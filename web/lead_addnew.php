@@ -39,6 +39,8 @@
 								  <div class="col-md-4">
 									<div class="form-group">
 									  <label>Name</label>
+									  <input type="hidden" name="status" value="0">
+									  <input type="hidden" name="handledby" value="<?php echo $_SESSION['uid'];?>">
 									  <input type="text" class="form-control" placeholder="Name" name="name" required>
 									</div>
 								  </div>
@@ -99,10 +101,32 @@
                                 
 
                             <div class="row">
-							<div class="col-md-3">
+								<div class="col-md-3">
 								<div class="form-group">
 								  <label>Company</label>
 								  <input type="text" class="form-control" placeholder="Company" name="company">
+								</div>
+								</div>
+
+								<div class="col-md-3">
+								<div class="form-group">
+								  <label>Company / Cusotomer Type</label>
+
+								  <select class="form-control" name="company_type" id="company_type" required>
+									<option disabled="disabled" selected="selected" >-- Select --</option>
+									<?php $company_type=$admin->get_metaname_byvalue('lead_customer_type');
+									foreach($company_type as $r => $v)
+									{
+										echo "<option value='".$company_type[$r]['value1']."'>".$company_type[$r]['value1']."</option>";
+									}?>
+								  </select>
+								</div>
+								</div>
+
+								<div class="col-md-3">
+								<div class="form-group">
+								  <label>Address</label>
+								  <input type="text" class="form-control" placeholder="Address" name="address">
 								</div>
 								</div>
 
@@ -113,21 +137,72 @@
 									</div>
 								  </div>
 
-                                <div class="col-md-3">
+                               
+                               
+
+								
+
+                            </div>
+
+
+							<div class="row">
+
+							<div class="col-md-3">
 								<div class="form-group">
 								  <label>LP Url</label>
 								  <input type="text" class="form-control" placeholder="Lp Url" name="lp_url">
 								</div>
 								</div>
 
-                                <div class="col-md-3">
+
+							<div class="col-md-3">
 								<div class="form-group">
 								  <label>Form Id</label>
 								  <input type="number" class="form-control" placeholder="Form Id" name="form_id">
 								</div>
 								</div>
 
-                            </div>
+							<div class="col-md-3">
+									<div class="form-group">
+										<label for="firstName5">Alloted To :</label>
+										<select class="custom-select form-control" id="userid" name="userid" required>
+										<option disbaled="disabled" selected="selected">Select</option>
+										<?php
+										if($_SESSION['uid']=='1')
+										{
+											$users=$admin->get_alluser();
+											foreach($users as $k=>$v){
+												echo "<option value='".$users[$k]['id']."'>".$users[$k]['person_name']."</option>";
+											}
+										}
+										else
+										{echo "<option value='".$_SESSION['uid']."'>".$_SESSION['person_name']."</option>";}	
+										?>
+										</select>
+									</div>
+								</div>
+
+							<div class="col-md-3">
+									<div class="form-group">
+										<label for="lastName1">Select Group :</label>
+										<select class="custom-select form-control" id="group" name="groupid" required>
+										<option disbaled="disabled" selected="selected">Select</option>
+										<?php
+										$group = $leads->get_group();
+										foreach($group as $k=>$v){
+											echo "<option value='".$group[$k]['id']."'>".$group[$k]['gname']."</option>";
+											//-- get sub group
+											$sgroup=$leads->get_sub_group($group[$k]['id']);
+											foreach($sgroup as $k=>$v)
+												{
+													echo "<option value='".$sgroup[$k]['id']."'>- ".$sgroup[$k]['gname']."</option>";
+
+												}
+										}
+										?>
+										</select>
+								</div>
+							</div>
 
 
 
@@ -135,9 +210,7 @@
 							</div>
 							<!-- /.box-body -->
 							<div class="box-footer">
-								<button type="reset" class="btn btn-rounded btn-warning btn-outline mr-1">
-								  <i class="ti-trash"></i> Cancel
-								</button>
+								<input type="reset" class="btn btn-rounded btn-warning btn-outline mr-1" value="Reset"/>
 								<input type="submit" class="btn btn-rounded btn-primary btn-outline" value="Save">
 								  
 							</div>  

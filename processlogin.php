@@ -38,12 +38,17 @@ else{
                 //fill the result to session variable
                
                $_SESSION['uid'] = $found_user['id'];
+               $_SESSION['person_name'] = $found_user['person_name'];
                $_SESSION['uname'] = $found_user['uname'];
                $_SESSION['utype'] = $found_user['utype'];
                $_SESSION['email'] = $found_user['uemail'];
                $_SESSION['phone'] = $found_user['ucontact'];
                
-               
+               //-- get copany details
+               $company=$admin->get_company();
+               $_SESSION['cname'] = $company[0]['cname'];
+               $_SESSION['logo'] = $company[0]['logo'];
+               //$_SESSION['uname'] = $found_user['uname'];
               ?>
                     <script type="text/javascript">
                       //then it will be redirected to index.php

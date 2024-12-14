@@ -174,27 +174,31 @@ $( document ).ready(function() {
 		});
 	}
 
+
+
+
+	//-- donut dashboard
+	var donut_label = $('#donut_label').val();
+	var donut_label= JSON.parse(donut_label);
+	
+	var donut_data = $('#donut_data').val();
+	var donut_data= JSON.parse(donut_data);
+
+	var donut_color = $('#donut_color').val();
+	var donut_color= JSON.parse(donut_color);
+
+	var donut_color1 = $('#donut_color1').val();
+	var donut_color1 = JSON.parse(donut_color1);
+	
 	if( $('#doughnut-chart').length > 0 ){
 		var ctx7 = document.getElementById("doughnut-chart").getContext("2d");
 		var data7 = {
-			 labels: [
-			"lab 1",
-			"lab 2",
-			"lab 3"
-		],
+			 labels:donut_label,
 		datasets: [
 			{
-				data: [300, 50, 100],
-				backgroundColor: [
-					"#389f99",
-					"#ee1044",
-					"#ff8f00"
-				],
-				hoverBackgroundColor: [
-					"#18625e",
-					"#b31338",
-					"#c0720f"
-				]
+				data:donut_data,
+				backgroundColor:donut_color,
+				hoverBackgroundColor:donut_color1
 			}]
 		};
 		
@@ -226,16 +230,27 @@ $( document ).ready(function() {
 		});
 	}
 	
-	// Bar chart
+	// Bar chart 1
+	var bar_label1 = $('#bar_label1').val();
+	var bar_label1= JSON.parse(bar_label1);
+	
+	var bar_title1 = $('#bar_title1').val();
+
+	var bar_data1 = $('#bar_data1').val();
+	var bar_data1= JSON.parse(bar_data1);
+
+	var bar_color1 = $('#bar_color1').val();
+	var bar_color1= JSON.parse(bar_color1);
+	//alert(bar_label1);
 	new Chart(document.getElementById("bar-chart1"), {
 		type: 'bar',
 		data: {
-		  labels: ["January", "February", "March", "April", "May"],
+		  labels:bar_label1,
 		  datasets: [
 			{
 			  label: "Dataset",
-			  backgroundColor: ["#689f38", "#38649f","#389f99","#ee1044","#ff8f00"],
-			  data: [8545,6589,5894,4985,1548]
+			  backgroundColor:bar_color1,
+			  data:bar_data1
 			}
 		  ]
 		},
@@ -243,13 +258,53 @@ $( document ).ready(function() {
 		  legend: { display: false },
 		  title: {
 			display: true,
-			text: 'My dataset'
+			text:bar_title1
+		  }
+		}
+	});
+
+	// Bar chart 2
+	var bar_label2 = $('#bar_label2').val();
+	var bar_label2= JSON.parse(bar_label2);
+	
+	
+	var bar_title2 = $('#bar_title2').val();
+
+	var bar_data2 = $('#bar_data2').val();
+	var bar_data2= JSON.parse(bar_data2);
+	
+
+	var bar_color2 = $('#bar_color2').val();
+	var bar_color2= JSON.parse(bar_color2);
+	
+	
+	//alert(bar_label1);
+	new Chart(document.getElementById("bar-chart2"), {
+		type: 'bar',
+		data: {
+		  labels:bar_label2,
+		  datasets: [
+			{
+			  label: "Dataset",
+			  backgroundColor:bar_color2,
+			  data:bar_data2
+			}
+		  ]
+		},
+		options: {
+		  legend: { display: false },
+		  title: {
+			display: true,
+			text:bar_title2
 		  }
 		}
 	});
 	
-	if( $('#bar-chart2').length > 0 ){
-		var ctx2 = document.getElementById("bar-chart2").getContext("2d");
+
+	//-- merchent graph
+	
+	if( $('#bar-chart3').length > 0 ){
+		var ctx2 = document.getElementById("bar-chart3").getContext("2d");
 		var data2 = {
 			labels: ["January", "February", "March", "April", "May", "June", "July"],
 			datasets: [
@@ -425,26 +480,7 @@ $( document ).ready(function() {
 		});
 	}
 
-	//Polar Chart
-	new Chart(document.getElementById("polar-chart1"), {
-		type: 'polarArea',
-		data: {
-		  labels: ["January", "February", "March", "April"],
-		  datasets: [
-			{
-			  label: "Dataset",
-			  backgroundColor: ["#689f38", "#38649f","#389f99","#ee1044","#ff8f00"],
-			  data: [2584,5698,5987,3485]
-			}
-		  ]
-		},
-		options: {
-		  title: {
-			display: true,
-			text: 'Mt Dataset'
-		  }
-		}
-	});
+	
 
 	if( $('#polar-chart2').length > 0 ){
 		var ctx4 = document.getElementById("polar-chart2").getContext("2d");

@@ -125,7 +125,22 @@
 
                             </div>
 
-
+							<div class="row">
+							<div class="col-md-3">
+							<label>Status</label>
+								<select class='form-control' name='status'>
+										<?php 
+                                            $status=$admin->get_metaname_byvalue('lead_status');
+                                            foreach($status as $r=>$v)
+                                            {
+                                                echo "<option value='".$status[$r]['value2']."' ";
+                                                if($status[$r]['value2']==$query[0]['status']){echo "selected='selected'";}
+                                                echo ">".$status[$r]['value1']."</option>";
+                                            }
+                                        ?>
+								</select>
+							</div>
+							</div>
 
 							
 							</div>

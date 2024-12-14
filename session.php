@@ -3,6 +3,8 @@
 	/*session_save_path('/opt/alt/php74/var/lib/php/session');
     ini_set('session.gc_probability', 1);
 	*/
+	//
+	//$base_url="http://192.168.1.38/sethia-handicrafts-erp/";
 	$base_url="http://localhost/sethia-handicrafts-erp/";
 
 	session_start();

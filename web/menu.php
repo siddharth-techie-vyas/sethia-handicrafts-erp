@@ -59,18 +59,36 @@
 		</ul> 
 	  </div>
 		
+	  <style>
+		.blink{
+		background-color: magenta;
+		animation: blink 3s linear infinite;
+	}
+
+		@keyframes blink{
+0%{opacity: 0;}
+50%{opacity: .5;}
+100%{opacity: 1;}
+}
+	  </style>
       <div class="navbar-custom-menu r-side">
         <ul class="nav navbar-nav">
 		  <!-- full Screen -->
-	      <li class="search-bar">		  
+	      <!-- <li class="search-bar">		  
 			  <div class="lookup lookup-circle lookup-right">
 			     <input type="text" name="s">
 			  </div>
-		  </li>			
+		  </li>			 -->
 		  <!-- Notifications -->
 		  <li class="dropdown notifications-menu">
 			<a href="#" class="waves-effect waves-light dropdown-toggle" data-toggle="dropdown" title="Notifications">
-			  <i class="mdi mdi-bell"></i>
+				<?php $latest_alert=$admin->latest_alerts($_SESSION['uid']);?>
+			  
+			<?php if($latest_alert){?>
+				<span class="blink badge badge-pill badge-danger badge-xs text-xs"><?php echo count($latest_alert);?></span>
+			<?php } else {?>
+				<i class="mdi mdi-bell"> </i>
+				<?php }?>
 			</a>
 			<ul class="dropdown-menu animated bounceIn">
 
@@ -81,7 +99,7 @@
 							<h4 class="mb-0 mt-0">Notifications</h4>
 						</div>
 						<div>
-							<a href="#" class="text-danger">Clear All</a>
+							<a href="#" class="text-danger">Mark Read All</a>
 						</div>
 					</div>
 				</div>
@@ -90,52 +108,29 @@
 			  <li>
 				<!-- inner menu: contains the actual data -->
 				<ul class="menu sm-scrol">
-				  <li>
+				<?php 
+				
+				foreach($latest_alert as $lr=>$v){
+				?> 
+				<li>
 					<a href="#">
-					  <i class="fa fa-users text-info"></i> Curabitur id eros quis nunc suscipit blandit.
+					  <i class="fa fa-users text-info"></i> <?php echo $latest_alert[$lr]['msg'];?><br>
+					  <small>From : <?php $uname=$admin->getone_user($latest_alert[$lr]['from_uid']); echo $uname[0]['person_name'];?></small><br>
+					  <small><?php echo date('d-m-Y H:i:s', strtotime($latest_alert[$lr]['date_time']));?></small>
 					</a>
 				  </li>
-				  <li>
-					<a href="#">
-					  <i class="fa fa-warning text-warning"></i> Duis malesuada justo eu sapien elementum, in semper diam posuere.
-					</a>
-				  </li>
-				  <li>
-					<a href="#">
-					  <i class="fa fa-users text-danger"></i> Donec at nisi sit amet tortor commodo porttitor pretium a erat.
-					</a>
-				  </li>
-				  <li>
-					<a href="#">
-					  <i class="fa fa-shopping-cart text-success"></i> In gravida mauris et nisi
-					</a>
-				  </li>
-				  <li>
-					<a href="#">
-					  <i class="fa fa-user text-danger"></i> Praesent eu lacus in libero dictum fermentum.
-					</a>
-				  </li>
-				  <li>
-					<a href="#">
-					  <i class="fa fa-user text-primary"></i> Nunc fringilla lorem 
-					</a>
-				  </li>
-				  <li>
-					<a href="#">
-					  <i class="fa fa-user text-success"></i> Nullam euismod dolor ut quam interdum, at scelerisque ipsum imperdiet.
-					</a>
-				  </li>
+				 <?php }?>
 				</ul>
 			  </li>
 			  <li class="footer">
-				  <a href="#">View all</a>
+				  <a href="<?php echo $base_url.'index.php?action=dashboard&page=notifications';?>">View all</a>
 			  </li>
 			</ul>
 		  </li>	
 		  
 	      <!-- User Account-->
           <li class="dropdown user user-menu">
-            <a href="#" class="waves-effect waves-light dropdown-toggle p-5" data-toggle="dropdown" title="User">
+            <a href="#" class="waves-effect waves-light dropdown-toggle p-5 " data-toggle="dropdown" title="User">
 				<img src="<?php echo $base_url.'images/user.jpg'?>" class="rounded" alt="" />
             </a>
             <ul class="dropdown-menu animated flipInX">
@@ -164,10 +159,10 @@
           </li>	
 		  
           <!-- Control Sidebar Toggle Button -->
-          <li>
+          <!-- <li>
             <a href="#" data-toggle="control-sidebar" title="Setting" class="waves-effect waves-light"><i class="fa fa-cog fa-spin"></i></a>
           </li>
-			
+			 -->
         </ul>
       </div>
     </nav>
@@ -192,8 +187,9 @@
           </a>
         </li>    
 		
-      	  
-		
+      	
+		<!----- leads ---->
+		<?php if($_SESSION['utype']=='1' || $_SESSION['utype']=='6'){?>
         <li class="header">Leads</li>
 		  
         <li class="treeview">
@@ -206,24 +202,72 @@
           <ul class="treeview-menu">
             <li><a href="<?php echo $base_url.'index.php?action=dashboard&page=lead_addnew';?>"><i class="ti-more"></i>Add New (Single)</a></li>
             <li><a href="<?php echo $base_url.'index.php?action=dashboard&page=lead_bulkupload';?>"><i class="ti-more"></i>Bulk Upload</a></li>
-            <li><a href="<?php echo $base_url.'index.php?action=dashboard&page=lead_addgroup';?>"><i class="ti-more"></i>Create Group</a></li>
-			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=lead_viewall';?>"><i class="ti-more"></i>View All</a></li>
+            <li><a href="<?php echo $base_url.'index.php?action=dashboard&page=lead_viewall';?>"><i class="ti-more"></i>View All</a></li>
+			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=lead_reports';?>"><i class="ti-more"></i>Report(s)</a></li>
           </ul>
         </li>
-		<li>
-			<a href="<?php echo $base_url.'index.php?action=dashboard&page=lead_feedback';?>">
-            <i class="mdi mdi-comment-outline"></i>
-			<span>Follow Up(s)</span>
-          </a>
-        </li> 
-		<li>
-			<a href="<?php echo $base_url.'index.php?action=dashboard&page=lead_report';?>">
-            <i class="mdi mdi-file-chart"></i>
-			<span>Report(s)</span>
+		<?php } ?>
+		
+
+		<!----- sales ---->
+		<?php if($_SESSION['utype']=='1' || $_SESSION['utype']=='8'){?>
+        <li class="header">Sales</li>
+		  
+        <li>
+          <a href="<?php echo $base_url.'index.php?action=dashboard&page=sales_lead_viewall';?>">
+		  <i class="mdi mdi-database"></i> <span>Leads</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
           </a>
         </li>
+		<?php } ?>
+
+
+		<!------- admin -------->
+		<?php if($_SESSION['utype']=='1'){?>
+		<li class="header">Admin</li>
+		<li>
+          <a href="<?php echo $base_url.'index.php?action=dashboard&page=admin_meta';?>">
+            <i class="mdi mdi-alert"></i> <span>Meta</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+        </li>
+
 		
+		  
+		  <li class="treeview">
+			<a href="#">
+			  <i class="mdi mdi-check-all"></i> <span>Leads Master</span>
+			  <span class="pull-right-container">
+				<i class="fa fa-angle-right pull-right"></i>
+			  </span>
+			</a>
+			<ul class="treeview-menu">
+				<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=lead_addgroup';?>"><i class="ti-more"></i>Create Group</a></li>
+				<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=lead_customertype';?>"><i class="ti-more"></i>Create Customer & Steps</a></li>
+			</ul>
+		  </li>
+
+
+		  <li class="treeview">
+			<a href="#">
+			  <i class="mdi mdi-currency-inr"></i> <span>Sales Master</span>
+			  <span class="pull-right-container">
+				<i class="fa fa-angle-right pull-right"></i>
+			  </span>
+			</a>
+			<ul class="treeview-menu">
+				<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=sales_addstages';?>"><i class="ti-more"></i>Create Sales <br>Status / Stage(s)</a></li>
+				<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=sales_addstatus';?>"><i class="ti-more"></i>Create Query Status</a></li>
+			</ul>
+		  </li>
+
 		
+
+		<?php }?>
         
 		   
         

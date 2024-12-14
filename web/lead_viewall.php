@@ -2,29 +2,17 @@
 	  <div class="container-full">
 
 <?php 
-//--queruies
-// $lead_grp=array();
-// //--- nu of groups
-// $nu_grp = (new MongoDB\Client)->$db->leads_group;
-// $nu_grp=$nu_grp->find();
-
-// foreach ($nu_grp as $doc0){
-// 	// change to php
-// 	$doc=json_encode($doc0);
-// 	$doc=json_decode($doc,true);
-// 	array_push($lead_grp,array("id"=>$doc['_id'],"gname"=>$doc["gname"]));
-// }
-// //-- data
-// $leadviewall = (new MongoDB\Client)->$db->leads;
-// $leadviewall=$leadviewall->find();
-?>
-<?php //$data1=json_encode($leadviewall); $data1=json_decode($data1,true); echo count($data1['group_id']);
-$leadviewall=$leads->view_all();
+if($_SESSION['utype']=='1')
+{$leadviewall=$leads->view_all();}
+elseif($_GET['status'])
+{$leadviewall=$leads->get_leads_bystatus_byuser($_GET['status'],$_SESSION['uid']);}
+else
+{$leadviewall=$leads->view_all_byuser($_SESSION['uid']);}
 ?>
 	  <div class="content-header">
 			<div class="d-flex align-items-center">
 				<div class="mr-auto">
-					<h3 class="page-title">View All Leads</h3>
+					<h3 class="page-title">View All Leads <?php if(isset($_GET['status'])){$status0=$admin->get_metaname_byvalue2('lead_status',$_GET["status"]);} echo '<b class="text-primary">['.$status0[0]['value1'].']</b>';?></h3>
 					<div class="d-inline-block align-items-center">
 						<nav>
 							<ol class="breadcrumb">
@@ -59,7 +47,7 @@ $leadviewall=$leads->view_all();
 					</div>
 
 					<div class="text-center my-2">
-					  <div class="font-size-60"><?php echo count($leadviewall);?></div>
+					  <div class="font-size-60"><?php if($leadviewall){echo count($leadviewall);}else{echo "0";}?></div>
 					  <span>Total Data</span>
 					</div>
 				  </div>
@@ -82,7 +70,7 @@ $leadviewall=$leads->view_all();
 					</div>
 
 					<div class="text-center my-2">
-					<div class="font-size-60"><?php $group0=$leads->get_group_record(0); if($group0){echo count($group0);}else{echo "0";};?></div>
+					<div class="font-size-60"><?php $group0=$leads->get_leads_bystatus_byuser(0,$_SESSION['uid']); if($group0){echo count($group0);}else{echo "0";};?></div>
 					  <span>Uncategorized Data</span>
 					</div>
 				  </div>				
@@ -106,7 +94,7 @@ $leadviewall=$leads->view_all();
 					</div>
 
 					<div class="text-center my-2">
-					  <div class="font-size-60"><?php $unhandled=$leads->get_leads_bystatus(0); if($unhandled){echo count($unhandled);}else{echo "0";};?></div>
+					  <div class="font-size-60"><?php $unhandled=$leads->get_leads_bystatus_byuser(0,$_SESSION['uid']); if($unhandled){echo count($unhandled);}else{echo "0";};?></div>
 					  <span>Un-Handled Queries</span>
 					</div>
 				  </div>
@@ -130,7 +118,7 @@ $leadviewall=$leads->view_all();
 					</div>
 
 					<div class="text-center my-2">
-					  <div class="font-size-60"><?php $qualified=$leads->get_leads_qualified(1); if($qualified){echo count($qualified);}else{echo "0";};?></div>
+					  <div class="font-size-60"><?php $qualified=$leads->get_leads_bystatus_byuser(1,$_SESSION['uid']); if($qualified){echo count($qualified);}else{echo "0";};?></div>
 					  <span>Qualified Leads</span>
 					</div>
 				  </div>
@@ -158,21 +146,23 @@ $leadviewall=$leads->view_all();
 					  <table id="example" class="table table-bordered table-responsive table-hover display wrap ">
 						<thead>
 							<tr>
-								<th>#</th>
+								<th>Lead #</th>
 								<th>Group</th>
+								<th>Alloted To</th>
 								<th>Date & Time</th>
 								<th>Name</th>
 								<th>Contact</th>
 								<th>Company</th>
 								<th>Location</th>
 								<th>Lead</th>
+								<th>Last Updated</th>
 								<th>Status</th>
 								<th>Utility</th>
 							</tr>
 						</thead>
 						<tbody>
 							<?php 
-							
+							$prefix_lead=$admin->get_metaname_byvalue('lead_nu');
 							$counter=1;
 							foreach ($leadviewall as $doc) 
 							{
@@ -182,26 +172,30 @@ $leadviewall=$leads->view_all();
 								$city		=$admin->get_cities_one($doc["city"]);
 								$qualify	=$admin->get_metaname_byvalue2('lead_qualify',$doc["lead_qualified"]);
 								$status		=$admin->get_metaname_byvalue2('lead_status',$doc["status"]);
-								$group=$leads->get_group_record($doc["group_id"]);
+									
+									$group=$leads->get_group_one($doc["group_id"]);
 									$gname = $group[0]['gname'];
 									if($gname==''){$gname= 'Uncategorised';}
+								$uname=$admin->getone_user($doc["handledby"]);
 
 								echo "<tr>";
-									echo "<th>".$counter++."</th>";
-									echo "<th>".$gname."</th>";
+									echo "<td>".$prefix_lead[0]['value1'].$doc['id']."</td>";
+									echo "<td>".$gname."</td>";
+									echo "<td>".$uname[0]['uname']."</td>";
 									echo "<td>".$doc["date_time"]."</td>";
 									echo "<td>".$doc["name"]."</td>";
 									echo "<td>".$doc["email"].'<br><small>'.$doc["phone"]."</small></td>";
 									echo "<td>".$doc["company"]."</td>";
 									echo "<td>".$city[0]['name'].'<br><small>'.$state[0]['name'].'</small><br><small>'.$country[0]['name']."</small></td>";
 									echo "<td>".$qualify[0]['value1']."</td>";
+									echo "<td>".date('d-m-Y H:i:s', strtotime($doc['last_updated']))."</td>";
 									echo "<td>".$status[0]["value1"]."</td>";
 									?>
 									<td>
-											<i class='fa fa-comment btn btn-primary btn-xs' data-toggle="modal" data-target="#modal-right" onclick="show_page_model('Feedback List','<?php echo $base_url.'index.php?action=dashboard&nocss=leads_feedback&id='.$doc['id'];?>')"></i>
+										<i class='fa fa-comment btn btn-primary btn-xs' data-toggle="modal" data-target="#modal-right" onclick="show_page_model('Feedback List','<?php echo $base_url.'index.php?action=dashboard&nocss=leads_feedback&id='.$doc['id'];?>')"></i>
 										<i class='fa fa-pencil btn btn-warning btn-xs'  data-toggle="modal" data-target=".bs-example-modal-lg" onclick="show_page_model_big('Edit Inquiry','<?php echo $base_url.'index.php?action=dashboard&nocss=lead_edit&id='.$doc['id'];?>')"></i>
-										<i class='fa fa-eye btn btn-success btn-xs'></i>
-										<i class='fa fa-trash btn btn-danger btn-xs'></i>
+										<!-- <i class='fa fa-eye btn btn-success btn-xs'></i>
+										<i class='fa fa-trash btn btn-danger btn-xs'></i> -->
 									</td>
 									<?php
 								echo "</tr>";

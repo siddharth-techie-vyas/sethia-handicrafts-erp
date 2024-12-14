@@ -44,6 +44,8 @@
 	</div>
 
 
+<!-- js -->
+ 
 <!-- Vendor JS -->
 <script src="<?php echo $base_url.'theme/js/vendors.min.js';?>"></script>
 	
@@ -53,6 +55,7 @@
 	<script src="<?php echo $base_url.'theme/js/progressbar.js';?>"></script>
 	<script src="<?php echo $base_url.'theme/js/Chart.min.js';?>"></script>
 	<script src="<?php echo $base_url.'theme/js/zingchart.min.js';?>"></script>	
+	<script src="<?php echo $base_url.'theme/js/pages/widget-charts2.js';?>"></script>	
 	
 	<!-- Lotus Admin App -->
 	<script src="<?php echo $base_url.'theme/js/template.js';?>"></script>
@@ -63,6 +66,7 @@
 	<script src="<?php echo $base_url.'theme/js/datatables.min.js';?>"></script>
 	<!------- custom js -->
 	<script src="<?php echo $base_url.'theme/js/function.js';?>"></script>
+	<script src="<?php echo $base_url.'theme/js/chart_custom_fn.js';?>"></script>
 </body>
 
 </html>

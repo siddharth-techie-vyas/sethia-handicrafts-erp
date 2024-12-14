@@ -2,11 +2,13 @@
 include_once('class/DBController.php');
 include_once('class/Admin.php');
 include_once('class/Leads.php');
+include_once('class/Sales.php');
 
 $db_handle = new DBController();
 
 $admin = new Admin();
 $leads = new Leads();
+$sales = new Sales();
 
 $conn = new DBController();
 $con = $conn->connectDB();

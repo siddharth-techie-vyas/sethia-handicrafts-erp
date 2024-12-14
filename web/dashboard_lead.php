@@ -5,13 +5,14 @@
 		<div class="content-header">
 			<div class="d-flex align-items-center">
 				<div class="mr-auto">
-					<h3 class="page-title">Tickets</h3>
+				<h3 class="page-title text-primary">Welcome <?php echo $_SESSION['person_name'];?></h3>	
+				<h4 class="page-title text-info">Dashbaord (Leads)</h4>
 					<div class="d-inline-block align-items-center">
 						<nav>
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
-								<li class="breadcrumb-item" aria-current="page">Extra</li>
-								<li class="breadcrumb-item active" aria-current="page">Tickets</li>
+								<li class="breadcrumb-item" aria-current="page">Dashbaord</li>
+								<li class="breadcrumb-item active" aria-current="page">Leads</li>
 							</ol>
 						</nav>
 					</div>
@@ -43,13 +44,15 @@
 
 		<!-- Main content -->
 		<section class="content">
-
+			
+		
+		<!-- 1st row-->
 		  <div class="row">
 				  <div class="col-lg-3 col-6">
-					  <a class="box box-link-shadow text-center" href="javascript:void(0)">
+					  <a class="box box-link-shadow text-center" href="<?php echo $base_url.'index.php?action=dashboard&page=lead_viewall';?>">
 						<div class="box-body">
-							<div class="font-size-24">+264</div>
-							<span>Total Tickets</span>
+							<div class="font-size-24">+<?php $leadviewall=$leads->view_all_byuser($_SESSION['uid']); if($leadviewall){echo count($leadviewall);}else{echo "0";}?></div>
+							<span>Total Lead(s)</span>
 						</div>
 						<div class="box-body bg-info">
 							<p>
@@ -59,10 +62,10 @@
 					  </a>
 				  </div>
 				  <div class="col-lg-3 col-6">
-					  <a class="box box-link-shadow text-center" href="javascript:void(0)">
+					  <a class="box box-link-shadow text-center" href="<?php echo $base_url.'index.php?action=dashboard&page=lead_viewall&status=0';?>">
 						<div class="box-body">
-							<div class="font-size-24">175</div>
-							<span>Responded</span>
+							<div class="font-size-24"><?php $unhandled=$leads->get_leads_bystatus_byuser(0,$_SESSION['uid']); if($unhandled){echo count($unhandled);}else{echo "0";};?></div>
+							<span>Not Responded</span>
 						</div>
 						<div class="box-body bg-warning">
 							<p>
@@ -72,10 +75,10 @@
 					  </a>
 				  </div>
 				  <div class="col-lg-3 col-6">
-					  <a class="box box-link-shadow text-center" href="javascript:void(0)">
+					  <a class="box box-link-shadow text-center" href="<?php echo $base_url.'index.php?action=dashboard&page=lead_viewall&status=1';?>">
 						<div class="box-body">
-							<div class="font-size-24">110</div>
-							<span>Resolve</span>
+							<div class="font-size-24"><?php $unhandled=$leads->get_leads_bystatus_byuser(1,$_SESSION['uid']); if($unhandled){echo count($unhandled);}else{echo "0";};?></div>
+							<span>Success</span>
 						</div>
 						<div class="box-body bg-success">
 							<p>
@@ -85,10 +88,10 @@
 					  </a>
 				  </div>
 				  <div class="col-lg-3 col-6">
-					  <a class="box box-link-shadow text-center" href="javascript:void(0)">
+					  <a class="box box-link-shadow text-center" href="<?php echo $base_url.'index.php?action=dashboard&page=lead_viewall&status=2';?>">
 						<div class="box-body">
-							<div class="font-size-24">59</div>
-							<span>Pending</span>
+							<div class="font-size-24"><?php $unhandled=$leads->get_leads_bystatus_byuser(2,$_SESSION['uid']); if($unhandled){echo count($unhandled);}else{echo "0";};?></div>
+							<span>Open</span>
 						</div>
 						<div class="box-body bg-danger">
 							<p>
@@ -97,269 +100,286 @@
 						</div>
 					  </a>
 				  </div>
-			<div class="col-xl-3 col-lg-4 col-12">
-			  <div class="row">
-				  <div class="col-12">				  	
-					<div class="box">
-					  <div class="box-header with-border">
-						<h5 class="box-title">Tickets share per category</h5>
-						<div class="box-tools pull-right">
-							<ul class="card-controls">
-							  <li class="dropdown">
-								<a data-toggle="dropdown" href="#"><i class="ion-android-more-vertical"></i></a>
-								<div class="dropdown-menu dropdown-menu-right">
-								  <a class="dropdown-item active" href="#">Today</a>
-								  <a class="dropdown-item" href="#">Yesterday</a>
-								  <a class="dropdown-item" href="#">Last week</a>
-								  <a class="dropdown-item" href="#">Last month</a>
-								</div>
-							  </li>
-							  <li><a href="" class="link card-btn-reload" data-toggle="tooltip" title="" data-original-title="Refresh"><i class="fa fa-circle-thin"></i></a></li>
-							</ul>
-						</div>
-					  </div>
-
-					  <div class="box-body">
-						<div class="text-center pb-25">                  
-						  <div class="donut" data-peity="{ &quot;fill&quot;: [&quot;#fc4b6c&quot;, &quot;#ffb22b&quot;, &quot;#398bf7&quot;], &quot;radius&quot;: 70, &quot;innerRadius&quot;: 28  }" style="display: none;">9,6,5</div><svg class="peity" height="140" width="140"><path d="M 70 0 A 70 70 0 0 1 91.63118960624632 136.57395614066075 L 78.65247584249853 96.6295824562643 A 28 28 0 0 0 70 42" fill="#fc4b6c"></path><path d="M 91.63118960624632 136.57395614066075 A 70 70 0 0 1 0 70.00000000000001 L 42 70 A 28 28 0 0 0 78.65247584249853 96.6295824562643" fill="#ffb22b"></path><path d="M 0 70.00000000000001 A 70 70 0 0 1 69.99999999999999 0 L 70 42 A 28 28 0 0 0 42 70" fill="#398bf7"></path></svg>
-						</div>
-
-						<ul class="list-inline">
-						  <li class="flexbox mb-5">
-							<div>
-							  <span class="badge badge-dot badge-lg mr-1" style="background-color: #fc4b6c"></span>
-							  <span>Technical</span>
-							</div>
-							<div>8952</div>
-						  </li>
-
-						  <li class="flexbox mb-5">
-							<div>
-							  <span class="badge badge-dot badge-lg mr-1" style="background-color: #ffb22b"></span>
-							  <span>Accounts</span>
-							</div>
-							<div>7458</div>
-						  </li>
-
-						  <li class="flexbox">
-							<div>
-							  <span class="badge badge-dot badge-lg mr-1" style="background-color: #398bf7"></span>
-							  <span>Other</span>
-							</div>
-							<div>3254</div>
-						  </li>
-						</ul>
-					  </div>
-					</div>
-					<div class="box">
-					  <div class="box-header with-border">
-						<h5 class="box-title">Tickets share per agent</h5>
-
-						<div class="box-tools pull-right">
-							<ul class="card-controls">
-							  <li class="dropdown">
-								<a data-toggle="dropdown" href="#"><i class="ion-android-more-vertical"></i></a>
-								<div class="dropdown-menu dropdown-menu-right">
-								  <a class="dropdown-item active" href="#">Today</a>
-								  <a class="dropdown-item" href="#">Yesterday</a>
-								  <a class="dropdown-item" href="#">Last week</a>
-								  <a class="dropdown-item" href="#">Last month</a>
-								</div>
-							  </li>
-							  <li><a href="" class="link card-btn-reload" data-toggle="tooltip" title="" data-original-title="Refresh"><i class="fa fa-circle-thin"></i></a></li>
-							</ul>
-						</div>
-					  </div>
-
-					  <div class="box-body">
-						<div class="flexbox mt-10">
-							<div class="bar" data-peity="{ &quot;fill&quot;: [&quot;#666EE8&quot;, &quot;#1E9FF2&quot;, &quot;#28D094&quot;, &quot;#FF4961&quot;, &quot;#FF9149&quot;], &quot;height&quot;: 150, &quot;width&quot;: 120, &quot;padding&quot;:0.2 }" style="display: none;">952,558,1254,427,784</div><svg class="peity" height="150" width="120"><rect fill="#666EE8" x="4.8" y="36.12440191387559" width="14.399999999999999" height="113.87559808612441"></rect><rect fill="#1E9FF2" x="28.8" y="83.25358851674642" width="14.400000000000002" height="66.74641148325358"></rect><rect fill="#28D094" x="52.8" y="0" width="14.400000000000006" height="150"></rect><rect fill="#FF4961" x="76.8" y="98.92344497607655" width="14.400000000000006" height="51.07655502392345"></rect><rect fill="#FF9149" x="100.8" y="56.22009569377991" width="14.400000000000006" height="93.77990430622009"></rect></svg>
-						  <ul class="list-inline align-self-end text-muted text-right mb-0">
-							<li>Andrew <span class="badge badge-primary ml-2">154</span></li>
-							<li>Benjamin <span class="badge badge-info ml-2">154</span></li>
-							<li>Elijah <span class="badge badge-success ml-2">254</span></li>
-							<li>Chloe <span class="badge badge-danger ml-2">854</span></li>
-							<li>Daniel <span class="badge badge-warning ml-2">215</span></li>
-						  </ul>
-						</div>
-
-					  </div>
-					</div>
-				  </div>
-			  </div>				  
 			</div>
-				<div class="col-xl-9 col-lg-8 col-12">
-					<div class="box">
+		  
+
+		  <!-- 2nd row-->
+			<div class="row">
+
+			<div class="col-xl-4 col-lg-6 col-12">
+				<div class="box">
 						<div class="box-header with-border">						
-							<h4 class="box-title">Support Ticket List</h4>
-							<h6 class="box-subtitle">List of ticket opend by customers</h6>
+							<h4 class="box-title">Today's Follow Up Reminder</h4>
+							<h6 class="box-subtitle">Reminder for call back</h6>
 						</div>
 						<div class="box-body p-15">						
 							<div class="table-responsive">
-								<div id="tickets_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer"><div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="tickets_length"><label>Show <select name="tickets_length" aria-controls="tickets" class="form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="tickets_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="tickets"></label></div></div></div><div class="row"><div class="col-sm-12"><table id="tickets" class="table mt-0 table-hover no-wrap table-borderless dataTable no-footer" data-page-size="10" role="grid" aria-describedby="tickets_info">
-									<thead>
-										<tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="tickets" rowspan="1" colspan="1" aria-sort="ascending" aria-label="ID: activate to sort column descending">ID</th><th class="sorting" tabindex="0" aria-controls="tickets" rowspan="1" colspan="1" aria-label="Ope. by: activate to sort column ascending">Ope. by</th><th class="sorting" tabindex="0" aria-controls="tickets" rowspan="1" colspan="1" aria-label="Cust. Email: activate to sort column ascending">Cust. Email</th><th class="sorting" tabindex="0" aria-controls="tickets" rowspan="1" colspan="1" aria-label="Sbuject: activate to sort column ascending">Sbuject</th><th class="sorting" tabindex="0" aria-controls="tickets" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending">Status</th><th class="sorting" tabindex="0" aria-controls="tickets" rowspan="1" colspan="1" aria-label="Ass. to: activate to sort column ascending">Ass. to</th><th class="sorting" tabindex="0" aria-controls="tickets" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending">Date</th><th class="sorting" tabindex="0" aria-controls="tickets" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending">Action</th></tr>
-									</thead>
-									<tbody>
+					  
+							<table class="table">
+								<tr>
+									<th>#</th>
+									<th>Name</th>
+									<th>Phone</th>
+									<th>Email</th>
+									<th>Company</th>
+									<th>Next Folloup Date</th>
+								</tr>
+								<?php $pc=1;
+								$pend=$leads->get_my_next_follow_dashboard($_SESSION['uid']);
+								if(!empty($pend))
+								{
+									foreach($pend as $k=>$v)
+									{
+									?>
+									<tr>
+										<th><?php echo $pc++;?></th>
+										<td><?php echo $pend[$k]['name'];?></td>
+										<td><?php echo $pend[$k]['phone'];?></td>
+										<td><?php echo $pend[$k]['email'];?></td>
+										<td><?php echo $pend[$k]['company'];?></td>
+										<td><?php echo date("d-m-Y", strtotime($pend[$k]['next_feedback_date']));  ?></td>
+									</tr>
+									<?php }?>
+									<tr>
+										<td colspan='6'><h4><A href="<?php echo $base_url.'index.php?action=dashboard&page=lead_viewall&lead_status=2';?>">View More</a></h4></td>
+									</tr>
+								<?php }else{?>
+								<tr><td colspan="6">No Pendencies For Today</td></tr>
+								<?php }?>
+							</table>
+							</div>
+					  	</div>
+				</div>
+				
+			</div>
+
+			<div class="col-xl-4 col-lg-6 col-12">
+				<div class="box">
+						<div class="box-header with-border">						
+							<h4 class="box-title">Follow Up Reminder (Tail)</h4>
+							<h6 class="box-subtitle">Old Lead Reminder</h6>
+						</div>
+						<div class="box-body p-15">						
+							<div class="table-responsive">
+					  
+							<table class="table">
+								<tr>
+									<th>#</th>
+									<th>Name</th>
+									<th>Phone</th>
+									<th>Email</th>
+									<th>Company</th>
+									<th>Next Folloup Date</th>
+								</tr>
+								<?php $pc=1;
+								$pend=$leads->get_my_next_follow_old_dashboard($_SESSION['uid']);
+								if(!empty($pend))
+								{
+									foreach($pend as $k=>$v)
+									{
+									?>
+									<tr>
+										<th><?php echo $pc++;?></th>
+										<td><?php echo $pend[$k]['name'];?></td>
+										<td><?php echo $pend[$k]['phone'];?></td>
+										<td><?php echo $pend[$k]['email'];?></td>
+										<td><?php echo $pend[$k]['company'];?></td>
+										<td><?php echo date("d-m-Y", strtotime($pend[$k]['next_feedback_date']));  ?></td>
+									</tr>
+									<?php }?>
+									<tr>
+										<td colspan='6'><h4><A href="<?php echo $base_url.'index.php?action=dashboard&page=lead_viewall&lead_status=2';?>">View More</a></h4></td>
+									</tr>
+								<?php }else{?>
+								<tr><td colspan="6">No Pendencies For Today</td></tr>
+								<?php }?>
+							</table>
+							</div>
+					  	</div>
+				</div>
+				
+			</div>
+
+			<div class="col-xl-4 col-lg-6 col-12">
+				<div class="box">
+						<div class="box-header with-border">						
+							<h4 class="box-title">Latest Data Upload(s)</h4>
+							<h6 class="box-subtitle">New Leads</h6>
+						</div>
+						<div class="box-body p-15">						
+							<div class="table-responsive">
+					  
+							<table class="table">
+								<tr>
+									<th>#</th>
+									<th>File Name</th>
+									<th>Uploaded By</th>
+									<th>Date & Time</th>
+									<th>Number Of Records</th>
+								</tr>
+								<?php $hc=1; $history=$leads->get_my_uploads_dashboard($_SESSION['uid']); 
+								if(!empty($history))
+								{
+									foreach($history as $r=>$v)
+									{?>
+									<tr>
+										<th><?php echo $hc++;?></th>
+										<td><?php echo $history[$r]['filename'];?></td>
+										<td><?php $up=$admin->getone_user($history[$r]['uploadedby']); echo $up[0]['person_name'];?></td>
+										<td><?php echo date("d-m-Y H:i:s", strtotime($history[$r]['date_time']));?></td>
+										<td><?php echo $history[$r]['nu_of_records'];?></td>
 										
-										
-										
-										
-										
-										
-										
-										
-										
-										
-										
-										
-										
-										
-										
-										
-										
-										
-										
-										
-									<tr role="row" class="odd">
-											<td class="sorting_1">1011</td>
-											<td>
-												<a href="javascript:void(0)">Sophia</a>
-											</td>
-											<td>sophia@gmail.com</td>
-											<td>How to customize the template?</td>
-											<td><span class="badge badge-warning">New</span> </td>
-											<td>Elijah</td>
-											<td>14-10-2018</td>
-											<td>
-												<a href="javascript:void(0)" class="text-danger" data-toggle="tooltip" data-original-title="Delete"><i class="ti-trash" aria-hidden="true"></i></a>
-											</td>
-										</tr><tr role="row" class="even">
-											<td class="sorting_1">1011</td>
-											<td>
-												<a href="javascript:void(0)">Mia</a>
-											</td>
-											<td>sophia@gmail.com</td>
-											<td>How to customize the template?</td>
-											<td><span class="badge badge-warning">New</span> </td>
-											<td>Elijah</td>
-											<td>14-10-2018</td>
-											<td>
-												<a href="javascript:void(0)" class="text-danger" data-toggle="tooltip" data-original-title="Delete"><i class="ti-trash" aria-hidden="true"></i></a>
-											</td>
-										</tr><tr role="row" class="odd">
-											<td class="sorting_1">1024</td>
-											<td>
-												<a href="javascript:void(0)">Jayden</a>
-											</td>
-											<td>jayden@gmail.com</td>
-											<td>How to set Horizontal nav</td>
-											<td><span class="badge badge-success">Complete</span> </td>
-											<td>Andrew</td>
-											<td>13-10-2018</td>
-											<td>
-												<a href="javascript:void(0)" class="text-danger" data-toggle="tooltip" data-original-title="Delete"><i class="ti-trash" aria-hidden="true"></i></a>
-											</td>
-										</tr><tr role="row" class="even">
-											<td class="sorting_1">1224</td>
-											<td>
-												<a href="javascript:void(0)">William</a>
-											</td>
-											<td>william@gmail.com</td>
-											<td>How to change colors</td>
-											<td><span class="badge badge-success">Complete</span> </td>
-											<td>Benjamin</td>
-											<td>13-10-2018</td>
-											<td>
-												<a href="javascript:void(0)" class="text-danger" data-toggle="tooltip" data-original-title="Delete"><i class="ti-trash" aria-hidden="true"></i></a>
-											</td>
-										</tr><tr role="row" class="odd">
-											<td class="sorting_1">1224</td>
-											<td>
-												<a href="javascript:void(0)">Chloe</a>
-											</td>
-											<td>william@gmail.com</td>
-											<td>How to change colors</td>
-											<td><span class="badge badge-success">Complete</span> </td>
-											<td>Benjamin</td>
-											<td>13-10-2018</td>
-											<td>
-												<a href="javascript:void(0)" class="text-danger" data-toggle="tooltip" data-original-title="Delete"><i class="ti-trash" aria-hidden="true"></i></a>
-											</td>
-										</tr><tr role="row" class="even">
-											<td class="sorting_1">1611</td>
-											<td>
-												<a href="javascript:void(0)">Sophia</a>
-											</td>
-											<td>sophia@gmail.com</td>
-											<td>How to customize the template?</td>
-											<td><span class="badge badge-warning">New</span> </td>
-											<td>Elijah</td>
-											<td>14-10-2018</td>
-											<td>
-												<a href="javascript:void(0)" class="text-danger" data-toggle="tooltip" data-original-title="Delete"><i class="ti-trash" aria-hidden="true"></i></a>
-											</td>
-										</tr><tr role="row" class="odd">
-											<td class="sorting_1">1621</td>
-											<td>
-												<a href="javascript:void(0)">Sophia</a>
-											</td>
-											<td>sophia@gmail.com</td>
-											<td>How to customize the template?</td>
-											<td><span class="badge badge-warning">New</span> </td>
-											<td>Elijah</td>
-											<td>14-10-2018</td>
-											<td>
-												<a href="javascript:void(0)" class="text-danger" data-toggle="tooltip" data-original-title="Delete"><i class="ti-trash" aria-hidden="true"></i></a>
-											</td>
-										</tr><tr role="row" class="even">
-											<td class="sorting_1">2124</td>
-											<td>
-												<a href="javascript:void(0)">Ethan</a>
-											</td>
-											<td>ethan@gmail.com</td>
-											<td>How this will connect with ethan</td>
-											<td><span class="badge badge-danger">Pending</span> </td>
-											<td>Andrew</td>
-											<td>12-10-2018</td>
-											<td>
-												<a href="javascript:void(0)" class="text-danger" data-toggle="tooltip" data-original-title="Delete"><i class="ti-trash" aria-hidden="true"></i></a>
-											</td>
-										</tr><tr role="row" class="odd">
-											<td class="sorting_1">2524</td>
-											<td>
-												<a href="javascript:void(0)">Jayden</a>
-											</td>
-											<td>jayden@gmail.com</td>
-											<td>How to set Horizontal nav</td>
-											<td><span class="badge badge-success">Complete</span> </td>
-											<td>Andrew</td>
-											<td>13-10-2018</td>
-											<td>
-												<a href="javascript:void(0)" class="text-danger" data-toggle="tooltip" data-original-title="Delete"><i class="ti-trash" aria-hidden="true"></i></a>
-											</td>
-										</tr><tr role="row" class="even">
-											<td class="sorting_1">2594</td>
-											<td>
-												<a href="javascript:void(0)">Jayden</a>
-											</td>
-											<td>jayden@gmail.com</td>
-											<td>How to set Horizontal nav</td>
-											<td><span class="badge badge-success">Complete</span> </td>
-											<td>Andrew</td>
-											<td>13-10-2018</td>
-											<td>
-												<a href="javascript:void(0)" class="text-danger" data-toggle="tooltip" data-original-title="Delete"><i class="ti-trash" aria-hidden="true"></i></a>
-											</td>
-										</tr></tbody>
-								</table></div></div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="tickets_info" role="status" aria-live="polite">Showing 1 to 10 of 20 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="tickets_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="tickets_previous"><a href="#" aria-controls="tickets" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="tickets" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="tickets" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item next" id="tickets_next"><a href="#" aria-controls="tickets" data-dt-idx="3" tabindex="0" class="page-link">Next</a></li></ul></div></div></div></div>
+									</tr>
+									<?php }?>
+									<!-- <tr>
+										<td colspan='6'><h4><a href="<?php echo $base_url.'index.php?action=dashboard&page=leads_upload_history';?>">View More</a></h4></td>
+									</tr> -->
+									<?php }else{?>
+									<tr><td colspan="6">No Upload(s) Found</td></tr>	
+									<?php }?>
+
+
+							</table>
+							</div>
+					  	</div>
+			</div>
+
+
+		</div>	  
+
+								</div>
+
+		<!-- 3rd row-->									
+		<div class="row">
+
+		<div class="col-xl-4 col-12">
+					<div class="box">
+						<div class="box-body">
+							<h4 class="box-title">Monthly Chart</h4>
+							<div><iframe class="chartjs-hidden-iframe" style="width: 100%; display: block; border: 0px; height: 0px; margin: 0px; position: absolute; inset: 0px;"></iframe>
+								<canvas id="bar-chart1" height="477" style="display: block; width: 658px; height: 438px;" width="717"></canvas>
+							</div>
+							<?php 
+							//-- get data by month
+							$graph_status = $leads->get_leadbystatus_dashboard_month($_SESSION['uid'],date('Y-m'));
+							$status=array();
+							$count=array();
+							foreach($graph_status as $gs=>$v)
+							{
+								//-- get status name 
+								$status0=$admin->get_metaname_byvalue2('lead_status',$graph_status[$gs]['status']);
+								$status[]=$status0[0]['value1'];
+								$count[]=$graph_status[$gs]['count'];
+							}
+
+							$label1 =$status;
+							$label1=json_encode($label1);
+
+							$data1 =$count;
+							$data1=json_encode($data1);
+
+							$color1 =array();
+							for($i=1;$i<=count($status);$i++)
+							{
+								$color='#'.str_pad(dechex(rand(0x000000, 0xFFFFFF)), 6, 0, STR_PAD_LEFT);
+								array_push($color1,$color);
+							}
+							$color1=json_encode($color1);
+							?>
+							<input type="hidden" name="bar_label" id="bar_label1" value='<?php echo $label1; ?>'/>
+							<input type="hidden" name="bar_color" id="bar_color1" value='<?php echo $color1; ?>'/>
+							<input type="hidden" name="bar_data" id="bar_data1" value='<?php echo $data1; ?>'/>
+							<input type="hidden" name="bar_title" id="bar_title1" value='Status Report of <?php echo date('m-Y');?>'/>
+						</div>
+					</div>
+				</div>
+				
+				
+				<!-- graph 2 -->
+				<div class="col-xl-4 col-12">
+					<div class="box">
+						<div class="box-body">
+							<h4 class="box-title">Overall Chart</h4>
+							<div><iframe class="chartjs-hidden-iframe" style="width: 100%; display: block; border: 0px; height: 0px; margin: 0px; position: absolute; inset: 0px;"></iframe>
+								<canvas id="bar-chart2" height="477" style="display: block; width: 658px; height: 438px;" width="717"></canvas>
+							</div>
+							<?php 
+							//-- get data by month
+							$graph_overall = $leads->get_leadbystatus_dashboard_overall($_SESSION['uid'],date('Y-m'));
+							$status1=array();
+							$count1=array();
+							foreach($graph_overall as $gs=>$v)
+							{
+								//-- get status name 
+								$status0=$admin->get_metaname_byvalue2('lead_status',$graph_overall[$gs]['status']);
+								$status1[]=$status0[0]['value1'];
+								$count1[]=$graph_overall[$gs]['count'];
+							}
+
+							$label2 =$status1;
+							$label2=json_encode($label2);
+
+							$data2 =$count1;
+							$data2=json_encode($data2);
+
+							$color2 =array();
+							for($i=1;$i<=count($status1);$i++)
+							{
+								$color='#'.str_pad(dechex(rand(0x000000, 0xFFFFFF)), 6, 0, STR_PAD_LEFT);
+								array_push($color2,$color);
+							}
+							$color2=json_encode($color2);
+							?>
+							<input type="hidden" name="bar_label2" id="bar_label2" value='<?php echo $label2; ?>'/>
+							<input type="hidden" name="bar_color2" id="bar_color2" value='<?php echo $color2; ?>'/>
+							<input type="hidden" name="bar_data2" id="bar_data2" value='<?php echo $data2; ?>'/>
+							<input type="hidden" name="bar_title2" id="bar_title2" value='Overall Report Till <?php echo date('d-m-Y');?>'/>
+						</div>
+					</div>
+				</div>
+
+				<!-- graph 3 -->
+				<div class="col-xl-4 col-12">
+					<div class="box">
+						<div class="box-body">
+							<h4 class="box-title">Data Alloted To You</h4>
+							<!-- label, datacount and color-->
+							 <?php 
+							 $donut_label0=array();
+							 $donut_data0=array();
+							 $donut_color0=array();
+							 $donut_color1=array();
+							 $donut_label = $leads->get_group_allotedto_data($_SESSION['uid']);
+							 foreach($donut_label as $dl=>$v)
+							 {
+								//-- get group name
+								$group=$leads->get_group_one($donut_label[$dl]["groupid"]);
+								$gname0=strtoupper($group[0]['gname']);
+								array_push($donut_label0, $gname0);
+								array_push($donut_data0, $donut_label[$dl]["nu_of_records"]);
+								
+								//-- color
+								$color='#'.str_pad(dechex(rand(0x000000, 0xFFFFFF)), 6, 0, STR_PAD_LEFT);
+								array_push($donut_color0,$color);
+
+								//-- color2
+								$color2='#'.str_pad(dechex(rand(0x000000, 0xFFFFFF)), 6, 0, STR_PAD_LEFT);
+								array_push($donut_color1,$color2);
+							 }
+							 ?>
+							<input type="hidden" name="group_label" id="donut_label" value='<?php echo json_encode($donut_label0); ?>'/>
+							<input type="hidden" name="group_color" id="donut_color" value='<?php echo json_encode($donut_color0); ?>'/>
+							<input type="hidden" name="group_color1" id="donut_color1" value='<?php echo json_encode($donut_color1); ?>'/>
+							<input type="hidden" name="group_data" id="donut_data" value='<?php echo json_encode($donut_data0); ?>'/>
+							
+							<div><iframe class="chartjs-hidden-iframe" style="width: 100%; display: block; border: 0px; height: 0px; margin: 0px; position: absolute; inset: 0px;"></iframe>
+								<canvas id="doughnut-chart" height="492" style="display: block; width: 738px; height: 492px;" width="738"></canvas>
 							</div>
 						</div>
 					</div>
 				</div>
+			
 			</div>
-		  <!-- /.row -->
-
 		</section>
 		<!-- /.content -->
 	  </div>

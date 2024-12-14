@@ -1,5 +1,11 @@
 <?php 
 require_once ("DBController.php");
+// for email
+require ('composer/vendor/phpmailer/src/PHPMailer.php');
+require ('composer/vendor/phpmailer/src/SMTP.php');
+require ('composer/vendor/phpmailer/src/Exception.php');
+
+
 
 class Admin 
 {
@@ -8,12 +14,81 @@ class Admin
     function __construct()
     {
         $this->db_handle = new DBController();
+        $this->email = new PHPMailer\PHPMailer\PHPMailer(true);
     }
-//========== company
+
+//=========users
+
+
+function create_user($uname,$upass,$utype,$email,$contact,$branch)
+{
+    
+    $query = "insert into tbluser(uname,upass,utype,email,phone,branchid)VALUES(?,?,?,?,?,?)";
+    $paramType = "ssssss";
+    $paramValue = array($uname,$upass,$utype,$email,$contact,$branch);
+    $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
+    return $insertId;    
+}
+
+function get_maxid()
+{
+    $query="select MAX(id) as id from tbluser";
+    $result = $this->db_handle->runBaseQuery($query);
+    return $result;
+}
+
+function edit_user($uname,$upass,$utype,$email,$contact,$branch,$id)
+{
+    
+        
+    $query = "Update tbluser SET uname='$uname',upass='$upass',utype='$utype',email='$email',phone='$contact',branchid='$branch' where id='$id' ";
+    $result = $this->db_handle->runSingleQuery($query);
+    return $result;	
+}
+
+function delete_user($id)
+{
+    $query="delete from tbluser where id='$id' ";
+    $result = $this->db_handle->runSingleQuery($query);
+    return $result;	
+}
+
+function get_alluser()
+{
+    $query="select * from tbluser";
+    $result = $this->db_handle->runBaseQuery($query);
+    return $result;
+}
+
+function get_alluser_ofc()
+{
+    $query="select * from tbluser where utype != '3' ";
+    $result = $this->db_handle->runBaseQuery($query);
+    return $result;
+}
+
+
+function getone_user($id)
+{
+    $query="select * from tbluser where id = $id";
+    $result = $this->db_handle->runBaseQuery($query);
+    return $result;
+}
+
+function getonetype_user($utype)
+{
+    $query="select * from tbluser where utype = $utype Order by uname DESC";
+    $result = $this->db_handle->runBaseQuery($query);
+    return $result;	
+}
+
+
+    //========== company
 function get_company()
 {
-        // $get=$db_handle->runSingleQuery('company','');
-        // return $get();
+    $query = "select * from company_details where id='1'";
+    $result = $this->db_handle->runBaseQuery($query);
+    return $result;
 }
 	
 //======== country state city (ALL)
@@ -74,6 +149,13 @@ function get_metaname_byvalue($meta_name)
     return $result;
 }
 
+function get_metaname_byvalue1($meta_name,$value1)
+{
+    $query = "select * from meta_data where meta_name='$meta_name' AND value1='$value1' ";
+    $result = $this->db_handle->runBaseQuery($query);
+    return $result;
+}
+
 function get_metaname_byvalue2($meta_name,$value2)
 {
     $query = "select * from meta_data where meta_name='$meta_name' AND value2='$value2' ";
@@ -88,13 +170,43 @@ function get_metaname_byid($id)
     return $result;
 }
 
-function create_meta($metaname,$value1,$value2)
+function create_meta($metaname,$value1,$value2,$editable)
 {
-    $query = "insert into meta_data(meta_name,value1,value2)VALUES(?,?,?)";
-    $paramType = "sss";
-    $paramValue = array($metaname,$value1,$value2);
+    $query = "insert into meta_data(meta_name,value1,value2,editable)VALUES(?,?,?,?)";
+    $paramType = "sssi";
+    $paramValue = array($metaname,$value1,$value2,$editable);
     $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
     return $insertId;
+}
+
+function create_meta_withparent($metaname,$value1,$value2,$editable,$parent,$final_step)
+{
+    $query = "insert into meta_data(meta_name,value1,value2,editable,parent_meta,final_step)VALUES(?,?,?,?,?,?)";
+    $paramType = "sssiii";
+    $paramValue = array($metaname,$value1,$value2,$editable,$parent,$final_step);
+    $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
+    return $insertId;
+}
+
+function get_metaname_byparent($id)
+{
+    $query = "select * from meta_data where parent_meta='$id'";
+    $result = $this->db_handle->runBaseQuery($query);
+    return $result;
+}
+
+function get_metaname_byparent_value2($id,$value2)
+{
+    $query = "select * from meta_data where parent_meta='$id' AND value2='$value2'";
+    $result = $this->db_handle->runBaseQuery($query);
+    return $result;
+}
+
+function edit_meta($metaname,$value1,$value2,$editable,$id)
+{
+    $query = "update meta_data SET meta_name='$metaname',value1='$value1',value2='$value2',editable='$editable' where id='$id' ";
+    $result = $this->db_handle->update($query);
+    return $result;
 }
 
 function viewall_meta()
@@ -110,4 +222,97 @@ function delete_meta($id)
     $result = $this->db_handle->runSingleQuery($query);
     return $result;
 }
+
+
+
+//========== send email
+function send_email()
+{
+header("Access-Control-Allow-Origin: *");
+header('Access-control-Allow-Headers: Authorization,Content-Type ,X-Auth-Token , Origin');
+
+   $username='dme@sethiahandicrafts.com';
+   $password='Dme@sethia';
+   $to='dme@sethiahandicrafts.com';
+   $subject='admin function checking';
+   $body='this is the body for email checking used in admin function';
+
+  
+   
+
+   // Instantiation and passing `true` enables exceptions
+   $mail = $this->email;
+
+   try {
+    //Server settings
+    $mail->SMTPDebug = 1;                      // Enable verbose debug output
+    $mail->isSMTP();                                            // Send using SMTP
+   // $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP    server    to send through
+    $mail->SMTPAuth   = true;                                   // Enable SMTP      authentication
+    $mail->Username   = $username;                     // SMTP username
+    $mail->Password   = $password;                               // SMTP password
+    $mail->Host = "tls://smtp.gmail.com";
+    $mail->Port = 587;       // Enable TLS encryption; `  PHPMailer::ENCRYPTION_SMTPS` encouraged
+   // $mail->Port       = 465;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+
+//Recipients
+   $mail->setFrom($username,$username);
+   $mail->addAddress($to);     // Add a recipient
+
+
+   // Attachments
+   // $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
+   // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
+
+   // Content
+   $mail->isHTML(true);                                  // Set email format to HTML
+   $mail->Subject = $subject;
+   $mail->Body    = $body;
+   //$mail->AltBody =;
+
+   $mail->send();
+
+   echo "<script>";
+   echo "window.alert('Email was sent')";
+   echo "</script>";
+
+
+  } catch (Exception $e) {
+  echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+  }
+}
+
+//========= notification
+function save_alerts($from,$msg,$to)
+{
+    $query = "insert into notification(from_uid,msg,to_uid)VALUES(?,?,?)";
+    $paramType = "isi";
+    $paramValue = array($from,$msg,$to);
+    $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
+    return $insertId;
+}
+
+function my_alerts($uid)
+{}
+
+function latest_alerts($uid)
+{
+    $query = "select * from notification where to_uid='$uid' AND status='0' ORDER BY id DESC";
+    $result = $this->db_handle->runBaseQuery($query);
+    return $result;
+}
+
+function read_alerts($uid)
+{
+    $query = "select * from notification where to_uid='$uid' AND status='1' ORDER BY id DESC";
+    $result = $this->db_handle->runBaseQuery($query);
+    return $result;
+}
+
+function alert_bystatus($uid,$status)
+{}
+
+function alert_update_status($id)
+{}
+
 }
