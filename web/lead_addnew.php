@@ -31,14 +31,15 @@
 						  <h4 class="box-title">Add New Lead</h4>
 						</div>
 						<!-- /.box-header -->
-						<form class="form" method="post" action="<?php echo $base_url.'index.php?action=leads&query=create_new'?>" name="leads_new">
+						<form class="form" method="post" action="<?php echo $base_url.'index.php?action=leads&query=create_new'?>" name="leads_new" enctype='multipart/form-data'>
 							<div class="box-body">
-								<h4 class="box-title text-info"><i class="ti-user mr-15"></i> Personal Info</h4>
+								<h4 class="box-title text-info"><i class="ti-user mr-15"></i> Customer Info</h4>
+								<br><small class="text-danger">* Are Medetory Filed(s)</small>
 								<hr class="my-15">
 								<div class="row">
 								  <div class="col-md-4">
 									<div class="form-group">
-									  <label>Name</label>
+									  <label>Contact Person Name <span class="text-danger">*</span></label>
 									  <input type="hidden" name="status" value="0">
 									  <input type="hidden" name="handledby" value="<?php echo $_SESSION['uid'];?>">
 									  <input type="text" class="form-control" placeholder="Name" name="name" required>
@@ -103,14 +104,14 @@
                             <div class="row">
 								<div class="col-md-3">
 								<div class="form-group">
-								  <label>Company</label>
-								  <input type="text" class="form-control" placeholder="Company" name="company">
+								  <label>Company <span class="text-danger">*</span></label>
+								  <input type="text" class="form-control" placeholder="Company" name="company" required>
 								</div>
 								</div>
 
 								<div class="col-md-3">
 								<div class="form-group">
-								  <label>Company / Cusotomer Type</label>
+								  <label>Company / Customer Type <span class="text-danger">*</span></label>
 
 								  <select class="form-control" name="company_type" id="company_type" required>
 									<option disabled="disabled" selected="selected" >-- Select --</option>
@@ -132,8 +133,8 @@
 
 								  <div class="col-md-3">
 									<div class="form-group">
-									  <label>Requirment</label>
-									  <input type="text" class="form-control" placeholder="Requirment" name="req">
+									  <label>Requirment <span class="text-danger">*</span></label>
+									  <input type="text" class="form-control" placeholder="Requirment" name="req" required>
 									</div>
 								  </div>
 
@@ -147,7 +148,7 @@
 
 							<div class="row">
 
-							<div class="col-md-3">
+							<!-- <div class="col-md-3">
 								<div class="form-group">
 								  <label>LP Url</label>
 								  <input type="text" class="form-control" placeholder="Lp Url" name="lp_url">
@@ -160,13 +161,13 @@
 								  <label>Form Id</label>
 								  <input type="number" class="form-control" placeholder="Form Id" name="form_id">
 								</div>
-								</div>
+								</div> -->
 
 							<div class="col-md-3">
 									<div class="form-group">
-										<label for="firstName5">Alloted To :</label>
+										<label for="firstName5">Alloted To <span class="text-danger">*</span> :</label>
 										<select class="custom-select form-control" id="userid" name="userid" required>
-										<option disbaled="disabled" selected="selected">Select</option>
+										<option disabled="disabled" selected="selected" >-- Select --</option>
 										<?php
 										if($_SESSION['uid']=='1')
 										{
@@ -184,9 +185,9 @@
 
 							<div class="col-md-3">
 									<div class="form-group">
-										<label for="lastName1">Select Group :</label>
+										<label for="lastName1">Source <span class="text-danger">*</span> :</label>
 										<select class="custom-select form-control" id="group" name="groupid" required>
-										<option disbaled="disabled" selected="selected">Select</option>
+										<option disabled="disabled" selected="selected" >-- Select --</option>
 										<?php
 										$group = $leads->get_group();
 										foreach($group as $k=>$v){
@@ -204,6 +205,20 @@
 								</div>
 							</div>
 
+							<div class="col-md-3">
+								<div class="form-group">
+								  <label>Source Remark :</label>
+								  <input type="text" class="form-control" placeholder="Remark" name="group_remark">
+								</div>
+								</div>
+
+
+							<div class="col-md-3">
+								<div class="form-group">
+								  <label>Attachment(s)</label>
+								  <input type="file" class="form-control" placeholder="Attachment" name="attachment[]" multiple>
+								</div>
+								</div>
 
 
 							

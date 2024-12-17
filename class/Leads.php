@@ -9,13 +9,14 @@ class Leads
         $this->db_handle = new DBController();
     }
 
-    function create_new($name,$phone,$email,$city,$state,$country,$designation,$req,$lp_url,$form_id,$company,$address,$groupid,$handledby,$company_type)
+    function create_new($name,$phone,$email,$city,$state,$country,$designation,$req,$group_remark,$attachment,$company,$address,$groupid,$handledby,$company_type)
     {           
-        $query = "insert into leads(name,phone,email,city,state,country,designation,req,lp_url,form_id,company,address,group_id,handledby,company_type)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        $query = "insert into leads(name,phone,email,city,state,country,designation,req,group_remark,attachment,company,address,group_id,handledby,company_type)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         $paramType = "sisiiissssssiis";
-        $paramValue = array($name,$phone,$email,$city,$state,$country,$designation,$req,$lp_url,$form_id,$company,$address,$groupid,$handledby,$company_type);
+        $paramValue = array($name,$phone,$email,$city,$state,$country,$designation,$req,$group_remark,$attachment,$company,$address,$groupid,$handledby,$company_type);
         $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
-    	return $insertId;           
+    	return $insertId;        
+        
 
     }
 

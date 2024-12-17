@@ -315,4 +315,40 @@ function alert_bystatus($uid,$status)
 function alert_update_status($id)
 {}
 
+
+
+function upload_file($pic)
+	{
+        $a=$pic;
+		$filename = $a['name'];
+		$tempname = $a["tmp_name"];
+		$folder = "./images/" . $filename;
+
+		if (move_uploaded_file($tempname, $folder)) {
+			return $filename;
+		} else {
+			return 0;
+		}
+	}
+
+
+    function upload_file_multi($name,$temp)
+	{
+        $filename = $name;
+		$tempname = $temp;
+		
+
+        //-- rename file
+        $temp = explode(".", $filename);
+        $newfilename = round(microtime(true)) . '.' . end($temp);
+        $folder = "./images/". $newfilename;
+    
+		if (move_uploaded_file($tempname, $folder)) {
+			return $newfilename;
+		} else {
+			return 0;
+		}
+	}
+
+
 }

@@ -51,11 +51,26 @@ case "leads":
 
 		if($_GET['query']=='create_new')
 		{
-			$save=$leads->create_new($_POST['name'],$_POST['phone'],$_POST['email'],$_POST['city'],$_POST['state'],$_POST['country'],$_POST['designation'],$_POST['req'],$_POST['lp_url'],$_POST['form_id'],$_POST['company'],$_POST['address'],$_POST['groupid'],$_POST['handledby'],$_POST['company_type']);
+			$file=array();
+			if(isset($_FILES['attachment']))
+			{		
+				foreach($_FILES['attachment']['name'] as $k=>$v)
+				{
+					$file[] = $admin->upload_file_multi($_FILES['attachment']['name'][$k],$_FILES['attachment']['tmp_name'][$k]);
+				}
+			}
+			$attachment = implode(",",($file));
+
+			$save=$leads->create_new($_POST['name'],$_POST['phone'],$_POST['email'],$_POST['city'],$_POST['state'],$_POST['country'],$_POST['designation'],$_POST['req'],$_POST['group_remark'],$attachment,$_POST['company'],$_POST['address'],$_POST['groupid'],$_POST['handledby'],$_POST['company_type']);
+
+
+			
 			if($save)
 			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=lead_addnew&status=1';</script>";}
 			else
 			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=lead_addnew&status=2';</script>";}
+
+
 		}
 
 		if($_GET['query']=='edit_lead')
