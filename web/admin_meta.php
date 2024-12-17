@@ -26,7 +26,7 @@
 
         <div class="row">
             <!--- form -->
-			<div class="col-md-6">
+			<div class="col-md-4">
 
             <div class="box box-default">
 				<div class="box-header with-border">
@@ -39,7 +39,7 @@
                     
                     <!----- 1st row------>
                        <div class="form-group row">
-                            <div class="col-lg-3">
+                            <div class="col-lg-6">
                             <label class="form-label">Meta Name</label>
                             <input list="meta_name" name="metaname" id="metaname" class="form-control" required>
 
@@ -50,24 +50,26 @@
                                 <?php }?>
                                 </datalist>
                             
-                        </div>
+                            </div>
 
-                            <div class="col-lg-3">
+                            <div class="col-lg-6">
                                 
                                 <label class="form-label">Value 1</label>
                                 <input class="form-control" type="text" name="value1" required>
                                 
                             </div>
 
+                        </div>                
+                        <div class="form-group row">
 
-                            <div class="col-lg-3">
+                            <div class="col-lg-6">
                                 
                                 <label class="form-label">Value 2</label>
                                 <input class="form-control" type="text" name="value2">
                                 
                             </div>
 
-                            <div class="col-lg-3">
+                            <div class="col-lg-6">
                                 
                                 <label class="form-label">Editable</label>
                                     <div class="c-inputs-stacked">
@@ -101,7 +103,7 @@
 			</div>
 
 				<!--- list--->
-				<div class="col-sm-6">
+				<div class="col-sm-8">
 				<div class="box box-default">
 					<div class="box-header with-border">
 					<h4 class="box-title">Previous Uploaded Data & Details</h4>
@@ -117,6 +119,7 @@
                   <th>Meta Type</th>
                   <th>Value 1</th>
                   <th>Value 2</th>
+                  <th>Parent Meta</th>
                   <th>Editable</th>
                   <th>Utility</th>
                 </tr>
@@ -132,6 +135,7 @@
                 <td><?php echo $metaname[$key]['meta_name'];?></td>
                 <td width="45%" style="white-space: normal !important; word-wrap: break-word;  "><?php echo $metaname[$key]['value1'];?></td>
                 <td><?php echo $metaname[$key]['value2'];?></td>
+                <td><?php if($metaname[$key]['parent_meta']==0){echo "No";}else{ $pname = $admin->get_metaname_byid($metaname[$key]['parent_meta']); echo $pname[0]['value1'];}?></td>
                 <td><?php if($metaname[$key]['editable']==0){echo "Yes";}else{echo "No";}?></td>
                 <td>
                     <i class="fa fa-pencil" data-toggle="modal" data-target="#modal-right" onclick="show_page_model('Admin Meta Data Edit','<?php echo $base_url.'index.php?action=dashboard&nocss=admin_meta_edit&id='.$metaname[$key]['id'];?>')"></i>
