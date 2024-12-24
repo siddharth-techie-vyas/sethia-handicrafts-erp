@@ -5,8 +5,8 @@
 	*/
 	//
 	//$base_url="http://192.168.1.38/sethia-handicrafts-erp/";
-	$base_url="http://localhost/sethia-handicrafts-erp/";
-	//$base_url="https://sethiahandicrafts.in/";
+	//$base_url="http://localhost/sethia-handicrafts-erp/";
+	$base_url="https://www.sethiahandicrafts.in/";
 
 	session_start();
 	//create a new function to check if the session variable member_id is on set

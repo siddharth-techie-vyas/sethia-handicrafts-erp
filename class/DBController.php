@@ -5,9 +5,9 @@
 
     //-- offline
     private $host = "localhost";
-    private $user = "root";
-    private $password = "";
-    private $database = "sethia-erp";
+    private $user = "u429142817_user";
+    private $password = "Sethia@#0291";
+    private $database = "u429142817_erp";
     private $conn;
 
     //-- online
