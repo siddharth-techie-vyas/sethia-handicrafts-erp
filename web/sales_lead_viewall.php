@@ -192,7 +192,7 @@ else
 									echo "<td>".$status[0]["value1"]."</td>";
 									?>
 									<td>
-                                        <i class='fa fa-comment btn btn-primary btn-xs' data-toggle="modal" data-target="#modal-right" onclick="show_page_model('Feedback List','<?php echo $base_url.'index.php?action=dashboard&nocss=leads_feedback&id='.$doc['id'];?>&from=sales')"></i>
+                                        <i class='fa fa-comment btn btn-primary btn-xs' data-toggle="modal" data-target="#exampleModal" onclick="show_page_model('Feedback List','<?php echo $base_url.'index.php?action=dashboard&nocss=leads_feedback&id='.$doc['id'];?>&from=sales')"></i>
 									</td>
 									<?php
 								echo "</tr>";

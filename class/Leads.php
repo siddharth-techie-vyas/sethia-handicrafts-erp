@@ -9,11 +9,11 @@ class Leads
         $this->db_handle = new DBController();
     }
 
-    function create_new($name,$phone,$email,$city,$state,$country,$designation,$req,$group_remark,$attachment,$company,$address,$groupid,$handledby,$company_type)
+    function create_new($company,$company_type,$groupid,$group_remak,$userid,$attachment,$target_date)
     {           
-        $query = "insert into leads(name,phone,email,city,state,country,designation,req,group_remark,attachment,company,address,group_id,handledby,company_type)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        $paramType = "sisiiissssssiis";
-        $paramValue = array($name,$phone,$email,$city,$state,$country,$designation,$req,$group_remark,$attachment,$company,$address,$groupid,$handledby,$company_type);
+        $query = "insert into leads(company,company_type,group_id,group_remark,handledby,attachment,targetted_date)VALUES(?,?,?,?,?,?,?)";
+        $paramType = "ssisiss";
+        $paramValue = array($company,$company_type,$groupid,$group_remak,$userid,$attachment,$target_date);
         $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
     	return $insertId;        
         
@@ -173,19 +173,47 @@ function get_group_one($id)
 
     function save_csv_records($header,$bodyrow)
     {
-        $header=implode(",",$header);
         $header=preg_replace('/[\x00-\x1F\x7F-\xFF]/', '', $header);
-
         $bodyrow=implode("','",$bodyrow);
         //-- query
         $insert="insert into leads($header)Values('$bodyrow')";
-        $result = $this->db_handle->update($insert);
-        return $result;
+        $result = $this->db_handle->insert_id($insert);
+        //-- max id return
+        $max= $this->db_handle->get_max_id('leads');
+        return $max['MAX'];
+    }
 
+    function save_csv_records2($header,$max_id,$type)
+    {
+        
+        //-- col loop
+        $col=array();      
+        $d=1;
+        
+        foreach($header as $r)
+        {
+            array_push($col,'col'.$d);
+            $d++;
+        }  
+        $col_name = implode(",",$col);    
+
+
+        $header = implode("','", array_map(function ($entry) {            
+            return $entry['column_data'];
+          }, $header));
+
+        $header=preg_replace('/[\x00-\x1F\x7F-\xFF]/', '', $header);
+
+
+        //-- query
+         $insert="insert into leads2($col_name,lid,type)Values('$header','$max_id','$type')";
+        $result = $this->db_handle->insert_id($insert);
+        //return $result;
     }
 
     function upload_csv_details($file,$nu_record,$userid,$groupid)
     {
+       
         $query = "insert into leads_upload_history(filename,uploadedby,nu_of_records,uploadedto,groupid)VALUES(?,?,?,?,?)";
         $paramType = "siiii";
         $paramValue = array($file,$_SESSION['uid'],$nu_record,$userid,$groupid);
@@ -260,5 +288,19 @@ function get_group_one($id)
         return $result; 
     }
 
+    function leads_save_company_details($lid,$details,$subdetails,$remark)
+    {
+        $query = "insert into lead_compnay_details(lid,details,subdetails,remark) VALUES(?,?,?,?)";
+        $paramType = "isss";
+        $paramValue = array($lid,$details,$subdetails,$remark); 
+        $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
+    }
+
+    function get_leads_company_details($lid)
+    {
+        $query="SELECT * FROM lead_compnay_details  where lid='$lid' ";
+		$result = $this->db_handle->runBaseQuery($query);
+        return $result;   
+    }
 }
 

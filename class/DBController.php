@@ -1,21 +1,21 @@
 <?php
 
- class DBController {
+ class DBController  {
 
 
     //-- offline
-    // private $host = "localhost";
-    // private $user = "root";
-    // private $password = "";
-    // private $database = "sethia-erp";
-    // private $conn;
+    private $host = "localhost";
+    private $user = "root";
+    private $password = "";
+    private $database = "sethia-erp";
+    private $conn;
 
     //-- online
-    private $host = "localhost";
-    private $user = "u429142817_user";
-    private $password = "Sethia@#0291";
-    private $database = "u429142817_erp";
-    private $conn;
+    // private $host = "localhost";
+    // private $user = "u429142817_user";
+    // private $password = "Sethia@#0291";
+    // private $database = "u429142817_erp";
+    // private $conn;
 
 	
 
@@ -24,7 +24,7 @@
 
         $this->conn = $this->connectDB();
          
-      error_reporting(0);
+      //error_reporting(0);
     }   
     
     function default_timezone()
@@ -76,10 +76,9 @@
     
     
     function runSingleQuery($tablename,$array) {
-        $collection = (new MongoDB\Client)->$db->$tablename;
-        echo $tablename;
-        // $col1=$collection->findOne(["uname" => $uname, "upass" => $upass]);
-        // $result = json_encode($col1);            
+        $result = $this->conn->query($query);   
+        $user = mysqli_fetch_array($result);
+		return $user[0];      
     }
 	
     function runQuery($query, $param_type, $param_value_array) {
@@ -129,6 +128,23 @@
         //$user = mysqli_fetch_array($result);
 		return $result;
     }	
+    
+    function lastInsertId(){
+        return $this->conn->lastInsertId();
+    }
+    
+    function insert_id($query) {
+        $result = $this->conn->query($query);   
+        //$user = mysqli_fetch_array($result);
+		return  $result;
+    }	
+
+    function get_max_id($table)
+    {
+        $result = $this->conn->query("select MAX(id) AS MAX from $table");   
+        $user = mysqli_fetch_array($result);
+		return $user; 
+    }
 	
 }
 ?>

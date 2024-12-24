@@ -2,7 +2,7 @@ var loading_img='../../images/loading.gif';
 
 function get_details(inputid,outputid,url)
 {
-
+// alert(outputid);
   $('#'+outputid).html('');
   var id=$('#'+inputid).val();
   $.ajax({
@@ -10,8 +10,8 @@ function get_details(inputid,outputid,url)
            url: url+id,
            success: function(data)
            {
-                          
-               $('#msg'+outputid).html("Please Wait !!!")
+            // alert(url+id);
+               $('#msg'+outputid).html("Please Wait !!!");
                $('#'+outputid).html(data);
                $('#msg'+outputid).html("")
               

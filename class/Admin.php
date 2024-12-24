@@ -20,12 +20,12 @@ class Admin
 //=========users
 
 
-function create_user($uname,$upass,$utype,$email,$contact,$branch)
+function create_user($uname,$upass,$utype,$email,$contact,$person_name)
 {
     
-    $query = "insert into tbluser(uname,upass,utype,email,phone,branchid)VALUES(?,?,?,?,?,?)";
+    $query = "insert into tbluser(uname,upass,utype,uemail,ucontact,person_name)VALUES(?,?,?,?,?,?)";
     $paramType = "ssssss";
-    $paramValue = array($uname,$upass,$utype,$email,$contact,$branch);
+    $paramValue = array($uname,$upass,$utype,$email,$contact,$person_name);
     $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
     return $insertId;    
 }
@@ -37,12 +37,12 @@ function get_maxid()
     return $result;
 }
 
-function edit_user($uname,$upass,$utype,$email,$contact,$branch,$id)
+function edit_user($uname,$upass,$utype,$email,$contact,$person_name,$id)
 {
     
         
-    $query = "Update tbluser SET uname='$uname',upass='$upass',utype='$utype',email='$email',phone='$contact',branchid='$branch' where id='$id' ";
-    $result = $this->db_handle->runSingleQuery($query);
+     $query = "Update tbluser SET uname='$uname',upass='$upass',utype='$utype',uemail='$email',ucontact='$contact',person_name='$person_name' where id='$id' ";
+    $result = $this->db_handle->update($query);
     return $result;	
 }
 
@@ -71,6 +71,13 @@ function get_alluser_ofc()
 function getone_user($id)
 {
     $query="select * from tbluser where id = $id";
+    $result = $this->db_handle->runBaseQuery($query);
+    return $result;
+}
+
+function getone_user_rand_bytype($type)
+{
+    $query="select * from tbluser where utype='$type' ORDER by rand() LIMIT 1";
     $result = $this->db_handle->runBaseQuery($query);
     return $result;
 }
@@ -149,9 +156,16 @@ function get_metaname_byvalue($meta_name)
     return $result;
 }
 
+function get_metaname_byvalue_group($meta_name)
+{
+    $query = "select * from meta_data where meta_name='$meta_name' GROUP BY value1";
+    $result = $this->db_handle->runBaseQuery($query);
+    return $result;
+}
+
 function get_metaname_byvalue1($meta_name,$value1)
 {
-    $query = "select * from meta_data where meta_name='$meta_name' AND value1='$value1' ";
+     $query = "select * from meta_data where meta_name='$meta_name' AND value1='$value1' ";
     $result = $this->db_handle->runBaseQuery($query);
     return $result;
 }
@@ -350,5 +364,12 @@ function upload_file($pic)
 		}
 	}
 
+    //=========global
+    function check_table_column($table)
+    {
+        $query = "SHOW COLUMNS FROM $table";
+        $result = $this->db_handle->runBaseQuery($query);
+        return $result;
+    }
 
 }

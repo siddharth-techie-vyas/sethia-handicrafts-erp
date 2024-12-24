@@ -5,7 +5,7 @@
 	  <div class="content-header">
 			<div class="d-flex align-items-center">
 				<div class="mr-auto">
-					<h3 class="page-title">Add New Single Lead</h3>
+					<h3 class="page-title">Add New Cold Lead</h3>
 					<div class="d-inline-block align-items-center">
 						<nav>
 							<ol class="breadcrumb">
@@ -28,90 +28,30 @@
 			<?php include('alert.php');?>	
             <div class="box">
 						<div class="box-header with-border">
-						  <h4 class="box-title">Add New Lead</h4>
+						  <h4 class="box-title">Add Lead</h4>
 						</div>
 						<!-- /.box-header -->
 						<form class="form" method="post" action="<?php echo $base_url.'index.php?action=leads&query=create_new'?>" name="leads_new" enctype='multipart/form-data'>
 							<div class="box-body">
-								<h4 class="box-title text-info"><i class="ti-user mr-15"></i> Customer Info</h4>
+								<h4 class="box-title text-info"><i class="ti-user mr-15"></i> Cold Lead Info / Input</h4>
 								<br><small class="text-danger">* Are Medetory Filed(s)</small>
 								<hr class="my-15">
-								<div class="row">
-								  <div class="col-md-4">
-									<div class="form-group">
-									  <label>Contact Person Name <span class="text-danger">*</span></label>
-									  <input type="hidden" name="status" value="0">
-									  <input type="hidden" name="handledby" value="<?php echo $_SESSION['uid'];?>">
-									  <input type="text" class="form-control" placeholder="Name" name="name" required>
-									</div>
-								  </div>
-								  <div class="col-md-4">
-									<div class="form-group">
-									  <label>Phone</label>
-									  <input type="number" class="form-control" placeholder="Phone" name="phone">
-									</div>
-								  </div>
-                                  <div class="col-md-4">
-									<div class="form-group">
-									  <label>E-mail</label>
-									  <input type="email" class="form-control" placeholder="E-mail" name="email">
-									</div>
-								  </div>
-								</div>
-
-								<div class="row">
-								<div class="col-md-3">
-								<div class="form-group">
-								  <label>Country</label>
-								  <select class="form-control" name="country" id="country" onchange="get_details('country','state','<?php echo $base_url.'index.php?action=leads&query=get_details&type=state&id=';?>')">
-									<option disabled="disabled" selected="selected" >-- Select --</option>
-									<?php $country=$admin->get_country();
-									foreach($country as $r => $v)
-									{
-										echo "<option value='".$country[$r]['id']."'>".$country[$r]['name']."</option>";
-									}?>
-								  </select>
-								</div>
-								</div>
-
-								  <div class="col-md-3">
-									<div class="form-group">
-									  <label>State</label>
-									 
-									  <select class="form-control" name="state" id="state" onchange="get_details('state','city','<?php echo $base_url.'index.php?action=leads&query=get_details&type=city&id=';?>')"></select>
-									  <span id="msgstate"></span> 
-									</div>
-								  </div>
-
-								  <div class="col-md-3">
-									<div class="form-group">
-									  <label>City</label>
-									  <select class="form-control" name="city" id="city"></select>
-									  <span id="msgcity"></span> 
-									</div>
-								  </div>
-
-                                <div class="col-md-3">
-								<div class="form-group">
-								  <label>Designation</label>
-								  <input type="text" class="form-control" placeholder="Designation" name="designation">
-								</div>
-								</div>
-
-                            </div>
-                                
+								
 
                             <div class="row">
 								<div class="col-md-3">
 								<div class="form-group">
-								  <label>Company <span class="text-danger">*</span></label>
+								  <label>Company Name<span class="text-danger">*</span></label>
 								  <input type="text" class="form-control" placeholder="Company" name="company" required>
+								  <!-- hidden filed to alloted to --->
+								   <?php $rand_lead_manager = $admin->getone_user_rand_bytype('6');?>
+								  <input type="hidden" class="form-control" name="userid" value="<?php echo $rand_lead_manager[0]['id'];?>">
 								</div>
 								</div>
 
 								<div class="col-md-3">
 								<div class="form-group">
-								  <label>Company / Customer Type <span class="text-danger">*</span></label>
+								  <label>Lead Type <span class="text-danger">*</span></label>
 
 								  <select class="form-control" name="company_type" id="company_type" required>
 									<option disabled="disabled" selected="selected" >-- Select --</option>
@@ -124,22 +64,35 @@
 								</div>
 								</div>
 
+							
 								<div class="col-md-3">
-								<div class="form-group">
-								  <label>Address</label>
-								  <input type="text" class="form-control" placeholder="Address" name="address">
-								</div>
-								</div>
-
-								  <div class="col-md-3">
 									<div class="form-group">
-									  <label>Requirment <span class="text-danger">*</span></label>
-									  <input type="text" class="form-control" placeholder="Requirment" name="req" required>
-									</div>
-								  </div>
+										<label for="lastName1">Lead Source <span class="text-danger">*</span> :</label>
+										<select class="custom-select form-control" id="group" name="groupid" required>
+										<option disabled="disabled" selected="selected" >-- Select --</option>
+										<?php
+										$group = $leads->get_group();
+										foreach($group as $k=>$v){
+											echo "<option value='".$group[$k]['id']."'>".$group[$k]['gname']."</option>";
+											//-- get sub group
+											$sgroup=$leads->get_sub_group($group[$k]['id']);
+											foreach($sgroup as $k=>$v)
+												{
+													echo "<option value='".$sgroup[$k]['id']."'>- ".$sgroup[$k]['gname']."</option>";
 
-                               
-                               
+												}
+										}
+										?>
+										</select>
+									</div>
+								</div>
+
+								<div class="col-md-3">
+										<div class="form-group">
+											<label for="lastName1">Lead Source Description :</label>
+											<input type="text" name="group_remak" class="form-control">
+										</div>
+									</div>	
 
 								
 
@@ -147,23 +100,36 @@
 
 
 							<div class="row">
+								<div class="col-md-3">
+										<div class="form-group">
+											<label for="lastName1">Expected Closure Date :</label>
+											<input type="date" name="targetted_date" class="form-control">
+										</div>
+									</div>	
 
-							<!-- <div class="col-md-3">
+								<!-- <div class="col-md-3">
 								<div class="form-group">
-								  <label>LP Url</label>
-								  <input type="text" class="form-control" placeholder="Lp Url" name="lp_url">
+								  <label>Targetted Outcome Number(s) <span class="text-danger">*</span>:</label>
+								  <select class="form-control" name="targetted_outcome_with"  required>
+									<option disabled="disabled" selected="selected" >-- Select --</option>
+									<?php $company_type=$admin->get_metaname_byvalue('targetted_outcome_with');
+									foreach($company_type as $r => $v)
+									{
+										echo "<option value='".$company_type[$r]['value1']."'>".$company_type[$r]['value1']."</option>";
+									}?>
+								  </select>
 								</div>
 								</div>
 
-
-							<div class="col-md-3">
+								<div class="col-md-3">
 								<div class="form-group">
-								  <label>Form Id</label>
-								  <input type="number" class="form-control" placeholder="Form Id" name="form_id">
+								  <label>Targetted Outcome Detail(s) :</label>
+								  <input type="text" name="targetted_outcome_with_details" class="form-control" >
 								</div>
 								</div> -->
+							
 
-							<div class="col-md-3">
+							<!-- <div class="col-md-3">
 									<div class="form-group">
 										<label for="firstName5">Alloted To <span class="text-danger">*</span> :</label>
 										<select class="custom-select form-control" id="userid" name="userid" required>
@@ -181,41 +147,16 @@
 										?>
 										</select>
 									</div>
-								</div>
+								</div> -->
 
-							<div class="col-md-3">
-									<div class="form-group">
-										<label for="lastName1">Source <span class="text-danger">*</span> :</label>
-										<select class="custom-select form-control" id="group" name="groupid" required>
-										<option disabled="disabled" selected="selected" >-- Select --</option>
-										<?php
-										$group = $leads->get_group();
-										foreach($group as $k=>$v){
-											echo "<option value='".$group[$k]['id']."'>".$group[$k]['gname']."</option>";
-											//-- get sub group
-											$sgroup=$leads->get_sub_group($group[$k]['id']);
-											foreach($sgroup as $k=>$v)
-												{
-													echo "<option value='".$sgroup[$k]['id']."'>- ".$sgroup[$k]['gname']."</option>";
+							
 
-												}
-										}
-										?>
-										</select>
-								</div>
-							</div>
-
-							<div class="col-md-3">
-								<div class="form-group">
-								  <label>Source Remark :</label>
-								  <input type="text" class="form-control" placeholder="Remark" name="group_remark">
-								</div>
-								</div>
+							
 
 
 							<div class="col-md-3">
 								<div class="form-group">
-								  <label>Attachment(s)</label>
+								  <label>Attachment(s) <span class="text-danger">*</span>:</label>
 								  <input type="file" class="form-control" placeholder="Attachment" name="attachment[]" multiple>
 								</div>
 								</div>

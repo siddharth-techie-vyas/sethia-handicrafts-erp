@@ -25,11 +25,11 @@
 			<?php include('alert.php');?>
 			<div class="row">
 			<!--- form -->
-			<div class="col-md-4">
+			<div class="col-md-6">
 
             <div class="box box-default">
 				<div class="box-header with-border">
-				<h4 class="box-title">Upload Leads</h4>
+				<h4 class="box-title">Cold Upload Leads</h4>
 				
 				</div>
 				<!-- /.box-header -->
@@ -38,14 +38,20 @@
 						<!-- Step 1 -->
 						<section>
 							<div class="row">
-								<div class="col-md-6">
+								<div class="col-md-4">
 									<div class="form-group">
 										<label for="firstName5">Upload File <sapn class='text-danger'>*</span>:</label>
-										<input type="file" class="form-control" id="file" name="file" accept=".csv" required> </div>
+										<input type="file" class="form-control" id="file" name="file" accept=".csv" required> 
+								
+										<!-- hidden filed to alloted to --->
+									<?php $rand_lead_manager = $admin->getone_user_rand_bytype('6');?>
+								  <input type="hidden" class="form-control" name="userid" value="<?php echo $rand_lead_manager[0]['id'];?>">
+
+									</div>
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-4">
 									<div class="form-group">
-										<label for="lastName1">Select Group <sapn class='text-danger'>*</span>:</label>
+										<label for="lastName1">Lead Soruce <sapn class='text-danger'>*</span>:</label>
 										<select class="form-control" id="group" name="group" required>
 										<option disabled="disabled" selected="selected" >-- Select --</option>
 										<?php
@@ -65,10 +71,18 @@
 								</div>
 								</div>
 
+								<div class="col-md-4">
+										<div class="form-group">
+											<label for="lastName1">Lead Source Description <span class="text-danger">*</span>:</label>
+											<input type="text" name="group_remak" class="form-control" required>
+										</div>
+									</div>	
+
+
 							</div>
 							<div class="row">
 								
-								<div class="col-md-6">
+								<!-- <div class="col-md-4">
 									<div class="form-group">
 										<label for="firstName5">Alloted To <sapn class='text-danger'>*</span>:</label>
 										<select class="form-control" id="userid" name="userid" required>
@@ -86,9 +100,9 @@
 										?>
 										</select>
 									</div>
-								</div>			
+								</div>			 -->
 
-								<div class="col-md-6">
+								<!-- <div class="col-md-6">
 									<div class="form-group">
 										<label for="firstName5">Company Type <sapn class='text-danger'>*</span>:</label>
 										<select class="form-control" name="company_type" id="company_type" required>
@@ -99,7 +113,22 @@
 											echo "<option value='".$company_type[$r]['value1']."'>".$company_type[$r]['value1']."</option>";
 										}?>
 									</select>
+								</div> -->
+
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="lastName1">Expected Closure Date  <span class="text-danger">*</span>:</label>
+										<input type="date" name="targetted_date" class="form-control" required>
+									</div>
+								</div>	
+
+								<div class="col-md-4">
+								<div class="form-group">
+								  <label>Attachment(s) <span class="text-danger">*</span>:</label>
+								  <input type="file" class="form-control" placeholder="Attachment" name="attachment[]" multiple>
 								</div>
+								</div>
+
 							</div>
 						</section>	
 						
@@ -128,7 +157,7 @@
 			</div>
 
 				<!--- list--->
-				<div class="col-sm-8">
+				<div class="col-sm-6">
 				<div class="box box-default">
 					<div class="box-header with-border">
 					<h4 class="box-title">Previous Uploaded Data & Details</h4>

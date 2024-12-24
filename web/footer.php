@@ -4,7 +4,7 @@
 
 <!----modals---->
 	<!--======== RIGHT====--->
-	<div class="modal modal-right fade" id="modal-right" tabindex="-1">
+	<!-- <div class="modal modal-right fade" id="modal-right" tabindex="-1">
 	  <div class="modal-dialog">
 		<div class="modal-content">
 		  <div class="modal-header">
@@ -22,26 +22,48 @@
 		  </div>
 		</div>
 	  </div>
-	</div>
+	</div> -->
   <!--====BIG===-->
-  <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title" id="modal-title1"></h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				</div>
-				<div class="modal-body" id="modal-body1">
-					
-				</div>
-				<div class="modal-footer">
-					<input type="button" class="btn btn-danger btn-rounded text-left" data-dismiss="modal" value="Close">
-				</div>
-			</div>
-			<!-- /.modal-content -->
-		</div>
-		<!-- /.modal-dialog -->
-	</div>
+  <div class="modal fade bd-example-modal-lg" tabindex="-1" id="exampleModal" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+	<div class="modal-header">
+        <h5 class="modal-title" id="modal-title"></h5>
+        <a type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </a>
+      </div>
+      <div class="modal-body" id="modal-body">
+        
+      </div>
+      <div class="modal-footer">
+        <a type="button" class="btn btn-secondary" data-dismiss="modal">Close</a>
+        
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+  <!-- <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-title"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modal-body">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div> -->
 
 
 <!-- js -->
@@ -49,7 +71,7 @@
 <!-- Vendor JS -->
 <script src="<?php echo $base_url.'theme/js/vendors.min.js';?>"></script>
 	
-    
+
 	<script src="<?php echo $base_url.'theme/js/irregular-data-series.js';?>"></script>
 	<script src="<?php echo $base_url.'theme/js/apexcharts.js';?>"></script>	
 	<script src="<?php echo $base_url.'theme/js/progressbar.js';?>"></script>
@@ -65,7 +87,7 @@
 	<script src="<?php echo $base_url.'theme/js/data-table.js';?>"></script>
 	<script src="<?php echo $base_url.'theme/js/datatables.min.js';?>"></script>
 	<!------- custom js -->
-	<script src="<?php echo $base_url.'theme/js/function.js';?>"></script>
+	<script src="<?php echo $base_url.'theme/js/function.js?ver=<?php echo rand(0,4);?>';?>"></script>
 	<script src="<?php echo $base_url.'theme/js/chart_custom_fn.js';?>"></script>
 </body>
 

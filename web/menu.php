@@ -224,6 +224,21 @@
 		<?php } ?>
 
 
+		<!----- sales ---->
+		<?php if($_SESSION['utype']=='1' || $_SESSION['utype']=='3'){?>
+        <li class="header">HR</li>
+		  
+        <li>
+          <a href="<?php echo $base_url.'index.php?action=dashboard&page=hr_add_emp';?>">
+		  <i class="mdi mdi-account-check"></i> <span>Add Employee</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+        </li>
+		<?php } ?>
+
+
 		<!------- admin -------->
 		<?php if($_SESSION['utype']=='1'){?>
 		<li class="header">Admin</li>
