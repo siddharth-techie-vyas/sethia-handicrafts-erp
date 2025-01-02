@@ -84,8 +84,25 @@
                                     <th>Phone No.</th>
                                     <td><input type="text" class="form-control" name="ucontact" value="<?php echo $emp[0]['ucontact'];?>"></td>
                                     <th>Location</th>
-                                    <td><input type="text" class="form-control" name="location" value=""></td>
+                                    <td><select class="form-control" name="country" id="country" onchange="get_details('country','state','<?php echo $base_url.'index.php?action=leads&query=get_details&type=state&id=';?>')">
+									<option disabled="disabled" selected="selected" >-- Select --</option>
+									<?php $country=$admin->get_country();
+									foreach($country as $r => $v)
+									{
+										echo "<option value='".$country[$r]['id']."'>".$country[$r]['name']."</option>";
+									}?>
+								  </select></td>
                                 </tr>
+                                <tr>
+                                    <th>State</th>
+									 <td>
+                                     <select class="form-control" name="state" id="state" onchange="get_details('state','city','<?php echo $base_url.'index.php?action=leads&query=get_details&type=city&id=';?>')"></select>
+                                     <span id="msgstate"></span> 
+                                     </td>
+									  <th>City</th>
+									  <td><select class="form-control" name="city" id="city"></td>
+                                </tr>      
+                                
                                 <tr>
                                     <th>Date of Birth</th>
                                     <td><input type="date" class="form-control" name="dob" value=""></td>
