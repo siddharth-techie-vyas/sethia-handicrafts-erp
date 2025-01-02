@@ -288,12 +288,13 @@ function get_group_one($id)
         return $result; 
     }
 
-    function leads_save_company_details($lid,$details,$subdetails,$remark)
+    function leads_save_company_details($lid,$details,$value1,$value2,$value3,$value4)
     {
-        $query = "insert into lead_compnay_details(lid,details,subdetails,remark) VALUES(?,?,?,?)";
-        $paramType = "isss";
-        $paramValue = array($lid,$details,$subdetails,$remark); 
-        $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
+        if(is_array($value2))
+        {$value2=serialize($value2);}
+       echo  $query = "insert into lead_compnay_details(lid,details,value1,value2,value3,value4) VALUES('$lid','$details','$value1','$value2','$value3','$value4')";
+        $insertId = $this->db_handle->update($query);
+        return $insertId;
     }
 
     function get_leads_company_details($lid)
@@ -302,5 +303,43 @@ function get_group_one($id)
 		$result = $this->db_handle->runBaseQuery($query);
         return $result;   
     }
+
+    function get_leads_company_details_bydetails($lid,$details)
+    {
+        $query="SELECT * FROM lead_compnay_details  where lid='$lid' AND details='$details' ";
+		$result = $this->db_handle->runBaseQuery($query);
+        return $result;   
+    }
+
+    function get_leads2_header($id)
+    {
+        $query="SELECT * FROM leads2  where id='$id' AND type='header'";
+		$result = $this->db_handle->runBaseQuery($query);
+        return $result;   
+    }
+
+    function get_leads2_data($id)
+    {
+        $query="SELECT * FROM leads2  where lid='$id' AND type='data'";
+		$result = $this->db_handle->runBaseQuery($query);
+        return $result;   
+    }
+
+    function meta_lead_company_details($metaname,$value1,$value2,$value3,$value4,$value1_input,$value2_input,$value3_input,$value4_input)
+    {
+        $query = "insert into meta_data(meta_name,value1,value2,value3,value4,value1_input,value2_input,value3_input,value4_input)VALUES('$metaname','$value1','$value2','$value3','$value4','$value1_input','$value2_input','$value3_input','$value4_input')";
+       
+        $insertId = $this->db_handle->update($query);
+        return $insertId;
+    } 
+
+    function update_meta_company($value1,$value2,$value3,$value4,$value2_input,$value3_input,$value4_input,$id)
+    {
+        
+     echo   $update="update meta_data SET value2='$value2',value3='$value3',value4='$value4',value2_input='$value2_input',value3_input='$value3_input',value4_input='$value4_input' where id='$id' ";
+        $insertId = $this->db_handle->update($update);
+        return $insertId;
+    }
+
 }
 

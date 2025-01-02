@@ -142,7 +142,7 @@ case "leads":
 		if($_GET['query']=='upload_csv')
 		{
 			//header('Content-Type: application/json; charset=utf-8');
-print_r($_POST);
+
 			$header=array();
 			$bodyrow=array();
 			$bodyrow2=array();
@@ -282,15 +282,106 @@ print_r($_POST);
 			echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=lead_bulkupload&status=1';</script>";
 		}
 
-		if($_GET['query']=='get_company_info')
-				{		
-					$details0=$admin->get_metaname_byvalue1($_GET['meta_name'],$_GET['detail2']);
-					foreach($details0 as $r=>$v)
-					{
-						echo "<option value='".$details0[$r]['value2']."'>".$details0[$r]['value2']."</option>";
-					}
-				}
+		// if($_GET['query']=='get_company_info')
+		// 		{		
+		// 			$details0=$admin->get_metaname_byvalue1($_GET['meta_name'],$_GET['detail2']);
+		// 			foreach($details0 as $r=>$v)
+		// 			{
+		// 				echo "<option value='".$details0[$r]['value2']."'>".$details0[$r]['value2']."</option>";
+		// 			}
+		// 		}
 
+
+		//-- getting value 3
+		if($_GET['query']=='get_company_info')
+		{		
+			
+			$details0=$admin->get_metaname_byvalue2($_GET['meta_name'],$_GET['id']);
+			foreach($details0 as $k=>$v)
+			{
+				$type=$details0[$k]['value2_input'];
+					if($type=='radio')
+					{
+						
+						$details0=$admin->get_metaname_byvalue_multi_group($details0[$k]['meta_name'],$details0[$k]['value2'],'value2','value3');
+						?>
+						
+						<select id="<?php echo $details0[0]['id'];?>" name="value2[]" class='form-control' onchange="get_details('<?php echo $details0[0]['id'];?>','<?php echo str_replace(' ','_',$details0[$k]['value2']);?>result2','<?php echo $base_url.'index.php?action=leads&query=get_company_info2&meta_name=lead_company_info&id=';?>')">
+						<?php 
+						echo "<option disabled='disabled' selected='selected'>-Select-</option>";
+						$i=1;
+						
+							foreach($details0 as $k=>$v){
+								echo "<option value='".$details0[$k]['value3']."'>".$details0[$k]['value3']."</option>";
+							}
+						echo "</select>";
+						
+						//-- becuase all select box repeating		
+						break;
+					}
+					elseif($type=='checkbox')
+					{?>
+						<input id='<?php echo $details0[$k]['id'];?>text2' type='checkbox' name='value2[]' value='<?php echo $details0[$k]['value3'];?>' onclick="get_details('<?php echo $details0[$k]['id'];?>text2','<?php echo $details0[$k]['id'];?>result3','<?php echo $base_url.'index.php?action=leads&query=get_company_info2&meta_name=lead_company_info&id=';?>')">
+
+						<label for='<?php echo $details0[$k]['id'];?>text2' ><?php echo $details0[$k]['value3'];?></label>
+						<div id='<?php echo $details0[$k]['id'];?>result3'>
+							 <!-- 	 -->
+						</div>
+						<hr>
+					<?php }
+					elseif($type=='textarea')
+					{
+						//-- label will be of 3 and input will be of 2
+						echo "<label>".$details0[$k]['value3']."</label>";
+						echo "<textarea col='5' row='4' name='value2[]' class='form-control'></textarea>";
+						if($details0[$k]['value3']=='')
+						{echo "<input type='hidden' name='value3[]'>";}
+					}
+					else
+					{	
+						if($details0[$k]['value2']=='Not Disclosed' || $details0[$k]['value2']=='Not Known'){}
+						else {echo "<textarea col='5' row='4' name='value2' class='form-control'></textarea>";}
+					}
+			}
+				
+		}
+
+		if($_GET['query']=='get_company_info2')
+		{
+			//-- check value 4 category
+			//print_r($_GET);
+			$details0=$admin->get_metaname_byvalue3($_GET['meta_name'],$_GET['id']);
+
+			//-- get value 3
+			//-- if value 3 is blank thats mean there is no multi  value4 availble stop here and cancel the loop
+			$details1=$admin->get_metaname_byvalue_multi_group($details0[0]['meta_name'],$details0[0]['value2'],'value2','value3');
+			if($details1[0]['value2']=='Not Known' || $details1[0]['value2']=='Not Disclosed')
+			{}
+			else if($details1[0]['value3']=='')
+			{   
+				//echo "<input type='text' name='value3[]' class='form-control'>";
+			}
+
+			//-- if value 3 is not blank    
+			else
+			{  
+			   $value4_type=$details1[0]['value4_input'];
+			   $value4=unserialize($details1[0]['value4']);
+			   $value4=explode(",",$value4);
+			   //-- change input type by for each
+			   if($value4_type=='radio')
+			   {
+				echo "<select name='value3[]' class='form-control'>";
+				echo "<option disbaled='disbaled' selected='selected'>-Select-</option>";
+					foreach($value4 as $r)
+					{
+						echo "<option value='".$r."'>".$r."</option>";
+					}
+				echo "</select>";
+			   }
+			  
+			}       
+		}
 
 		if($_GET['query']=='fileviewer')
 				{
@@ -299,22 +390,94 @@ print_r($_POST);
 				
 		if($_GET['query']=='save_company_details')
 		{
-					$lid = $_POST['lid'];
-					$details_array = $_POST['details'];
-					$subdetails_array = $_POST['subdetails'];
-					$remark_array = $_POST['remark'];
-	 				for ($i = 0; $i < count($details_array); $i++) 
-								{
-									$details = mysqli_real_escape_string($con, $details_array[$i]);
-									$subdetails = mysqli_real_escape_string($con, $subdetails_array[$i]);
-									$remark = mysqli_real_escape_string($con, $remark_array[$i]);
-									
-									//=== save
-					 			 	$save = $leads->leads_save_company_details($lid,$details,$subdetails,$remark); 
-						        }
+			print_r($_POST);
 
-					echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=leads_feedback&id=".$lid."&lstatus=1';</script>"	;		
-		}		
+					$lid = $_POST['lid'];
+					$details = $_POST['details'];
+					$value1 = $_POST['value1'];
+					$value2 = $_POST['value2'];
+					if(isset($_POST['value3'])){$value3 = $_POST['value3'];}else{$value3='';}
+					if(isset($_POST['value4'])){$value4 = $_POST['value4'];}else{$value4='';}
+
+					//-- if value 1 is array
+					if(is_array($value1))
+					{
+						foreach($value1 as $key=>$value) 
+									{ 
+										$value1_single = mysqli_real_escape_string($con,$value1[$key]);
+										$value2_single = mysqli_real_escape_string($con,$value2[$key]);
+										if(is_array($value3))
+										{$value3_single = mysqli_real_escape_string($con,$value3[$key]);}
+										//=== save
+										$save = $leads->leads_save_company_details($lid,$details,$value1_single,$value2_single,$value3_single,$value4); 
+										
+									}
+									echo "<div class='alert alert-success'>Detail Saved !!!</div>"; 	
+					}
+					else
+					{
+						$save = $leads->leads_save_company_details($lid,$details,$value1,$value2,$value3,$value4); 
+						if(!$save)
+						{
+							echo "<div class='alert alert-danger'>Something went wrong !!</div>";
+						}
+						else
+						{
+							echo "<div class='alert alert-success'>Detail Saved !!!</div>"; 	
+						}
+					}
+			
+						
+		}
+		if($_GET['query']=='company_research')		
+		{
+					$metaname = $_POST['meta_name'];
+					$value1 = $_POST['value1'];
+					$value1_input = $_POST['input_type_value1'];
+					$value2 = $_POST['value2'];
+					$value2_input = $_POST['input_type_value2'];
+					$value3_array = $_POST['value3'];
+					$value4_array = $_POST['value4'];
+					$value3_input_array = $_POST['input_type_value3'];
+					$value4_input_array = $_POST['input_type_value4'];
+					
+					
+					if(isset($_POST['value3']))
+					{
+									foreach($value3_array as $key=>$value) 
+									{ 
+										$value3 = mysqli_real_escape_string($con,  $value3_array[$key]);
+										$value4 = mysqli_real_escape_string($con,  $value4_array[$key]);
+										$value3_input = mysqli_real_escape_string($con,  $value3_input_array[$key]);
+										$value4_input = mysqli_real_escape_string($con,  $value4_input_array[$key]);
+
+										$value4 = explode(",",$value4);
+										
+										$value4=serialize($value4);
+										//=== save
+										$save = $leads->meta_lead_company_details($metaname,$value1,$value2,$value3,$value4,$value1_input,$value2_input,$value3_input,$value4_input); 
+									}
+					}
+					else
+					{
+						$save = $leads->meta_lead_company_details($metaname,$value1,$value2,'','',$value1_input,$value2_input,'',''); 
+					}
+
+					echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=lead_add_company_info&status=1';</script>"	;	
+		}
+
+		if($_GET['query']=='delete_company_info')		
+		{ $delete = $admin->delete_meta($_GET['id']);}
+
+		if($_GET['query']=='lead_edit_company_info_update')
+		{	
+			$value4=explode(",",$_POST['value4']);
+			$value4=serialize($value4);
+			$update=$leads->update_meta_company($_POST['value1'],$_POST['value2'],$_POST['value3'],$value4,$_POST['value2_input'],$_POST['value3_input'],$_POST['value4_input'],$_POST['id']);
+			if($update)
+			{echo "<div class='alert alert-success'>Updated Successfully !!!";}
+			else{echo "<div class='alert alert-danger'>Something went wrong!!!";}
+		}
 	}
 	break;
 //--- leads closed

@@ -102,7 +102,7 @@
 							<div class="row">
 								<div class="col-md-3">
 										<div class="form-group">
-											<label for="lastName1">Expected Closure Date :</label>
+											<label for="lastName1">Expected Qualification Date :</label>
 											<input type="date" name="targetted_date" class="form-control">
 										</div>
 									</div>	

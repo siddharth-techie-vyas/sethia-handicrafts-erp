@@ -262,6 +262,7 @@
 			</a>
 			<ul class="treeview-menu">
 				<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=lead_addgroup';?>"><i class="ti-more"></i>Create Group</a></li>
+				<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=lead_add_company_info';?>"><i class="ti-more"></i>Create Company<br>Research Flow</a></li>
 				<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=lead_customertype';?>"><i class="ti-more"></i>Create Customer & Steps</a></li>
 			</ul>
 		  </li>

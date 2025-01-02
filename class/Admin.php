@@ -158,7 +158,7 @@ function get_metaname_byvalue($meta_name)
 
 function get_metaname_byvalue_group($meta_name)
 {
-    $query = "select * from meta_data where meta_name='$meta_name' GROUP BY value1";
+    $query = "select * from meta_data where meta_name='$meta_name' GROUP BY value1 ORDER by id ASC";
     $result = $this->db_handle->runBaseQuery($query);
     return $result;
 }
@@ -172,10 +172,18 @@ function get_metaname_byvalue1($meta_name,$value1)
 
 function get_metaname_byvalue2($meta_name,$value2)
 {
-    $query = "select * from meta_data where meta_name='$meta_name' AND value2='$value2' ";
+     $query = "select * from meta_data where meta_name='$meta_name' AND value2='$value2' ";
     $result = $this->db_handle->runBaseQuery($query);
     return $result;
 }
+
+function get_metaname_byvalue3($meta_name,$value3)
+{
+     $query = "select * from meta_data where meta_name='$meta_name' AND value3='$value3' ";
+    $result = $this->db_handle->runBaseQuery($query);
+    return $result;
+}
+
 
 function get_metaname_byid($id)
 {
@@ -232,12 +240,17 @@ function viewall_meta()
 
 function delete_meta($id)
 {
-    $query = "delete from meta_data where id='".$id."' ";   
-    $result = $this->db_handle->runSingleQuery($query);
+   echo $query = "delete from meta_data where id='".$id."' ";   
+    $result = $this->db_handle->update($query);
     return $result;
 }
 
-
+function get_metaname_byvalue_multi_group($metaname,$value_name,$value_column,$groupby)
+{
+    $query = "select * from meta_data where $value_column='$value_name' GROUP BY $groupby";
+    $result = $this->db_handle->runBaseQuery($query);
+    return $result;
+}
 
 //========== send email
 function send_email()

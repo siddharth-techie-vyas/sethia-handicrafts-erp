@@ -32,7 +32,7 @@ $feedback_type=$admin->get_metaname_byvalue1('lead_customer_type',$query[0]['com
 
 				<!--- form -->
 							
-					<div class="col-md-6">
+					<div class="col-md-4">
 						<div class="box">
 							<div class="box-header with-border">
 								<h4 class="box-title">Lead Details</h4>
@@ -51,28 +51,65 @@ $feedback_type=$admin->get_metaname_byvalue1('lead_customer_type',$query[0]['com
 										<th>Source</th>
 										<td><?php $group=$leads->get_group_one($query[0]['group_id']);  echo $group[0]['gname']; ?></td>
 									</tr>
-									<tr>
-										<th>Target Outcome Date :</th>
-										<td><?php echo $query[0]['date_time'];?></td>
-									</tr>
-									<tr>
-										<th>Targetted Outcome Number(s) </th>
-										<td><?php echo $query[0]['targetted_outcome_with'];?></td>
-									</tr>
-									<tr>
-										<th>Targetted Outcome Detail(s) :</th>
-										<td><?php echo $query[0]['targetted_outcome_with_details'];?></td>
-									</tr>
+									
 									<tr>
 										<th>Alloted To :</th>
 										<td><?php $uname=$admin->getone_user($query[0]['handledby']); echo $uname[0]['uname']; ?></td>
+									</tr>
+
+									<tr>
+										<th>Targetted Date:</th>
+										<td><?php echo date('d-m-Y', strtotime($query[0]['targetted_date'])); ?></td>
+									</tr>
+
+									<tr>
+										<th>Requirment</th>
+										<td>
+											<!-- <textarea class="form-control"></textarea> -->
+										</td>
 									</tr>
 								</table>
 							</div>
 						</div>	
 					</div>
 					
-					<div class="col-md-6">
+					<div class="col-md-5">
+						
+						<div class="box">
+							<div class="box-header with-border">
+								<h4 class="box-title">Targetted Details</h4>
+							</div>
+							<div class="box-body">
+								<table class="table-bordered wrap" width="100%">
+								<?php 
+									//-- get data for table of sinle row
+									$data=$leads->get_leads2_data($_GET['id']);
+									//-- get header for table of sinle row
+									$header=$leads->get_leads2_header($data[0]['id']);
+									$hcol=10;
+
+								
+									$col=10;
+									for($i=1; $i<=$col;$i++)
+									{					
+										if($data[0]['col'.$i] == ''){continue;}
+										echo "<tr>";
+											echo "<th>".str_replace("_"," ",$header[0]['col'.$i])."</th>";
+											echo "<td>".$data[0]['col'.$i]."</td>";
+											$i++;
+											echo "<th>".str_replace("_"," ",$header[0]['col'.$i])."</th>";
+											echo "<td>".$data[0]['col'.$i]."</td>";
+										echo "</tr>";
+									}
+									?>
+								</table>
+							</div>
+						</div>
+					</div>	
+					
+					
+					
+					<div class="col-md-3">
 						<div class="row">
 							<?php if(empty($query[0]['attachment'])){?>
 								<div class="alert alert-warning">No Attachment Found</div>	
@@ -86,6 +123,8 @@ $feedback_type=$admin->get_metaname_byvalue1('lead_customer_type',$query[0]['com
 										{ $type="image/".$info["extension"]; $icon='file-delimited'; $title='CSV';}
 										elseif ($info["extension"] == "pdf")  	
 										{ $type="image/".$info["extension"]; $icon='file-pdf-box'; $title='PDF';}
+										elseif ($info["extension"] == "docx")  	
+										{ $type="image/".$info["extension"]; $icon='file-pdf-box'; $title='PDF';}
 										elseif ($info["extension"] == "excel")  
 										{ $type="image/".$info["extension"]; $icon='microsoft-excel'; $title='Excel';}
 										elseif ($info["extension"] == "html")  
@@ -98,6 +137,10 @@ $feedback_type=$admin->get_metaname_byvalue1('lead_customer_type',$query[0]['com
 								</div>
 							<?php } }?>	
 
+							<form name="attachment" action="post" action="">
+								<label>Add Attachment</label>
+								<input type="file" name="attachment" class="form-control">
+							</form>
 							<!--   -->
 
 							</div>	
@@ -112,104 +155,36 @@ $feedback_type=$admin->get_metaname_byvalue1('lead_customer_type',$query[0]['com
 
 <!-- feedback content -->
 <section class="content">
+<?php include('alert.php');?>
+
 	<div class="row">
+				
+
 			<div class="col-sm-12">
 					<ul class="nav nav-tabs nav-fill" role="tablist">
-						<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#home11" role="tab" aria-selected="true"><span><i class="fa fa-info"></i></span> <span class="hidden-xs-down ml-15">Company & Query Detail </span></a> </li>
-						<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile11" role="tab" aria-selected="false"><span><i class="fa fa-user"></i></span> <span class="hidden-xs-down ml-15">Followup</span></a> </li>
+						<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#home11" role="tab" aria-selected="true"><span><i class="fa fa-info"></i></span> <span class="hidden-xs-down ml-15">Company Research </span></a> </li>
+						<li class="nav-item "> <a class="nav-link" data-toggle="tab" href="#profile11" role="tab" aria-selected="false"><span><i class="fa fa-user"></i></span> <span class="hidden-xs-down ml-15">Followup</span></a> </li>
 						<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#msg" role="tab" aria-selected="false"><span><i class="fa fa-comment"></i></span> <span class="hidden-xs-down ml-15">Followup History</span></a> </li>
 					</ul>
 
 
-					<div class="tab-content tabcontent-border">					
+					<div class="tab-content tabcontent-border">		
+						
 <!------------ company list -------->
 						<div class="tab-pane active" id="home11" role="tabpanel">
 							<div class="p-15 content">
 									
 									<div class="row">
 
-										<div class="col-md-5">
-											<?php 
-												if(isset($_GET['lstatus']))
-												{
-													if($_GET['lstatus']=='1')
-													{echo "<div class='alert alert-success'>Company Details Added Successfully !</div>";}
-												}
-											?>
-										<form name="addmore_details" action="<?php echo $base_url.'index.php?action=leads&query=save_company_details';?>" method="post">
-											<input type="hidden" name="lid" value="<?php echo $_GET['id'];?>"/>
-											<div class="row">		
-												
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Detail 1</label>
-														<select name="details[]" class="form-control" id="details1"  onchange="get_details('details1','subdetails1','<?php echo $base_url.'index.php?action=leads&query=get_company_info&meta_name=lead_company_info&detail2='?>')"required>
-															<option disabled="disabled" selected="selected" >-- Select --</option>
-															<?php $stage=$admin->get_metaname_byvalue_group('lead_company_info');
-																foreach($stage as $k=>$v)
-																{
-																echo "<option value='".$stage[$k]['value1']."' ";
-																echo ">".$stage[$k]['value1']."</option>";
-																}
-																?>
-														</select>
-													</div>
-												</div>
-
-
-												<div class="col-md-4">
-													<div class="form-group">
-													<label>Sub Detail 1</label>
-													<select name="subdetails[]" class="form-control" id="subdetails1"  required>
-													<option disabled="disabled" selected="selected" >-- Select --</option>
-
-													</select>
-													</div>
-												</div>
-
-												<div class="col-md-4">
-													<div class="form-group">
-													<label>Remark 1</label>
-													<input type="text" name="remark" class="form-control">
-													</div>
-												</div>
-
-												<div class="col-sm-12" id="addmore"></div>
-												
-												<div class="col-sm-2">
-													<input type="button" name="addmore_btn" id="addmore_btn" value="Add More" class="btn btn-secondary btn-sm">
-												</div>
-												<div class="col-sm-2">
-													<input type="submit" name="submit" id="submit" value="Save" class="btn btn-primary btn-sm">
-												</div>
-												
-											</div>	
-											</form>
+										<div class="col-md-12">
+											<div id="company_details"></div>
+											<script>
+												$( document ).ready(function() {
+														$("#company_details").load( "<?php echo $base_url.'index.php?action=dashboard&nocss=leads_feedback_company&lid='.$_GET['id'];?>" );
+													});
+											</script>
 										</div>   
-
-										<div class="col-md-7">
-											<table class="table table-bordered">
-												<tr>
-													<th>#</th>
-													<th>Title</th>
-													<th>Sub Title</th>
-													<th>Details</th>
-												</tr>
-												<?php
-												$counter=1;
-												$company_details_leads=$leads->get_leads_company_details($_GET['id']);
-												foreach($company_details_leads as $r =>$v)
-												{
-													echo "<tr>";
-														echo "<th>".$counter++."</th>";
-														echo "<td>".$company_details_leads[$r]['details']."</td>";
-														echo "<td>".$company_details_leads[$r]['subdetails']."</td>";
-														echo "<td>".$company_details_leads[$r]['remark']."</td>";
-													echo "</tr>";
-												}
-												?>
-											</table>
-										</div>						
+		
 								
 									</div>
 
@@ -357,9 +332,9 @@ $feedback_type=$admin->get_metaname_byvalue1('lead_customer_type',$query[0]['com
 								{
 								foreach($list as $row=>$value)
 								{
-								echo '<div class="alert alert-secondary alert-dismissable">'.$list[$row]['feedback'];
-								echo '<br><small class="text-white">'.$list[$row]['date_time'].'</small>';
-								echo '</div>';
+									echo '<div class="alert alert-secondary alert-dismissable">'.$list[$row]['feedback'];
+									echo '<br><small class="text-white">'.$list[$row]['date_time'].'</small>';
+									echo '</div>';
 								}
 
 								if(isset($_GET['from']))

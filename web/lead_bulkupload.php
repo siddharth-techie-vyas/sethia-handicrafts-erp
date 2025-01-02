@@ -146,9 +146,9 @@
 						</section>
 						<section>
 							<div class="row">
-								<div class="col-sm-6"><a class="btn btn-info btn-xs" href="<?php echo $base_url.'images/lead_file_sample.csv';?>">Downlaod Sample File</a></div>	
-								<div class="col-sm-3"><input type="reset" name="reset" value="Reset" class="btn btn-xs btn-warning"></div>
-								<div class="col-sm-3"><input type="submit" name="submit" value="Upload" class="btn btn-xs btn-success"></div>
+								<div class="col-sm-9"><a class="btn btn-info btn-xs" href="<?php echo $base_url.'images/lead_file_sample.csv';?>">Downlaod Sample File</a></div>	
+								<div class="col-sm-1"><input type="reset" name="reset" value="Reset" class="btn btn-xs btn-warning"></div>
+								<div class="col-sm-1"><input type="submit" name="submit" value="Upload" class="btn btn-xs btn-success"></div>
 							</div>
 						</section>	
 					</form>
@@ -165,7 +165,7 @@
 					</div>
 					<!-- /.box-header -->
 					<div class="box-body wizard-content">
-					<table class="table">
+					<table class="table-bordered wrap" cellpadding="2" cellspacing="5">
 								<tr>
 									<th>#</th>
 									<th>File Name</th>
