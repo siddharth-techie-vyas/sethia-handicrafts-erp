@@ -11,7 +11,7 @@ function get_details(inputid,outputid,url)
            url: url+id,
            success: function(data)
            {
-           alert(data);
+           //alert(data);
                $('#msg'+outputid).html("Please Wait !!!");
                $('#'+outputid).html(data);
                $('#msg'+outputid).html("")
@@ -82,7 +82,7 @@ function deleteme(h,i,j)
            url: 'index.php?action='+h+'&query='+i+'&id='+j,
            success: function(data)
            {
-            alert(data);
+            //alert(data);
                alert('index.php?action='+h+'&query='+i+'&id='+j);
                $('#'+j).toggle(750); 
             
