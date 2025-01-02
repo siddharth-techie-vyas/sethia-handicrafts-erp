@@ -390,7 +390,7 @@ case "leads":
 				
 		if($_GET['query']=='save_company_details')
 		{
-			print_r($_POST);
+			//print_r($_POST);
 
 					$lid = $_POST['lid'];
 					$details = $_POST['details'];
