@@ -336,7 +336,7 @@ function get_group_one($id)
     function update_meta_company($value1,$value2,$value3,$value4,$value2_input,$value3_input,$value4_input,$id)
     {
         
-     echo   $update="update meta_data SET value2='$value2',value3='$value3',value4='$value4',value2_input='$value2_input',value3_input='$value3_input',value4_input='$value4_input' where id='$id' ";
+        $update="update meta_data SET value1='$value1', value2='$value2',value3='$value3',value4='$value4',value2_input='$value2_input',value3_input='$value3_input',value4_input='$value4_input' where id='$id' ";
         $insertId = $this->db_handle->update($update);
         return $insertId;
     }
