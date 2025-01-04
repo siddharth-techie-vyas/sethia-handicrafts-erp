@@ -155,12 +155,23 @@
                                                 }
                                                 else{
 												foreach($company_details_leads as $r =>$v)
-												{
+												{   
+                                                    if(is_string($value2))
+                                                    {$value2=$company_details_leads[$r]['value2'];}
+                                                    else
+                                                    {$value21=unserialize($company_details_leads[$r]['value2']);
+                                                        foreach($value21 as $r)
+                                                        {
+                                                            $value2.=$r."<br>";
+                                                        }
+                                                    }
+
+
 													echo "<tr>";
 														echo "<th>".$counter++."</th>";
 														echo "<td>".$company_details_leads[$r]['details']."</td>";
 														echo "<td>".$company_details_leads[$r]['value1']."</td>";
-														echo "<td>".$company_details_leads[$r]['value2']."</td>";
+														echo "<td>".$value2."</td>";
                                                         echo "<td>".$company_details_leads[$r]['value3']."</td>";
 													echo "</tr>";
 												}}
