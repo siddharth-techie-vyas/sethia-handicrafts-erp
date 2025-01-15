@@ -645,6 +645,18 @@ case "leads":
 				echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=leads_feedback&id=$_POST[lid]&status=1';</script>";
 			}
 
+			if($_GET['query']=='step_14')
+			{
+				$leads->step_change($_POST['lid'],'14');
+				echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=leads_feedback&id=$_POST[lid]&status=1';</script>";
+			}
+
+			if($_GET['query']=='step_15')
+			{
+				$leads->step_change($_POST['lid'],'15');
+				echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=leads_feedback&id=$_POST[lid]&status=1';</script>";
+			}
+
 
 	}
 	break;

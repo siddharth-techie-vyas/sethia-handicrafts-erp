@@ -471,11 +471,18 @@ function get_group_one($id)
 
     function leads_company_more_details ($lid,$step,$value1,$value2)
     {
-       echo $query = "insert into leads_company_more_details(lid,step,value1,value2)VALUES(?,?,?,?)";
+        $query = "insert into leads_company_more_details(lid,step,value1,value2)VALUES(?,?,?,?)";
         $paramType = "ssss";
         $paramValue = array($lid,$step,$value1,$value2);
         $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
         return $insertId;   
+    }
+
+    function get_company_more_details($step,$id)
+    {
+        $query="select * from leads_company_more_details where step ='$step' AND lid='$id' ";
+        $result = $this->db_handle->runBaseQuery($query);
+        return $result;
     }
 }
 
