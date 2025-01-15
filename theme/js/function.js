@@ -67,7 +67,32 @@ function form_submit(x)
         //form.show(); 
  } 
 
-
+ function form_submit_alert(x) 
+ {  
+        var r = confirm("Are you sure you want to process  ??");
+  
+        if (r == true) 
+        {
+        var form = $("#"+x);
+          $('#msg'+x).html("Please Wait !");
+          // form.hide();
+          $.ajax({
+              type: "POST",
+              url: $("#"+x).attr("action"),
+              data: form.serialize(),
+              success: function(result)
+              {
+                $('#msg'+x).html(result);  
+                setTimeout(function(){
+                      $('#msg'+x).slideUp('slow').fadeOut(function() {
+                          window.location.reload();
+                      });
+                }, 1000); 
+              }
+          }); 
+          //form.show(); 
+        }         
+  } 
  
 
  //-- action, query , id
@@ -90,3 +115,6 @@ function deleteme(h,i,j)
        }); 
   } 
 }
+
+
+

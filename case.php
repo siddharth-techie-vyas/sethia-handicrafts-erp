@@ -37,7 +37,7 @@ case "dashboard":
 case "leads":
 	if($_GET['action']=='leads')
 	{
-
+		
 		//-- from masters 
 		if($_GET['query']=='add-customer-type')
 				{
@@ -73,7 +73,7 @@ case "leads":
 
 			}
 			
-			$save=$leads->create_new($_POST['company'],$_POST['company_type'],$_POST['groupid'],$_POST['group_remak'],$_POST['userid'],$attachment,$target_date);
+			$save=$leads->create_new($_POST['company'],$_POST['company_type'],$_POST['groupid'],$_POST['group_remak'],$_POST['userid'],$attachment,$target_date,$_POST['step']);
 
 
 			
@@ -478,6 +478,174 @@ case "leads":
 			{echo "<div class='alert alert-success'>Updated Successfully !!!";}
 			else{echo "<div class='alert alert-danger'>Something went wrong!!!";}
 		}
+
+		if($_GET['query']=='qulified_lead')
+		{
+			$update=$leads->update_lead_qualified($_POST['id'],$_POST['qualified']);
+			
+			//-- send notification to all MD if disqualified
+										if($_POST["qualified"]=='1'){$qualified= "Qualified";}
+										if($_POST["qualified"]=='2'){$qualified= "Dis-Qualified";}
+										
+			//-- lead gen to MD
+			if($_SESION['utype']=='6')
+				{
+				$mds=$admin->getonetype_user('9');
+				foreach($mds as $r=>$v)
+				{$admin->save_alerts($_SESSION['uid'],"Lead #SHL$_POST[id] Has Been $qualified",$mds[$r]['id']);}
+				exit();
+				}
+
+			//-- MD to lead gen
+			if($_SESION['utype']=='9')
+				{
+					//--this time we need lead gen id
+					$lead_genid=$lead->get_lead_one($_POST['id']);
+					$admin->save_alerts($_SESSION['uid'],"Lead #SHL$_POST[id] Has Been $qualified",$lead_genid[0]['handledby']);
+				}	
+
+			//--- next step proceed
+				
+			if($update)
+			{echo "<div class='alert alert-success'>Lead Qualified Status Changed Successfully !!!";}
+			else{echo "<div class='alert alert-danger'>Something went wrong!!!";}
+			
+		}
+
+		if($_GET['query']=='qulified_lead')
+		{
+			$update=$leads->update_lead_qualified($_POST['id'],$_POST['qualified']);
+			
+			//-- send notification to all MD if disqualified
+										if($_POST["qualified"]=='1'){$qualified= "Qualified";}
+										if($_POST["qualified"]=='2'){$qualified= "Dis-Qualified";}
+										
+			//-- lead gen to MD
+			if($_SESION['utype']=='6')
+				{
+				$mds=$admin->getonetype_user('9');
+				foreach($mds as $r=>$v)
+				{$admin->save_alerts($_SESSION['uid'],"Lead #SHL$_POST[id] Has Been $qualified",$mds[$r]['id']);}
+				
+				}
+
+			//-- MD to lead gen
+			if($_SESION['utype']=='9')
+				{
+					//--this time we need lead gen id
+					$lead_genid=$leads->get_lead_one($_POST['id']);
+					$admin->save_alerts($_SESSION['uid'],"Lead #SHL$_POST[id] Has Been $qualified",$lead_genid[0]['handledby']);
+				}	
+
+			//--- next step proceed
+				
+			if($update)
+			{echo "<div class='alert alert-success'>Lead Qualified Status Changed Successfully !!!";}
+			else{echo "<div class='alert alert-danger'>Something went wrong!!!";}
+			
+		}
+
+		//-- company audit by business development manager
+		if($_GET['query']=='comp_qulified_lead')
+		{
+			$update=$leads->update_lead_audit($_POST['id'],$_POST['qualified'],$_POST['audit_by']);
+			//-- send notification to all MD if disqualified
+			if($_POST["qualified"]=='1'){$qualified= "Approved";}
+			if($_POST["qualified"]=='2'){$qualified= "Dis-Approved";}
+			//--send notification to lead manager
+			$lead_genid=$leads->get_lead_one($_POST['id']);
+					$admin->save_alerts($_SESSION['uid'],"Lead #SHL$_POST[id] Has Been $qualified by Business devlopment manager",$lead_genid[0]['handledby']);
+			//-- send notification to MD 
+				$mds=$admin->getonetype_user('9');
+				foreach($mds as $r=>$v)
+				{$admin->save_alerts($_SESSION['uid'],"Lead #SHL$_POST[id] Has Been $qualified",$mds[$r]['id']);}
+			//--update the step to 11 and 
+				$update=$leads->step_change($_POST['id'],'11');
+				echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=leads_feedback&id=$_POST[id]&status=1';</script>";
+
+		}
+
+		//-- company audit by MD
+		if($_GET['query']=='comp_qulified_lead_md')
+		{
+			$update=$leads->update_lead_audit_md($_POST['id'],$_POST['qualified']);
+			//-- send notification to all MD if disqualified
+			if($_POST["qualified"]=='3'){$qualified= "Approved";}
+			if($_POST["qualified"]=='4'){$qualified= "Dis-Approved";}
+			//--send notification to lead manager
+			$lead_genid=$leads->get_lead_one($_POST['id']);
+					$admin->save_alerts($_SESSION['uid'],"Lead #SHL$_POST[id] Has Been $qualified By MD",$lead_genid[0]['handledby']);
+			//-- send notification to BDM 
+				$mds=$admin->getonetype_user('9');
+				foreach($mds as $r=>$v)
+				{$admin->save_alerts($_SESSION['uid'],"Lead #SHL$_POST[id] Has Been $qualified By MD",$lead_genid[0]['audit_by']);}
+			//--update the step to 11 and 
+				$update=$leads->step_change($_POST['id'],'12');
+				echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=leads_feedback&id=$_POST[id]&status=1';</script>";
+
+		}
+
+		//-- step changhes
+		if($_GET['query']=='step_change')
+			{				
+				$update=$leads->step_change($_POST['lid'],$_POST['step']);
+				$same_page=$_POST['step']-1;
+				if($update)
+				{
+					echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=leads_feedback&id=$_POST[lid]&status=1';</script>";
+				}
+				else
+				{
+					echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=leads_feedback&id=$_POST[lid]&status=2';</script>";
+				}
+			}
+
+			if($_GET['query']=='save_step_9')
+			{
+				
+				//-- save to profile
+				$save0=$leads->save_comp_profile($_POST['lid'],$_POST['firstname'],$_POST['lastname'],$_POST['gender'],$_POST['company_now'],$_POST['designation_now'],$_POST['phone'],$_POST['country'],$_POST['state'],$_POST['city'],$_POST['zipcode'],$_POST['timezone'],$_POST['dob'],$_POST['family_linkage'],$_POST['religion'],$_POST['goal'],$_POST['point'],$_POST['motivation'],$_POST['channel'],$_POST['current_since']);
+				//-- save to experience
+						$designation_array = $_POST['designation'];
+						$from_array = $_POST['from'];
+						$to_array = $_POST['to'];
+						$company_array = $_POST['company'];
+						 for ($i = 0; $i < count($designation_array); $i++) 
+									{
+										$company = mysqli_real_escape_string($con, $company_array[$i]);
+										$from = mysqli_real_escape_string($con, $from_array[$i]);
+										$to = mysqli_real_escape_string($con, $to_array[$i]);
+										$designation = mysqli_real_escape_string($con, $designation_array[$i]);
+	
+										$save1=$leads->edit_comp_experience($company,$from,$to,$designation,$_POST['lid']);
+									}
+	
+				//-- update next step
+				$leads->step_change($_POST['lid'],'10');
+				echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=leads_feedback&id=$_POST[lid]&status=1';</script>";
+			}	
+
+			if($_GET['query']=='step_12')
+			{
+					$lid = $_POST['lid'];
+					$step= '12';
+					$value1_array = $_POST['contact_person'];
+					$value2_array = $_POST['contact'];
+					
+					foreach($value1_array as $key=>$value) 
+					{ 
+						$value1 = mysqli_real_escape_string($con,  $value1_array[$key]);
+						$value2 = mysqli_real_escape_string($con,  $value2_array[$key]);
+						//=== save
+						$save = $leads->leads_company_more_details ($lid,$step,$value1,$value2); 
+					}
+					//-- update next step
+					
+				$leads->step_change($_POST['lid'],'13');
+				echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=leads_feedback&id=$_POST[lid]&status=1';</script>";
+			}
+
+
 	}
 	break;
 //--- leads closed
@@ -527,6 +695,7 @@ case "sales":
 						else
 						{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=sales_feedback&status=2&id=".$_POST['sales_lid']."';</script>";}
 				}	
+		
 									
 	}
 	break;
@@ -579,31 +748,7 @@ case "admin":
 case "hr":
 	if($_GET['action']=='hr')
 	{
-		if($_GET['query']=='save_emp_profile')
-		{
-			
-			//-- save to user
-			$save=$admin->edit_user($_POST['uname'],$_POST['upass'],$_POST['utype'],$_POST['uemail'],$_POST['ucontact'],$_POST['person_name'],$_POST['uid']);
-			//-- save to profile
-			$save0=$hr->edit_profile($_POST['gender'],$_POST['company_now'],$_POST['location'],$_POST['religion'],$_POST['dob'],$_POST['family_linkage'],$_POST['goal'],$_POST['motivation'],$_POST['channel'],$_POST['current_since'],$_POST['uid']);
-			//-- save to experience
-					$designation_array = $_POST['designation'];
-					$from_array = $_POST['from'];
-					$to_array = $_POST['to'];
-					$company_array = $_POST['company'];
-	 				for ($i = 0; $i < count($designation_array); $i++) 
-								{
-									$company = mysqli_real_escape_string($con, $company_array[$i]);
-									$from = mysqli_real_escape_string($con, $from_array[$i]);
-									$to = mysqli_real_escape_string($con, $to_array[$i]);
-									$designation = mysqli_real_escape_string($con, $designation_array[$i]);
-
-									$save1=$hr->edit_emp_experience($company,$from,$to,$designation,$_POST['uid']);
-								}
-
-			
-			echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=hr_emp_profile&status=1&id=".$_POST['uid']."';</script>";
-		}
+		
 	}
 	break;
 

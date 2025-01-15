@@ -189,7 +189,7 @@
 		
       	
 		<!----- leads ---->
-		<?php if($_SESSION['utype']=='1' || $_SESSION['utype']=='6'){?>
+		<?php if($_SESSION['utype']=='1'  || $_SESSION['utype']=='6'){?>
         <li class="header">Leads</li>
 		  
         <li class="treeview">
@@ -211,9 +211,18 @@
 
 		<!----- sales ---->
 		<?php if($_SESSION['utype']=='1' || $_SESSION['utype']=='8'){?>
-        <li class="header">Sales</li>
-		  
-        <li>
+       
+        
+		<li class="header">Leads</li>
+		<li>
+          <a href="<?php echo $base_url.'index.php?action=dashboard&page=leads_approval_steps';?>">
+            <i class="mdi mdi-alert"></i> <span>Leads Approval</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+        </li>
+		<li>
           <a href="<?php echo $base_url.'index.php?action=dashboard&page=sales_lead_viewall';?>">
 		  <i class="mdi mdi-database"></i> <span>Leads</span>
             <span class="pull-right-container">
@@ -221,10 +230,12 @@
             </span>
           </a>
         </li>
+
+
 		<?php } ?>
 
 
-		<!----- sales ---->
+		<!----- hr ---->
 		<?php if($_SESSION['utype']=='1' || $_SESSION['utype']=='3'){?>
         <li class="header">HR</li>
 		  
@@ -261,7 +272,8 @@
 			  </span>
 			</a>
 			<ul class="treeview-menu">
-				<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=lead_addgroup';?>"><i class="ti-more"></i>Create Group</a></li>
+			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=module_tuto&module=lead';?>"><i class="ti-more"></i>What-Who-How-When</a></li>	
+			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=lead_addgroup';?>"><i class="ti-more"></i>Create Group</a></li>
 				<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=lead_add_company_info';?>"><i class="ti-more"></i>Create Company<br>Research Flow</a></li>
 				<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=lead_customertype';?>"><i class="ti-more"></i>Create Customer & Steps</a></li>
 			</ul>
@@ -283,8 +295,41 @@
 
 		
 
-		<?php }?>
-        
+		  <?php }if($_SESSION['utype']=='9'){?>
+		<li class="header">Leads</li>
+		<li>
+          <a href="<?php echo $base_url.'index.php?action=dashboard&page=leads_disqualified&qualify=2';?>">
+            <i class="mdi mdi-cancel"></i> <span>Disqualified</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+        </li>
+		<li>
+          <a href="<?php echo $base_url.'index.php?action=dashboard&page=leads_disqualified&qualify=1';?>">
+            <i class="mdi mdi-check"></i> <span>Qualified</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+        </li>
+		<li>
+          <a href="<?php echo $base_url.'index.php?action=dashboard&page=leads_disqualified&approve=1';?>">
+            <i class="mdi mdi-cancel"></i> <span>Approved</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+        </li>
+		<li>
+          <a href="<?php echo $base_url.'index.php?action=dashboard&page=leads_disqualified&approve=2';?>">
+            <i class="mdi mdi-check"></i> <span>Dis-Approved</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+        </li>
+        <?php }?>
 		   
         
       </ul>

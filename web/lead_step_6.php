@@ -7,6 +7,13 @@
                   
 				</div>
 				<!-- /.box-header -->
+               
+                <div class="row">
+              
+
+
+                                        <div class="col-md-8">
+
 				<div class="box-body">
 					<!-- Nav tabs -->
 					<div class="vtabs customvtab">
@@ -19,7 +26,7 @@
                                 {
                                     //$badge='success';
                                     //-- check data avilable or not in company details
-                                    $company_details = $leads->get_leads_company_details_bydetails($_GET['lid'],$stage[$k]['value1']);
+                                    $company_details = $leads->get_leads_company_details_bydetails($_GET['id'],$stage[$k]['value1']);
                                     if(!$company_details)
                                     {$badge='danger';}
                                     else
@@ -58,7 +65,7 @@
                                     <!-- dynamic form -->
                                      <div id="msg<?php echo $formname;?>"></div>
                                      <form name="<?php echo $formname;?>" id="<?php echo $formname;?>" method="post" action="<?php echo $base_url.'index.php?action=leads&query=save_company_details';?>">
-                                     <input type="hidden" name="lid" value="<?php echo $_GET['lid'];?>"/>
+                                     <input type="hidden" name="lid" value="<?php echo $_GET['id'];?>"/>
                                      <input type="hidden" name="details" value="<?php echo $stage[$k]['value1'];?>"/>
                                         <div class="form-group">
                                             
@@ -148,7 +155,7 @@
                                                 </thead>				
 												<?php
 												$counter=1;
-												$company_details_leads=$leads->get_leads_company_details($_GET['lid']);
+												$company_details_leads=$leads->get_leads_company_details($_GET['id']);
                                                 if(!$company_details_leads)
                                                 {
                                                     echo "<tr><td colspan='4'><div class='alert alert-info'>No Data Found</div></td></tr>";
@@ -195,6 +202,85 @@
 			  </div>
 
 
+                              
 
 
-              
+                                              <!-- check if company name has been already researched-->
+                <div class="col-md-4">
+
+                <?php 
+								$progress=$leads->company_research_progress($_GET['id']);
+								$check_company=$leads->check_company_research($query[0]['company'],$_GET['id']);
+								
+								if( $query[0]['lead_qualified']=='2')
+								{
+									echo "<div class='alert alert-danger'>Lead Has Been Disqualified & Sent For Approval To MD. If It Has Been Declined To Discqualify Then Other Tabs Will Be Enable.</div>";
+								}
+								if( $query[0]['lead_qualified']=='1' || $query[0]['lead_qualified']=='0' || $_SESSION['utype']=='9' )
+								{
+									if($query[0]['lead_qualified']=='1' )
+									{echo "<div class='alert alert-success'>Lead Has Been Qualified</div>";}
+								
+								}?>
+										
+										<h3>Company Research Progress (<?php echo $progress;?>%)</h3>
+										<div class="progress">
+											<div class="progress-bar progress-bar-danger progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $progress;?>%">
+											<span class="sr-only">60% Complete (warning)</span>
+											</div>
+										</div>
+
+											<?php 										
+										 	if($check_company){?>
+											<div class="alert alert-info">This Company has been already researched !!!&nbsp;&nbsp;&nbsp;
+												<i class="btn btn-warning btn-xs" data-toggle="modal" data-target="#exampleModal" onclick="show_page_model('View Previous Company Research History','<?php echo $base_url.'index.php?action=dashboard&nocss=leads_company_history&id='.$check_company;?>')">View Details</i>
+											</div>
+											<?php }?>
+
+										<?php if($progress >= 25 && $query[0]['lead_qualified']=='0'){?> 
+
+												                    <span id="msg qualified_form"></span>
+												
+																	<span id="msgqualified"></span>
+																	<form name="qualified_form" id="qualified" action="<?php echo $base_url.'index.php?action=leads&query=qulified_lead';?>" method="post">
+																		<fieldset class="border p-2">
+																			<legend  class="float-none w-auto p-2">Lead Qualified ???</legend>
+																			
+																			<input type="hidden" name="id" value="<?php echo $_GET['id'];?>">
+																			<div class="row">
+																					<div class="col-sm-8">
+																						<select name="qualified" class="form-control">
+																							<option disabled="disabled" selected="selected">-Select-</option>
+																							<option value="1" <?php if($query[0]['lead_qualified']=='1'){echo "selected='selected'";}?>>Qualified</option>
+																							<option value="2" <?php if($query[0]['lead_qualified']=='2'){echo "selected='selected'";}?>>Dis-Qualified</option>
+																						</select>
+																					</div>
+																					<div class="col-sm-4">
+																						<input class="btn btn-success btn-sm" name="qualified_btn" onclick="form_submit_alert('qualified')" type="button" value="Save">
+																					</div>
+																			</div>
+																		</fieldset>
+																	</form>
+
+												
+													
+												
+												
+												
+
+											
+										<?php }
+                                        if($query[0]['lead_qualified']=='1' OR $query[0]['lead_qualified']=='2')
+                                        {?>
+                                            <form name="step7" action="<?php echo $base_url.'index.php?action=leads&query=step_change';?>" method="post">
+                                                <input type="hidden" name="lid" value="<?php echo $_GET['id'];?>">
+                                                <input type="hidden" name="step" value="7">
+                                                <input class="btn btn-info" type="submit" value="Process to Next Step 7">
+                                            </form>
+                                        <?php }   ?>	
+										</div>
+
+                                            </div>
+                                            </div>
+
+

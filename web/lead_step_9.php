@@ -1,56 +1,29 @@
-<div class="content-wrapper">
-	  <div class="container-full">
-
-
-	  <div class="content-header">
-			<div class="d-flex align-items-center">
-				<div class="mr-auto">
-					<h3 class="page-title">Employee Profile</h3>
-					<div class="d-inline-block align-items-center">
-						<nav>
-							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
-								<li class="breadcrumb-item" aria-current="page">HR</li>
-								<li class="breadcrumb-item active" aria-current="page">Employee Profile</li>
-							</ol>
-						</nav>
-					</div>
-				</div>
-				
-			</div>
-		</div>
 
 		<!-- Main content -->
 		<section class="content">
-			
+			<hr>
 			<!--- form -->
-			
-			<?php include('alert.php');?>	
-            <div class="box">
+			<div class="box">
                 
 						<div class="box-header with-border">
-						  <h4 class="box-title">Employee Profile</h4>
+						  <h4 class="box-title">Company Profile</h4>
 						</div>
 
 						<div class="box-body">
                             <?php 
                                 //basic details
                                 $emp=$admin->getone_user($_GET['id']);
-                                $profile =$hr->get_emp_profile($_GET['id']);
+                                $profile=$hr->get_emp_profile($_GET['id']);
                             ?>
-                            <form name="emp_profile" method="post" action="<?php echo $base_url."index.php?action=hr&query=save_emp_profile";?>">
-                                <input type="hidden" name="uid" value="<?php echo $_GET['id'];?>">
-                                <input type="hidden" name="uemail" value="<?php echo $emp[0]['uemail'];?>">
+                            <form name="emp_profile" method="post" action="<?php echo $base_url."index.php?action=leads&query=save_step_9";?>">
+
+                                <input type="hidden" name="lid" value="<?php echo $_GET['id'];?>">
+                              
                             <table class="table table-bordered">
                                 <tr>
-                                    <th>User Name</th>
-                                    <td><input type="text" class="form-control" name="uname" readonly="readonly" value="<?php echo $emp[0]['uname'];?>"></td>
-                                    <th>Password</th>
-                                    <td><input type="password" class="form-control" readonly="readonly" name="upass" value="<?php echo $emp[0]['upass'];?>"></td>
-                                </tr>    
-                                <tr>
-                                    <th>Name</th>
-                                    <td><input type="text" class="form-control" name="person_name" value="<?php echo $emp[0]['person_name'];?>"></td>
+                                    <th>First Name <input type="text" class="form-control" name="firstname" value=""></th>
+                                    <th>Last Name
+                                    <input type="text" class="form-control" name="lastname" value=""></th>
                                     <th>Gender</th>
                                     <td>
                                         <select name="gender" class="form-control" required>
@@ -59,30 +32,18 @@
                                             <option value="FeMale">FeMale</option>
                                         </select>
                                     </td>
-                                </tr>
+                                </tr>    
+                                
                                 <tr>
                                     <th>Company</th>
                                     <td><input type="text" class="form-control" name="company_now"></td>
                                     <th>Designation</th>
-                                    <td>
-                                            <select name="utype" class="form-control">
-                                            <option>-- Select --</option>
-                                            <?php $user = $admin->get_metaname_byvalue('user_type'); 
-
-                                            //	$user = array_unique($user0);
-                                            foreach($user as $k=>$value)
-                                            {
-                                                echo "<option value='".$user[$k]['value2']."' ";
-                                                if($emp[0]['utype']==$user[$k]['value2']){echo "selected='selected'";}  
-                                                echo ">".$user[$k]['value1']."</option>";
-                                            }
-                                            ?>
-                                            </select>
-                                    </td>
+                                    <td><input type="text" name="designation_now" class="form-control"></td>
                                 </tr>
+
                                 <tr>
                                     <th>Phone No.</th>
-                                    <td><input type="text" class="form-control" name="ucontact" value="<?php echo $emp[0]['ucontact'];?>"></td>
+                                    <td><input type="text" class="form-control" name="phone" value="<?php echo $emp[0]['ucontact'];?>"></td>
                                     <th>Location</th>
                                     <td><select class="form-control" name="country" id="country" onchange="get_details('country','state','<?php echo $base_url.'index.php?action=leads&query=get_details&type=state&id=';?>')">
 									<option disabled="disabled" selected="selected" >-- Select --</option>
@@ -93,14 +54,22 @@
 									}?>
 								  </select></td>
                                 </tr>
+
                                 <tr>
-                                    <th>State</th>
-									 <td>
-                                     <select class="form-control" name="state" id="state" onchange="get_details('state','city','<?php echo $base_url.'index.php?action=leads&query=get_details&type=city&id=';?>')"></select>
-                                     <span id="msgstate"></span> 
-                                     </td>
-									  <th>City</th>
-									  <td><select class="form-control" name="city" id="city"></td>
+                                    <th>State
+                                        <select class="form-control" name="state" id="state" onchange="get_details('state','city','<?php echo $base_url.'index.php?action=leads&query=get_details&type=city&id=';?>')"></select>
+                                        <span id="msgstate"></span> 
+                                    </th>
+                                    <th>City
+                                        <select class="form-control" name="city" id="city">
+                                        </select>
+                                    </th>
+                                    <th>Zipcode
+                                        <input type="number" class="form-control" name="zipcode" value="">
+                                    </th>
+                                    <th>Time Zone
+                                        <input type="text" class="form-control" name="timezone" value="">
+                                    </th>
                                 </tr>      
                                 
                                 <tr>
@@ -109,6 +78,7 @@
                                     <th>Family Linkage</th>
                                     <td><input type="text" class="form-control" name="family_linkage" value=""></td>
                                 </tr>
+
                                 <tr>
                                     <th>Religon</th>
                                     <td>
@@ -178,9 +148,7 @@
         
         </section>     
         
-    </div>        
-
-</div>    
+    
 
 
 

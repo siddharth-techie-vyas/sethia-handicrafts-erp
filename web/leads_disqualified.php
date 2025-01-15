@@ -7,18 +7,15 @@
 	  <div class="container-full">
 
 <?php 
-if($_SESSION['utype']=='1')
-{$leadviewall=$leads->view_all();}
-elseif(isset($_GET['status']))
-{$leadviewall=$leads->get_leads_bystatus_byuser($_GET['status'],$_SESSION['uid']);}
-else
-{$leadviewall=$leads->view_all_byuser($_SESSION['uid']);}
+if(isset($_GET['qualify']))
+{$leadviewall=$leads->view_all_by_qualify('lead_qualified',$_GET['qualify']);}
+if(isset($_GET['approve']))
+{$leadviewall=$leads->view_all_by_qualify('comp_audit',$_GET['approve']);}
 ?>
 	  <div class="content-header">
 			<div class="d-flex align-items-center">
 				<div class="mr-auto">
-					<h3 class="page-title">View All Leads <?php if(isset($_GET['status'])){$status0=$admin->get_metaname_byvalue2('lead_status',$_GET["status"]);} 
-					echo '<b class="text-primary">['.$status0[0]['value1'].']</b>';?></h3>
+					<h3 class="page-title">View All Leads <?php if(isset($_GET['status'])){$status0=$admin->get_metaname_byvalue2('lead_status',$_GET["status"]);} echo '<b class="text-primary">['.$status0[0]['value1'].']</b>';?></h3>
 					<div class="d-inline-block align-items-center">
 						<nav>
 							<ol class="breadcrumb">
@@ -154,7 +151,6 @@ else
 							<tr>
 								<th>Date & Time</th>
 								<th>Lead #</th>
-								<th>Step</th>
 								<th>Source</th>
 								<th>Alloted To</th>
 								
@@ -173,9 +169,8 @@ else
 							foreach ($leadviewall as $doc) 
 							{
 								
-								$status=$admin->get_metaname_byvalue2('lead_status',$doc["status"]);
+								$status		=$admin->get_metaname_byvalue2('lead_status',$doc["status"]);
 									$group=$leads->get_group_one($doc["group_id"]);
-									
 									$gname = $group[0]['gname'];
 									if($gname==''){$gname= 'Uncategorised';}
 								$uname=$admin->getone_user($doc["handledby"]);
@@ -183,7 +178,6 @@ else
 								echo "<tr>";
 								echo "<td>".date('d-m-Y H:i:s', strtotime($doc['date_time']))."</td>";	
 								echo "<td>".$prefix_lead[0]['value1'].$doc['id']."</td>";
-								echo "<td>".$doc["step"]."</td>";
 									echo "<td>".$gname."</td>";
 									echo "<td>".$uname[0]['uname']."</td>";
 									
@@ -192,10 +186,10 @@ else
 									echo "</td>";
 									echo "<td>".$doc["company"]."</td>";
 									echo "<td>";
-										if($doc["lead_qualified"]=='1'){echo "Qualified";}
-										if($doc["lead_qualified"]=='2'){echo "Dis-Qualified";}
-										if($doc["lead_qualified"]=='0'){echo "Not Handled";}
-									echo "</td>";
+                                        if($doc["lead_qualified"]=='1'){echo "Qualified";}
+                                        if($doc["lead_qualified"]=='2'){echo "Dis-Qualified";}
+                                        if($doc["lead_qualified"]=='0'){echo "Not Handled";}
+                                    echo  "</td>";
 									echo "<td>".date('d-m-Y H:i:s', strtotime($doc['last_updated']))."</td>";									
 									echo "<td>".$status[0]["value1"]."</td>";
 									?>

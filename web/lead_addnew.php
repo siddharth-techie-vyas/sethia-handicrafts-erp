@@ -32,6 +32,8 @@
 						</div>
 						<!-- /.box-header -->
 						<form class="form" method="post" action="<?php echo $base_url.'index.php?action=leads&query=create_new'?>" name="leads_new" enctype='multipart/form-data'>
+							<!-- sent directly to step 6 for company check -->
+							 <input type="hidden" name="step" value="6">
 							<div class="box-body">
 								<h4 class="box-title text-info"><i class="ti-user mr-15"></i> Cold Lead Info / Input</h4>
 								<br><small class="text-danger">* Are Medetory Filed(s)</small>

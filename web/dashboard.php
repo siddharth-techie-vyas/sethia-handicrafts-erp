@@ -21,7 +21,8 @@ if($_SESSION['utype']=='7')
 { include('dashboard_developer.php') ; }
 if($_SESSION['utype']=='8')
 { include('dashboard_merchent.php') ; }
-
+if($_SESSION['utype']=='9')
+{ include('dashboard_md.php') ; }
 ?>
 
 <?php include('footer.php') ;?>

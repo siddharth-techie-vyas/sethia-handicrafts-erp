@@ -312,7 +312,7 @@ header('Access-control-Allow-Headers: Authorization,Content-Type ,X-Auth-Token ,
 //========= notification
 function save_alerts($from,$msg,$to)
 {
-    $query = "insert into notification(from_uid,msg,to_uid)VALUES(?,?,?)";
+   echo $query = "insert into notification(from_uid,msg,to_uid)VALUES(?,?,?)";
     $paramType = "isi";
     $paramValue = array($from,$msg,$to);
     $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
@@ -385,4 +385,17 @@ function upload_file($pic)
         return $result;
     }
 
+    function get_steps_by_module($module)
+    {   
+        $query = "select * from module_info where module_type='$module'";
+        $result = $this->db_handle->runBaseQuery($query);
+        return $result; 
+    }
+
+    function get_module_step($module,$step)
+    {   
+        $query = "select * from module_info where module_type='$module' AND step='$step'";
+        $result = $this->db_handle->runBaseQuery($query);
+        return $result; 
+    }   
 }

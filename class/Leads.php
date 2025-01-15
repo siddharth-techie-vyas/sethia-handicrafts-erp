@@ -9,11 +9,11 @@ class Leads
         $this->db_handle = new DBController();
     }
 
-    function create_new($company,$company_type,$groupid,$group_remak,$userid,$attachment,$target_date)
+    function create_new($company,$company_type,$groupid,$group_remak,$userid,$attachment,$target_date,$step)
     {           
-        $query = "insert into leads(company,company_type,group_id,group_remark,handledby,attachment,targetted_date)VALUES(?,?,?,?,?,?,?)";
-        $paramType = "ssisiss";
-        $paramValue = array($company,$company_type,$groupid,$group_remak,$userid,$attachment,$target_date);
+        $query = "insert into leads(company,company_type,group_id,group_remark,handledby,attachment,targetted_date,step)VALUES(?,?,?,?,?,?,?,?)";
+        $paramType = "ssisissi";
+        $paramValue = array($company,$company_type,$groupid,$group_remak,$userid,$attachment,$target_date,$step);
         $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
     	return $insertId;        
         
@@ -35,7 +35,7 @@ class Leads
 
     function view_all()
     {
-        $query="select * from leads ORDER BY id DESC";
+        $query="select * from leads ORDER BY date_time DESC ";
 		$result = $this->db_handle->runBaseQuery($query);
         return $result;
     }
@@ -292,7 +292,7 @@ function get_group_one($id)
     {
         if(is_array($value2))
         {$value2=serialize($value2);}
-       echo  $query = "insert into lead_compnay_details(lid,details,value1,value2,value3,value4) VALUES('$lid','$details','$value1','$value2','$value3','$value4')";
+        $query = "insert into lead_compnay_details(lid,details,value1,value2,value3,value4) VALUES('$lid','$details','$value1','$value2','$value3','$value4')";
         $insertId = $this->db_handle->update($query);
         return $insertId;
     }
@@ -341,5 +341,141 @@ function get_group_one($id)
         return $insertId;
     }
 
+    function check_company_research($company,$lid)
+    {
+        $query="SELECT * FROM leads where company='$company' ";
+		$result = $this->db_handle->runBaseQuery($query);
+        $ids=array();
+        if(count($result)>0)
+        {
+           foreach($result as $r)
+           {
+               array_push($ids,$r['id']) ;
+           }
+
+           $compny_c = count($ids); 
+
+        if($compny_c>1)
+        {
+            //-- check between data that any comapny research found or not
+            $ids=implode("','",$ids);
+            $query="SELECT * FROM lead_compnay_details  where lid IN ('$ids') ";
+            $result = $this->db_handle->runBaseQuery($query);
+            if($result)
+            {return $result[0]['id'];}
+            
+        }
+        else
+        {return '0';}  
+        }
+        
+    }
+
+    function company_research_progress($id)
+    {
+        //-- get total fileds from meta where metaname = lead_company_info
+        $query="SELECT * FROM meta_data where meta_name='lead_company_info' ";
+        $result = $this->db_handle->runBaseQuery($query);
+         $count=count($result);
+
+        $query1="SELECT * FROM lead_compnay_details  where lid='$id' ";
+        $result1 = $this->db_handle->runBaseQuery($query1);
+        if($result1)
+        {$count1=count($result1);}
+        else
+        {$count1=0;}
+
+        //-- calculate progress
+        $progress=($count1/$count)*100; 
+        
+        
+        return round($progress);
+    }
+
+
+    //--change lead qualified status
+    function update_lead_qualified($id,$qualified_status)
+    {
+        $update="update leads SET lead_qualified='$qualified_status' where id='$id' ";
+        $insertId = $this->db_handle->update($update);
+        return $insertId;
+    } 
+    
+    function update_lead_audit($id,$qualified_status,$audit_by)
+    {
+        $update="update leads SET comp_audit='$qualified_status',audit_by='$audit_by' where id='$id' ";
+        $insertId = $this->db_handle->update($update);
+        return $insertId;
+    }
+    
+    function update_lead_audit_md($id,$qualified_status)
+    {
+        $update="update leads SET comp_audit='$qualified_status' where id='$id' ";
+        $insertId = $this->db_handle->update($update);
+        return $insertId;
+    }
+
+    function view_all_by_qualify($column,$qualify)
+    {
+       echo $query="SELECT * FROM leads where $column='$qualify' ";
+        $result = $this->db_handle->runBaseQuery($query);
+        return $result;
+    }
+
+    function step_change($id,$step)
+    {
+        $query="update leads SET step='$step' where id='$id' ";
+        $result = $this->db_handle->update($query);
+        return $result;
+    }
+
+    function save_comp_profile($lid,$firstname,$lastname,$gender,$company_now,$designation_now,$phone,$country,$state,$city,$zipcode,$timezone,$dob,$family_linkage,$religion,$goal,$point,$motivation,$channel,$current_since)
+    {
+       echo $query = "insert into lead_comp_profile (lid,firstname,lastname,gender,company_now,designation_now,phone,country,state,city,zipcode,timezone,dob,family_linkage,religion,goal,point,motivation,channel,current_since)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        $paramType = "ssssssssssssssssssss";
+        $paramValue = array($lid,$firstname,$lastname,$gender,$company_now,$designation_now,$phone,$country,$state,$city,$zipcode,$timezone,$dob,$family_linkage,$religion,$goal,$point,$motivation,$channel,$current_since);
+        $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
+        return $insertId; 
+       
+    }
+
+    function edit_comp_experience($company,$from,$to,$designation,$lid)
+    {
+        $query = "insert into lead_comp_experience(company,from_date,to_date,designation,lid)VALUES(?,?,?,?,?)";
+        $paramType = "ssssi";
+        $paramValue = array($company,$from,$to,$designation,$uid);
+        $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
+        return $insertId;     
+    }
+
+    function get_company_profile($id)
+    {
+         $query="select * from lead_comp_profile where lid='$id' ";
+        $result = $this->db_handle->runBaseQuery($query);
+        return $result;
+    }
+
+    function get_company_profile_details($id)
+    {
+        $query="select * from lead_comp_experience where lid='$id' ";
+        $result = $this->db_handle->runBaseQuery($query);
+        return $result;
+    }
+
+    function view_all_leads_approval()
+    {
+        $query="select * from leads where step IN (10,31,33,34,35,36,37) ";
+        $result = $this->db_handle->runBaseQuery($query);
+        return $result;
+    }
+
+    function leads_company_more_details ($lid,$step,$value1,$value2)
+    {
+       echo $query = "insert into leads_company_more_details(lid,step,value1,value2)VALUES(?,?,?,?)";
+        $paramType = "ssss";
+        $paramValue = array($lid,$step,$value1,$value2);
+        $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
+        return $insertId;   
+    }
 }
 

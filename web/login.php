@@ -31,6 +31,10 @@
 		  <div class="auth-body" >
 			<p class="auth-msg text-white-50">Sign in to start your session</p>
 
+			<?php 
+			if(isset($_GET['status']))
+			{echo "<div class='alert alert-danger'>Wrong Credential(s)</div>";}
+			?>
 			<form  method="post" class="form-element" action="../processlogin.php">
 			  <div class="form-group has-feedback">
 				<input type="text" name="uname" class="form-control text-white plc-white" placeholder="User Name" required>

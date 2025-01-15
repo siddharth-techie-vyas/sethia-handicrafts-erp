@@ -331,7 +331,7 @@
 							$color2=json_encode($color2);
 							?>
 							<input type="hidden" name="bar_label2" id="bar_label2" value='<?php echo $label2; ?>'/>
-							<input type="hidden" name="bar_color2" id="bar_color2" value='<?php echo $color2; ?>'/>
+							<input type="text" name="bar_color2" id="bar_color2" value='<?php echo $color2; ?>'/>
 							<input type="hidden" name="bar_data2" id="bar_data2" value='<?php echo $data2; ?>'/>
 							<input type="hidden" name="bar_title2" id="bar_title2" value='Overall Report Till <?php echo date('d-m-Y');?>'/>
 						</div>
