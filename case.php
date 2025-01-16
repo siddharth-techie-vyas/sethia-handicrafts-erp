@@ -651,12 +651,100 @@ case "leads":
 				echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=leads_feedback&id=$_POST[lid]&status=1';</script>";
 			}
 
-			if($_GET['query']=='step_15')
+			if($_GET['query']=='step_14_update')
 			{
+					$lid = $_POST['lid'];
+					$value3_array = $_POST['value3'];
+					$value4_array = $_POST['value4'];
+					$id_array = $_POST['id'];
+
+					foreach($value3_array as $key=>$value) 
+					{ 
+						$value3 = mysqli_real_escape_string($con,  $value3_array[$key]);
+						$value4 = mysqli_real_escape_string($con,  $value4_array[$key]);
+						$id = mysqli_real_escape_string($con,  $id_array[$key]);
+						//=== save
+						$save = $leads->leads_company_more_details_update ($id,$value3,$value4); 
+					}
+
 				$leads->step_change($_POST['lid'],'15');
 				echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=leads_feedback&id=$_POST[lid]&status=1';</script>";
 			}
 
+			if($_GET['query']=='step_15')
+			{
+					$lid = $_POST['lid'];
+					$value5_array = $_POST['value5'];
+					$id_array = $_POST['id'];
+
+					foreach($value5_array as $key=>$value) 
+					{ 
+						$value5 = mysqli_real_escape_string($con,  $value5_array[$key]);
+						$value6 = date("Y-m-d h:i:s");
+						$id = mysqli_real_escape_string($con,$id_array[$key]);
+						//=== save
+						$save = $leads->leads_company_more_details_update2 ($id,$value5,$value6); 
+					}
+
+				$leads->step_change($_POST['lid'],'16');
+				echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=leads_feedback&id=$_POST[lid]&status=1';</script>";
+			}
+
+
+			if($_GET['query']=='step_15')
+			{
+					$lid = $_POST['lid'];
+					$value5_array = $_POST['value5'];
+					$id_array = $_POST['id'];
+
+					foreach($value5_array as $key=>$value) 
+					{ 
+						$value5 = mysqli_real_escape_string($con,  $value5_array[$key]);
+						$value6 = date("Y-m-d h:i:s");
+						$id = mysqli_real_escape_string($con,$id_array[$key]);
+						//=== save
+						$save = $leads->leads_company_more_details_update2 ($id,$value5,$value6); 
+					}
+
+				$leads->step_change($_POST['lid'],'16');
+				echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=leads_feedback&id=$_POST[lid]&status=1';</script>";
+			}
+
+			//-- for step 16 to 20
+			if($_GET['query']=='step_16' || $_GET['query']=='step_17' || $_GET['query']=='step_18' || $_GET['query']=='step_19' || $_GET['query']=='step_20')
+			{
+					$lid = $_POST['lid'];
+					$next_step = $_POST['next_step'];
+					$value7_array = $_POST['value7'];
+					$value8_array = $_POST['value8'];
+					$value9_array = $_POST['value9'];
+					$value10_array = $_POST['value10'];
+					
+
+					$id_array = $_POST['id'];
+
+					foreach($value7_array as $key=>$value) 
+					{ 
+						if($value7_array[$key]=='1')
+						{$value7 = date('Y-m-d h:i:s'); $next_step='21';}
+						
+						if($value8_array[$key]=='1')
+						{$value8 = date('Y-m-d h:i:s');}
+						
+						if($value9_array[$key]=='1')
+						{$value9 = date('Y-m-d h:i:s');}
+						
+						if($value10_array[$key]=='1')
+						{$value10 = date('Y-m-d h:i:s');}
+
+						$id = mysqli_real_escape_string($con,$id_array[$key]);
+						//=== save
+						$save = $leads->leads_company_more_details_update3 ($id,$value7,$value8,$value9,$value10); 
+					}
+
+				$leads->step_change($_POST['lid'],$next_step);
+				echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=leads_feedback&id=$_POST[lid]&status=1';</script>";
+			}
 
 	}
 	break;

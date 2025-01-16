@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="box-body">
-                <form name="likedin" action="<?php echo $base_url.'index.php?action=leads&query=step_14_update';?>" method="post">
+                <form name="likedin" action="<?php echo $base_url.'index.php?action=leads&query=step_15';?>" method="post">
                     <input type="hidden" name="lid" value="<?php echo $_GET['id'];?>"/>
             <table class="table table-bordered" id="addmore">
                     <tr>
@@ -10,6 +10,7 @@
                         <th>Contact Number</th>
                         <th>Decision Maker</th>
                         <th>Linkedin Profile</th>
+                        <th>Request Send</th>
                     </tr>
                     <?php 
                         $get_details_comp = $leads->get_company_more_details('12',$_GET['id']);
@@ -18,37 +19,27 @@
                     <tr>
                         <td><?php echo $get_details_comp[$key]['value1'];?></td>
                         <td><?php echo $get_details_comp[$key]['value2'];?></td>
-                        <th>
+                        <td><?php echo $get_details_comp[$key]['value3'];?></td>
+                        <td><?php echo $get_details_comp[$key]['value4'];?></td>
+                        <td>
                             <input type="hidden" name="id[]" value="<?php echo $get_details_comp[$key]['id'];?>"/>
-                            <select name="value3[]" class="form-control">
+                            <select name="value5[]" class="form-control">
+                                <option disabled='disabled' selected='selected'>-Select-</option>
                                 <option value="1">Yes</option>
-                                <option value="0" selected='selected'>No</option>
+                                <option value="0">No</option>
                             </select>
-                        </th>
-                        <th><input type="text" name="value4[]" class="form-control" required></th>
-                        <td><i class="fa fa-pencil btn btn-warning btn-xs"></i> <i class="fa fa-trash btn btn-danger btn-xs"></i></td>
+                        </td>
                     </tr>
                     <?PHP }?>
                    <tr>
                     <td colspan="2">
-                        <input type="submit" name="submit" value="Save Details" class="btn btn-info btn-md">
+                        <input type="submit" name="submit" value="Save Details & Process To Next Step" class="btn btn-info btn-md">
                     </td>
                    </tr>
                 </table>
                 </form>
 
-                <table class="table table-bordered">
-                <tr>
-                    
-                        <td colspan="2">
-                        <form name="step14" action="<?php echo $base_url.'index.php?action=leads&query=step_15';?>" method="post">
-                            <input type="hidden" name="lid" value="<?php echo $_GET['id'];?>">
-                            
-                            <input type="submit" name="submit" value="Process to Next Step" class="btn btn-warning btn-md">
-                        </form>
-                    </td>
-                </tr>
-                        </table>
+                
             </div>
         </div>
     </div>

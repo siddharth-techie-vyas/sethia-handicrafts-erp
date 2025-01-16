@@ -478,6 +478,27 @@ function get_group_one($id)
         return $insertId;   
     }
 
+    function leads_company_more_details_update ($id,$value3,$value4)
+    {
+        $query="update leads_company_more_details SET value3='$value3', value4='$value4' where id='$id' ";
+        $result = $this->db_handle->update($query);
+        return $result;
+    }
+
+    function leads_company_more_details_update2 ($id,$value5,$value6)
+    {
+        $query="update leads_company_more_details SET value5='$value5', value6='$value6' where id='$id' ";
+        $result = $this->db_handle->update($query);
+        return $result;
+    }
+
+    function leads_company_more_details_update3 ($id,$value7,$value8,$value9,$value10)
+    {
+        $query="update leads_company_more_details SET value7='$value7', value8='$value8',value9='$value9',value10='$value10' where id='$id' ";
+        $result = $this->db_handle->update($query);
+        return $result;
+    }
+
     function get_company_more_details($step,$id)
     {
         $query="select * from leads_company_more_details where step ='$step' AND lid='$id' ";
