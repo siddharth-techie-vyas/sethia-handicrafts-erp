@@ -478,9 +478,9 @@ function get_group_one($id)
         return $insertId;   
     }
 
-    function leads_company_more_details_update ($id,$value3,$value4)
+    function leads_company_more_details_update ($id,$query0)
     {
-        $query="update leads_company_more_details SET value3='$value3', value4='$value4' where id='$id' ";
+        $query="update leads_company_more_details SET $query0 where id='$id' ";
         $result = $this->db_handle->update($query);
         return $result;
     }

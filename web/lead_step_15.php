@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="box-body">
-                <form name="likedin" action="<?php echo $base_url.'index.php?action=leads&query=step_15';?>" method="post">
+                <form name="likedin" action="<?php echo $base_url.'index.php?action=leads&query=step_15_update';?>" method="post">
                     <input type="hidden" name="lid" value="<?php echo $_GET['id'];?>"/>
             <table class="table table-bordered" id="addmore">
                     <tr>
@@ -25,21 +25,32 @@
                             <input type="hidden" name="id[]" value="<?php echo $get_details_comp[$key]['id'];?>"/>
                             <select name="value5[]" class="form-control">
                                 <option disabled='disabled' selected='selected'>-Select-</option>
-                                <option value="1">Yes</option>
-                                <option value="0">No</option>
+                                <option value="1" <?php if($get_details_comp[$key]['value5']=='1'){echo "selected='selected'"; }?>>Yes</option>
+                                <option value="0" <?php if($get_details_comp[$key]['value5']=='0'){echo "selected='selected'"; }?>>No</option>
                             </select>
                         </td>
                     </tr>
                     <?PHP }?>
                    <tr>
                     <td colspan="2">
-                        <input type="submit" name="submit" value="Save Details & Process To Next Step" class="btn btn-info btn-md">
+                        <input type="submit" name="submit" value="Update" class="btn btn-info btn-md">
                     </td>
                    </tr>
                 </table>
                 </form>
 
-                
+                <table class="table table-bordered">
+                <tr>
+                    
+                        <td colspan="2">
+                        <form name="step14" action="<?php echo $base_url.'index.php?action=leads&query=step_15';?>" method="post">
+                            <input type="hidden" name="lid" value="<?php echo $_GET['id'];?>">
+                            
+                            <input type="submit" name="submit" value="Process to Next Step 16" class="btn btn-warning btn-md">
+                        </form>
+                    </td>
+                </tr>
+                        </table>
             </div>
         </div>
     </div>

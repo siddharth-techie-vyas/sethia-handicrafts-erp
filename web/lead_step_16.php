@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="box-body">
-                <form name="likedin" action="<?php echo $base_url.'index.php?action=leads&query=step_16';?>" method="post">
+                <form name="likedin" action="<?php echo $base_url.'index.php?action=leads&query=step_16to20_update';?>" method="post">
                     <input type="hidden" name="next_step" value="17">
                     <input type="hidden" name="lid" value="<?php echo $_GET['id'];?>"/>
             <table class="table table-bordered" id="addmore">
@@ -39,26 +39,39 @@
                         </td>
                         <td>
                             <select name="value7[]" class="form-control">
-                                <option value="1">Yes</option>
-                                <option value="0" selected='selected'>No</option>
-                            </select>   
+                            <option disabled='disabled' selected='selected'>-Select-</option>
+                                <option value="1" <?php if($get_details_comp[$key]['value7']=='1'){echo "selected='selected'"; }?>>Yes</option>
+                                <option value="0" <?php if($get_details_comp[$key]['value7']=='0'){echo "selected='selected'"; }?>>No</option>
+                            </select>    
                             
-                            <input type="hidden" name="value7[]" value="0"/>
-                            <input type="hidden" name="value8[]" value="0"/>
+                            
+                            <input type="hidden" name="value8[]" value="<?php echo $get_details_comp[$key]['value8'];?>"/>
                             <input type="hidden" name="value9[]" value="0"/>
                             <input type="hidden" name="value10[]" value="0"/>
+                            <input type="hidden" name="value11[]" value="" class="form-control"/>
                         </td>
                     </tr>
                     <?PHP }?>
                    <tr>
                     <td colspan="2">
-                        <input type="submit" name="submit" value="Save Details & Process To Next Step" class="btn btn-info btn-md">
+                        <input type="submit" name="submit" value="Update" class="btn btn-info btn-md">
                     </td>
                    </tr>
                 </table>
                 </form>
 
-                
+                <table class="table table-bordered">
+                <tr>
+                    
+                        <td colspan="2">
+                        <form name="step16" action="<?php echo $base_url.'index.php?action=leads&query=step_16to20';?>" method="post">
+                            <input type="hidden" name="lid" value="<?php echo $_GET['id'];?>">
+                            <input type="hidden" name="step" value="17">
+                            <input type="submit" name="submit" value="Process to Next Step 17" class="btn btn-warning btn-md">
+                        </form>
+                    </td>
+                </tr>
+                        </table>
             </div>
         </div>
     </div>
