@@ -20,6 +20,7 @@
 
                     </tr>
                     <?php 
+                    $linkedin_con=array();
                         $get_details_comp = $leads->get_company_more_details('12',$_GET['id']);
                         foreach ($get_details_comp as $key => $value) {
                     ?>
@@ -72,6 +73,12 @@
                         <td>    
                             <input type="date" name="value11[]" value="<?php echo $get_details_comp[$key]['value11'];?>" class="form-control"/>
                         </td>
+                        
+                        <td>
+                            <?php if($get_details_comp[$key]['value9']=='0'){echo "Failed";}
+                                    if($get_details_comp[$key]['value9']=='1'){array_push($linkedin_con,"yes");}
+                            ?>
+                        </td>
                     </tr>
                     <?PHP }?>
                    <tr>
@@ -82,6 +89,7 @@
                 </table>
                 </form>
 
+                <?php if(count($linkedin_con)>0){?>
                 <table class="table table-bordered">
                 <tr>
                     
@@ -94,6 +102,7 @@
                     </td>
                 </tr>
                         </table>
+                <?php }?>        
             </div>
         </div>
     </div>

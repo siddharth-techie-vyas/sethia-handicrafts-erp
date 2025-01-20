@@ -19,7 +19,7 @@
                     <tr>
                         <td><?php echo $get_details_comp[$key]['value1'];?></td>
                         <td><?php echo $get_details_comp[$key]['value2'];?></td>
-                        <td><?php echo $get_details_comp[$key]['value3'];?></td>
+                        <td><?php if($get_details_comp[$key]['value3']=='0'){echo "No";}; if($get_details_comp[$key]['value3']=='1'){echo "Yes";};?></td>
                         <td><?php echo $get_details_comp[$key]['value4'];?></td>
                         <td>
                             <input type="hidden" name="id[]" value="<?php echo $get_details_comp[$key]['id'];?>"/>
