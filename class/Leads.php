@@ -431,7 +431,7 @@ function get_group_one($id)
 
     function save_comp_profile($lid,$firstname,$lastname,$gender,$company_now,$designation_now,$phone,$country,$state,$city,$zipcode,$timezone,$dob,$family_linkage,$religion,$goal,$point,$motivation,$channel,$current_since)
     {
-       echo $query = "insert into lead_comp_profile (lid,firstname,lastname,gender,company_now,designation_now,phone,country,state,city,zipcode,timezone,dob,family_linkage,religion,goal,point,motivation,channel,current_since)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        $query = "insert into lead_comp_profile (lid,firstname,lastname,gender,company_now,designation_now,phone,country,state,city,zipcode,timezone,dob,family_linkage,religion,goal,point,motivation,channel,current_since)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         $paramType = "ssssssssssssssssssss";
         $paramValue = array($lid,$firstname,$lastname,$gender,$company_now,$designation_now,$phone,$country,$state,$city,$zipcode,$timezone,$dob,$family_linkage,$religion,$goal,$point,$motivation,$channel,$current_since);
         $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
@@ -443,7 +443,7 @@ function get_group_one($id)
     {
         $query = "insert into lead_comp_experience(company,from_date,to_date,designation,lid)VALUES(?,?,?,?,?)";
         $paramType = "ssssi";
-        $paramValue = array($company,$from,$to,$designation,$uid);
+        $paramValue = array($company,$from,$to,$designation,$lid); 
         $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
         return $insertId;     
     }
