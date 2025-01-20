@@ -44,12 +44,8 @@
                         ?>
                         </td>
                         <td>
-                            <select name="value7[]" class="form-control">
-                            <option value="">Select</option>
-                                <option value="1" <?php if($get_details_comp[$key]['value7']=='1'){echo "selected='selected'"; }?>>Yes</option>
-                                <option value="0" <?php if($get_details_comp[$key]['value7']=='0'){echo "selected='selected'"; }?>>No</option>
-                            </select>   
-                            <input type="hidden" name="value8[]" value="<?php echo $get_details_comp[$key]['value8'];?>">
+                            <?php if($get_details_comp[$key]['value7']=='1'){echo "Yes"; }?>
+                                <?php if($get_details_comp[$key]['value7']=='0'){echo "No"; }?>
                             <?php 
                             if($get_details_comp[$key]['value7']=='1') { echo '<br>'.date("d-m-Y h:i:s", strtotime($get_details_comp[$key]['value8']));}
                             ?>
@@ -57,26 +53,19 @@
                         </td>
                         
                         <td>
-                            <select name="value9[]" class="form-control">
-                            <option value="1" <?php if($get_details_comp[$key]['value9']=='1'){echo "selected='selected'"; }?>>Yes</option>
-                            <option value="0" <?php if($get_details_comp[$key]['value9']=='0'){echo "selected='selected'"; }?>>No</option>
-                            </select>   
+                        <?php if($get_details_comp[$key]['value9']=='1'){echo "Yes"; }?>
+                        <?php if($get_details_comp[$key]['value9']=='0'){echo "No"; }?> 
                         </td>
                         
                         <td>
-                        <select name="value10[]" class="form-control">
-                            <option value="1" <?php if($get_details_comp[$key]['value10']=='1'){echo "selected='selected'"; }?>>Yes</option>
-                            <option value="0" <?php if($get_details_comp[$key]['value10']=='0'){echo "selected='selected'"; }?>>No</option>
-                            </select>  
+                                <?php if($get_details_comp[$key]['value10']=='1'){echo "Yes"; }?>
+                                <?php if($get_details_comp[$key]['value10']=='0'){echo "No"; }?>                        
                         </td>
-                        
-                        <td>    
-                            <input type="date" name="value11[]" value="<?php echo $get_details_comp[$key]['value11'];?>" class="form-control"/>
-                        </td>
+                        <td><?php echo $get_details_comp[$key]['value11'];?></td>
                         
                         <td>
                             <?php if($get_details_comp[$key]['value9']=='0'){echo "Failed";}
-                                    if($get_details_comp[$key]['value9']=='1'){array_push($linkedin_con,"yes"); echo "Accepted";}
+                                    if($get_details_comp[$key]['value9']=='1'){array_push($linkedin_con,"yes");}
                             ?>
                         </td>
                     </tr>
@@ -94,10 +83,11 @@
                 <tr>
                     
                         <td colspan="2">
-                        <form name="step21" action="<?php echo $base_url.'index.php?action=leads&query=step_16to20';?>" method="post">
+                            <span id="msgstep30"></span>
+                        <form name="step30" id="step30" action="<?php echo $base_url.'index.php?action=leads&query=step_16to20';?>" method="post">
                             <input type="hidden" name="lid" value="<?php echo $_GET['id'];?>">
-                            <input type="hidden" name="step" value="21">
-                            <input type="submit" name="submit" value="Process to Next Step 21" class="btn btn-warning btn-md">
+                            <input type="hidden" name="step" value="30">
+                            <input type="button" onclick="form_submit_alert('step30')" name="submit" value="Schedule A Meeting First Meeting" class="btn btn-warning btn-md">
                         </form>
                     </td>
                 </tr>
