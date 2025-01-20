@@ -10,11 +10,7 @@
 						</div>
 
 						<div class="box-body">
-                            <?php 
-                                //basic details
-                                $emp=$admin->getone_user($_GET['id']);
-                                $profile=$hr->get_emp_profile($_GET['id']);
-                            ?>
+                           
                             <form name="emp_profile" method="post" action="<?php echo $base_url."index.php?action=leads&query=save_step_9";?>">
 
                                 <input type="hidden" name="lid" value="<?php echo $_GET['id'];?>">
