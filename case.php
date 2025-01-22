@@ -756,12 +756,84 @@ case "leads":
 				
 				echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=leads_feedback&id=$_POST[lid]&status=1';</script>";
 			}
+
+			//-- upgrade the step only using by other pages too
 			if($_GET['query']=='step_16to20')
 			{
 				$leads->step_change($_POST['lid'],$_POST['step']);
 				echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=leads_feedback&id=$_POST[lid]&status=1';</script>";
 			}
 
+			if($_GET['query']=='step_30to38_update')
+			{
+				$id_array = $_POST['id'];
+				$meeting_date_array = $_POST['meeting_date'];
+				$meeting_location_array = $_POST['meeting_location'];
+				$meeting_req_array = $_POST['meeting_req'];
+				
+				$meeting_images_array = $_POST['meeting_images'];
+				$meeting_present_array = $_POST['meeting_present'];
+				$meeting_status_array = $_POST['meeting_status'];
+				$meeting_updates_array = $_POST['meeting_updates'];
+				$meeting_call_array = $_POST['meeting_call'];
+				$meeting_updates2_array = $_POST['meeting_updates2'];
+				$meeting_intouch_array = $_POST['meeting_intouch'];
+				$meeting_drip_array = $_POST['meeting_drip'];
+
+				foreach($id_array as $key=>$value) 
+				{ 
+					$meeting_date = mysqli_real_escape_string($con,  $meeting_date_array[$key]);
+					$meeting_location = mysqli_real_escape_string($con,  $meeting_location_array[$key]);
+					$meeting_req = mysqli_real_escape_string($con,  $meeting_req_array[$key]);
+					//--multi images
+					$meeting_images = mysqli_real_escape_string($con,  $meeting_images_array[$key]);
+					$file=array();
+						if(isset($_FILES[$meeting_images]))
+						{		
+							foreach($_FILES[$meeting_images]['name'] as $k=>$v)
+							{
+								$file[] = $admin->upload_file_multi($_FILES[$meeting_images]['name'][$k],$_FILES[$meeting_images]['tmp_name'][$k]);
+							}
+						}
+						$meeting_images = implode(",",($file));
+
+					
+					$meeting_present = mysqli_real_escape_string($con,  $meeting_present_array[$key]);
+					$meeting_status = mysqli_real_escape_string($con,  $meeting_status_array[$key]);
+					$meeting_updates = mysqli_real_escape_string($con,  $meeting_updates_array[$key]);
+					$meeting_call = mysqli_real_escape_string($con,  $meeting_call_array[$key]);
+					$meeting_updates2 = mysqli_real_escape_string($con,  $meeting_updates2_array[$key]);
+					$meeting_intouch = mysqli_real_escape_string($con,  $meeting_intouch_array[$key]);
+					$meeting_drip = mysqli_real_escape_string($con,  $meeting_drip_array[$key]);
+
+					$id = mysqli_real_escape_string($con,$id_array[$key]);
+			
+					$query="meeting_date='$meeting_date', meeting_location='$meeting_location', meeting_req='$meeting_req', meeting_images='$meeting_images', meeting_present='$meeting_present', meeting_location='$meeting_location', meeting_status='$meeting_status', meeting_updates='$meeting_updates', meeting_call='$meeting_call', meeting_updates2='$meeting_updates2', meeting_intouch='$meeting_intouch',meeting_drip='$meeting_drip' ";
+					
+					$save = $leads->leads_company_more_details_update ($id,$query); 
+
+					//-- send meeting notification to MD
+					$lead_genid=$leads->get_lead_one($_POST['lid']);
+					
+					$mds=$admin->getonetype_user('9');
+					foreach($mds as $r=>$v)
+					{$admin->save_alerts($_SESSION['uid'],"Lead #SHL$_POST[lid] Has Been Schduled on $meeting_date at $meeting_location",$mds[$r]['id']);}
+					//-- send notification to BDM
+					$admin->save_alerts($_SESSION['uid'],"Lead #SHL$_POST[lid] Has Been Schduled on $meeting_date at $meeting_location",$lead_genid[0]['audit_by']);
+				}
+
+				echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=leads_feedback&id=$_POST[lid]&status=1';</script>";
+			}
+
+			//-- upgrade the step only using by other pages too
+			if($_GET['query']=='step_30to38')
+			{
+				//-- send notification to BDM
+				$admin->save_alerts($_SESSION['uid'],$_POST['msg'],$_POST['msgto']);
+
+				$leads->step_change($_POST['lid'],$_POST['step']);
+				echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=leads_feedback&id=$_POST[lid]&status=1';</script>";
+			}
 	}
 	break;
 //--- leads closed

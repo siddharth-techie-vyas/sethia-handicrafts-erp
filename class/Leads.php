@@ -49,7 +49,7 @@ class Leads
 
     function get_lead_one($id)
     {
-        $query="select * from leads where id='$id'";
+         $query="select * from leads where id='$id'";
 		$result = $this->db_handle->runBaseQuery($query);
         return $result;
     }
@@ -417,7 +417,7 @@ function get_group_one($id)
 
     function view_all_by_qualify($column,$qualify)
     {
-       echo $query="SELECT * FROM leads where $column='$qualify' ";
+        $query="SELECT * FROM leads where $column='$qualify' ";
         $result = $this->db_handle->runBaseQuery($query);
         return $result;
     }
@@ -469,6 +469,13 @@ function get_group_one($id)
         return $result;
     }
 
+    function view_all_leads_approval_graphic()
+    {
+        $query="select * from leads where step IN (32) ";
+        $result = $this->db_handle->runBaseQuery($query);
+        return $result;
+    }
+
     function leads_company_more_details ($lid,$step,$value1,$value2)
     {
         $query = "insert into leads_company_more_details(lid,step,value1,value2)VALUES(?,?,?,?)";
@@ -480,7 +487,7 @@ function get_group_one($id)
 
     function leads_company_more_details_update ($id,$query0)
     {
-        $query="update leads_company_more_details SET $query0 where id='$id' ";
+         $query="update leads_company_more_details SET $query0 where id='$id' ";
         $result = $this->db_handle->update($query);
         return $result;
     }

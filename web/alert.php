@@ -29,7 +29,12 @@ if(isset($_GET['status']))
     if($_GET['status']=='6')
     {
         echo "<div class='alert alert-secondary'>This Item Has Been Already Added</div>";
-    }    
+    }
+    
+    if($_GET['status']=='7')
+    {
+        echo "<div class='alert alert-secondary'>Details has been send for approval</div>";
+    }
 }
 ?>
 

@@ -295,7 +295,7 @@
 
 		
 
-		  <?php }if($_SESSION['utype']=='9'){?>
+		<?php }if($_SESSION['utype']=='9'){?>
 		<li class="header">Leads</li>
 		<li>
           <a href="<?php echo $base_url.'index.php?action=dashboard&page=leads_disqualified&qualify=2';?>">
@@ -324,6 +324,16 @@
 		<li>
           <a href="<?php echo $base_url.'index.php?action=dashboard&page=leads_disqualified&approve=2';?>">
             <i class="mdi mdi-check"></i> <span>Dis-Approved</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+        </li>
+		<?php }if($_SESSION['utype']=='11'){?>
+		<li class="header">Leads</li>
+		<li>
+          <a href="<?php echo $base_url.'index.php?action=dashboard&page=leads_approval_steps_graphic';?>">
+            <i class="mdi mdi-cancel"></i> <span>For Graphic Requirment(s)</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-right pull-right"></i>
             </span>

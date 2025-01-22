@@ -13,7 +13,7 @@
                         <th>Linkedin Profile</th>
                         <th>Request Send</th>
                         <th>Accepted</th>
-                        <th>Follow Up EMail Send</th>
+                        <th>Follow Up In-Mail Messege</th>
                     </tr>
                     <?php 
                         $get_details_comp = $leads->get_company_more_details('12',$_GET['id']);
