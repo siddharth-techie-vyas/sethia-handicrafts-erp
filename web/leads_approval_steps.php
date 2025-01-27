@@ -38,7 +38,7 @@ $leadviewall=$leads->view_all_leads_approval();
 								<th>#</th>
                                 <th>Status</th>
 								<th>Lead #</th>
-								
+								<th>Current Step</th>
 								<th>Alloted To</th>
 								<th>Date & Time</th>
 								<th>Name</th>
@@ -70,6 +70,7 @@ $leadviewall=$leads->view_all_leads_approval();
 									echo "<th>".$counter++."</th>";
 									echo "<td>".$gname."</td>";
 									echo "<td>".$prefix_lead[0]['value1'].$doc['id']."</td>";
+									echo "<td>".$doc['step']."</td>";
 									echo "<td>".$uname[0]['uname']."</td>";
 									echo "<td>".$doc["date_time"]."</td>";
 									echo "<td>".$doc["name"]."</td>";

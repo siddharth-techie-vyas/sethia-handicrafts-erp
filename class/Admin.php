@@ -312,7 +312,7 @@ header('Access-control-Allow-Headers: Authorization,Content-Type ,X-Auth-Token ,
 //========= notification
 function save_alerts($from,$msg,$to)
 {
-   echo $query = "insert into notification(from_uid,msg,to_uid)VALUES(?,?,?)";
+    $query = "insert into notification(from_uid,msg,to_uid)VALUES(?,?,?)";
     $paramType = "isi";
     $paramValue = array($from,$msg,$to);
     $insertId = $this->db_handle->insert($query, $paramType, $paramValue);

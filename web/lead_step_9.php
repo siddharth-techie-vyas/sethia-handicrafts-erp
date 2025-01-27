@@ -7,7 +7,21 @@
                 
 						<div class="box-header with-border">
 						  <h4 class="box-title">Company Profile</h4>
+                          
 						</div>
+
+                        <?php 
+                          //-- check if company profile is completed
+                          $comp = $leads->get_company_profile($_GET['id']);
+                        //   if($comp)
+                        //   {
+                        //       include('lead_step_9_edit.php');
+                        //   } 
+                        //   else
+                        //   {
+                        //       include('lead_step_9.php');
+                        //   }
+                          ?>
 
 						<div class="box-body">
                            

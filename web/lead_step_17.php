@@ -25,7 +25,13 @@
                             <?php echo $get_details_comp[$key]['value1'];?>
                         </td>
                         <td><?php echo $get_details_comp[$key]['value2'];?></td>
-                        <td><?php echo $get_details_comp[$key]['value3'];?></td>
+                        <td>
+                        <select name="value3[]" class="form-control" readonly='readonly'> 
+                            <option value="">Select</option>
+                                <option value="1" <?php if($get_details_comp[$key]['value3']=='1'){echo "selected='selected'"; }?>>Yes</option>
+                                <option value="0" <?php if($get_details_comp[$key]['value3']=='0'){echo "selected='selected'"; }?>>No</option>
+                            </select> 
+                        </td>
                         <td><?php echo $get_details_comp[$key]['value4'];?></td>
                         <td>
                         <?php 

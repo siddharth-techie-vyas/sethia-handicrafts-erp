@@ -23,8 +23,9 @@ if($_SESSION['utype']=='8')
 { include('dashboard_merchent.php') ; }
 if($_SESSION['utype']=='9')
 { include('dashboard_md.php') ; }
-else
-{ include('dashboard_all.php') ; }
+if($_SESSION['utype']=='11')
+{ include('dashboard_graphic.php') ; }
+
 ?>
 
 <?php include('footer.php') ;?>
