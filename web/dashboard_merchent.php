@@ -43,10 +43,10 @@
 		</div>
 
 		<!-- Main content -->
-		<section class="content">
+		<!-- <section class="content">
 			
 		
-		<!-- 1st row-->
+	
                 <div class="box-header with-border">
 				  <h4 class="box-title">Lead(s) Countdown</h4>
 				</div>
@@ -109,21 +109,149 @@
 			</div>
             
 
-</section>        
+</section>         -->
 
 
 <!-- row 2 -->
  <section class="content">
 
-                <div class="col-xl-6 col-12">
-					<div class="box">
-						<div class="box-body">
-							<h4 class="box-title">Bar Chart</h4>
-							<div><iframe class="chartjs-hidden-iframe" style="width: 100%; display: block; border: 0px; height: 0px; margin: 0px; position: absolute; inset: 0px;"></iframe>
-								<canvas id="bar-chart3" height="365" style="display: block; width: 738px; height: 365px;" width="738"></canvas>
-							</div>
-						</div>
-					</div>
-				</div>
+ <div class="row">
 
+<div class="col-xl-4 col-lg-6 col-12">
+	<div class="box">
+			<div class="box-header with-border">						
+				
+				<h4 class="box-title">Follow Up Reminder (Tail)</h4>
+				<h6 class="box-subtitle">Old Lead Reminder</h6>
+			</div>
+			<div class="box-body p-15">						
+				<div class="table-responsive">
+		  
+				<table class="table">
+					<tr>
+						<th>#</th>
+						<th>Company</th>
+						<th>In Step</th>
+						<th>Targetted Date</th>
+					</tr>
+					<?php $pc=1;
+					$pend=$leads->get_my_next_follow_dashboard_bdm($_SESSION['uid']);
+					if(!empty($pend))
+					{
+						foreach($pend as $k=>$v)
+						{
+						?>
+						<tr>
+							<th><?php echo 'SHL'.$pend[$k]['id'];?></th>
+							<td><?php echo $pend[$k]['company'];?></td>
+							<td><?php echo $pend[$k]['step'];?></td>
+							<td><?php echo date("d-m-Y", strtotime($pend[$k]['targetted_date']));  ?></td>
+						</tr>
+						<?php }?>
+						<!-- <tr>
+							<td colspan='6'><h4><A href="<?php echo $base_url.'index.php?action=dashboard&page=lead_viewall&lead_status=2';?>">View More</a></h4></td>
+						</tr> -->
+					<?php }else{?>
+					<tr><td colspan="6">No Pendencies For Today</td></tr>
+					<?php }?>
+				</table>
+				</div>
+			  </div>
+	</div>
+	
+</div>
+
+<div class="col-xl-4 col-lg-6 col-12">
+	<div class="box">
+			<div class="box-header with-border">						
+			<h4 class="box-title">Today's Follow Up Reminder</h4>
+			<h6 class="box-subtitle">Reminder for follow back</h6>
+			</div>
+			<div class="box-body p-15">						
+				<div class="table-responsive">
+		  
+				<table class="table">
+					<tr>
+						<th>#</th>
+						<th>Company</th>
+						<th>In Step</th>
+						<th>Audit & Sales By</th>
+						<th>Targetted Date</th>
+					</tr>
+					<?php $pc=1;
+					$pend=$leads->get_my_next_follow_old_dashboard_bdm($_SESSION['uid']);
+					if(!empty($pend))
+					{
+						foreach($pend as $k=>$v)
+						{
+						?>
+						<tr>
+							<th><?php echo 'SHL'.$pend[$k]['id'];?></th>
+							<td><?php echo $pend[$k]['company'];?></td>
+							<td><?php echo $pend[$k]['step'];?></td>
+							<td><?php $up=$admin->getone_user($pend[$k]['audit_by']); echo $up[0]['person_name'];;?></td>
+							<td><?php echo date("d-m-Y", strtotime($pend[$k]['targetted_date']));  ?></td>
+						</tr>
+						<?php }?>
+						<!-- <tr>
+							<td colspan='6'><h4><A href="<?php echo $base_url.'index.php?action=dashboard&page=lead_viewall&lead_status=2';?>">View More</a></h4></td>
+						</tr> -->
+					<?php }else{?>
+					<tr><td colspan="6">No Pendencies For Today</td></tr>
+					<?php }?>
+				</table>
+				</div>
+			  </div>
+	</div>
+	
+</div>
+
+<div class="col-xl-4 col-lg-6 col-12">
+	<div class="box">
+			<div class="box-header with-border">						
+				<h4 class="box-title">Latest Data Upload(s)</h4>
+				<h6 class="box-subtitle">New Leads</h6>
+			</div>
+			<div class="box-body p-15">						
+				<div class="table-responsive">
+		  
+				<table class="table">
+					<tr>
+						<th>#</th>
+						<th>File Name</th>
+						<th>Uploaded By</th>
+						<th>Date & Time</th>
+						<th>Number Of Records</th>
+					</tr>
+					<?php $hc=1; $history=$leads->get_my_uploads_dashboard($_SESSION['uid']); 
+					if(!empty($history))
+					{
+						foreach($history as $r=>$v)
+						{?>
+						<tr>
+							<th><?php echo $hc++;?></th>
+							<td><?php echo $history[$r]['filename'];?></td>
+							<td><?php $up=$admin->getone_user($history[$r]['uploadedby']); echo $up[0]['person_name'];?></td>
+							<td><?php echo date("d-m-Y H:i:s", strtotime($history[$r]['date_time']));?></td>
+							<td><?php echo $history[$r]['nu_of_records'];?></td>
+							
+						</tr>
+						<?php }?>
+						<!-- <tr>
+							<td colspan='6'><h4><a href="<?php echo $base_url.'index.php?action=dashboard&page=leads_upload_history';?>">View More</a></h4></td>
+						</tr> -->
+						<?php }else{?>
+						<tr><td colspan="6">No Upload(s) Found</td></tr>	
+						<?php }?>
+
+
+				</table>
+				</div>
+			  </div>
+</div>
+
+
+</div>	  
+
+					</div>
  </section>
