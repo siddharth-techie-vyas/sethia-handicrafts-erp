@@ -109,8 +109,9 @@
 			<div class="col-xl-4 col-lg-6 col-12">
 				<div class="box">
 						<div class="box-header with-border">						
-							<h4 class="box-title">Today's Follow Up Reminder</h4>
-							<h6 class="box-subtitle">Reminder for call back</h6>
+							
+							<h4 class="box-title">Follow Up Reminder (Tail)</h4>
+							<h6 class="box-subtitle">Old Lead Reminder</h6>
 						</div>
 						<div class="box-body p-15">						
 							<div class="table-responsive">
@@ -118,11 +119,9 @@
 							<table class="table">
 								<tr>
 									<th>#</th>
-									<th>Name</th>
-									<th>Phone</th>
-									<th>Email</th>
 									<th>Company</th>
-									<th>Next Folloup Date</th>
+									<th>In Step</th>
+									<th>Targetted Date</th>
 								</tr>
 								<?php $pc=1;
 								$pend=$leads->get_my_next_follow_dashboard($_SESSION['uid']);
@@ -132,17 +131,15 @@
 									{
 									?>
 									<tr>
-										<th><?php echo $pc++;?></th>
-										<td><?php echo $pend[$k]['name'];?></td>
-										<td><?php echo $pend[$k]['phone'];?></td>
-										<td><?php echo $pend[$k]['email'];?></td>
+										<th><?php echo 'SHL'.$pend[$k]['id'];?></th>
 										<td><?php echo $pend[$k]['company'];?></td>
-										<td><?php echo date("d-m-Y", strtotime($pend[$k]['next_feedback_date']));  ?></td>
+										<td><?php echo $pend[$k]['step'];?></td>
+										<td><?php echo date("d-m-Y", strtotime($pend[$k]['targetted_date']));  ?></td>
 									</tr>
 									<?php }?>
-									<tr>
+									<!-- <tr>
 										<td colspan='6'><h4><A href="<?php echo $base_url.'index.php?action=dashboard&page=lead_viewall&lead_status=2';?>">View More</a></h4></td>
-									</tr>
+									</tr> -->
 								<?php }else{?>
 								<tr><td colspan="6">No Pendencies For Today</td></tr>
 								<?php }?>
@@ -156,8 +153,8 @@
 			<div class="col-xl-4 col-lg-6 col-12">
 				<div class="box">
 						<div class="box-header with-border">						
-							<h4 class="box-title">Follow Up Reminder (Tail)</h4>
-							<h6 class="box-subtitle">Old Lead Reminder</h6>
+						<h4 class="box-title">Today's Follow Up Reminder</h4>
+						<h6 class="box-subtitle">Reminder for follow back</h6>
 						</div>
 						<div class="box-body p-15">						
 							<div class="table-responsive">
@@ -165,11 +162,10 @@
 							<table class="table">
 								<tr>
 									<th>#</th>
-									<th>Name</th>
-									<th>Phone</th>
-									<th>Email</th>
 									<th>Company</th>
-									<th>Next Folloup Date</th>
+									<th>In Step</th>
+									<th>Audit & Sales By</th>
+									<th>Targetted Date</th>
 								</tr>
 								<?php $pc=1;
 								$pend=$leads->get_my_next_follow_old_dashboard($_SESSION['uid']);
@@ -179,17 +175,16 @@
 									{
 									?>
 									<tr>
-										<th><?php echo $pc++;?></th>
-										<td><?php echo $pend[$k]['name'];?></td>
-										<td><?php echo $pend[$k]['phone'];?></td>
-										<td><?php echo $pend[$k]['email'];?></td>
+										<th><?php echo 'SHL'.$pend[$k]['id'];?></th>
 										<td><?php echo $pend[$k]['company'];?></td>
-										<td><?php echo date("d-m-Y", strtotime($pend[$k]['next_feedback_date']));  ?></td>
+										<td><?php echo $pend[$k]['step'];?></td>
+										<td><?php echo $pend[$k]['audit_by'];?></td>
+										<td><?php echo date("d-m-Y", strtotime($pend[$k]['targetted_date']));  ?></td>
 									</tr>
 									<?php }?>
-									<tr>
+									<!-- <tr>
 										<td colspan='6'><h4><A href="<?php echo $base_url.'index.php?action=dashboard&page=lead_viewall&lead_status=2';?>">View More</a></h4></td>
-									</tr>
+									</tr> -->
 								<?php }else{?>
 								<tr><td colspan="6">No Pendencies For Today</td></tr>
 								<?php }?>
@@ -331,7 +326,7 @@
 							$color2=json_encode($color2);
 							?>
 							<input type="hidden" name="bar_label2" id="bar_label2" value='<?php echo $label2; ?>'/>
-							<input type="text" name="bar_color2" id="bar_color2" value='<?php echo $color2; ?>'/>
+							<input type="hidden" name="bar_color2" id="bar_color2" value='<?php echo $color2; ?>'/>
 							<input type="hidden" name="bar_data2" id="bar_data2" value='<?php echo $data2; ?>'/>
 							<input type="hidden" name="bar_title2" id="bar_title2" value='Overall Report Till <?php echo date('d-m-Y');?>'/>
 						</div>
