@@ -178,7 +178,7 @@
 										<th><?php echo 'SHL'.$pend[$k]['id'];?></th>
 										<td><?php echo $pend[$k]['company'];?></td>
 										<td><?php echo $pend[$k]['step'];?></td>
-										<td><?php echo $pend[$k]['audit_by'];?></td>
+										<td><?php $up=$admin->getone_user($pend[$k]['audit_by']); echo $up[0]['person_name'];;?></td>
 										<td><?php echo date("d-m-Y", strtotime($pend[$k]['targetted_date']));  ?></td>
 									</tr>
 									<?php }?>
