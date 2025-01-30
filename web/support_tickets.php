@@ -37,12 +37,12 @@
                         
                         <form name="support" action="<?php echo $base_url.'index.php?action=admin&query=add_ticket';?>" method="post" enctype="multipart/form-data">
                             <div class="form-group">
-                                <label for="subject">Subject</label>    
+                                <label for="subject">Subject <span class="text-danger">*</span></label>    
                                 <input type="hidden" name="uid" value="<?php echo $_SESSION['uid']; ?>">
                                 <input type="text" name="subject" class="form-control" required>
                             </div>    
                             <div class="form-group">
-                                <label for="description">Description</label>    
+                                <label for="description">Description <span class="text-danger">*</span></label>    
                                 <textarea col="5" row="6" name="description" class="form-control" required></textarea>
                             </div>    
                             <div class="form-group">
