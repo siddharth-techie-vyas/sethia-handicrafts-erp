@@ -86,13 +86,16 @@
                                         foreach($tickets as $k=>$v)
                                         {
                                         ?>
-                                        <tr>
+                                        <tr <?php if($tickets[$k]['status']=='1'){echo 'class="bg-danger"';}?>>
                                             <td><?php echo 'SHT'.$tickets[$k]['id'];?></td>
                                             <td><?php echo $tickets[$k]['subject'];?></td>
                                             <td><?php if($tickets[$k]['file'] != ''){?><img src="<?php echo $base_url.'images/'.$tickets[$k]['file'];?>" height="60" width="auto"><?php }?></td>
                                             <td><?php echo $tickets[$k]['date_time'];?></td>
                                             <td><?php if($tickets[$k]['status']=='0'){echo 'Open';} else {echo 'Closed';}?></td>
-                                            <td><a href="<?php echo $base_url.'index.php?action=dashboard&page=view_ticket&id='.$tickets[$k]['id'];?>"><i class='fa fa-comment btn btn-primary btn-xs'></i></a></td>
+                                            <td>
+                                            <?php if($tickets[$k]['status']=='0'){?>
+                                                <a href="<?php echo $base_url.'index.php?action=dashboard&page=view_ticket&id='.$tickets[$k]['id'];?>"><i class='fa fa-comment btn btn-primary btn-xs'></i></a></td>
+                                            <?php } ?>
                                         </tr>
                                         <?php } } else {echo "<tr><td colspan='5'>No Ticket(s) Found</td></tr>";}?>
                                 </tbody>

@@ -35,6 +35,11 @@ if(isset($_GET['status']))
     {
         echo "<div class='alert alert-secondary'>Details has been send for approval</div>";
     }
+
+    if($_GET['status']=='8')
+    {
+        echo "<div class='alert alert-secondary'>Closed Successfully</div>";
+    }
 }
 ?>
 

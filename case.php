@@ -575,11 +575,11 @@ case "leads":
 			//--send notification to lead manager
 			$lead_genid=$leads->get_lead_one($_POST['id']);
 					$admin->save_alerts($_SESSION['uid'],"Lead #SHL$_POST[id] Has Been $qualified By MD",$lead_genid[0]['handledby']);
-			//-- send notification to BDM 
+			//-- send notification to MD 
 				$mds=$admin->getonetype_user('9');
 				foreach($mds as $r=>$v)
-				{$admin->save_alerts($_SESSION['uid'],"Lead #SHL$_POST[id] Has Been $qualified By MD",$lead_genid[0]['audit_by']);}
-			//--update the step to 11 and 
+				{$admin->save_alerts($_SESSION['uid'],"Lead #SHL$_POST[id] Has Been $qualified By MD",$mds[$r]['id']);}
+			//--update the step to 11 
 				$update=$leads->step_change($_POST['id'],'12');
 				echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=leads_feedback&id=$_POST[id]&status=1';</script>";
 
@@ -619,7 +619,14 @@ case "leads":
 	
 										$save1=$leads->edit_comp_experience($company,$from,$to,$designation,$_POST['lid']);
 									}
-	
+
+
+				//-- send notification to all BDM
+				$bdm=$admin->getonetype_user('9');
+				foreach($bdm as $r=>$v)
+				{$admin->save_alerts($_SESSION['uid'],"Lead #SHL$_POST[id] Has Been $qualified By MD",$bdm[$r]['audit_by']);}
+
+				$admin->save_alerts($_SESSION['uid'],"Lead #SHL$_POST[lid] has been received for Company Profile Audit",$lead_genid[0]['audit_by']);
 				//-- update next step
 				$leads->step_change($_POST['lid'],'10');
 				echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=leads_feedback&id=$_POST[lid]&status=1';</script>";
@@ -729,6 +736,7 @@ case "leads":
 			if($_GET['query']=='step_16to20_update')
 			{
 					$lid = $_POST['lid'];
+					$value3_array = $_POST['value3'];
 					$value7_array = $_POST['value7'];
 					$value8_array = $_POST['value8'];
 					$value9_array = $_POST['value9'];
@@ -738,6 +746,9 @@ case "leads":
 
 					foreach($value7_array as $key=>$value) 
 					{ 
+						
+						$value3 = mysqli_real_escape_string($con,  $value3_array[$key]);
+
 						$value7 = mysqli_real_escape_string($con,  $value7_array[$key]);
 						//-- yes or or record date of 7
 						if($value7=='1'){$value8=date('Y-m-d h:i:s');}
@@ -749,7 +760,7 @@ case "leads":
 						
 						$id = mysqli_real_escape_string($con,$id_array[$key]);
 						//=== save
-						$query="value7='$value7', value8='$value8', value9='$value9', value10='$value10', value11='$value11'";
+						$query="value3='$value3', value7='$value7', value8='$value8', value9='$value9', value10='$value10', value11='$value11'";
 						$save = $leads->leads_company_more_details_update($id,$query); 
 					}
 
@@ -830,9 +841,15 @@ case "leads":
 			{
 				//-- send notification to BDM
 				$admin->save_alerts($_SESSION['uid'],$_POST['msg'],$_POST['msgto']);
-
 				$leads->step_change($_POST['lid'],$_POST['step']);
 				echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=leads_feedback&id=$_POST[lid]&status=1';</script>";
+
+				//-- save grapic designer in leads table if step = 32
+				if($_POST['step']=='32')
+				{
+					$leads->save_leads_gd($_POST['lid'],$_POST['msgto']);
+				}
+
 			}
 	}
 	break;
@@ -924,6 +941,30 @@ case "admin":
 					else
 					{echo "<div class='alert alert-danger'>Something went wrong !! Please try again later !!</div>";}
 						
+				}
+
+				if($_GET['query']=='add_ticket')
+				{
+					$save=$admin->add_ticket($_POST['subject'],$_POST['description'],$_FILES['img'],$_POST['uid']);
+					if($save)
+					{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=support_tickets&status=1';</script>";}   
+						else{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=support_tickets&status=2';</script>";}
+				}
+
+				if($_GET['query']=='add_ticket2')
+				{
+					$save=$admin->add_ticket2($_POST['description'],$_POST['tid']);
+					if($save)
+					{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=view_ticket&status=3&id=".$_POST['tid']."';</script>";}   
+						else{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=view_ticket&status=2&id=".$_POST['tid']."';</script>";}
+				}
+
+				if($_GET['query']=='ticket_close')
+				{
+					$save=$admin->ticket_close($_POST['tid']);
+					if($save)
+					{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=support_tickets&status=8';</script>";}   
+						else{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=support_tickets&status=2';</script>";}
 				}
 			}
 		}	

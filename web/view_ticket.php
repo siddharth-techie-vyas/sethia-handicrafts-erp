@@ -32,6 +32,8 @@
                     <div class="box">
                         <div class="box-header with-border">
                             <h5 class="mt-0 font-weight-700 text-primary"><i class='fa fa-ticket'></i> Reply(s) On Support Ticket # SHT<?php echo $_GET['id']; ?></h5>
+
+                            
                         </div>
                         
                         <div class="box-body"> 
@@ -75,8 +77,17 @@
             <div class="col-sm-8">
                 <!------- view all --->
                 <div class="box">
-                    <div class="box-header with-border">
+                    <div class="box-header with-border text-left">
                         <h5 class="mt-0 font-weight-700 text-primary"><i class='fa fa-ticket'></i> Revert Regarding Ticket</h5>
+                        <div class="text-right">
+                            <span id="msgticket_more"></span>
+                                 <form name="ticket_more" id="ticket_more" action="<?php echo $base_url.'index.php?action=admin&query=ticket_close'?>" method="post">
+                                    <label>Add Revert(s)</label>
+                                    <input type="button" name="close" value="Close The Ticket" class="btn btn-xs btn-warning" onclick="form_submit_alert('ticket_more')">
+                                    <input type="hidden" name="tid" value="<?php echo $_GET['id']; ?>" >
+                                </form>
+                               
+                            </div>
                     </div>
                     <div class="box-body" style="max-height: 600px;overflow-y: scroll;">
                         <div class="table table-bordered table-responsive">
