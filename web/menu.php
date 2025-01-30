@@ -37,9 +37,8 @@
 					<div class="dropdown-menu-header-inner bg-img" style="background-image: url('https/lotus-admin-templatesmultipurposethemescom/images/gallery/landscape1_7340154.jpg');" data-overlay="5">
 						<div class="p-30 text-left w-250">
 							<h5 class="text-white">Overview</h5>
-							<h6 class="text-white">Unlimited options</h6>
 							<div class="menu-header-btn-pane">
-								<button class="mr-2 btn btn-success btn-sm">Settings</button>
+								<a href="<?php echo $base_url.'index.php?action=dashboard&page=support_tickets';?>" class="mr-2 btn btn-success btn-sm">Support Ticket</a>
 								<button class="btn-icon btn-icon-only btn btn-info btn-sm">
 									<i class="fa fa-cog"></i>
 								</button>
