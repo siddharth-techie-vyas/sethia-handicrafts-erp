@@ -33,6 +33,7 @@
 					<span class="d-xl-inline-block d-none">Help & Support
 					<i class="fa fa-angle-down ml-2"></i></span>
 				</a>
+
 				<div class="dropdown-menu overflow-hidden">
 					<div class="dropdown-menu-header-inner bg-img" style="background-image: url('https/lotus-admin-templatesmultipurposethemescom/images/gallery/landscape1_7340154.jpg');" data-overlay="5">
 						<div class="p-30 text-left w-250">
@@ -45,15 +46,16 @@
 							</div>
 						</div>
 					</div>
-					<div class="p-10">
+					<!-- <div class="p-10">
 						<button type="button" class="waves-effect waves-light btn btn-flat btn-light no-shadow w-p100 text-left"><i class="mdi mdi-file-multiple mr-10"> </i>Graphic Design</button>
 						<button type="button" class="waves-effect waves-light btn btn-flat btn-light no-shadow w-p100 text-left"><i class="mdi mdi-file-multiple mr-10"> </i>App Development</button>
 						<button type="button" class="waves-effect waves-light btn btn-flat btn-light no-shadow w-p100 text-left"><i class="mdi mdi-file-multiple mr-10"> </i>Icon Design</button>
 						<div tabindex="-1" class="dropdown-divider"></div>
 						<button type="button" class="waves-effect waves-light btn btn-flat btn-light no-shadow w-p100 text-left"><i class="mdi mdi-file-multiple mr-10"> </i>Miscellaneous</button>
 						<button type="button" class="waves-effect waves-light btn btn-flat btn-light no-shadow w-p100 text-left"><i class="mdi mdi-file-multiple mr-10"> </i>Frontend Dev</button>
-					</div>
-				  </div>
+					</div> -->
+				</div>
+
 			</li>
 		</ul> 
 	  </div>
@@ -81,11 +83,9 @@
 		  <!-- Notifications -->
 		  <li class="dropdown notifications-menu">
 			<a href="#" class="waves-effect waves-light dropdown-toggle" data-toggle="dropdown" title="Notifications">
-				<?php $latest_alert=$admin->latest_alerts($_SESSION['uid']);?>
-			  
-			<?php if($latest_alert){?>
+				<?php $latest_alert=$admin->latest_alerts($_SESSION['uid']); if($latest_alert){?>
 				<span class="blink badge badge-pill badge-danger badge-xs text-xs"><?php echo count($latest_alert);?></span>
-			<?php } else {?>
+				<?php } else {?>
 				<i class="mdi mdi-bell"> </i>
 				<?php }?>
 			</a>
@@ -106,6 +106,7 @@
 
 			  <li>
 				<!-- inner menu: contains the actual data -->
+				 <?php if($latest_alert){?>
 				<ul class="menu sm-scrol">
 				<?php 
 				
@@ -118,13 +119,14 @@
 					  <small><?php echo date('d-m-Y H:i:s', strtotime($latest_alert[$lr]['date_time']));?></small>
 					</a>
 				  </li>
-				 <?php }?>
+				 <?php } ?>
 				</ul>
 			  </li>
 			  <li class="footer">
 				  <a href="<?php echo $base_url.'index.php?action=dashboard&page=notifications';?>">View all</a>
 			  </li>
 			</ul>
+			<?php }?>
 		  </li>	
 		  
 	      <!-- User Account-->
@@ -188,7 +190,7 @@
 		
       	
 		<!----- leads ---->
-		<?php if($_SESSION['utype']=='1'  || $_SESSION['utype']=='6'){?>
+		<?php if($_SESSION['utype']=='1'  || $_SESSION['utype']=='6' || $_SESSION['utype']=='8'){?>
         <li class="header">Leads</li>
 		  
         <li class="treeview">
@@ -250,7 +252,7 @@
 
 
 		<!------- admin -------->
-		<?php if($_SESSION['utype']=='1'){?>
+		<?php if($_SESSION['utype']=='1' || $_SESSION['utype']=='7'){?>
 		<li class="header">Admin</li>
 		<li>
           <a href="<?php echo $base_url.'index.php?action=dashboard&page=admin_meta';?>">
@@ -289,6 +291,20 @@
 			<ul class="treeview-menu">
 				<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=sales_addstages';?>"><i class="ti-more"></i>Create Sales <br>Status / Stage(s)</a></li>
 				<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=sales_addstatus';?>"><i class="ti-more"></i>Create Query Status</a></li>
+			</ul>
+		  </li>
+
+
+		  <li class="treeview">
+			<a href="#">
+			  <i class="mdi mdi-help"></i> <span>Help and Alerts</span>
+			  <span class="pull-right-container">
+				<i class="fa fa-angle-right pull-right"></i>
+			  </span>
+			</a>
+			<ul class="treeview-menu">
+				<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=dev_announcment';?>"><i class="ti-more"></i>Make Announcment</a></li>
+				<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=dev_support';?>"><i class="ti-more"></i>Help Tickets</a></li>
 			</ul>
 		  </li>
 
