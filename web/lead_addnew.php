@@ -47,7 +47,8 @@
 								  <input type="text" class="form-control" placeholder="Company" name="company" required>
 								  <!-- hidden filed to alloted to --->
 								   <?php $rand_lead_manager = $admin->getone_user_rand_bytype('6');?>
-								  <input type="hidden" class="form-control" name="userid" value="<?php echo $rand_lead_manager[0]['id'];?>">
+								  <!-- <input type="hidden" class="form-control" name="userid" value="<?php echo $rand_lead_manager[0]['id'];?>"> -->
+								  <input type="hidden" class="form-control" name="userid" value="<?php echo $_SESSION['uid'];?>">
 								</div>
 								</div>
 
