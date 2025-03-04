@@ -48,6 +48,7 @@ else{
                $company=$admin->get_company();
                $_SESSION['cname'] = $company[0]['cname'];
                $_SESSION['logo'] = $company[0]['logo'];
+               $_SESSION['address'] = $company[0]['address'];
                //$_SESSION['uname'] = $found_user['uname'];
               ?>
                     <script type="text/javascript">

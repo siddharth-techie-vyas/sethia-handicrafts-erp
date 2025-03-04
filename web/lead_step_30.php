@@ -77,6 +77,7 @@
                             <form name="step31" id="step31" action="<?php echo $base_url.'index.php?action=leads&query=step_16to20';?>" method="post">
                                 <input type="hidden" name="lid" value="<?php echo $_GET['id'];?>">
                                 <input type="hidden" name="step" value="31">
+                                <input type="hidden" name="msg" value="<?php echo 'SHL'.$_GET['id'];?> Meeting has been scheduled"/>
                                 <input type="button" onclick="form_submit_alert('step31')" name="submit" value="Schedule A Meeting First Meeting" class="btn btn-warning btn-md">
                             </form>
                         </td>

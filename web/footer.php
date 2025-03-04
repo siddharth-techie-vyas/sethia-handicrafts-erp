@@ -3,27 +3,27 @@
 <!-- ./wrapper -->	 
 
 <!----modals---->
-	<!--======== RIGHT====--->
-	<!-- <div class="modal modal-right fade" id="modal-right" tabindex="-1">
+	<!--======== FILL====--->
+	  <div class="modal modal-fill fade" data-backdrop="false" id="modal-fill" tabindex="-1">
 	  <div class="modal-dialog">
 		<div class="modal-content">
 		  <div class="modal-header">
-			<h5 class="modal-title" id="modal-title"></h5>
+			<h5 class="modal-title" id="modal-fill-body">Modal title</h5>
 			<button type="button" class="close" data-dismiss="modal">
 			  <span aria-hidden="true">&times;</span>
 			</button>
 		  </div>
-		  <div class="modal-body" id="modal-body">
+		  <div class="modal-body" id="modal-fill-body">
 			
 		  </div>
-		  <div class="modal-footer modal-footer-uniform">
-			<input type="button" class="btn btn-rounded btn-secondary" data-dismiss="modal" value="Close">
-			<input type="button" class="btn btn-rounded btn-primary float-right" value="Save changes">
+		  <div class="modal-footer">
+			<a type="button" class="btn btn-secondary" data-dismiss="modal">Close</a>
 		  </div>
 		</div>
 	  </div>
-	</div> -->
-  <!--====BIG===-->
+	</div>
+
+	<!--====BIG===-->
   <div class="modal fade bd-example-modal-lg" tabindex="-1" id="exampleModal" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -87,8 +87,15 @@
 	<script src="<?php echo $base_url.'theme/js/data-table.js';?>"></script>
 	<script src="<?php echo $base_url.'theme/js/datatables.min.js';?>"></script>
 	<!------- custom js -->
-	<script src="<?php echo $base_url.'theme/js/';?>function.js?ver=<?php echo rand(0,10);?>';?>"></script>
+	<script src="<?php echo $base_url.'theme/js/';?>function.js?ver=<?php echo rand(0,100);?>';?>"></script>
 	<script src="<?php echo $base_url.'theme/js/chart_custom_fn.js';?>"></script>
+	<!-- steps -->
+	<script src="<?php echo $base_url.'theme/js/';?>jquery.steps.js"></script>
+    <script src="<?php echo $base_url.'theme/js/';?>jquery.validate.min.js"></script>
+	<!-- select2 -->
+	<script src="<?php echo $base_url.'theme/js/';?>select2.js"></script>
+	<script src="<?php echo $base_url.'theme/js/';?>boostrap-select.js"></script>
+	
 </body>
 
 </html>

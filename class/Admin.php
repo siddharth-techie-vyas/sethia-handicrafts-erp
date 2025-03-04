@@ -351,8 +351,12 @@ function upload_file($pic)
 		$tempname = $a["tmp_name"];
 		$folder = "./images/" . $filename;
 
+        $temp = explode(".", $filename);
+        $newfilename = round(microtime(true)) . '.' . end($temp);
+        $folder = "./images/". $newfilename;
+
 		if (move_uploaded_file($tempname, $folder)) {
-			return $filename;
+			return $newfilename;
 		} else {
 			return 0;
 		}
@@ -398,4 +402,79 @@ function upload_file($pic)
         $result = $this->db_handle->runBaseQuery($query);
         return $result; 
     }   
+
+    //====== supprt tickets
+    function add_ticket($subject,$description,$img,$uid)
+    {
+        if(isset($img))
+        {
+            $img0=$this->upload_file($img);
+        }
+        else
+        {$img0='';}
+
+        $query = "insert into tickets(subject,file,uid)VALUES(?,?,?)";
+        $paramType = "ssi";
+        $paramValue = array($subject,$img0,$uid);
+        $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
+        
+        //-- get latest id from ticketsmsg
+
+        $maxid="select MAX(id) from tickets";
+        $result = $this->db_handle->runBaseQuery($maxid);
+        $id=$result[0]['MAX(id)'];
+        
+        //--- insert into ticketsmsg
+
+        $query = "insert into tickets_msgs(msg,tid)VALUES(?,?)";
+        $paramType = "si";
+        $paramValue = array($description,$id);
+        $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
+
+        return $insertId;
+    }
+
+    function get_alltickets()
+    {
+        $query = "select * from tickets ORDER BY id DESC";
+        $result = $this->db_handle->runBaseQuery($query);
+        return $result;
+    }
+    function get_tickets($uid)
+    {
+        $query = "select * from tickets where uid='$uid' ORDER BY id DESC";
+        $result = $this->db_handle->runBaseQuery($query);
+        return $result;
+    }
+
+    function getone_ticket($id)
+    {
+        $query = "select * from tickets where id='$id'";
+        $result = $this->db_handle->runBaseQuery($query);
+        return $result;
+    }
+
+    function getone_ticket_details($id)
+    {
+        $query = "select * from tickets_msgs where tid='$id'";
+        $result = $this->db_handle->runBaseQuery($query);
+        return $result;
+    }
+
+    function add_ticket2($description,$tid)
+    {
+        $query = "insert into tickets_msgs(msg,tid)VALUES(?,?)";
+        $paramType = "si";
+        $paramValue = array($description,$tid);
+        $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
+
+        return $insertId;
+    }
+
+    function ticket_close($id)
+    {
+       echo $query = "update tickets set status='1' where id='$id'";
+        $result = $this->db_handle->update($query);
+        return $result; 
+    }
 }

@@ -14,10 +14,10 @@
                     <input type="hidden" name="lid" value="<?php echo $_GET['id'];?>"/>
                     <table class="table table-bordered" id="addmore">
                     <tr>
-                        <th>Contact Person Name</th>
+                        <!-- <th>Contact Person Name</th>
                         <th>Contact Number</th>
                         <th>Decision Maker</th>
-                        <th>Linkedin Profile</th>
+                        <th>Linkedin Profile</th> -->
                         <th>Meeting Date</th>
                         <th>Meeting Location</th>
                         <th>Meeting Requirment(s)</th>
@@ -29,19 +29,19 @@
                         foreach ($get_details_comp as $key => $value) {
                     ?>
                     <tr>
-                        <td>
-                            <input type="hidden" name="id[]" value="<?php echo $get_details_comp[$key]['id'];?>"/>
+                        <!-- <td>
+                            
                             <?php echo $get_details_comp[$key]['value1'];?>
                         </td>
                         <td><?php echo $get_details_comp[$key]['value2'];?></td>
                         <td><?php echo $get_details_comp[$key]['value3'];?></td>
-                        <td><?php echo $get_details_comp[$key]['value4'];?></td>
+                        <td><?php echo $get_details_comp[$key]['value4'];?></td> -->
                         <td><input type="date" value="<?php echo $get_details_comp[$key]['meeting_date'];?>" class="form-control" value="<?php echo $get_details_comp[$key]['meeting_date'];?>" name="meeting_date[]" readonly="readonly"></td>
                         <td><input type="text" value="<?php echo $get_details_comp[$key]['meeting_location'];?>" name="meeting_location[]" class="form-control" readonly="readonly"/></td>
                         <td><input type="text" value="<?php echo $get_details_comp[$key]['meeting_req'];?>" name="meeting_req[]" class="form-control" readonly="readonly"/></td>
                         <td><input type="file" name="meeting_images[]" class="form_control" accept=".jpg,.png,.pdf,.ppt " multiple="multiple">    
                                 <!-- blank inputs-->
-                                
+                                <input type="hidden" name="id[]" value="<?php echo $get_details_comp[$key]['id'];?>"/>
                                 <input type="hidden" name="meeting_present[]" value="">
                                 <input type="hidden" name="meeting_status[]" value="">
                                 <input type="hidden" name="meeting_updates[]" value="">

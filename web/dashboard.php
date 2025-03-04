@@ -2,7 +2,7 @@
 
     <!-- partial:partials/_navbar.html -->
 
-<?php include('menu.php') ;?>
+<?php //include('menu.php') ;?>
 
 <?php 
 if($_SESSION['utype']=='1')
@@ -28,7 +28,7 @@ if($_SESSION['utype']=='11')
 
 ?>
 
-<?php include('footer.php') ;?>
+<?php //include('footer.php') ;?>
 
 
 

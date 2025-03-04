@@ -1,4 +1,5 @@
 var loading_img='../../images/loading.gif';
+var base_url='http://localhost/sethia-handicrafts-erp/';
 
 function get_details(inputid,outputid,url)
 {
@@ -33,6 +34,15 @@ function show_page_model(title,page)
   //alert(page);
   $('#modal-body').html('<img src='+loading_img+'>');
   $('#modal-body').load(page); 
+}
+
+function show_page_model_fill(title,page)
+{
+  //alert(base_url+page);
+  $('#modal-fill-title').html(title); 
+  //alert(page);
+  $('#modal-fill-body').html('<img src='+loading_img+'>');
+  $('#modal-fill-body').load(page); 
 }
 
 function show_page_model_big(title,page)
@@ -104,11 +114,11 @@ function deleteme(h,i,j)
   {
      $.ajax({
            type: "GET",
-           url: 'index.php?action='+h+'&query='+i+'&id='+j,
+           url: base_url+'index.php?action='+h+'&query='+i+'&id='+j,
            success: function(data)
            {
             //alert(data);
-               alert('index.php?action='+h+'&query='+i+'&id='+j);
+               //alert(base_url+'index.php?action='+h+'&query='+i+'&id='+j);
                $('#'+j).toggle(750); 
             
            }
@@ -117,4 +127,56 @@ function deleteme(h,i,j)
 }
 
 
+function get_details(inputid,url,outputid)
+{
+  var data = $('#'+inputid).val();
+    $.ajax({
+        type:'POST',
+        url:url+'&id='+data,
+        success:function(result){
+            $('#'+outputid).html(result);
+        }
+    });
+}
 
+
+function show_txtbox(id)
+{
+  $('#'+id).show();
+}
+
+function hide_txtbox(id)
+{
+  $('#'+id).hide();
+}
+
+
+function show_bycheck(checkbox,txtbox)
+{
+  if($('#'+checkbox).prop('checked') == true)
+    {$('#'+txtbox).show();}
+ else
+    {$('#'+txtbox).hide();}
+ 
+}
+
+function discount_calc(id)
+{
+  var per=$('#discount'+id).val();
+  var amt=$('#amount'+id).val();
+  var total = parseFloat(per)*parseFloat(amt)/100;
+  var total = total.toFixed(2);
+  $('#discount_amt'+id).val(total);
+  $('#discount_amt_val'+id).html(total);
+}
+
+function htmlget(id,filename)
+      {
+          var html = $("#"+id).html();
+          //alert(html);
+          var final_html = "<hr><form name='pdf' id='htmlpdf' target='_blank' action='"+base_url+"library/test.php' method='post'><input type='hidden' id='myhtml' name='html'><select name='page'><option disabled='disbaled' selected='selected'>--Page--</option><option>letter</option><option>A2</option><option>A3</option><option>A4</option></select><select name='orientation'><option disabled='disbaled' selected='selected'>--Type--</option><option value='landscape'>Landscape</option><option value='portrait'>Portrait</option></select><input type='hidden' name='filename' value='"+filename+"'><input type='submit' name='submit' value='Generate PDF'></form>";
+          $("#editor").html(final_html);
+          $("#myhtml").val(html);
+          
+
+      }

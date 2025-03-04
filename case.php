@@ -860,6 +860,7 @@ case "leads":
 case "sales":
 	if($_GET['action']=='sales')
 	{
+		
 		if($_GET['query']=='add-meta')
 				{
 						if($_POST['parent_meta'])
@@ -900,8 +901,287 @@ case "sales":
 						else
 						{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=sales_feedback&status=2&id=".$_POST['sales_lid']."';</script>";}
 				}	
+
+				if($_GET['query']=='prospect1')
+				{		
+					//--0 is btype (means its a prospect)
+					$save=$sales->create_beneficiery($_POST['fname'],$_POST['lname'],$_POST['phone'],$_POST['email'],$_POST['cname'],$_POST['ctype'],$_POST['designation'],$_POST['address'],$_POST['country'],$_POST['state'],$_POST['city'],$_POST['zipcode'],$_POST['regtype'],$_POST['regnu'],'0');
+					if($save)
+						{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=sales_addprospect&status=1&id=".$save."';</script>";}   
+						else
+						{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=sales_addprospect&status=2&id=".$save."';</script>";}
+				}
 		
+				if($_GET['query']=='prospect2')
+				{
+					$bid = $_POST['bid'];
+					$value1 = $_POST['value1'];
+					$value2 = $_POST['value2'];
+					
+					//-- if value 1 is array
+					if(is_array($value1))
+					{
+						foreach($value1 as $key=>$value) 
+									{ 
+										$value1_single = mysqli_real_escape_string($con,$value1[$key]);
+										$value2_single = mysqli_real_escape_string($con,$value2[$key]);
+										//=== save
+										$save = $sales->beneficiery_details($bid,$value1_single,$value2_single); 
+										
+									}
 									
+					}
+					echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=sales_addprospect&status=1&id=".$bid."&tab=profile12';</script>";
+				}
+				
+				
+				
+				
+				if($_GET['query']=='prospect3')
+				{
+					$save=$sales->sales_prospect_type($_POST['id'],$_POST['type_of_client']);
+					if($save)
+						{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=sales_addprospect&status=1&id=".$_POST['id']."';</script>";}   
+						else
+						{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=sales_addprospect&status=2&id=".$_POST['id']."';</script>";}
+				}
+
+				if($_GET['query']=='prospect3_1')
+				{
+					print_r($_POST);
+					$save=$sales->sales_prospect_tandc($_POST['pid'],$_POST['incoterms'],$_POST['shipping'],$_POST['shipping-basis'],$_POST['currency'],$_POST['liability'],$_POST['liability_per'],$_POST['advance'],$_POST['advance_per'],$_POST['no_advance'],$_POST['further_advance_per0'],$_POST['further_advance_per_val'],$_POST['further_advance0'],$_POST['further_advance_val'],$_POST['balance'],$_POST['credit_period'],$_POST['retention_period'],$_POST['progress_payment'],$_POST['document'],$_POST['document2'],$_POST['price_validity'],$_POST['audit1'],$_POST['Existing_not_acceptable_val'],$_POST['ctpat'],$_POST['lateshipment_per'],$_POST['lateshipment_max_per'],$_POST['repair_labour_rate'],$_POST['repair_labour_rate_after'],$_POST['repair_labour_rate_limit'],$_POST['commission_to'],$_POST['commision_name'],$_POST['commision_per'],$_POST['sample'],$_POST['sample_paid_foc_qty'],$_POST['photography'],$_POST['photography_qty'],$_POST['packing'],$_POST['product_testing'],$_POST['product_testing_paid'],$_POST['packing_testing'],$_POST['fsc'],$_POST['fsc_current'],$_POST['fsc_target'],$_POST['branding'],$_POST['branding_req']);
+					if($save)
+						{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=sales_addprospect&status=1&id=".$_POST['pid']."';</script>";}   
+						else
+						{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=sales_addprospect&status=2&id=".$_POST['pid']."';</script>";}
+				}
+
+				//----------------- rfq only
+				if($_GET['query']=='rfq_additem')
+				{
+					$created_by = $_SESSION['uid'];
+					$sid=$sales->rfq_step0($_POST['prospect'],$_POST['rfq_number'],$_POST['date_of_rfq'],$_POST['created_date'],$created_by);
+
+					$sku=$_POST['sku'];
+					$item_type=$_POST['item_type'];
+					foreach($sku as $key=>$value) 
+									{ 
+										$sku_single = mysqli_real_escape_string($con,$sku[$key]);
+										$item_type_single = mysqli_real_escape_string($con,$item_type[$key]);
+										//=== save
+										$save = $sales->rfq_items($sku_single,$item_type_single,$sid); 
+										
+									}
+
+						echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=sales_rfq_edit&status=1&id=".$sid."';</script>";
+				}
+
+				if($_GET['query']=='rfq_item_edit')
+				{
+					
+					$sales->rfq_step0_edit($_POST['prospect'],$_POST['rfq_number'],$_POST['date_of_rfq'],$_POST['created_date'],$_POST['id']);
+					$sid=$_POST['id'];
+					$sku=$_POST['sku'];
+					$item_type=$_POST['item_type'];
+					$item_id=$_POST['itemid'];
+					foreach($sku as $key=>$value) 
+									{ 
+										$sku_single = mysqli_real_escape_string($con,$sku[$key]);
+										$item_type_single = mysqli_real_escape_string($con,$item_type[$key]);
+										$item_id_single = mysqli_real_escape_string($con,$item_id[$key]);
+										//=== save
+										if(empty($item_id_single))
+										{$save = $sales->rfq_items($sku_single,$item_type_single,$sid);}
+										else{$save = $sales->rfq_items_edit($sku_single,$item_type_single,$item_id_single); }										
+									}
+
+									echo "<div class='alert alert-success'>RFQ Updated Successfully</div>";
+				}
+
+				if($_GET['query']=='step0_edit_items_client')
+				{
+					$sid=$_POST['sid'];
+					$sku=$_POST['tempsku'];
+					$item_type=$_POST['item_type'];
+					
+
+					foreach($sku as $key=>$value) 
+									{ 
+										$sku_single = mysqli_real_escape_string($con,$sku[$key]);
+										$item_type_single = mysqli_real_escape_string($con,$item_type[$key]);
+										
+										//--file upload
+										$filename=$admin->upload_file_multi($_FILES['file']['name'][$key],$_FILES['file']['tmp_name'][$key]);
+										//-- temp save
+										$pid=$product->tempsave($sku_single,$filename);
+										//=== save
+										$save = $sales->rfq_items_2($pid,$item_type_single,$sid,$filename); 
+										
+									}
+
+						echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=sales_rfq_edit&status=1&id=".$sid."';</script>";
+
+				}
+
+				if($_GET['query']=='delete_rfq_item')
+				{
+					$id=$_GET['id'];
+					$save=$sales->delete_rfq_item($id);
+				}
+
+				if($_GET['query']=='rfq_step05_edit')
+				{
+					$sid=$_POST['sid'];
+					$itemid=$_POST['itemid'];
+					$length=$_POST['length'];
+					$width=$_POST['width'];
+					$height=$_POST['height'];
+					//-- additional 
+					$wood=$_POST['wood'];
+					$fitting=$_POST['fitting'];
+					$finish=$_POST['finish'];
+					$packing=$_POST['packing'];
+					$branding=$_POST['branding'];
+
+					
+
+					foreach($itemid as $key=>$value) 
+									{ 
+										$itemid_single = mysqli_real_escape_string($con,$itemid[$key]);
+										$length_single = mysqli_real_escape_string($con,$length[$key]);
+										$width_single = mysqli_real_escape_string($con,$width[$key]);
+										$height_single = mysqli_real_escape_string($con,$height[$key]);
+										$wood_single = mysqli_real_escape_string($con,$wood[$key]);
+										$fitting_single = mysqli_real_escape_string($con,$fitting[$key]);
+										$finish_single = mysqli_real_escape_string($con,$finish[$key]);
+										$packing_single = mysqli_real_escape_string($con,$packing[$key]);
+										$branding_single = mysqli_real_escape_string($con,$branding[$key]);
+										
+										//=== update
+										$save = $sales->rfq_step0_5_update($itemid_single,$length_single,$width_single,$height_single,$sid,$wood_single,$fitting_single,$finish_single,$packing_single,$branding_single); 
+										
+									}
+
+						echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=sales_rfq_edit&status=3&id=".$sid."';</script>";
+				}
+
+				if($_GET['query']=='rfq_step08_edit')
+				{
+					$sid=$_POST['sid'];
+					$itemid=$_POST['itemid'];
+					$price=$_POST['price'];
+					$sprice=$_POST['sprice'];
+					$bom=$_POST['bom'];
+					$temp = rand(1000,9999);
+					
+
+					foreach($itemid as $key=>$value) 
+									{ 
+										//--file upload
+										$filename=$admin->upload_file_multi($_FILES['sfile']['name'][$key],$_FILES['sfile']['tmp_name'][$key]);
+										//-- temp save
+										//$pid=$product->tempsave($sku_single,$filename);
+
+										$itemid_single = mysqli_real_escape_string($con,$itemid[$key]);
+										$price_single = mysqli_real_escape_string($con,$price[$key]);
+										$sprice_single = mysqli_real_escape_string($con,$sprice[$key]);
+										$bom_single = mysqli_real_escape_string($con,$bom[$key]);
+										
+										
+										//=== update
+										$save = $sales->rfq_step0_8_update($itemid_single,$price_single,$sprice_single,$bom_single,$filename,$sid); 
+										
+									}
+
+						echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=sales_rfq_edit&status=1&id=".$sid."';</script>";
+				}
+
+				if($_GET['query']=='rfq_step1_edit')
+				{
+					$sid=$_POST['sid'];
+					$save=$sales->rfq_step1_edit($sid);
+					echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=sales_rfq_edit&status=1&id=".$sid."';</script>";
+				}
+
+				if($_GET['query']=='rfq_step2_edit')
+				{
+					$sid=$_POST['sid'];
+					$itemid=$_POST['itemid'];
+					$price=$_POST['price'];
+					$moq=$_POST['moq'];
+					$repeat_pa=$_POST['repeat_pa'];
+					$plc = $_POST['plc'];
+					
+
+					foreach($itemid as $key=>$value) 
+									{ 
+										$itemid_single = mysqli_real_escape_string($con,$itemid[$key]);
+										$price_single = mysqli_real_escape_string($con,$price[$key]);
+										$moq_single = mysqli_real_escape_string($con,$moq[$key]);
+										$repeat_pa_single = mysqli_real_escape_string($con,$repeat_pa[$key]);
+										$plc_single = mysqli_real_escape_string($con,$plc[$key]);
+										
+										
+										//=== update
+										$save = $sales->rfq_step2_update($itemid_single,$price_single,$moq_single,$repeat_pa_single,$plc_single,$sid); 
+										
+									}
+
+						echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=sales_rfq_edit&status=3&id=".$sid."';</script>";
+				}	
+				
+				if($_GET['query']=='rfq_step3_edit')
+				{
+					$sid=$_POST['sid'];
+					$save=$sales->rfq_step3_edit($sid);
+
+				//-- send notification to MD 
+				$mds=$admin->getonetype_user('9');
+				foreach($mds as $r=>$v)
+				{$admin->save_alerts($_SESSION['uid'],"RFQ #SHL-RFQ-$_POST[id] Has Been Send For Reveiew",$mds[$r]['id']);}
+
+					echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=sales_rfq_edit&status=1&id=".$sid."';</script>";
+				}
+
+				if($_GET['query']=='rfq_step4_edit_discount')
+				{
+					$sid=$_POST['sid'];
+					$itemid=$_POST['itemid'];
+					$discount=$_POST['discount'];
+					$discount_amt=$_POST['discount_amt'];
+					
+					foreach($itemid as $key=>$value) 
+						{ 
+							$itemid_single = mysqli_real_escape_string($con,$itemid[$key]);
+							$discount_single = mysqli_real_escape_string($con,$discount[$key]);
+							$discount_amt_single = mysqli_real_escape_string($con,$discount_amt[$key]);
+							
+							//=== update
+							$save = $sales->rfq_step4_discount($itemid_single,$discount_single,$discount_amt_single,$sid); 
+							
+						}
+
+						echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=sales_rfq_edit&status=3&id=".$sid."';</script>";
+				}
+
+				if($_GET['query']=='rfq_step4_edit')
+				{
+					$sid=$_POST['sid'];
+					$save=$sales->rfq_step4_edit($sid);
+						echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=sales_rfq_edit&status=1&id=".$sid."';</script>";
+				}
+
+				if($_GET['query']=='rfq_step6_edit')
+				{
+					$sid=$_POST['sid'];
+					$save=$sales->rfq_step5_edit($sid);
+					//-- send notification to MD 
+					$mds=$admin->getonetype_user('9');
+					foreach($mds as $r=>$v)
+					{$admin->save_alerts($_SESSION['uid'],"RFQ #SHL-RFQ-$_POST[id] Has Been Send Submitted to Client",$mds[$r]['id']);}
+
+					echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=sales_rfq_edit&status=1&id=".$sid."';</script>";
+				}
 	}
 	break;
 //-- sales close
@@ -973,13 +1253,39 @@ case "admin":
 	
 
 
-//-- sales open
+//-- hr open
 case "hr":
 	if($_GET['action']=='hr')
 	{
 		
 	}
 	break;
+
+//-- products open
+case "product":
+	if($_GET['action']=='product')
+	{
+		if($_GET['query']=='get_details')
+		{
+			
+			$id=$_GET['id'];
+			$details=$product->getone($id);
+			if($details)
+			{
+					echo "<table border='1' style='font-size:11px;'><tr><th>Name</th><td>".$details[0]['product_name']."</td></tr>";					
+					echo "<tr><th>Dimension</th><td>".$details[0]['width_cm'].' x '.$details[0]['depth_cm'].' x '.$details[0]['height_cm'].' (CM) <br>';
+					echo $details[0]['width_inch'].' x '.$details[0]['depth_inch'].' x '.$details[0]['height_inch'].' (INCH)</td></tr>';
+					echo "<tr><th>Finish</th><td>".$details[0]['finish']."</td></tr><tr><th>Material</th><td>".$details[0]['material']."</td></tr>";
+				echo "</table>";
+			}
+			else
+			{echo "No data found";}
+
+		}	
+		
+	}
+	break;
+
 
 
 
