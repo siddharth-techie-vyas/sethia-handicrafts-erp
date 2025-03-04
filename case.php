@@ -112,6 +112,7 @@ case "leads":
 			if($_GET['type']=='state')
 			{
 				$state=$admin->get_states($_GET['id']);
+				echo "<option disabled='disbaled' selected='selected'>-Select States-</option>";
 				foreach($state as $r=>$v)
 				{
 					echo "<option value='".$state[$r]['id']."'>".$state[$r]['name']."</option>";
@@ -121,9 +122,10 @@ case "leads":
 			if($_GET['type']=='city')
 			{
 				$city=$admin->get_cities($_GET['id']);
+				echo "<option disabled='disbaled' selected='selected'>-Select Cities-</option>";
 				foreach($city as $r=>$v)
 				{
-					echo "<option value='".$city[$r]['id']."'>".$city[$r]['name']."</option>";
+					echo "<option value='".$city[$r]['id']."' >".$city[$r]['name']."</option>";
 				}
 			}
 		}
