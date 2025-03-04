@@ -1,9 +1,10 @@
 var loading_img='../../images/loading.gif';
-var base_url='http://localhost/sethia-handicrafts-erp/';
+//var base_url='http://localhost/sethia-handicrafts-erp/';
+var base_url='https://www.sethiahandicrafts.in/';
 
-function get_details(inputid,outputid,url)
+function get_details2(inputid,outputid,url)
 {
-// alert(outputid);
+ //alert(outputid);
   $('#'+outputid).html('');
   var id=$('#'+inputid).val();
   //alert(id);
@@ -12,7 +13,7 @@ function get_details(inputid,outputid,url)
            url: url+id,
            success: function(data)
            {
-           //alert(data);
+           //alert(url+id);
                $('#msg'+outputid).html("Please Wait !!!");
                $('#'+outputid).html(data);
                $('#msg'+outputid).html("")

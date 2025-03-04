@@ -65,7 +65,7 @@
 											<div class="col-md-3">
 								<div class="form-group">
 								  <label>Country</label>
-								  <select class="form-control" name="country" id="country" onchange="get_details('country','state','<?php echo $base_url.'index.php?action=leads&query=get_details&type=state&id=';?>')">
+								  <select class="form-control" name="country" id="country" onchange="get_details2('country','state','<?php echo $base_url.'index.php?action=leads&query=get_details&type=state&id=';?>')">
 									<option disabled="disabled" selected="selected" >-- Select --</option>
 									<?php $country=$admin->get_country();
 									foreach($country as $r => $v)
@@ -82,7 +82,7 @@
 									<div class="form-group">
 									  <label>State</label>
 									 
-									  <select class="form-control" name="state" id="state" onchange="get_details('state','city','<?php echo $base_url.'index.php?action=leads&query=get_details&type=city&id=';?>')">
+									  <select class="form-control" name="state" id="state" onchange="get_details2('state','city','<?php echo $base_url.'index.php?action=leads&query=get_details&type=city&id=';?>')">
                                         
                                       </select>
 									  <span id="msgstate"></span> 
