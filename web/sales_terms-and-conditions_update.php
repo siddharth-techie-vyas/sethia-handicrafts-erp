@@ -8,7 +8,7 @@
     ?>
         <tbody>
         <tr>
-            <th colspan="2">TERMS CONDITIONS <span class="text-danger">UPDATE</span></th>
+            <th colspan="2">TERMS CONDITIONS <span class="text-danger">( UPDATE )</span></th>
         </tr>
         <!-- <tr>
              <td></td>
