@@ -904,6 +904,8 @@ case "sales":
 						{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=sales_feedback&status=2&id=".$_POST['sales_lid']."';</script>";}
 				}	
 
+
+				//================= prospect starts
 				if($_GET['query']=='prospect1')
 				{		
 					//--0 is btype (means its a prospect)
@@ -951,12 +953,20 @@ case "sales":
 				if($_GET['query']=='prospect3_1')
 				{
 					print_r($_POST);
-					$save=$sales->sales_prospect_tandc($_POST['pid'],$_POST['incoterms'],$_POST['shipping'],$_POST['shipping-basis'],$_POST['currency'],$_POST['liability'],$_POST['liability_per'],$_POST['advance'],$_POST['advance_per'],$_POST['no_advance'],$_POST['further_advance_per0'],$_POST['further_advance_per_val'],$_POST['further_advance0'],$_POST['further_advance_val'],$_POST['balance'],$_POST['credit_period'],$_POST['retention_period'],$_POST['progress_payment'],$_POST['document'],$_POST['document2'],$_POST['price_validity'],$_POST['audit1'],$_POST['Existing_not_acceptable_val'],$_POST['ctpat'],$_POST['lateshipment_per'],$_POST['lateshipment_max_per'],$_POST['repair_labour_rate'],$_POST['repair_labour_rate_after'],$_POST['repair_labour_rate_limit'],$_POST['commission_to'],$_POST['commision_name'],$_POST['commision_per'],$_POST['sample'],$_POST['sample_paid_foc_qty'],$_POST['photography'],$_POST['photography_qty'],$_POST['packing'],$_POST['product_testing'],$_POST['product_testing_paid'],$_POST['packing_testing'],$_POST['fsc'],$_POST['fsc_current'],$_POST['fsc_target'],$_POST['branding'],$_POST['branding_req']);
+					$save=$sales->sales_prospect_tandc($_POST['pid'],$_POST['incoterms'],$_POST['shipping'],$_POST['shipping_basis'],$_POST['currency'],$_POST['liability'],$_POST['liability_per'],$_POST['advance'],$_POST['progress_payment'],$_POST['stage1'],$_POST['stage2'],$_POST['stage3'],$_POST['stage4'],$_POST['balance'],$_POST['credit_period'],$_POST['retention'],$_POST['retention_period'],$_POST['process_payment'],$_POST['document'],$_POST['document2'],$_POST['price_validity'],$_POST['price_validity_year'],$_POST['social_audit'],$_POST['audit0'],$_POST['audit1'],$_POST['audit2'],$_POST['audit3'],$_POST['audit4'],$_POST['ctpat'],$_POST['shipment_penelty'],$_POST['late_shipment_penelty'],$_POST['late_shipment_max_per'],$_POST['late_shipment_duration'],$_POST['chargeback'],$_POST['repair_labour_rate'],$_POST['repair_labour_rate_after'],$_POST['repair_labour_limit'],$_POST['commissionable'],$_POST['commision_to'],$_POST['commision_name'],$_POST['commision_per'],$_POST['sample'],$_POST['sample_qty'],$_POST['photography'],$_POST['photography_qty'],$_POST['packing'],$_POST['special_notes'],$_POST['product_testing'],$_POST['product_testing_paid'],$_POST['product_testing_1'],$_POST['product_testing_frequency'],$_POST['packing_testing1'],$_POST['packing_testing_frequency'],$_POST['packing_testing_paid'],$_POST['fsc'],$_POST['fsc_years'],$_POST['fsc_yes0'],$_POST['fsc_yes1'],$_POST['fsc_yes2'],$_POST['branding'],$_POST['branding_req']);
 					if($save)
 						{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=sales_addprospect&status=1&id=".$_POST['pid']."';</script>";}   
 						else
 						{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=sales_addprospect&status=2&id=".$_POST['pid']."';</script>";}
 				}
+
+				if($_GET['query']=='delete_moredetails_prospect')
+				{
+					echo $_GET['id'];
+					$sales->delete_moredetails_prospect($_GET['id']);
+				}
+				//================= prospect ends
+
 
 				//----------------- rfq only
 				if($_GET['query']=='rfq_additem')

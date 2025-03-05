@@ -31,10 +31,11 @@ if($pro1[0]['export'] =='1'){?>
 
 <!-------- form for term and conditions ---------->
 <?php 
-$tandc=$sales->get_prospect_tandc($pro1[0]['id']);
-if($tandc[0]['id']!='')
-{include('sales_terms-and-conditions_update.php');}
-else
-{include('sales_terms-and-conditions_insert.php');}
-
+if(!empty($pro1[0]['export'])){
+    $tandc=$sales->get_prospect_tandc($pro1[0]['id']);
+    if($tandc)
+    {include('sales_terms-and-conditions_update.php');}
+    else
+    {include('sales_terms-and-conditions_insert.php');}
+}
 ?>

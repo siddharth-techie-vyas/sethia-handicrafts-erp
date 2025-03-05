@@ -82,11 +82,11 @@
 										foreach($details as $r=>$v)
 										{
 											?>
-											<tr>
+											<tr id="<?php echo $details[$r]['id']; ?>">
 												<th><?php echo $counter++;?></th>
 												<td><?php echo $details[$r]['value1']; ?></td>
 												<td><?php echo $details[$r]['value2']; ?></td>
-												<td><i class="fa fa-trash btn btn-danger tbn-sm"></i></td>
+												<td><i class="fa fa-trash btn btn-danger tbn-sm" onclick="deleteme('sales','delete_moredetails_prospect','<?php echo $details[$r]['id']; ?>')"></i></td>
 											</tr>
 											
 								   <?php } echo "</table>";}else{echo "<h5>No details found</h5>";}?>

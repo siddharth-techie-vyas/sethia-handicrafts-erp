@@ -75,7 +75,7 @@
             Shipping - Basis
             </td>
             <td>
-            <select id="export" name="shipping-basis" class="form-control">
+            <select id="export" name="shipping_basis" class="form-control">
                 <option disbaled="disabled">-Select-</option>
                     <option>Shipper PDA </option>
                     <option> Liner PDA</option>
@@ -105,7 +105,7 @@
              
             <td>
             <select id="domestic" name="currency" class="form-control">
-                <option disbaled="disabled">-Select-</option>
+                
                     <option>INR</option>                    
                 </select>
             </td>
@@ -187,19 +187,19 @@
 
                             <div class="col-sm-3">
                                 <label for="advance_stage1">Stage 1</label>
-                                <input type="text" name="advance_stage1" class="form-control-sm">
+                                <input type="text" name="stage1" class="form-control-sm">
                             </div>
                             <div class="col-sm-3">
                                 <label for="advance_stage2">Stage 2</label>
-                                <input type="text" name="advance_stage2" class="form-control-sm">
+                                <input type="text" name="stage2" class="form-control-sm">
                             </div>
                             <div class="col-sm-3">
                                 <label for="advance_stage3">Stage 3</label>
-                                <input type="text" name="advance_stage3" class="form-control-sm">
+                                <input type="text" name="stage3" class="form-control-sm">
                             </div>
                             <div class="col-sm-3">
                                 <label for="advance_stage4">Stage 4</label>
-                                <input type="text" name="advance_stage4" class="form-control-sm">
+                                <input type="text" name="stage4" class="form-control-sm">
                             </div>
 
                         </div>        
@@ -255,8 +255,8 @@
                                 <input type="number" name="retention_period" class="form-control">
                             </div>
                             <div class="col-sm-6">
-                                <label>Progress Payment</label>
-                                <input type="number" name="progress_payment" class="form-control">
+                                <label>Process Payment</label>
+                                <input type="number" name="process_payment" class="form-control">
                             </div>
                         </div>    
 
@@ -332,18 +332,18 @@
             <td colspan="2">
                     <div class="demo-radio-button row">
                         <div class="col-sm-2">
-                            <input name="audit1" type="radio" id="radio_r1" value="Not Required" onchange="hide_txtbox('compliance')">
+                            <input name="social_audit" type="radio" id="radio_r1" value="Not Required" onchange="hide_txtbox('compliance')">
                             <label for="radio_r1">Not Required</label>
                         </div>
 
                         <div class="col-sm-2">
-                            <input name="audit1" type="radio" id="radio_r11" value="Not Required" onchange="show_txtbox('compliance')">
+                            <input name="social_audit" type="radio" id="radio_r11" value="Not Required" onchange="show_txtbox('compliance')">
                             <label for="radio_r11">Required</label>
                         </div>
 
                         <div id="compliance" class="col-sm-8" style="display:none;">
                         <div class="col-sm-4">
-                            <input name="audit1" type="checkbox" id="radio_r2" value="SA8000">
+                            <input name="audit0" type="checkbox" id="radio_r2" value="SA8000">
                             <label for="radio_r2">SA8000</label>                            
                         </div>
                         <div class="col-sm-8">    
@@ -353,11 +353,11 @@
                         <label for="radio_r3">Existing not acceptable required</label>      
                             <div id="Existing_not_acceptable_val" style="display:none;">
                                 <label>Option 1</label>    
-                                <input type="text" name="Existing_not_acceptable_val_1" class="form-control-sm"> 
+                                <input type="text" name="audit2" class="form-control-sm"> 
                                 <label>Option 2</label>    
-                                <input type="text" name="Existing_not_acceptable_val_2" class="form-control-sm">
+                                <input type="text" name="audit3" class="form-control-sm">
                                 <label>Option 3</label>    
-                                <input type="text" name="Existing_not_acceptable_val_3" class="form-control-sm">   
+                                <input type="text" name="audit4" class="form-control-sm">   
                             </div>
                             
 
@@ -407,11 +407,11 @@
 
                             <div class="col-sm-4">
                                 <label>%</label>
-                                <input name="lateshipment_per" type="number" value="" class="form-control">
+                                <input name="late_shipment_per" type="number" value="" class="form-control">
                             </div>
                             <div class="col-sm-4">
                                 <label>Duration</label> 
-                                <select name="lateshipment_duration" class="form-control">
+                                <select name="late_shipment_duration" class="form-control">
                                     <option disbaled="disabled">-Select-</option>
                                     <option>Per Day</option>
                                     <option>Per Week</option>
@@ -420,7 +420,7 @@
                             </div>
                             <div class="col-sm-4">    
                                 <label>Max %</label>
-                                <input name="lateshipment_max_per" type="number" value="" class="form-control">
+                                <input name="late_shipment_max_per" type="number" value="" class="form-control">
                             </div>    
 
                         </div>    
@@ -469,7 +469,7 @@
 
                             <div class="col-sm-4">    
                                 <label>Rate Limitation</label>   
-                                <select name="repair_labour_rate_limit" class="form-control">
+                                <select name="repair_labour_limit" class="form-control">
                                     <option disbaled="disabled">-Select-</option>
                                     <option>Repair</option>
                                     <option>Replacement of part or full replacement</option>
@@ -494,12 +494,12 @@
                      <div class="demo-radio-button row">
 
                      <div class="col-sm-2">
-                            <input name="chargeback" type="radio" id="radio_co1" value="0" onchange="hide_txtbox('Commissionable')">
+                            <input name="commissionable" type="radio" id="radio_co1" value="0" onchange="hide_txtbox('Commissionable')">
                             <label for="radio_co1">Not Discussed</label>
                         </div>
 
                         <div class="col-sm-2">
-                            <input name="chargeback" type="radio" id="radio_co2" value="1" onchange="show_txtbox('Commissionable')">
+                            <input name="commissionable" type="radio" id="radio_co2" value="1" onchange="show_txtbox('Commissionable')">
                             <label for="radio_co2">Discussed</label>
                         </div>
 
@@ -516,11 +516,11 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <label>Name</label>   
-                                        <input name="commision_name" type="text" value="" class="form-control">                                                     
+                                        <input name="commission_name" type="text" value="" class="form-control">                                                     
                                     </div>
                                     <div class="col-sm-4">    
                                         <label>Commission %</label>   
-                                        <input name="commision_per" type="number" value="" class="form-control">      
+                                        <input name="commission_per" type="number" value="" class="form-control">      
                                     </div>    
                         </div>
 
@@ -556,9 +556,9 @@
                             <label for="radio_c3">Sample Freight Foc</label>
                         </div>
                         <div class="col-sm-3">    
-                            <input name="sample_qty" type="checkbox" id="radio_c4" value="sample_paid_foc" onclick="show_bycheck('radio_c4','sample_paid_foc_qty')">
+                            <input name="sample_qty0" type="checkbox" id="radio_c4" value="sample_paid_foc" onclick="show_bycheck('radio_c4','sample_paid_foc_qty')">
                             <label for="radio_c4">Quantity Required</label>
-                            <input name="sample_paid_foc_qty" id="sample_paid_foc_qty" type="number" value="" class="form-control" style="display:none;">      
+                            <input name="sample_qty" id="sample_paid_foc_qty" type="number" value="" class="form-control" style="display:none;">      
                         </div>
                        
 					</div>
@@ -628,7 +628,7 @@
                             <label for="radio_pt1">Internal Testing Required</label>
                         </div>
                         <div class="col-sm-4">
-                            <input name="product_testing" type="checkbox" id="radio_pt2" value="Laboratory" onclick="show_bycheck('radio_pt2','product_testing');">
+                            <input name="product_testing1" type="checkbox" id="radio_pt2" value="Laboratory" onclick="show_bycheck('radio_pt2','product_testing');">
                             <label for="radio_pt2">Laboratory Testing Required</label>                       
                         </div>
                         <div class="col-sm-4" id="product_testing" style="display:none;">    
@@ -664,10 +664,10 @@
                         <label for="radio_pc1">Only Internal Testing Required</label>
                     </div>
                     <div class="col-sm-4">
-                        <input name="packing_testing" type="checkbox" id="radio_pc2" value="Laboratory" onclick="show_bycheck('radio_pc2','packing_testing');">
+                        <input name="packing_testing1" type="checkbox" id="radio_pc2" value="Laboratory" onclick="show_bycheck('radio_pc2','packing_testing');">
                         <label for="radio_pc2">Laboratory Testing Required</label>                       
                     </div>
-                    <div class="col-sm-4" id="packing_testing" style="display:none;">    
+                    <div class="col-sm-4" id="packing_testing_frequency" style="display:none;">    
                         <label for="radio_pc3">Testing Frequency</label>
                         <select class="form-control" name="packing_testing_frequency" id="packing_testing_frequency">
                             <option disbaled="disbaled">-Select-</option>
@@ -720,17 +720,17 @@
                         
                         <div clas="col-sm-2" id="fsc_yes0" style="display:none;">    
                             <label>FSC % Target in 1-2 Years</label>   
-                            <input name="fsc_target" type="number" value="" class="form-control"> 
+                            <input name="fsc_yes0" type="number" value="" class="form-control"> 
                         </div>
 
                         <div class="col-sm-2" id="fsc_yes1" style="display:none;">    
                             <label>FSC Current</label>
-                            <input type="text" name="fsc_current" class="form-control"  >
+                            <input type="text" name="fsc_yes1" class="form-control"  >
                         </div>
 
                         <div class="col-sm-2 demo-radio-button" id="fsc_yes2" style="display:none;">    
-                            <input name="no_target" type="checkbox" id="radio_1" value="1" class="form-control">
-                            <label for="no_target">No Target</label>
+                            <input name="fsc_yes2" type="checkbox" id="radio_1" value="1" class="form-control">
+                            <label for="fsc_yes2">No Target</label>
                         </div>
     
 					</div>

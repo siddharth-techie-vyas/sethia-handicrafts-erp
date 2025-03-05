@@ -97,11 +97,11 @@ function get_prospect_tandc($id)
     $result = $this->db_handle->runBaseQuery($query);
     return $result;
 }
-function sales_prospect_tandc($pid,$incoterms,$shipping,$shipping_basis,$currency,$liability,$liability_per,$advance,$advance_per,$no_advance,$further_advance_per0,$further_advance_per_val,$further_advance0,$further_advance_val,$balance,$credit_period,$retention_period,$progress_payment,$document,$document2,$price_validity,$audit1,$Existing_not_acceptable_val,$ctpat,$lateshipment_per,$lateshipment_max_per,$repair_labour_rate,$repair_labour_rate_after,$repair_labour_rate_limit,$commission_to,$commision_name,$commision_per,$sample,$sample_paid_foc_qty,$photography,$photography_qty,$packing,$product_testing,$product_testing_paid,$packing_testing,$fsc,$fsc_current,$fsc_target,$branding,$branding_req)
+function sales_prospect_tandc($pid,$incoterms,$shipping,$shipping_basis,$currency,$liability,$liability_per,$advance,$progress_payment,$stage1,$stage2,$stage3,$stage4,$balance,$credit_period,$retention,$retention_period,$process_payment,$document,$document2,$price_validity,$price_validity_year,$social_audit,$audit0,$audit1,$audit2,$audit3,$audit4,$ctpat,$shipment_penelty,$late_shipment_penelty,$late_shipment_max_per,$late_shipment_duration,$chargeback,$repair_labour_rate,$repair_labour_rate_after,$repair_labour_limit,$commissionable,$commision_to,$commision_name,$commision_per,$sample,$sample_qty,$photography,$photography_qty,$packing,$special_notes,$product_testing,$product_testing_paid,$product_testing_1,$product_testing_frequency,$packing_testing1,$packing_testing_frequency,$packing_testing_paid,$fsc,$fsc_years,$fsc_yes0,$fsc_yes1,$fsc_yes2,$branding,$branding_req)
 {
-    $query = "insert into prospect_tandc(pid,incoterms,shipping,shipping_basis,currency,liability,liability_per,advance,advance_per,no_advance,further_advance_per0,further_advance_per_val,further_advance0,further_advance_val,balance,credit_period,retention_period,progress_payment,document,document2,price_validity,audit1,Existing_not_acceptable_val,ctpat,lateshipment_per,lateshipment_max_per,repair_labour_rate,repair_labour_rate_after,repair_labour_rate_limit,commission_to,commision_name,commision_per,sample,sample_paid_foc_qty,photography,photography_qty,packing,product_testing,product_testing_paid,packing_testing,fsc,fsc_current,fsc_target,branding,branding_req)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    $paramType = "issssssssssssssssssssssssssssssssssssssssssss";
-    $paramValue = array($pid,$incoterms,$shipping,$shipping_basis,$currency,$liability,$liability_per,$advance,$advance_per,$no_advance,$further_advance_per0,$further_advance_per_val,$further_advance0,$further_advance_val,$balance,$credit_period,$retention_period,$progress_payment,$document,$document2,$price_validity,$audit1,$Existing_not_acceptable_val,$ctpat,$lateshipment_per,$lateshipment_max_per,$repair_labour_rate,$repair_labour_rate_after,$repair_labour_rate_limit,$commission_to,$commision_name,$commision_per,$sample,$sample_paid_foc_qty,$photography,$photography_qty,$packing,$product_testing,$product_testing_paid,$packing_testing,$fsc,$fsc_current,$fsc_target,$branding,$branding_req);
+    $query = "insert into prospect_tandc(pid,incoterms,shipping,shipping_basis,currency,liability,liability_per,advance,progress_payment,stage1,stage2,stage3,stage4,balance,credit_period,retention,retention_period,process_payment,document,document2,price_validity,price_validity_year,social_audit,audit0,audit1,audit2,audit3,audit4,ctpat,shipment_penelty,late_shipment_penelty,late_shipment_max_per,late_shipment_duration,chargeback,repair_labour_rate,repair_labour_rate_after,repair_labour_limit,commissionable,commision_to,commision_name,commision_per,sample,sample_qty,photography,photography_qty,packing,special_notes,product_testing,product_testing_paid,product_testing_1,product_testing_frequency,packing_testing1,packing_testing_frequency,packing_testing_paid,fsc,fsc_years,fsc_yes0,fsc_yes1,fsc_yes2,branding,branding_req)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    $paramType = "issssssssssssssssssssssssssssssssssssssssssssssssssssssssssss";
+    $paramValue = array($pid,$incoterms,$shipping,$shipping_basis,$currency,$liability,$liability_per,$advance,$progress_payment,$stage1,$stage2,$stage3,$stage4,$balance,$credit_period,$retention,$retention_period,$process_payment,$document,$document2,$price_validity,$price_validity_year,$social_audit,$audit0,$audit1,$audit2,$audit3,$audit4,$ctpat,$shipment_penelty,$late_shipment_penelty,$late_shipment_max_per,$late_shipment_duration,$chargeback,$repair_labour_rate,$repair_labour_rate_after,$repair_labour_limit,$commissionable,$commision_to,$commision_name,$commision_per,$sample,$sample_qty,$photography,$photography_qty,$packing,$special_notes,$product_testing,$product_testing_paid,$product_testing_1,$product_testing_frequency,$packing_testing1,$packing_testing_frequency,$packing_testing_paid,$fsc,$fsc_years,$fsc_yes0,$fsc_yes1,$fsc_yes2,$branding,$branding_req);
     $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
     return $insertId;
 }
@@ -262,5 +262,11 @@ function rfq_step5_edit($sid)
 }
 
 
+function delete_moredetails_prospect($id)
+{
+    $delete="delete from beneficiery_details where id='$id' ";
+    $delete = $this->db_handle->update($delete);
+    return $delete;
+}
 //=========== end 
 }?>
