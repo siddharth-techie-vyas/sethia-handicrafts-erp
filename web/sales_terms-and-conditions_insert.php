@@ -174,12 +174,12 @@
                 
                     <div class="demo-radio-button row">
                         <div class="col-sm-2">
-                            <input name="progress_payment" type="radio" id="radio_pp1" value="0" onchange="show_txtbox('progress_payment')">
+                            <input name="progress_payment" type="radio" id="radio_pp1" value="1" onchange="show_txtbox('progress_payment')">
                             <label for="radio_pp1">Yes</label>
                         </div>
 
                         <div class="col-sm-2">
-                            <input name="progress_payment" type="radio" id="radio_pp2" value="1" onchange="hide_txtbox('progress_payment')">
+                            <input name="progress_payment" type="radio" id="radio_pp2" value="0" onchange="hide_txtbox('progress_payment')">
                             <label for="radio_pp2">No</label>
                         </div>
 
@@ -239,12 +239,12 @@
 
                 <div class="demo-radio-button row">
                         <div class="col-sm-2">
-                            <input name="retention" type="radio" id="radio_rt1" value="0" onchange="show_txtbox('retention')">
+                            <input name="retention" type="radio" id="radio_rt1" value="1" onchange="show_txtbox('retention')">
                             <label for="radio_rt1">Yes</label>
                         </div>
 
                         <div class="col-sm-2">
-                            <input name="retention" type="radio" id="radio_rt2" value="1" onchange="hide_txtbox('retention')">
+                            <input name="retention" type="radio" id="radio_rt2" value="0" onchange="hide_txtbox('retention')">
                             <label for="radio_rt2">No</label>
                         </div>
 
@@ -332,12 +332,12 @@
             <td colspan="2">
                     <div class="demo-radio-button row">
                         <div class="col-sm-2">
-                            <input name="social_audit" type="radio" id="radio_r1" value="Not Required" onchange="hide_txtbox('compliance')">
+                            <input name="social_audit" type="radio" id="radio_r1" value="0" onchange="hide_txtbox('compliance')">
                             <label for="radio_r1">Not Required</label>
                         </div>
 
                         <div class="col-sm-2">
-                            <input name="social_audit" type="radio" id="radio_r11" value="Not Required" onchange="show_txtbox('compliance')">
+                            <input name="social_audit" type="radio" id="radio_r11" value="1" onchange="show_txtbox('compliance')">
                             <label for="radio_r11">Required</label>
                         </div>
 
@@ -394,12 +394,12 @@
                      <div class="demo-radio-button row">
 
                         <div class="col-sm-2">
-                            <input name="shipment_panelty" type="radio" id="radio_sh1" value="0" onchange="hide_txtbox('shipment')">
+                            <input name="shipment_penelty" type="radio" id="radio_sh1" value="0" onchange="hide_txtbox('shipment')">
                             <label for="radio_sh1">Not Discussed</label>
                         </div>
 
                         <div class="col-sm-2">
-                            <input name="shipment_panelty" type="radio" id="radio_sh2" value="1" onchange="show_txtbox('shipment')">
+                            <input name="shipment_penelty" type="radio" id="radio_sh2" value="1" onchange="show_txtbox('shipment')">
                             <label for="radio_sh2">Discussed</label>
                         </div>
 
@@ -745,10 +745,10 @@
             <td>
                 <div class="demo-radio-button row">
                     <div class="col-sm-6">
-                        <input name="branding" type="radio" id="radio_b1" onclick="show_txtbox('branding_yes')">
+                        <input name="branding" type="radio" value="0" id="radio_b1" onclick="show_txtbox('branding_yes')">
                         <label for="radio_b1">Yes</label>
                         
-                        <input name="branding" type="radio" id="radio_b2" onclick="hide_txtbox('branding_yes')">
+                        <input name="branding" type="radio" value="1" id="radio_b2" onclick="hide_txtbox('branding_yes')">
                         <label for="radio_b2">No</label>
 
                     </div>
