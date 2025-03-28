@@ -1139,8 +1139,7 @@ case "sales":
 												}
 												
 											
-										else{$filename=$_POST['sfile_old'];}
-										
+										else{$filename=$_POST['sfile_old'];}									
 										
 										//=== update
 										$save = $sales->rfq_step20_update($itemid,$sprice,$filename,$source,$discountedprice,$mrp,$designer_pass,$sid); 
