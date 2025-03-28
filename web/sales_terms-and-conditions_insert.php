@@ -55,6 +55,14 @@
                         </div>
 
                         <div id="cif" style="display:none;">
+                            <label for="fob">Name Of Port</label>
+                            <select name="port" class="form-control">
+                                <option disbaled="disabled">-Select-</option>
+                                <option>Mundra</option>
+                                <option>Pipava</option>
+                                <option>Nhava Sheva</option>
+                            </select> 
+
                             <label>Destination</label>
                             <input type="text" name="destination" class="form-control">
                         </div>
@@ -188,13 +196,19 @@
             <td colspan="2">
 
                 <div class="demo-radio-button row">
+                        
                         <div class="col-sm-2">
-                            <input name="progress_payment" type="radio" id="radio_pt1" value="1" onchange="show_txtbox('advance'); hide_txtbox('lc')">
+                            <input name="progress_payment" type="radio" id="radio_pt0" value="0" onchange="show_txtbox('document_lc'); hide_txtbox('advance'); hide_txtbox('lc')">
+                            <label for="radio_pt0">No Advance Payment</label>
+                        </div>        
+                        
+                        <div class="col-sm-2">
+                            <input name="progress_payment" type="radio" id="radio_pt1" value="1" onchange=" show_txtbox('document_lc'); show_txtbox('advance'); hide_txtbox('lc')">
                             <label for="radio_pt1">Advance Payment</label>
                         </div>
 
                         <div class="col-sm-2">
-                            <input name="progress_payment" type="radio" id="radio_pt2" value="0" onchange="hide_txtbox('advance'); show_txtbox('lc')">
+                            <input name="progress_payment" type="radio" id="radio_pt2" value="2" onchange="hide_txtbox('advance'); show_txtbox('lc'); hide_txtbox('document_lc')">
                             <label for="radio_pt2">LC</label>
                         </div>
                 </div>
@@ -202,16 +216,7 @@
                 <div class="row">
 
                         <div id="advance" class="col-sm-10 row demo-radio-button" style="display:none;">
-                            <div class="col-sm-4">                                
-                                <input type="radio" id="advance0" value="advance" name="advance" class="form-control" onchange="hide_txtbox('advance2'); show_txtbox('advance1')">
-                                <label for="advance0">Advance</label>    
-                            </div>
-                            <div class="col-sm-4">                                
-                                <input type="radio" id="no_advance" value="no_advance" name="advance" class="form-control" onchange="hide_txtbox('advance1'); show_txtbox('advance2')">
-                                <label for="no_advance">No Advance</label>
-                            </div>
-                            <hr>
-                            <div class="col-sm-4" id="advance1" style="display:none;">
+                            <div class="col-sm-4" id="advance1">
                                 <label>Advance T&C</label>
                                                 <div class="demo-radio-button row">
                                                         
@@ -331,7 +336,7 @@
         </tr>
 
 
-        <!-- <tr>
+        <tr>
             <td>
                 - Balance Payment
             </td>
@@ -348,7 +353,7 @@
                  <label>Credit Period (Days)</label>
                  <input type="number" name="credit_period" class="form-control">
             </td>
-        </tr> -->
+        </tr>
         
         
         <tr id="domestic">
@@ -386,7 +391,7 @@
         </tr>
 
 
-        <tr>
+        <tr id="document_lc">
             <td>
             - Documentation (non-LC)
             </td>
@@ -429,13 +434,13 @@
                         </div>
 
                         <div id="Price_Validity" class="col-sm-8" style="display:none;">
-                                <!-- <select name="price_validity_year" class="form-control">
+                                <select name="price_validity_year" class="form-control">
                                     <option disbaled="disabled">-Select-</option>
                                     <option>No Agreement </option>    
                                     <option>Committed 1 Year</option>
-                                </select>  -->
-                                <label>Number of Days</label>
-                                <input type="number" name="price_validity_year" class="form-control">
+                                </select> 
+                                <!-- <label>Number of Days</label>
+                                <input type="number" name="price_validity_year" class="form-control"> -->
                         </div>
                 </div>        
                  
@@ -497,11 +502,25 @@
                 8. CTPAT Audit Requirement
             </td>
             <td colspan="2">
-                <select name="ctpat" class="form-control">
+                <!-- <select name="ctpat" class="form-control">
                     <option disbaled="disabled">-Select-</option>
                     <option>Not Required</option>    
                     <option>Required</option>
-                </select> 
+                </select>  -->
+
+                <div class="demo-radio-button row">
+                        <div class="col-sm-2">
+                            <input name="ctpat" type="radio" id="ctpat_r1" value="0" >
+                            <label for="ctpat_r1">Not Required</label>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <input name="ctpat" type="radio" id="ctpat_r11" value="1" >
+                            <label for="ctpat_r11">Required</label>
+                        </div>
+                </div>
+
+
             </td>
           
         </tr>
@@ -693,20 +712,32 @@
                 13. Photography Sample
             </td>
             <td colspan="2">
-                     <div class="demo-radio-button row">
-                        <div class="col-sm-3">
+
+            <div class="demo-radio-button row">
+                        <div class="col-sm-2">
+                            <input name="photography2" type="radio" id="radio_po1" value="0" onchange="hide_txtbox('photography')">
+                            <label for="radio_po1">Not Required</label>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <input name="photography1" type="radio" id="radio_po2" value="1" onchange="show_txtbox('photography')">
+                            <label for="radio_po2">Required</label>
+                        </div>
+
+                     <div class="col-sm-8 row" id="photography" style="display:none;">
+                        <div class="col-sm-4">
                             <input name="photography" type="radio" id="radio_p1" value="sample_paid_client" onclick="hide_txtbox('photography_qty')">
                             <label for="radio_p1">Sample & Freight Paid by client</label>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
                             <input name="photography" type="radio" id="radio_p2" value="sample_paid_foc_freight" onclick="hide_txtbox('photography_qty')">
                             <label for="radio_p2">Sample Foc Freight paid by client</label>                       
                         </div>
-                        <div class="col-sm-2">    
+                        <div class="col-sm-4">    
                             <input name="photography" type="radio" id="radio_p3" value="sample_paid_foc" onclick="hide_txtbox('photography_qty')">
                             <label for="radio_p3">Sample Freight Foc</label>
                         </div>
-                        <div class="col-sm-2">    
+                        <div class="col-sm-4">    
                             <input name="photography_qty" type="checkbox" id="radio_p4" value="quanity_required" onclick="show_bycheck('radio_p4','photography_qty')">
                             <label for="radio_p4">Quantity Required</label>
                             <input name="photography_qty" id="photography_qty" type="number" value="" class="form-control" style="display:none;">      
@@ -746,12 +777,12 @@
             <td>
                     <div class="demo-radio-button row">
                         <div class="col-sm-4">
-                            <input name="product_testing" type="checkbox" id="radio_pt01" value="Only Internal">
-                            <label for="radio_pt1">Internal Testing Required</label>
+                            <input name="product_testing" type="radio" id="radio_pt01" value="Only Internal" onclick="hide_txtbox('product_testing');">
+                            <label for="radio_pt01">Internal Testing Required</label>
                         </div>
                         <div class="col-sm-4">
-                            <input name="product_testing1" type="checkbox" id="radio_pt02" value="Laboratory" onclick="show_bycheck('radio_pt2','product_testing');">
-                            <label for="radio_pt2">Laboratory Testing Required</label>                       
+                            <input name="product_testing" type="radio" id="radio_pt02" value="Laboratory" onclick="show_bycheck('radio_pt02','product_testing');">
+                            <label for="radio_pt02">Laboratory Testing Required</label>                       
                         </div>
                         <div class="col-sm-4" id="product_testing" style="display:none;">    
                             <label for="radio_pt3">Testing Frequency</label>
@@ -782,11 +813,11 @@
             <td>
                 <div class="demo-radio-button row">
                     <div class="col-sm-4">
-                        <input name="packing_testing" type="checkbox" id="radio_pc1" value="Only Internal" onclick="hide_txtbox('packing_testing');">
+                        <input name="packing_testing" type="radio" id="radio_pc1" value="Only Internal" onclick="hide_txtbox('packing_testing_frequency');">
                         <label for="radio_pc1">Only Internal Testing Required</label>
                     </div>
                     <div class="col-sm-4">
-                        <input name="packing_testing1" type="checkbox" id="radio_pc2" value="Laboratory" onclick="show_bycheck('radio_pc2','packing_testing_frequency');">
+                        <input name="packing_testing" type="radio" id="radio_pc2" value="Laboratory" onclick="show_bycheck('radio_pc2','packing_testing_frequency');">
                         <label for="radio_pc2">Laboratory Testing Required</label>                       
                     </div>
                     <div class="col-sm-4" id="packing_testing_frequency" style="display:none;">    
@@ -821,7 +852,7 @@
                     <div class="demo-radio-button row">
                         
                         <div class="col-sm-2">    
-                            <input name="fsc" type="radio" id="radio_f2" onclick="hide_txtbox('fsc_yes1'); hide_txtbox('fsc_yes0'); show_txtbox('fsc_yes'); show_txtbox('fsc_yes2');">
+                            <input name="fsc" type="radio" id="radio_f2" onclick="hide_txtbox('fsc_yes1'); hide_txtbox('fsc_yes0'); hide_txtbox('fsc_yes'); show_txtbox('fsc_yes2');">
                             <label for="radio_f2">No</label>
 
                         </div>
@@ -856,8 +887,8 @@
                         
 
                         <div class="col-sm-2 demo-radio-button" id="fsc_yes2" style="display:none;">    
-                            <input name="fsc_yes2" type="checkbox" id="radio_1" value="1" class="form-control">
-                            <label for="fsc_yes2">No Target</label>
+                            <input name="fsc_yes2" type="checkbox" id="fsc_yes20" value="1" class="form-control">
+                            <label for="fsc_yes20">No Target</label>
                         </div>
     
 					</div>

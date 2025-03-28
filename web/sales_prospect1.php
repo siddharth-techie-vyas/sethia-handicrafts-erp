@@ -124,8 +124,8 @@
 											
 											<div class="col-md-3">
 											<div class="form-group">
-											<label for="phoneNumber1">Phone Number<span class="text-danger">*</span> :</label>
-											<input type="number" class="form-control" name="phone"  required="required"> </div>
+											<label for="phoneNumber1">Phone Number :</label>
+											<input type="number" class="form-control" name="phone"> </div>
 											</div>
 
 											<div class="col-md-2">
