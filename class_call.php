@@ -5,6 +5,7 @@ include_once('class/Leads.php');
 include_once('class/Sales.php');
 include_once('class/Hr.php');
 include_once('class/Inventory.php');
+include_once('class/Store.php');
 
 $db_handle = new DBController();
 
@@ -13,6 +14,7 @@ $leads = new Leads();
 $sales = new Sales();
 $hr = new Hr();
 $product = new Inventory();
+$store = new Store();
 
 $conn = new DBController();
 $con = $conn->connectDB();

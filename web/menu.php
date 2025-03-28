@@ -193,9 +193,62 @@
           </a>
         </li>    
 		
+		<!------- product ----->
+		<?php if($_SESSION['utype']=='1'){?>
+		<li class="header">Product(s)</li>
+		  
+        <li class="treeview">
+          <a href="#">
+            <i class="mdi mdi-arrow-right"></i> <span>Add / Edit</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=products-add-group';?>"><i class="ti-more"></i>Add New Group</a></li>   			
+			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=products-category';?>"><i class="ti-more"></i>Add New Category</a></li> 
+			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=products-add';?>"><i class="ti-more"></i>Add Product</a></li>	
+			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=products-viewall';?>"><i class="ti-more"></i>View All Product</a></li>  			
+          </ul>
+        </li>
+
+		<li class="treeview">
+          <a href="#">
+            <i class="mdi mdi-arrow-right"></i> <span>Master(s)</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=products-material';?>"><i class="ti-more"></i>Material</a></li>   			
+			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=products-finish';?>"><i class="ti-more"></i>Finish</a></li> 
+			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=products-logistics';?>"><i class="ti-more"></i>Logistics</a></li>	
+			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=products-packing';?>"><i class="ti-more"></i>Packing</a></li>	
+          </ul>
+        </li>
+
+		
+        </li>
       	
+
+		<li class="header">Store & Hardware</li>
+		<li class="treeview">
+          <a href="#">
+            <i class="mdi mdi-arrow-right"></i> <span>Store(s)</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+		 	<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=add-store-category';?>">Add / View Category</a>
+			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=add-sub-category';?>">Add / View Sub-Category</a>
+			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=add-unit';?>">Unit Master</a></li>
+			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=add-item';?>">Add Item</a></li>	
+			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=view-item';?>">View / Update Item</a></li>		
+          </ul>
+        </li>
 		<!----- leads ---->
-		<?php if($_SESSION['utype']=='1'  || $_SESSION['utype']=='6' || $_SESSION['utype']=='8'){?>
+		<?php }if($_SESSION['utype']=='1'  || $_SESSION['utype']=='6' || $_SESSION['utype']=='8'){?>
         <li class="header">Leads</li>
 		  
         <li class="treeview">
@@ -249,7 +302,7 @@
           </ul>
         </li>
 
-		<!-- <li class="treeview">
+		<li class="treeview">
           <a href="#">
             <i class="ti-comments"></i> <span>RFQ</span>
             <span class="pull-right-container">
@@ -260,7 +313,7 @@
             <li><a href="<?php echo $base_url.'index.php?action=dashboard&page=sales_rfq';?>"><i class="ti-more"></i>Create</a></li>
             <li><a href="<?php echo $base_url.'index.php?action=dashboard&page=sales_rfq-viewall';?>"><i class="ti-more"></i>View All</a></li>
           </ul>
-        </li> -->
+        </li>
 		
 		
 
@@ -284,6 +337,7 @@
 
 		<!------- admin -------->
 		<?php if($_SESSION['utype']=='1' || $_SESSION['utype']=='7'){?>
+			
 		<li class="header">Admin</li>
 		<li>
           <a href="<?php echo $base_url.'index.php?action=dashboard&page=admin_meta';?>">
@@ -343,6 +397,31 @@
 		
 
 		<?php }if($_SESSION['utype']=='9'){?>
+			<li class="header">Prospect & RFQ</li>
+			<li>
+          <a href="<?php echo $base_url.'index.php?action=dashboard&page=sales_prospect_approval';?>">
+            <i class="fa fa-user text-danger"></i> <span>Prospect Approval</span>
+          </a>
+        </li>
+		<li>
+          <a href="<?php echo $base_url.'index.php?action=dashboard&page=sales_rfq_4-0_approval_list';?>">
+            <i class="fa fa-inr text-warning"></i> <span>Pending Request</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+        </li>
+		<!-- <li>
+          <a href="<?php echo $base_url.'index.php?action=dashboard&page=sales_rfq_2-0_engineer_list_all';?>">
+            <i class="fa fa-inr text-success"></i> <span>All Request</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+        </li> -->
+
+			
+		
 		<li class="header">Leads</li>
 		<li>
           <a href="<?php echo $base_url.'index.php?action=dashboard&page=leads_disqualified&qualify=2';?>">
@@ -386,9 +465,53 @@
             </span>
           </a>
         </li>
-        <?php }?>
+		
+		<li class="header">RFQ</li>
+		<li>
+          <a href="<?php echo $base_url.'index.php?action=dashboard&page=sales_rfq_2-0_engineer_list';?>">
+            <i class="fa fa-inr text-warning"></i> <span>Pending Request</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+        </li>
+		<li>
+          <a href="<?php echo $base_url.'index.php?action=dashboard&page=sales_rfq_2-0_engineer_list_all';?>">
+            <i class="fa fa-inr text-success"></i> <span>All Request</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+        </li>
 		   
-        
+
+		
+
+
+
+		<?php }if($_SESSION['utype']=='12'){?>
+
+
+			<!------- engineer -------->
+		<li>
+          <a href="<?php echo $base_url.'index.php?action=dashboard&page=sales_rfq_6-0_engineer_list_all';?>">
+            <i class="fa fa-inr text-warning"></i> <span>Pending Request (RFQ)</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+        </li>
+		<?php }if($_SESSION['utype']=='13'){?>
+		<!------- estimator -------->
+		<li>
+          <a href="<?php echo $base_url.'index.php?action=dashboard&page=sales_rfq_6-0_engineer_list_all';?>">
+            <i class="fa fa-inr text-warning"></i> <span>Pending Request (RFQ)</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+        </li>
+		<?php }?>
       </ul>
     </section>
   </aside>

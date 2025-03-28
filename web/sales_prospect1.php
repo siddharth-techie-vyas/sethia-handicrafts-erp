@@ -1,23 +1,16 @@
 <form name="prospect1" id="prospect1" action="<?php echo $base_url.'index.php?action=sales&query=prospect1';?>" method="post">
 										<div class="row">
+
 											<div class="col-md-3">
 											<div class="form-group">
-											<label for="firstName5">First Name<span class="text-danger">*</span> :</label>
-											<input type="text" class="form-control" name="fname" required="required"> </div>
+											<label for="lastName1">Prospect's Company Name<span class="text-danger">*</span> :</label>
+											<input type="text" class="form-control" name="cname" required="required"> 
 											</div>
+											</div>											
+
 											<div class="col-md-3">
 											<div class="form-group">
-											<label for="lastName1">Last Name :</label>
-											<input type="text" class="form-control" name="lname"> </div>
-											</div>
-											<div class="col-md-3">
-											<div class="form-group">
-											<label for="lastName1">Company Name<span class="text-danger">*</span> :</label>
-											<input type="text" class="form-control" name="cname" required="required"> </div>
-											</div>
-											<div class="col-md-3">
-											<div class="form-group">
-											<label for="lastName1">Prospect Type :</label>
+											<label for="lastName1">Prospect's Type :</label>
 											<!-- <input type="text" class="form-control" name="ctype">  -->
 											 <select class="form-control" name="ctype">
 												<option>-select-</option>
@@ -26,8 +19,34 @@
 											</select>
 											</div>
 											</div>
+
+											<div class="col-md-3">
+											<div class="form-group">
+											<label for="regtype">Registration Type :</label>
+											<input type="text" class="form-control" name="regtype"> </div>
+											</div>
+											
+											<div class="col-md-3">
+											<div class="form-group">
+											<label for="regnu">Registration Number :</label>
+											<input type="text" class="form-control" name="regnu">
+											</div>
+											</div>
+
 										</div>
 										<div class="row">
+											<div class="col-md-4">
+											<div class="form-group">
+											<label for="firstName5">First Name<span class="text-danger">*</span> :</label>
+											<input type="text" class="form-control" name="fname" required="required"> </div>
+											</div>
+
+											<div class="col-md-4">
+											<div class="form-group">
+											<label for="lastName1">Last Name :</label>
+											<input type="text" class="form-control" name="lname"> </div>
+											</div>
+
 											<div class="col-md-4">
 											<div class="form-group">
 											<label for="emailAddress1">Designation<span class="text-danger">*</span> :</label>
@@ -42,18 +61,7 @@
 											</div>
 											</div>
 
-											<div class="col-md-4">
-											<div class="form-group">
-											<label for="regtype">Registration Type :</label>
-											<input type="text" class="form-control" name="regtype"> </div>
-											</div>
 											
-											<div class="col-md-4">
-											<div class="form-group">
-											<label for="regnu">Registration Number :</label>
-											<input type="text" class="form-control" name="regnu">
-											</div>
-											</div>
 										</div>
 										<div class="row">
 											<div class="col-md-3">

@@ -5,9 +5,9 @@
 
     //-- offline
     private $host = "localhost";
-    private $user = "u429142817_user";
-    private $password = "Sethia@#0291";
-    private $database = "u429142817_erp";
+    private $user = "root";
+    private $password = "";
+    private $database = "sethia-erp";
     private $conn;
 
     //-- online
@@ -22,9 +22,8 @@
    function __construct() {
         //$conn = $this->connectDB($database,$uri,$driverOptions);
 
-        $this->conn = $this->connectDB();
-         
-      //error_reporting(0);
+        $this->conn = $this->connectDB();         
+        error_reporting(0);
     }   
     
     function default_timezone()

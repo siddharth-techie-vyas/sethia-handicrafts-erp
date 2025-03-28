@@ -24,12 +24,41 @@
                 1. Incoterms
             </td>
             <td>
-            <select id="export" name="incoterms" class="form-control">
+            <!-- <select id="export" name="incoterms" class="form-control">
                 <option disbaled="disabled">-Select-</option>
                 <option>FOB-Mundra/Pipava</option>
                 <option>CIF</option>
-            </select>    
+            </select>     -->
             
+                    <div class="demo-radio-button row" id="export">
+                        <div class="col-sm-2">
+                            <input name="retention" type="radio" id="radio_in1" value="1" onchange="show_txtbox('fob'); hide_txtbox('cif');">
+                            <label for="radio_in1">FOB</label>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <input name="retention" type="radio" id="radio_in2" value="0" onchange="hide_txtbox('fob'); show_txtbox('cif');">
+                            <label for="radio_in2">CIF</label>
+                        </div>
+
+                        <div id="fob" style="display:none;">
+                            <label for="fob">Name Of Port</label>
+                            <select name="port" class="form-control">
+                                <option disbaled="disabled">-Select-</option>
+                                <option>Mundra</option>
+                                <option>Pipava</option>
+                                <option>Nhava Sheva</option>
+                            </select> 
+                            
+                            <label>Destination</label>
+                            <input type="text" name="destination" class="form-control">
+                        </div>
+
+                        <div id="cif" style="display:none;">
+                            <label>Destination</label>
+                            <input type="text" name="destination" class="form-control">
+                        </div>
+                    </div>
             </td>
             
              
@@ -98,7 +127,7 @@
                 <option disbaled="disabled">-Select-</option>
                     <option>USD</option>
                     <option>Euro</option>
-                    <option>Pound</option>
+                    <option>GBP (Pound)</option>
                 </select>
             </td>
             
@@ -118,7 +147,7 @@
                 4. Product Liability Insurance
             </td>
             <td>
-            <select id="export" name="liability" class="form-control" onchange="show_txtbox('Required_Costs')">
+            <!-- <select id="export" name="liability" class="form-control" onchange="show_txtbox('Required_Costs')">
                 <option disbaled="disabled">-Select-</option>
                     <option>No Stated Requirement </option>    
                     <option>Required Costs %</option>                
@@ -127,7 +156,25 @@
                     <hr>
                     <label>Required Costs Value (%)</label>
                      <input type="text" name="liability_per" class="form-control-sm">
-                 </div>
+                 </div> -->
+
+                <div class="demo-radio-button row">
+                        <div class="col-sm-4">
+                            <input name="liability" type="radio" id="radio_li2" value="0" onchange="hide_txtbox('liability');">
+                            <label for="radio_li2">No State Requirment</label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input name="liability" type="radio" id="radio_li1" value="1" onchange="show_txtbox('liability');">
+                            <label for="radio_li1">Required Costs %</label>
+                        </div>
+
+                        <div id="liability" class="col-sm-3" style="display:none;">
+                            <label>Required Costs Value (%)</label>
+                            <input type="text" name="liability_per" class="form-control-sm">
+                        </div>
+                </div>
+
+
             </td>
             <td>
                 
@@ -139,14 +186,88 @@
                 5. Payment Terms - Confirmation
             </td>
             <td colspan="2">
-            <select name="advance" class="form-control" onchange="show_txtbox('Advance_30')">
+
+                <div class="demo-radio-button row">
+                        <div class="col-sm-2">
+                            <input name="progress_payment" type="radio" id="radio_pt1" value="1" onchange="show_txtbox('advance'); hide_txtbox('lc')">
+                            <label for="radio_pt1">Advance Payment</label>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <input name="progress_payment" type="radio" id="radio_pt2" value="0" onchange="hide_txtbox('advance'); show_txtbox('lc')">
+                            <label for="radio_pt2">LC</label>
+                        </div>
+                </div>
+                <hr>
+                <div class="row">
+
+                        <div id="advance" class="col-sm-10 row demo-radio-button" style="display:none;">
+                            <div class="col-sm-4">                                
+                                <input type="radio" id="advance0" value="advance" name="advance" class="form-control" onchange="hide_txtbox('advance2'); show_txtbox('advance1')">
+                                <label for="advance0">Advance</label>    
+                            </div>
+                            <div class="col-sm-4">                                
+                                <input type="radio" id="no_advance" value="no_advance" name="advance" class="form-control" onchange="hide_txtbox('advance1'); show_txtbox('advance2')">
+                                <label for="no_advance">No Advance</label>
+                            </div>
+                            <hr>
+                            <div class="col-sm-4" id="advance1" style="display:none;">
+                                <label>Advance T&C</label>
+                                                <div class="demo-radio-button row">
+                                                        
+                                                        <div class="col-sm-6">
+                                                            <input name="advance_tandc" type="radio" id="radio_adv1" value="advance_payment">
+                                                            <label for="radio_adv1">Advance Payment</label>
+                                                        
+                                                            <input name="advance_tandc" type="radio" id="radio_adv2" value="credit">
+                                                            <label for="radio_adv2">Credit</label>
+
+                                                            <input name="advance_tandc" type="radio" id="radio_adv3" value="balance">
+                                                            <label for="radio_adv3">Balance</label>
+                                                        </div>
+                                                        
+                                                        <div class="col-sm-6">
+                                                            <label>Balance Amount</label>
+                                                            <input type="text" name="balance_amt" class="form-control-sm">
+                                                        </div>
+                                                        
+                                                </div>
+                            </div>
+                            <div class="col-sm-4" id="advance2" style="display:none;">
+                                <label>No Advance T&C</label>
+                                <select name="advance_tandc" class="form-control">
+                                    <option disbaled="disabled">-Select-</option>
+                                    <option>Credit</option>
+                                    <option>Cash</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="lc" class="col-sm-10 row demo-radio-button" style="display:none; ">
+                                <div class="col-sm-4">    
+                                    <input type="radio" name="advance" id="radio_lc1" value="LC @ Sight" class="form-control">
+                                    <label for="radio_lc1">LC @ Sight</label>    
+                                </div>
+                                <div class="col-sm-4">  
+                                    <input type="radio" name="advance" id="radio_lc2" value="LC Usance" class="form-control">
+                                    <label for="radio_lc2">LC Usance</label>                            
+                                </div>
+                                <div class="col-sm-4" id="tandc_lc">
+                                    <label>Terms and Condition(s)</label>
+                                    <input type="text" name="tandc_lc" class="form-control-sm">
+                                </div>
+                        </div>
+
+                </div>        
+
+                <!-- <select name="advance" class="form-control" onchange="show_txtbox('Advance_30')">
                 <option disbaled="disabled">-Select-</option>
                     <option>Without Advance</option>    
                     <option>Advance (30%)</option>    
                     <option>LC at Sight</option>    
                     <option>LC Usance</option>                
                     <option>100% After ____ days of BC / FCR</option>
-                </select>
+                </select> -->
 
                 <!-- <div class="allhide" id="Advance_30">
                     <hr>
@@ -210,13 +331,13 @@
         </tr>
 
 
-        <tr>
+        <!-- <tr>
             <td>
                 - Balance Payment
             </td>
             <td>
                 <label>Credit Basis</label>
-            <select name="balance" class="form-control">
+                <select name="balance" class="form-control">
                 <option disbaled="disabled">-Select-</option>
                     <option>Handover</option>  
                     <option>Incoterm</option>     
@@ -227,7 +348,7 @@
                  <label>Credit Period (Days)</label>
                  <input type="number" name="credit_period" class="form-control">
             </td>
-        </tr>
+        </tr> -->
         
         
         <tr id="domestic">
@@ -313,7 +434,7 @@
                                     <option>No Agreement </option>    
                                     <option>Committed 1 Year</option>
                                 </select>  -->
-                                <label>Nu of Days</label>
+                                <label>Number of Days</label>
                                 <input type="number" name="price_validity_year" class="form-control">
                         </div>
                 </div>        
@@ -350,7 +471,7 @@
 
                           
                         <input name="audit1" type="checkbox" id="radio_r3" value="Existing not acceptable" onclick="show_bycheck('radio_r3','Existing_not_acceptable_val')"> 
-                        <label for="radio_r3">Existing not acceptable required</label>      
+                        <label for="radio_r3">Additional Requirment</label>      
                             <div id="Existing_not_acceptable_val" style="display:none;">
                                 <label>Option 1</label>    
                                 <input type="text" name="audit2" class="form-control-sm"> 
@@ -512,6 +633,7 @@
                                             <option>Buying Agent </option>
                                             <option>Sales Representative </option>
                                             <option>Third Party</option>
+                                            <option>Other(s)</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-4">
@@ -624,11 +746,11 @@
             <td>
                     <div class="demo-radio-button row">
                         <div class="col-sm-4">
-                            <input name="product_testing" type="checkbox" id="radio_pt1" value="Only Internal">
+                            <input name="product_testing" type="checkbox" id="radio_pt01" value="Only Internal">
                             <label for="radio_pt1">Internal Testing Required</label>
                         </div>
                         <div class="col-sm-4">
-                            <input name="product_testing1" type="checkbox" id="radio_pt2" value="Laboratory" onclick="show_bycheck('radio_pt2','product_testing');">
+                            <input name="product_testing1" type="checkbox" id="radio_pt02" value="Laboratory" onclick="show_bycheck('radio_pt2','product_testing');">
                             <label for="radio_pt2">Laboratory Testing Required</label>                       
                         </div>
                         <div class="col-sm-4" id="product_testing" style="display:none;">    
@@ -664,7 +786,7 @@
                         <label for="radio_pc1">Only Internal Testing Required</label>
                     </div>
                     <div class="col-sm-4">
-                        <input name="packing_testing1" type="checkbox" id="radio_pc2" value="Laboratory" onclick="show_bycheck('radio_pc2','packing_testing');">
+                        <input name="packing_testing1" type="checkbox" id="radio_pc2" value="Laboratory" onclick="show_bycheck('radio_pc2','packing_testing_frequency');">
                         <label for="radio_pc2">Laboratory Testing Required</label>                       
                     </div>
                     <div class="col-sm-4" id="packing_testing_frequency" style="display:none;">    
@@ -697,15 +819,15 @@
             <td colspan="2">
 
                     <div class="demo-radio-button row">
-                        <div class="col-sm-2">
-                            <input name="fsc" type="radio" id="radio_f1" onclick="show_txtbox('fsc_yes'); show_txtbox('fsc_yes0'); show_txtbox('fsc_yes1'); hide_txtbox('fsc_yes2');">
-                            <label for="radio_f1">Yes</label>
-                        </div>
-
+                        
                         <div class="col-sm-2">    
                             <input name="fsc" type="radio" id="radio_f2" onclick="hide_txtbox('fsc_yes1'); hide_txtbox('fsc_yes0'); show_txtbox('fsc_yes'); show_txtbox('fsc_yes2');">
                             <label for="radio_f2">No</label>
 
+                        </div>
+                        <div class="col-sm-2">
+                            <input name="fsc" type="radio" id="radio_f1" onclick="show_txtbox('fsc_yes'); show_txtbox('fsc_yes0'); show_txtbox('fsc_yes1'); hide_txtbox('fsc_yes2');">
+                            <label for="radio_f1">Yes</label>
                         </div>
 
                         <div class="col-sm-2" id="fsc_yes" style="display:none;">    
@@ -718,15 +840,20 @@
                             </select>
                         </div>
                         
-                        <div clas="col-sm-2" id="fsc_yes0" style="display:none;">    
-                            <label>FSC % Target in 1-2 Years</label>   
-                            <input name="fsc_yes0" type="number" value="" class="form-control"> 
-                        </div>
-
                         <div class="col-sm-2" id="fsc_yes1" style="display:none;">    
                             <label>FSC Current</label>
                             <input type="text" name="fsc_yes1" class="form-control"  >
                         </div>
+
+                        <div clas="col-sm-2" id="fsc_yes0" style="display:none;">    
+                            <label for="fsc_yes0">FSC % Target in 1 Years</label>   
+                            <input name="fsc_yes0" type="number" value="" class="form-control"> 
+                            <label for="fsc_yes02">FSC % Target in 2 Years</label>   
+                            <input name="fsc_yes02" type="number" value="" class="form-control"> 
+                            <label for="fsc_yes03">FSC % Target in 3 Years</label>   
+                            <input name="fsc_yes03" type="number" value="" class="form-control"> 
+                        </div>
+                        
 
                         <div class="col-sm-2 demo-radio-button" id="fsc_yes2" style="display:none;">    
                             <input name="fsc_yes2" type="checkbox" id="radio_1" value="1" class="form-control">
@@ -744,12 +871,17 @@
             </td>
             <td>
                 <div class="demo-radio-button row">
-                    <div class="col-sm-6">
-                        <input name="branding" type="radio" value="0" id="radio_b1" onclick="show_txtbox('branding_yes')">
-                        <label for="radio_b1">Yes</label>
-                        
-                        <input name="branding" type="radio" value="1" id="radio_b2" onclick="hide_txtbox('branding_yes')">
-                        <label for="radio_b2">No</label>
+                    <div class="col-sm-6 row">
+                        <div class="col-sm-6">    
+                            <input name="branding" type="radio" value="1" id="radio_b2" onclick="hide_txtbox('branding_yes')">
+                            <label for="radio_b2">No</label>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <input name="branding" type="radio" value="0" id="radio_b1" onclick="show_txtbox('branding_yes')">
+                            <label for="radio_b1">Yes</label>
+                        </div>    
+                            
 
                     </div>
                     <div class="col-sm-6" id="branding_yes" style="display:none;">    
@@ -757,7 +889,7 @@
                         <select name="branding_req" class="form-control" >
                             <option disbaled="disbaled">-Select-</option>
                             <option>Provided By Client</option>
-                            <option>factory Procurement</option>                    
+                            <option>Factory Procurement</option>                    
                         </select>
                     </div>    
                 </div>

@@ -52,6 +52,13 @@ private $db_handle;
         $result = $this->db_handle->runBaseQuery($sql);
         return $result;
 	}
+
+    function getall_group()
+    {
+        $sql = "SELECT * FROM products_group ORDER BY id ASC";
+        $result = $this->db_handle->runBaseQuery($sql);
+        return $result;
+    }
 	
 	function delete($id)
 	{
@@ -179,9 +186,9 @@ private $db_handle;
     }
 
     //-- cat and subcatregory
-    function get_collection_all()
+    function get_products_cat()
     {
-        $sql = "SELECT DISTINCT(collection) FROM product_category where collection='1' ORDER BY cat ASC ";
+        $sql = "SELECT * FROM product_category ORDER BY cat ASC ";
         $result = $this->db_handle->runBaseQuery($sql);
         return $result;
     }
@@ -199,5 +206,85 @@ private $db_handle;
         $result = $this->db_handle->runBaseQuery($sql);
         return $result;
     }
+
+    function get_material()
+    {
+        $sql = "SELECT * FROM products_material ORDER BY material_type ASC ";
+        $result = $this->db_handle->runBaseQuery($sql);
+        return $result;
+    }
+
+    function get_material_unique()
+    {
+        $sql = "SELECT DISTINCT(material_type) FROM products_material  ";
+        $result = $this->db_handle->runBaseQuery($sql);
+        return $result;
+    }
+
+    function get_finish()
+    {
+        $sql = "SELECT * FROM products_finish ORDER BY id ASC ";
+        $result = $this->db_handle->runBaseQuery($sql);
+        return $result;
+    }
+
+    function get_logistics()
+    {
+        $sql = "SELECT * FROM products_logistics ORDER BY id ASC ";
+        $result = $this->db_handle->runBaseQuery($sql);
+        return $result;
+    }
+
+
+    function get_packing()
+    {
+        $sql = "SELECT * FROM products_packing ORDER BY id ASC ";
+        $result = $this->db_handle->runBaseQuery($sql);
+        return $result;
+    }
+
+
+    function get_material_byid($id)
+    {
+        $sql = "SELECT * FROM products_material where id='$id' ";
+        $result = $this->db_handle->runBaseQuery($sql);
+        return $result;
+    }
+
+    function get_material_byname($name)
+    {
+        $sql = "SELECT * FROM products_material where material_name='$name' ";
+        $result = $this->db_handle->runBaseQuery($sql);
+        return $result;
+    }
+
+    function get_material_bytype($type)
+    {
+       echo $sql = "SELECT * FROM products_material where material_type='$type' ";
+        $result = $this->db_handle->runBaseQuery($sql);
+        return $result;
+    }
+
+    function get_finish_type($type)
+    {
+       echo  $sql = "SELECT * FROM products_finish where finish_material='$type' ";
+        $result = $this->db_handle->runBaseQuery($sql);
+        return $result;
+    }
+
+    function get_finish_byid($id)
+    {
+        $sql = "SELECT * FROM products_finish where id='$id' ";
+        $result = $this->db_handle->runBaseQuery($sql);
+        return $result;
+    }
+
+    function get_partlist($pid)
+    {
+        $sql = "SELECT * FROM product_cuttinglist_items where pid='$pid' ";
+        $result = $this->db_handle->runBaseQuery($sql);
+        return $result;
+    }
 }
 ?>
+

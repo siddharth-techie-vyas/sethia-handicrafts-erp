@@ -72,7 +72,7 @@ function get_baneficiery($id)
 
 function view_all_beneficiery($btype)
 {
-    $query="select * from beneficiery where btype = '$btype' ";
+    $query="select * from beneficiery where btype = '$btype' ORDER BY id DESC ";
     $result = $this->db_handle->runBaseQuery($query);
     return $result;  
 }
@@ -110,7 +110,7 @@ function sales_prospect_tandc($pid,$incoterms,$shipping,$shipping_basis,$currenc
 function rfq_step0($prospect,$rfq_number,$date_of_rfq,$created_date,$created_by)
 {
     $query = "insert into sales_rfq(prospect,rfq_number,date_of_rfq,created_date,created_by,step)VALUES(?,?,?,?,?,?)";
-    $paramType = "isssii";
+    $paramType = "isssis";
     $paramValue = array($prospect,$rfq_number,$date_of_rfq,$created_date,$created_by,'0.5');
     $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
 
@@ -151,6 +151,13 @@ function sales_rfq_items($sid)
     return $result;
 }
 
+function sales_rfq_items_item($id)
+{
+    $query="select * from sales_rfq_items where id = '$id' ";
+    $result = $this->db_handle->runBaseQuery($query);
+    return $result;
+}
+
 function rfq_step0_edit($prospect,$rfq_number,$date_of_rfq,$created_date,$id)
 {
     $update="update sales_rfq SET prospect='$prospect',rfq_number='$rfq_number',date_of_rfq='$date_of_rfq',created_date='$created_date' where id='$id' ";
@@ -181,92 +188,222 @@ function delete_rfq_item($id)
     return $update;
 }
 
-function rfq_step0_5_update($itemid_single,$length_single,$width_single,$height_single,$sid,$wood_single,$fitting_single,$finish_single,$packing_single,$branding_single)
+function rfq_step0_5_update($itemid_single,$length_single,$width_single,$height_single,$moq_single,$sid,$wood_single,$mtype_single,$fitting_single,$finish_single,$packing_single,$branding_single)
 {
-    $update="update sales_rfq_items SET length='$length_single',width='$width_single',height='$height_single',wood='$wood_single',fitting='$fitting_single',finish='$finish_single',packing='$packing_single',branding='$branding_single' where id='$itemid_single' ";
+    $update="update sales_rfq_items SET length='$length_single',width='$width_single',height='$height_single',moq='$moq_single',wood='$wood_single',mtype='$mtype_single',fitting='$fitting_single',finish='$finish_single',packing='$packing_single',branding='$branding_single' where id='$itemid_single' ";
     $update = $this->db_handle->update($update);
 
     //--update step id 0
-    $update0="update sales_rfq SET step='0.8' where id='$sid' ";
-    $update0 = $this->db_handle->update($update0);
+    // $update0="update sales_rfq SET step='0.9' where id='$sid' ";
+    // $update0 = $this->db_handle->update($update0);
 
 
     return $update;
 }
 
-function rfq_step0_8_update($itemid_single,$price_single,$sprice_single,$bom_single,$filename,$sid)
+function rfq_step0_5_material($sid,$pid,$mtype,$finsih,$part)
 {
-    $update="update sales_rfq_items SET price='$price_single',sprice='$sprice_single',bom='$bom_single',sfile='$filename' where id='$itemid_single' ";
-    $update = $this->db_handle->update($update);
-
-    //--update step id 0
-     $update0="update sales_rfq SET step='1.0' where id='$sid' ";
-    $update0 = $this->db_handle->update($update0);
-
-    return $update;
+    $query = "insert into sales_rfq_items_material(sid,pid,mtype,finish,part)VALUES(?,?,?,?,?)";
+    $paramType = "iiiis";
+    $paramValue = array($sid,$pid,$mtype,$finsih,$part);
+    $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
+    return $insertId;
 }
 
-function rfq_step1_edit($sid)
+function get_temp_item_material($sid,$pid)
 {
-    //--update step id 0
-    $update0="update sales_rfq SET step='2.0' where id='$sid' ";
-    $update0 = $this->db_handle->update($update0);
-    return $update;
+    $query="select * from  sales_rfq_items_material where sid = '$sid' AND pid='$pid' ";
+    $result = $this->db_handle->runBaseQuery($query);
+    return $result;
 }
 
-function rfq_step2_update($itemid_single,$price_single,$moq_single,$repeat_pa_single,$plc_single,$sid)
+function delete_material_cutom($id)
 {
-    $update="update sales_rfq_items SET price='$price_single',moq='$moq_single',repeat_pa='$repeat_pa_single',plc='$plc_single' where id='$itemid_single' ";
-    $update = $this->db_handle->update($update);
-
-    //--update step id 0
-     $update0="update sales_rfq SET step='3.0' where id='$sid' ";
-    $update0 = $this->db_handle->update($update0);
-
-    return $update;
+    $delete="delete from sales_rfq_items_material where id='$id' ";
+    $delete = $this->db_handle->update($delete);
+    return $delete;
 }
 
-function rfq_step3_edit($sid)
+//------------- edit steps open
+function rfq_step20_update($itemid,$sprice,$filename,$source,$discountedprice,$mrp,$designer_pass,$sid)
 {
-    //--update step id 0
-    $update0="update sales_rfq SET step='4.0' where id='$sid' ";
-    $update0 = $this->db_handle->update($update0);
-    return $update;
+    if($designer_pass=='2')
+    {$submitted_date = date('Y-m-d h:i:s');}
+    else
+    {$submitted_date = '';}
 
-    
-}
-
-function rfq_step4_discount($itemid_single,$discount_single,$discount_amt_single)
-{
-  echo  $update="update sales_rfq_items SET discount_per='$discount_single',discount_amt='$discount_amt_single' where id='$itemid_single' ";
+    $update="update sales_rfq_items SET sprice='$sprice',sfile='$filename',source='$source',discountedprice='$discountedprice',mrp='$mrp',designer_pass='$designer_pass', submitted_date='$submitted_date' where id='$itemid' ";
     $update = $this->db_handle->update($update);
     return $update;
 }
 
-function rfq_step4_edit($sid)
+function rfq_step20_assign_designer($sid,$itemid_single,$designer_single)
 {
-    //--update step id 0
-    $update0="update sales_rfq SET step='5.0' where id='$sid' ";
-    $update0 = $this->db_handle->update($update0);
+   echo $update="update sales_rfq_items SET designer='$designer_single' where id='$itemid_single' ";
+    $update = $this->db_handle->update($update);
     return $update;
-    
 }
 
-function rfq_step5_edit($sid)
+function rfq_step30_update($itemid_single,$remark_single,$moq_single,$repeat_pa_single,$plc_single,$sid)
 {
+    $update="update sales_rfq_items SET remark='$remark_single',moq='$moq_single',repeat_pa='$repeat_pa_single',plc='$plc_single' where id='$itemid_single' ";
+    $update = $this->db_handle->update($update);
+
     //--update step id 0
-    $update0="update sales_rfq SET step='6.0' where id='$sid' ";
-    $update0 = $this->db_handle->update($update0);
+    //  $update0="update sales_rfq SET step='3.0' where id='$sid' ";
+    // $update0 = $this->db_handle->update($update0);
+
     return $update;
-    
 }
 
+function rfq_step40_update($id,$approval_sendto)
+{
+    $update="update sales_rfq SET approval_sendto='$approval_sendto' where id='$id' ";
+    $update = $this->db_handle->update($update);
+    return $update;
+}
+
+function rfq_step40_update2($id,$approval,$remark_approval)
+{
+    $update="update sales_rfq SET approval_status='$approval',remark_approval='$remark_approval' where id='$id' ";
+    $update = $this->db_handle->update($update);
+    return $update;
+}
+
+function rfq_step50_update($id,$prospect_status,$remark_prospect)
+{
+    $update="update sales_rfq SET prospect_status='$prospect_status',remark_prospect='$remark_prospect' where id='$id' ";
+    $update = $this->db_handle->update($update);
+    return $update;
+}
+
+function rfq_step60_update($id,$engineer,$estimator)
+{
+    $update="update sales_rfq_items SET engineer='$engineer',estimator='$estimator' where id='$id' ";
+    $update = $this->db_handle->update($update);
+    return $update;
+}
+
+function rfq_step61_update($itemid,$engineer_files,$engineer_pass)
+{
+    $update="update sales_rfq_items SET engineer_files='$engineer_files',engineer_pass='$engineer_pass' where id='$itemid' ";
+    $update = $this->db_handle->update($update);
+    return $update;
+}
+
+function rfq_step62_update($itemid,$estimator_pass,$price)
+{
+    $update="update sales_rfq_items SET estimator_pass='$estimator_pass',price='$price' where id='$itemid' ";
+    $update = $this->db_handle->update($update);
+    return $update;
+}
+
+function rfq_step70_update($id,$final_approval)
+{
+    $update="update sales_rfq SET final_approval='$final_approval' where id='$id' ";
+    $update = $this->db_handle->update($update);
+    return $update;
+}
+
+function rfq_step70_approval($itemid_single,$status_engineer_single,$remark_engneer_single,$status_estimator_single,$remark_estimator_single)
+{
+    $update="update sales_rfq_items SET status_engineer='$status_engineer_single',remark_engineer='$remark_engneer_single',status_estimator='$status_estimator_single',remark_estimator='$remark_estimator_single' where id='$itemid_single' ";
+    $update = $this->db_handle->update($update);
+    return $update;
+}
+
+function rfq_step70_approval_status($sid,$final_approval_status)
+{
+    echo $update="update sales_rfq SET final_approval_status='$final_approval_status' where id='$sid' ";
+    $update = $this->db_handle->update($update);
+    return $update;
+}
+
+function rfq_step80_discount($itemid_single,$discount_single,$discount_amt_single,$discount_remark_single)
+{
+    $update="update sales_rfq_items SET discount_per='$discount_single',discount_amt='$discount_amt_single',discount_remark='$discount_remark_single' where id='$itemid_single' ";
+    $update = $this->db_handle->update($update);
+    return $update;
+}
+
+function rfq_step10_update($id,$send_status,$remark_send)
+{
+    echo $update="update sales_rfq SET send_status='$send_status',remark_send='$remark_send' where id='$id' ";
+    $update = $this->db_handle->update($update);
+    return $update;
+}
+//------------- edit steps closed
+
+function get_rfq_approval($id)
+{
+    $select="select * from sales_rfq where approval_sendto='$id' ";
+    $select = $this->db_handle->runBaseQuery($select);
+    return $select; 
+}
 
 function delete_moredetails_prospect($id)
 {
     $delete="delete from beneficiery_details where id='$id' ";
     $delete = $this->db_handle->update($delete);
     return $delete;
+}
+
+function sales_rfq_edit_step_update($sid,$step)
+{
+    $update0="update sales_rfq SET step='$step' where id='$sid' ";
+    $update0 = $this->db_handle->update($update0);
+    return $update;
+}
+
+function update_engineer($id,$eid)
+{
+    $update0="update sales_rfq SET engineer='$eid' where id='$id' ";
+    $update0 = $this->db_handle->update($update0);
+    return $update;
+}
+
+function get_price_request_list($id)
+{
+    $query="select * from  sales_rfq_items where designer = '$id' AND designer_pass='0' ";
+    $result = $this->db_handle->runBaseQuery($query);
+    return $result;
+}
+
+function get_price_request_drawing($id,$column)
+{
+    $query="select * from  sales_rfq_items where $column = '$id' ";
+    $result = $this->db_handle->runBaseQuery($query);
+    return $result;
+}
+
+function get_price_request_list_bystatus($status)
+{
+    $query="select * from  sales_rfq where engineer_pass = '$status' ORDER by id DESC ";
+    $result = $this->db_handle->runBaseQuery($query);
+    return $result;
+}
+
+
+function get_price_request_list_all($id)
+{
+    $query="select * from  sales_rfq_items where designer = '$id' ORDER by id DESC ";
+    $result = $this->db_handle->runBaseQuery($query);
+    return $result;
+}
+
+function get_price_request_list_all_noeng()
+{
+    $query="select * from  sales_rfq ORDER by id DESC ";
+    $result = $this->db_handle->runBaseQuery($query);
+    return $result;
+}
+
+
+function rfq_step_09_sent_approval_eng($sid,$pass)
+{
+    $update0="update sales_rfq SET engineer_pass='$pass' where id='$sid' ";
+    $update0 = $this->db_handle->update($update0);
+    return $update0;
 }
 //=========== end 
 }?>

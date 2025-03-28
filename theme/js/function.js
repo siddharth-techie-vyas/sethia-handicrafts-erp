@@ -1,6 +1,7 @@
 var loading_img='../../images/loading.gif';
-//var base_url='http://localhost/sethia-handicrafts-erp/';
-var base_url='https://www.sethiahandicrafts.in/';
+var base_url='http://localhost/sethia-handicrafts-erp/';
+//var base_url='http://192.168.1.78/sethia-handicrafts-erp/';
+//var base_url='https://www.sethiahandicrafts.in/';
 
 function get_details2(inputid,outputid,url)
 {
@@ -60,7 +61,6 @@ function form_submit(x)
 {
       var form = $("#"+x);
         $('#msg'+x).html("Please Wait !");
-       // form.hide();
         $.ajax({
            type: "POST",
            url: $("#"+x).attr("action"),
@@ -78,6 +78,26 @@ function form_submit(x)
         //form.show(); 
  } 
 
+ function noform_submit(x,url)
+ {
+        var pid = $("#pid"+x).val;
+        var sid = $("#sid"+x).val;
+        var mtype = $("#mtype"+x).val;
+        var finish = $("#finish"+x).val;
+
+        $('#msg'+x).html("Please Wait !");
+        $.ajax({
+           type: "POST",
+           url: url,
+           data: {pid:pid,sid:sid,mtype:mtype,finish:finish},
+           success: function(result)
+           {
+              $('#msg'+x).html(result);  
+           }
+        }); 
+ }
+
+
  function form_submit_alert(x) 
  {  
         var r = confirm("Are you sure you want to process  ??");
@@ -94,6 +114,7 @@ function form_submit(x)
               success: function(result)
               {
                 $('#msg'+x).html(result);  
+                alert(result);
                 setTimeout(function(){
                       $('#msg'+x).slideUp('slow').fadeOut(function() {
                           window.location.reload();
@@ -130,11 +151,14 @@ function deleteme(h,i,j)
 
 function get_details(inputid,url,outputid)
 {
+  
   var data = $('#'+inputid).val();
+  
     $.ajax({
         type:'POST',
         url:url+'&id='+data,
         success:function(result){
+          
             $('#'+outputid).html(result);
         }
     });
@@ -181,3 +205,39 @@ function htmlget(id,filename)
           
 
       }
+
+
+function get_mtype(id)      
+{
+  var mtype = $('#mtype'+id).val();
+    $.ajax({
+        type:'GET',
+        url:base_url+'index.php?action=sales&query=getmtype&mtype='+mtype,
+        success:function(result){
+            $('#material'+id).html(result);
+        }
+    });
+}
+
+function get_ftype(id)      
+{
+  var mtype = $('#material'+id).val();
+    $.ajax({
+        type:'GET',
+        url:base_url+'index.php?action=sales&query=getftype&mtype='+mtype,
+        success:function(result){
+            $('#finish'+id).html(result);
+        }
+    });
+}
+
+function get_subcat(idresult,value,fn)
+{
+    $.ajax({
+        type:'GET',
+        url:base_url+'index.php?action='+fn+'&query=get_subcat&id='+value,
+        success:function(result){
+            $('#'+idresult).html(result);
+        }
+    });
+}

@@ -19,28 +19,28 @@
   <div class="col-md-3">
     <div class="form-group">
       <label for="rfq_number">RFQ Number (Client):</label>
-      <input type="text" class="form-control" id="rfq_number" name="rfq_number">
+      <input type="text" class="form-control" id="rfq_number" name="rfq_number" required>
     </div>
   </div>
 
   <div class="col-md-3">
     <div class="form-group">
-      <label for="date_of_rfq">Date Of RFQ:</label>
-      <input type="date" class="form-control" id="date_of_rfq" name="date_of_rfq" value="<?php echo date('Y-m-d');?>" readonly="readonly">
+      <label for="date_of_rfq">Date Of RFQ (Client):</label>
+      <input type="date" class="form-control" id="date_of_rfq" name="date_of_rfq" value="<?php echo date('Y-m-d');?>" required>
     </div>
   </div>
 
   <div class="col-md-3">
     <div class="form-group">
       <label for="created_by">Client Target Date:</label>
-      <input type="date" class="form-control" id="created_date" name="created_date">
+      <input type="date" class="form-control" id="created_date" name="created_date" required>
     </div>
   </div>
 
 
 </div>
 <!--- product details ------>
-<div class="row">
+<!-- <div class="row">
   
   <div class="col-md-3">  
       <div class="form-group">
@@ -80,15 +80,15 @@
   
 
 
-</div>
+</div> -->
 
 <div id="addmore"></div>
 
 <input type="button" name="btn"  class="btn btn-xs btn-secondary" value="Add Item From SHPL Catalogue" id="btn">
 
-<input type="button" name="btn"  class="btn btn-xs btn-primary" value="Client Design" id="btn"  data-toggle="modal" data-target="#exampleModal" onclick="show_page_model('Add Client Design','<?php echo $base_url.'index.php?action=dashboard&page=sales_add_client_item';?>')">
+<!-- <input type="button" name="btn"  class="btn btn-xs btn-primary" value="Client Design" id="btn"  data-toggle="modal" data-target="#modal-fill" onclick="show_page_model_fill('Add Client Design','<?php echo $base_url.'index.php?action=dashboard&nocss=sales_add_client_item';?>')"> -->
 
-<input type="button" onclick="form_submit('step0')" name="submit" value="Save & Process" class="btn btn-success" id="submit_btn" style="display:none;">
+<input type="submit" name="submit" value="Save & Process" class="btn btn-success" id="submit_btn">
 
 </form>
 
@@ -105,7 +105,8 @@ $(document).ready(function() {
 var max_fields      = 50; //maximum input boxes allowed
 var wrapper         =  $("#addmore"); //Fields wrapper
 var add_button      =  $("#btn"); //Add button ID
-var x = 1; //initlal text box count
+var remove_button      =  $(".remove"); //Add button ID
+var x = 0; //initlal text box count
 
 
 
@@ -114,12 +115,14 @@ $(add_button).click(function(e)
     e.preventDefault();
     if(x < max_fields){ 
         x++; 
-    $(wrapper).append('<div id="addmore'+x+'" class="row"><div class="col-md-3"><div class="form-group"><label>Item Type '+x+' </label><select name="item_type[]" class="form-control"><option disabled="disabled" selected="selected">-Select</option><option value="1">Standard Product</option><option value="2">Standard Product With Customization (eg: wood / fitting /finish)</option><option value="3">Standard Product With Size & Design Customization</option></select></div></div><div class="col-md-2"><div class="form-group"><label for="sku_item_code">Product Code '+x+':</label><select class="form-control select2" name="sku[]" id="sku"><option disabled="disabled" selected="selected">-Select-</option><?php foreach($sku0 as $s0=>$v){?><option value="<?php echo $sku0[$s0]['id'];?>"><?php echo $sku0[$s0]['sku'];?></option><?php }?></select></div></div><div class="col-md-4"><div class="form-group"><label for="product_name">Product Details '+x+':</label><span id="pd'+x+'"></span></div></div><div><br><i onclick="removeme('+x+')" class="btn btn-danger btn-sm ti ti-trash"></i></div></div>'); 
+    $(wrapper).append('<div id="addmore'+x+'" class="row"><div class="col-md-3"><div class="form-group"><label>Item Type '+x+' </label><select name="item_type[]" class="form-control"><option disabled="disabled" selected="selected">-Select</option><option value="1">Standard Product</option><option value="2">Standard Product With Customization (eg: wood / fitting /finish)</option></select></div></div><div class="col-md-2"><div class="form-group"><label for="sku_item_code">Product Code '+x+':</label><select class="form-control select2 sku_details" name="sku[]" id="sku'+x+'"><option disabled="disabled" selected="selected">-Select-</option><?php foreach($sku0 as $s0=>$v){?><option value="<?php echo $sku0[$s0]['id'];?>"><?php echo $sku0[$s0]['sku'].'/'.$sku0[$s0]['productname'];?></option><?php }?></select></div></div><div class="col-md-4"><div class="form-group"><label for="product_name">Product Details '+x+':</label><br><span id="product_details'+x+'"></span></div></div><div><br><i onclick="removeme('+x+')" class="btn btn-danger btn-sm ti ti-trash remove"></i></div></div>'); 
 
-    if(x<2)
+    if(x<1)
       {$("#submit_btn").hide();}
       else
       {$("#submit_btn").show();}
+
+      $('.select2').select2();
 
 }
       
@@ -138,5 +141,17 @@ $(add_button).click(function(e)
 function removeme(x)
 {
   $('#addmore'+x).remove();
+  x--;
 }  
 </script>	    
+
+
+<script type="text/javascript">
+$(document).on('change', '.sku_details',function(){
+  var id = $(this).attr('id');
+  alert('called');
+  var pid = id.slice(3);
+  $('#product_details'+pid).html('Loading.... Please Wait !!!');
+  get_details(id,'<?php echo $base_url.'index.php?action=product&query=get_details';?>','product_details'+pid);  
+ });
+</script>

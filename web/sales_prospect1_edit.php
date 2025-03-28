@@ -4,28 +4,16 @@ $pro1= $sales->get_baneficiery($_GET['id']);
 
 <form name="prospect1" id="prospect1" action="<?php echo $base_url.'index.php?action=sales&query=prospect1';?>" method="post">
 										<div class="row">
-											<div class="col-md-3">
-											<div class="form-group">
-											<label for="firstName5">First Name<span class="text-danger">*</span> :</label>
-											<input type="text" class="form-control" name="fname" required="required" value="<?php echo $pro1[0]['fname'];?>"> </div>
-											</div>
-											<div class="col-md-3">
-											<div class="form-group">
-											<label for="lastName1">Last Name :</label>
-											<input type="text" class="form-control" name="lname" value="<?php echo $pro1[0]['lname'];?>"> </div>
-											</div>
-											<div class="col-md-3">
+										<div class="col-md-4">
 											<div class="form-group">
 											<label for="lastName1">Company Name<span class="text-danger">*</span> :</label>
 											<input type="text" class="form-control" name="cname" required="required" value="<?php echo $pro1[0]['cname'];?>"> </div>
 											</div>
-											<div class="col-md-3">
+											<div class="col-md-4">
 											<div class="form-group">
 											<label for="lastName1">Company Type :</label>
 											<input type="text" class="form-control" name="ctype" value="<?php echo $pro1[0]['ctype'];?>"> </div>
 											</div>
-										</div>
-										<div class="row">
 											<div class="col-md-4">
 											<div class="form-group">
 											<label for="emailAddress1">Designation<span class="text-danger">*</span> :</label>
@@ -40,19 +28,38 @@ $pro1= $sales->get_baneficiery($_GET['id']);
 											</div>
 											</div>
 
-											<div class="col-md-4">
+											
+											
+										</div>
+										<div class="row">
+
+											<div class="col-md-3">
 											<div class="form-group">
 											<label for="regtype">Registration Type :</label>
 											<input type="text" class="form-control" name="regtype" value="<?php echo $pro1[0]['regtype'];?>"> </div>
 											</div>
 											
-											<div class="col-md-4">
+											<div class="col-md-3">
 											<div class="form-group">
 											<label for="regnu">Registration Number :</label>
 											<input type="text" class="form-control" name="regnu" value="<?php echo $pro1[0]['regnu'];?>">
 											</div>
 											</div>
+
+										<div class="col-md-3">
+											<div class="form-group">
+											<label for="firstName5">First Name<span class="text-danger">*</span> :</label>
+											<input type="text" class="form-control" name="fname" required="required" value="<?php echo $pro1[0]['fname'];?>"> </div>
+											</div>
+											<div class="col-md-3">
+											<div class="form-group">
+											<label for="lastName1">Last Name :</label>
+											<input type="text" class="form-control" name="lname" value="<?php echo $pro1[0]['lname'];?>"> </div>
+											</div>
+
+											
 										</div>
+
 										<div class="row">
 											<div class="col-md-3">
 											<div class="form-group">
@@ -137,7 +144,7 @@ $pro1= $sales->get_baneficiery($_GET['id']);
 											<div class="col-md-2">
 											<div class="form-group">
 												<br>
-												<input class="btn btn-primary" type="submit" value="Save & Process">
+												<input class="btn btn-primary" type="submit" value="Update">
 											</div>
 											</div>
 										</div>	

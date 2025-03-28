@@ -15,8 +15,13 @@ class Leads
         $paramType = "ssisissi";
         $paramValue = array($company,$company_type,$groupid,$group_remak,$userid,$attachment,$target_date,$step);
         $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
-    	return $insertId;        
-        
+    	
+         //-- get max id from beneficiery table
+            $max="select MAX(id) AS max_id from leads";
+            $result = $this->db_handle->runBaseQuery($max);
+            $id=$result[0]['max_id'];
+
+            return $id;       
 
     }
 

@@ -78,7 +78,7 @@
                                                         //------ drop box
                                                         if($type=='radio')
                                                         {?>
-                                                            <select id="<?php echo $formname;?>value1" name="value1" class='form-control' onchange="get_details('<?php echo $formname;?>value1','<?php echo $formname;?>value2','<?php echo $base_url.'index.php?action=leads&query=get_company_info&meta_name=lead_company_info&id=';?>')">
+                                                            <select id="<?php echo $formname;?>value1" name="value1" class='form-control' onchange="get_details('<?php echo $formname;?>value1','<?php echo $base_url.'index.php?action=leads&query=get_company_info&meta_name=lead_company_info&id=';?>','<?php echo $formname;?>value2')">
                                                         <?php 
                                                             echo "<option disbaled='disbaled' selected='selected'>-Select-</option>";
                                                                 $i=1;
@@ -97,7 +97,7 @@
                                                                 
                                                                 ?>
                                                                 <th>
-                                                                    <input type="checkbox" id="<?php echo $details0[$k]['id'];?>text" name="value1[]" value="<?php echo $details0[$k]['value2'];?>" onclick="get_details('<?php echo $details0[$k]['id'];?>text','<?php echo $details0[$k]['id'];?>result','<?php echo $base_url.'index.php?action=leads&query=get_company_info&meta_name=lead_company_info&id=';?>')"/>
+                                                                    <input type="checkbox" id="<?php echo $details0[$k]['id'];?>text" name="value1[]" value="<?php echo $details0[$k]['value2'];?>" onclick="get_details('<?php echo $details0[$k]['id'];?>text','<?php echo $base_url.'index.php?action=leads&query=get_company_info&meta_name=lead_company_info&id=';?>','<?php echo $details0[$k]['id'];?>result')"/>
 
                                                                     <label for="<?php echo $details0[$k]['id'];?>text" > <?php echo $details0[$k]['value2'];?></label>
                                                                 </th>

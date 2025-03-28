@@ -8,7 +8,7 @@ $viewall=$sales->view_all_rfq();
 	  <div class="content-header">
 			<div class="d-flex align-items-center">
 				<div class="mr-auto">
-					<h3 class="page-title">View All Prospect(s)</h3>
+					<h3 class="page-title">View All RFQ(s)</h3>
 					<div class="d-inline-block align-items-center">
 						<nav>
 							<ol class="breadcrumb">
@@ -56,13 +56,16 @@ $viewall=$sales->view_all_rfq();
                                 //--prospect details 
                                 $prospect = $sales->get_baneficiery($doc["prospect"]);
 								echo "<tr>";
+
+									$uname=$admin->getone_user($doc["created_by"]);
+
 									echo "<th>".$counter++."</th>";
 									echo "<td>".$prospect[0]['fname']." - ".$prospect[0]['lname']."</td>";
 									echo "<td>".$doc["rfq_number"]."</td>";
                                     echo "<td>SHPL-RFQ-".$doc["id"]."</td>";
                                     echo "<td>".$doc["date_of_rfq"]."</td>";
                                     echo "<td>".$doc["created_date"]."</td>";
-                                    echo "<td>".$doc["created_by"]."</td>";
+                                    echo "<td>".$uname[0]['person_name']."</td>";
                                     ?>
 									<td>
                                         <a href="<?php echo $base_url.'index.php?action=dashboard&page=sales_rfq_edit&id='.$doc['id'];?>"><i class='fa fa-pencil btn btn-primary btn-xs'></i></a>

@@ -4,7 +4,7 @@
 
 <!----modals---->
 	<!--======== FILL====--->
-	  <div class="modal modal-fill fade" data-backdrop="false" id="modal-fill" tabindex="-1">
+	  <div class="modal modal-fill fade" data-backdrop="false" id="modal-fill" tabindex="-1" style="z-index:9999px;">
 	  <div class="modal-dialog">
 		<div class="modal-content">
 		  <div class="modal-header">
@@ -93,6 +93,11 @@
 	<script src="<?php echo $base_url.'theme/js/';?>jquery.steps.js"></script>
     <script src="<?php echo $base_url.'theme/js/';?>jquery.validate.min.js"></script>
 	<!-- select2 -->
+	<script>
+            $(document).ready(function() {
+                $('.select2').select2();
+            });
+        </script>
 	<script src="<?php echo $base_url.'theme/js/';?>select2.js"></script>
 	<script src="<?php echo $base_url.'theme/js/';?>boostrap-select.js"></script>
 	
