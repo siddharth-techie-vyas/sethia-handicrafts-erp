@@ -87,7 +87,7 @@
 	<script src="<?php echo $base_url.'theme/js/data-table.js';?>"></script>
 	<script src="<?php echo $base_url.'theme/js/datatables.min.js';?>"></script>
 	<!------- custom js -->
-	<script src="<?php echo $base_url.'theme/js/';?>function.js';?>"></script>
+	<script src="<?php echo $base_url.'theme/js/';?>function.js?ver=<?php echo rand(0,100);?>';?>"></script>
 	<script src="<?php echo $base_url.'theme/js/chart_custom_fn.js';?>"></script>
 	<!-- steps -->
 	<script src="<?php echo $base_url.'theme/js/';?>jquery.steps.js"></script>
