@@ -1,7 +1,7 @@
 var loading_img='../../images/loading.gif';
-var base_url='http://localhost/sethia-handicrafts-erp/';
+//var base_url='http://localhost/sethia-handicrafts-erp/';
 //var base_url='http://192.168.1.78/sethia-handicrafts-erp/';
-//var base_url='https://www.sethiahandicrafts.in/';
+var base_url='https://www.sethiahandicrafts.in/';
 
 function get_details2(inputid,outputid,url)
 {

@@ -4,18 +4,18 @@
 
 
     //-- offline
-    private $host = "localhost";
-    private $user = "root";
-    private $password = "";
-    private $database = "sethia-erp";
-    private $conn;
+    // private $host = "localhost";
+    // private $user = "root";
+    // private $password = "";
+    // private $database = "sethia-erp";
+    // private $conn;
 
     //-- online
-    // private $host = "localhost";
-    // private $user = "u429142817_user";
-    // private $password = "Sethia@#0291";
-    // private $database = "u429142817_erp";
-    // private $conn;
+    private $host = "localhost";
+    private $user = "u429142817_user";
+    private $password = "Sethia@#0291";
+    private $database = "u429142817_erp";
+    private $conn;
 
 	
 
