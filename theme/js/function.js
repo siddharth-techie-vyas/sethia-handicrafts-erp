@@ -214,7 +214,6 @@ function get_mtype(id)
         type:'GET',
         url:base_url+'index.php?action=sales&query=getmtype&mtype='+mtype,
         success:function(result){
-          alert(result);
             $('#material'+id).html(result);
         }
     });
