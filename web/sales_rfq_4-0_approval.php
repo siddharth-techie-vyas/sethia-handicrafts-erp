@@ -93,7 +93,7 @@
         <td colspan="7">
 <br>
         <?php
-        $path = $base_url.'/images/addlogo1.jpeg';
+        $path = $base_url.'images/addlogo1.jpeg';
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data = file_get_contents($path);
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
@@ -101,7 +101,7 @@
         <img src="<?php echo $base64?>" width="auto" height="60"/> 
 
         <?php
-        $path = $base_url.'/images/addlogo2.jpeg';
+        $path = $base_url.'images/addlogo2.jpeg';
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data = file_get_contents($path);
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
@@ -109,7 +109,7 @@
         <img src="<?php echo $base64?>" width="auto" height="60"/> 
 
         <?php
-        $path = $base_url.'/images/addlogo3.jpeg';
+        $path = $base_url.'images/addlogo3.jpeg';
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data = file_get_contents($path);
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
