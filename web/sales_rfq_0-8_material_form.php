@@ -24,7 +24,7 @@
 <?php
 
 
-
+$material='';
 $mtype=$product->get_material_unique();
 
     foreach($mtype as $w=>$v)
