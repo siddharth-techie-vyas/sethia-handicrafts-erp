@@ -216,7 +216,7 @@ private $db_handle;
 
     function get_material_unique()
     {
-        $sql = "SELECT DISTINCT(material_type) FROM products_material  ";
+       echo $sql = "SELECT DISTINCT(material_type) FROM products_material  ";
         $result = $this->db_handle->runBaseQuery($sql);
         return $result;
     }
