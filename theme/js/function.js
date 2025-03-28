@@ -210,10 +210,12 @@ function htmlget(id,filename)
 function get_mtype(id)      
 {
   var mtype = $('#mtype'+id).val();
+  alert(mtype);
     $.ajax({
         type:'GET',
         url:base_url+'index.php?action=sales&query=getmtype&mtype='+mtype,
         success:function(result){
+          
             $('#material'+id).html(result);
         }
     });
