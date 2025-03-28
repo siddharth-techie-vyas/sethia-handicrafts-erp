@@ -210,7 +210,7 @@ function htmlget(id,filename)
 function get_mtype(id)      
 {
   var mtype = $('#mtype'+id).val();
-  alert(mtype);
+  alert(base_url+'index.php?action=sales&query=getmtype&mtype='+mtype);
     $.ajax({
         type:'GET',
         url:base_url+'index.php?action=sales&query=getmtype&mtype='+mtype,
