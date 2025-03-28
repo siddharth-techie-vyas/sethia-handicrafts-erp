@@ -6,7 +6,7 @@
     .padding1{padding:2px;}
 </style>
 <h6 class="text-secondary">Step 1.0</h6>
-<h3 class="text-primary">Custom Requirment For Item(s)</h3>
+<h3 class="text-primary">RFQ Customization Required</h3>
 <hr>
 
 <form name="step0_edit" id="step00_edit" action="<?php echo $base_url.'index.php?action=sales&query=rfq_step05_edit'?>" method="post">
@@ -25,7 +25,21 @@
 <table class="table table-bordered" id="<?php echo $items[$row]['id'];?>">
     <!----- product name ---------->
 <tr>
-    <th colspan="5"> 
+    <td>
+        <?php
+        if($itemtype=='1' OR $itemtype=='2')
+        { 
+            $sku=$product->getone($items[$row]['pid']);
+            if(file_exists('images/'.$sku[0]['picture']))
+            {echo '<img src="'.$base_url.'images/'.$sku[0]['picture'].'" height="auto" width="80"/>';}
+        }else{
+            $sku=$product->getone_temp($items[$row]['pid']);
+            if(file_exists('images/'.$sku[0]['file']))
+            {echo '<img src="'.$base_url.'images/'.$sku[0]['file'].'" height="auto" width="80"/>';}
+        }
+        ?>
+    </td>
+    <th colspan="3"> 
         (<?php echo $counter++;?>) 
         <?php 
             $itemtype=$items[$row]['item_type'];
@@ -37,7 +51,7 @@
             }else{
                 $sku=$product->getone_temp($items[$row]['pid']);
                 echo $sku[0]['sku'].'<br>';
-                echo '<b class="text-secondary">'.$sku[0]['productname'].'</b>';
+                echo '<b class="text-secondary">'.$sku[0]['product_name'].'</b>';
             }
             ?>
             <br>

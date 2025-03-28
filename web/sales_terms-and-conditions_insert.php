@@ -217,10 +217,10 @@
 
                         <div id="advance" class="col-sm-10 row demo-radio-button" style="display:none;">
                             <div class="col-sm-4" id="advance1">
-                                <label>Advance T&C</label>
+                                
                                                 <div class="demo-radio-button row">
                                                         
-                                                        <div class="col-sm-6">
+                                                        <div class="col-sm-6" style="display:none;">
                                                             <input name="advance_tandc" type="radio" id="radio_adv1" value="advance_payment">
                                                             <label for="radio_adv1">Advance Payment</label>
                                                         
@@ -232,8 +232,8 @@
                                                         </div>
                                                         
                                                         <div class="col-sm-6">
-                                                            <label>Balance Amount</label>
-                                                            <input type="text" name="balance_amt" class="form-control-sm">
+                                                            <label>Advance %</label>
+                                                            <input type="text" name="advance_payment" class="form-control-sm">
                                                         </div>
                                                         
                                                 </div>

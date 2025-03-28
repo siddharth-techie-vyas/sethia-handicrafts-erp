@@ -1027,17 +1027,18 @@ case "sales":
 					$sid=$_POST['sid'];
 					$sku=$_POST['tempsku'];
 					$item_type=$_POST['item_type'];
+					$tempname=$_POST['tempname'];
 					
 
 					foreach($sku as $key=>$value) 
 									{ 
 										$sku_single = mysqli_real_escape_string($con,$sku[$key]);
 										$item_type_single = mysqli_real_escape_string($con,$item_type[$key]);
-										
+										$tempname_single = mysqli_real_escape_string($con,$tempname[$key]);
 										//--file upload
 										$filename=$admin->upload_file_multi($_FILES['file']['name'][$key],$_FILES['file']['tmp_name'][$key]);
 										//-- temp save
-										$pid=$product->tempsave($sku_single,$filename);
+										$pid=$product->tempsave($sku_single,$filename,$tempname_single);
 										//=== save
 										$save = $sales->rfq_items_2($pid,$item_type_single,$sid,$filename); 
 										

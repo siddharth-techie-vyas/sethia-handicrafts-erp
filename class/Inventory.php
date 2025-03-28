@@ -9,11 +9,11 @@ private $db_handle;
         $this->db_handle = new DBController();
     }
 	
-    function tempsave($sku,$file)
+    function tempsave($sku,$file,$name)
     {
-        $query = "insert into temp_products(sku,file)VALUES(?,?)";
-        $paramType = "ss";
-        $paramValue = array($sku,$file);
+        $query = "insert into temp_products(sku,file,product_name)VALUES(?,?,?)";
+        $paramType = "sss";
+        $paramValue = array($sku,$file,$name);
         $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
 
         //-- get maxid and return
