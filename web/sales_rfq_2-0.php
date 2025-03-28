@@ -1,4 +1,4 @@
-<h6 class="text-secondary">Step 3.0</h6>
+<h6 class="text-secondary">Step 2.0</h6>
 <h3 class="text-secondary">Review The Line Sheet (Gap Solving)</h3>
 <hr>
 <style>

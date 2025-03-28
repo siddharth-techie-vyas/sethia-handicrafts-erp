@@ -29,7 +29,7 @@
 // }
 ?>
 
-<h6 class="text-secondary">Step 2.0</h6>
+<h6 class="text-secondary">Step 3.0</h6>
 <h3 class="text-primary">Assign Item(s) To Designer</h3>
 <hr>
 
