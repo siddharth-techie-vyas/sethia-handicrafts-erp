@@ -18,6 +18,7 @@
 	<link rel="stylesheet" href="<?php echo $base_url;?>theme/css/style.css">
 	<link rel="stylesheet" href="<?php echo $base_url;?>theme/css/skin_color.css">
      
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="<?php echo $base_url.'theme/js/jquery-3-7-1.min.js';?>"></script>	  
   </head>
 
