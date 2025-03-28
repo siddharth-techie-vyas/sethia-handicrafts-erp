@@ -10,7 +10,6 @@
     // private $database = "sethia-erp";
     // private $conn;
 
-    
     //-- online
     private $host = "localhost";
     private $user = "u429142817_user";
@@ -24,7 +23,7 @@
         //$conn = $this->connectDB($database,$uri,$driverOptions);
 
         $this->conn = $this->connectDB();         
-        error_reporting(0);
+      //  error_reporting(0);
     }   
     
     function default_timezone()
