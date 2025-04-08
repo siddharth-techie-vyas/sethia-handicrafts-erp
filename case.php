@@ -949,7 +949,23 @@ case "sales":
 
 				if($_GET['query']=='prospect3_1')
 				{
-					$save=$sales->sales_prospect_tandc($_POST['pid'],$_POST['incoterms'],$_POST['shipping'],$_POST['shipping_basis'],$_POST['currency'],$_POST['liability'],$_POST['liability_per'],$_POST['advance'],$_POST['progress_payment'],$_POST['stage1'],$_POST['stage2'],$_POST['stage3'],$_POST['stage4'],$_POST['balance'],$_POST['credit_period'],$_POST['retention'],$_POST['retention_period'],$_POST['process_payment'],$_POST['document'],$_POST['document2'],$_POST['price_validity'],$_POST['price_validity_year'],$_POST['social_audit'],$_POST['audit0'],$_POST['audit1'],$_POST['audit2'],$_POST['audit3'],$_POST['audit4'],$_POST['ctpat'],$_POST['shipment_penelty'],$_POST['late_shipment_penelty'],$_POST['late_shipment_max_per'],$_POST['late_shipment_duration'],$_POST['chargeback'],$_POST['repair_labour_rate'],$_POST['repair_labour_rate_after'],$_POST['repair_labour_limit'],$_POST['commissionable'],$_POST['commision_to'],$_POST['commision_name'],$_POST['commision_per'],$_POST['sample'],$_POST['sample_qty'],$_POST['photography'],$_POST['photography_qty'],$_POST['packing'],$_POST['special_notes'],$_POST['product_testing'],$_POST['product_testing_paid'],$_POST['product_testing_1'],$_POST['product_testing_frequency'],$_POST['packing_testing1'],$_POST['packing_testing_frequency'],$_POST['packing_testing_paid'],$_POST['fsc'],$_POST['fsc_years'],$_POST['fsc_yes0'],$_POST['fsc_yes1'],$_POST['fsc_yes2'],$_POST['branding'],$_POST['branding_req']);
+					$save=$sales->sales_prospect_tandc($_POST['pid'],$_POST['incoterms'],$_POST['incoterms_port'],$_POST['incoterms_destination'],$_POST['shipping'],$_POST['shipping_basis'],$_POST['currency'],$_POST['liability'],$_POST['liability_per'],$_POST['payment_terms'],$_POST['advance_payment_per'],$_POST['lc_advance'],$_POST['tandc_lc'],$_POST['progress_payment'],$_POST['progress_paymentstage1'],$_POST['progress_paymentstage2'],$_POST['progress_paymentstage3'],$_POST['progress_paymentstage4'],$_POST['balance'],$_POST['credit_period'],$_POST['retention'],$_POST['retention_period'],$_POST['process_payment'],$_POST['document'],$_POST['document2'],$_POST['price_validity'],$_POST['price_validity_year'],$_POST['social_audit'],$_POST['SA8000'],$_POST['audit1'],$_POST['audit2'],$_POST['audit3'],$_POST['audit4'],$_POST['ctpat'],$_POST['shipment_penelty'],$_POST['late_shipment_per'],$_POST['late_shipment_max_per'],$_POST['chargeback'],$_POST['chargeback_labour_rate'],$_POST['chargeback_labour_rate_after'],$_POST['chargeback_labour_limit'],$_POST['commissionable'],$_POST['commission_to'],$_POST['commission_name'],$_POST['commission_per'],$_POST['sample'],$_POST['sample_qty0'],$_POST['sample_qty'],$_POST['photography'],$_POST['sample_paid_client'],$_POST['photography1'],$_POST['photography_qty'],$_POST['packing'],$_POST['packing_notes'],$_POST['product_testing'],$_POST['product_testing_frequency'],$_POST['product_testing_paid'],$_POST['packing_testing'],$_POST['packing_testing_frequency'],$_POST['packing_testing_paid'],$_POST['fsc'],$_POST['fsc_years'],$_POST['fsc_current'],$_POST['fsc_target1'],$_POST['fsc_target2'],$_POST['fsc_target3'],$_POST['fsc_target_no'],$_POST['branding'],$_POST['branding_req'],$_POST['added_by']);
+					if($save)
+						{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=sales_addprospect&status=1&id=".$_POST['pid']."';</script>";}   
+						else
+						{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=sales_addprospect&status=2&id=".$_POST['pid']."';</script>";}
+
+
+						//--send approval to admin
+						$mds=$admin->getonetype_user('9');
+						foreach($mds as $r=>$v)
+						{$admin->save_alerts($_SESSION['uid'],"Prospect request Has Been Received For Approval",$mds[$r]['id']);}
+				}
+
+		
+				if($_GET['query']=='prospect3_1_update')
+				{
+					$save=$sales->sales_prospect_tandc_update($_POST['pid'],$_POST['incoterms'],$_POST['incoterms_port'],$_POST['incoterms_destination'],$_POST['shipping'],$_POST['shipping_basis'],$_POST['currency'],$_POST['liability'],$_POST['liability_per'],$_POST['payment_terms'],$_POST['advance_payment_per'],$_POST['lc_advance'],$_POST['tandc_lc'],$_POST['progress_payment'],$_POST['progress_paymentstage1'],$_POST['progress_paymentstage2'],$_POST['progress_paymentstage3'],$_POST['progress_paymentstage4'],$_POST['balance'],$_POST['credit_period'],$_POST['retention'],$_POST['retention_period'],$_POST['process_payment'],$_POST['document'],$_POST['document2'],$_POST['price_validity'],$_POST['price_validity_year'],$_POST['social_audit'],$_POST['SA8000'],$_POST['audit1'],$_POST['audit2'],$_POST['audit3'],$_POST['audit4'],$_POST['ctpat'],$_POST['shipment_penelty'],$_POST['late_shipment_per'],$_POST['late_shipment_max_per'],$_POST['chargeback'],$_POST['chargeback_labour_rate'],$_POST['chargeback_labour_rate_after'],$_POST['chargeback_labour_limit'],$_POST['commissionable'],$_POST['commission_to'],$_POST['commission_name'],$_POST['commission_per'],$_POST['sample'],$_POST['sample_qty0'],$_POST['sample_qty'],$_POST['photography'],$_POST['sample_paid_client'],$_POST['photography1'],$_POST['photography_qty'],$_POST['packing'],$_POST['packing_notes'],$_POST['product_testing'],$_POST['product_testing_frequency'],$_POST['product_testing_paid'],$_POST['packing_testing'],$_POST['packing_testing_frequency'],$_POST['packing_testing_paid'],$_POST['fsc'],$_POST['fsc_years'],$_POST['fsc_current'],$_POST['fsc_target1'],$_POST['fsc_target2'],$_POST['fsc_target3'],$_POST['fsc_target_no'],$_POST['branding'],$_POST['branding_req'],$_POST['added_by'],$_POST['id']);
 					if($save)
 						{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=sales_addprospect&status=1&id=".$_POST['pid']."';</script>";}   
 						else
@@ -1028,19 +1044,20 @@ case "sales":
 					$sku=$_POST['tempsku'];
 					$item_type=$_POST['item_type'];
 					$tempname=$_POST['tempname'];
-					
+					$cat=$_POST['category'];
 
 					foreach($sku as $key=>$value) 
 									{ 
 										$sku_single = mysqli_real_escape_string($con,$sku[$key]);
 										$item_type_single = mysqli_real_escape_string($con,$item_type[$key]);
 										$tempname_single = mysqli_real_escape_string($con,$tempname[$key]);
+										$cat_single = mysqli_real_escape_string($con,$cat[$key]);
 										//--file upload
 										$filename=$admin->upload_file_multi($_FILES['file']['name'][$key],$_FILES['file']['tmp_name'][$key]);
 										//-- temp save
-										$pid=$product->tempsave($sku_single,$filename,$tempname_single);
+										$pid=$product->tempsave($sku_single,$filename,$tempname_single,$cat_single);
 										//=== save
-										$save = $sales->rfq_items_2($pid,$item_type_single,$sid,$filename); 
+									$save = $sales->rfq_items_2($pid,$item_type_single,$sid,$filename); 
 										
 									}
 
@@ -1182,6 +1199,7 @@ case "sales":
 					$itemid=$_POST['itemid'];
 					$remark=$_POST['remark'];
 					$moq=$_POST['moq'];
+					$target_price=$_POST['target_price'];
 					$repeat_pa=$_POST['repeat_pa'];
 					$plc = $_POST['plc'];
 					
@@ -1191,12 +1209,13 @@ case "sales":
 										$itemid_single = mysqli_real_escape_string($con,$itemid[$key]);
 										$remark_single = mysqli_real_escape_string($con,$remark[$key]);
 										$moq_single = mysqli_real_escape_string($con,$moq[$key]);
+										$target_price_single = mysqli_real_escape_string($con,$target_price[$key]);
 										$repeat_pa_single = mysqli_real_escape_string($con,$repeat_pa[$key]);
 										$plc_single = mysqli_real_escape_string($con,$plc[$key]);
 										
 										
 										//=== update
-										$save = $sales->rfq_step30_update($itemid_single,$remark_single,$moq_single,$repeat_pa_single,$plc_single,$sid); 
+										$save = $sales->rfq_step30_update($itemid_single,$remark_single,$moq_single,$target_price_single,$repeat_pa_single,$plc_single,$sid); 
 										
 									}
 
@@ -1205,7 +1224,7 @@ case "sales":
 					//=== step 4.0
 					if($_GET['query']=='rfq_step40_edit')
 					{
-						$save = $sales->rfq_step40_update($_POST['sid'],$_POST['approval_sendto']); 
+						$save = $sales->rfq_step40_update($_POST['sid'],$_POST['approval_sendto'],$_POST['approval_status']); 
 						$admin->save_alerts($_SESSION['uid'],'RFQ#'.$_POST['sid'].' received for approval / declined',$_POST['approval_sendto']);
 						if($save)
 						{

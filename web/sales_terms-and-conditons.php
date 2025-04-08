@@ -1,9 +1,17 @@
 <?php $pro1= $sales->get_baneficiery($_GET['id']);
 if($pro1[0]['export'] =='1'){?>
-<style>#domestic{display:none;}</style>
+<script>
+    $(document).ready(function(){
+    $(".domestic").remove();
+});
+</script>
 <?php
 }if($pro1[0]['export'] =='2'){?>
-    <style>#export{display:none;}</style>
+    <script>
+    $(document).ready(function(){
+    $(".export").remove();
+});
+</script>
 <?php }?>
 <style>.allhide{display:none;}</style>
 

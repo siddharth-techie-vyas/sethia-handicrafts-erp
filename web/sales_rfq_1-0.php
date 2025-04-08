@@ -47,11 +47,15 @@
             { 
                 $sku=$product->getone($items[$row]['pid']);
                 echo $sku[0]['sku'].'<br>';
-                echo '<b class="text-secondary">'.$sku[0]['productname'].'</b>';
+                echo '<b class="text-success">'.$sku[0]['productname'].'</b><br>';
+                echo '<b class="text-secondary">'.$sku[0]['cat'].'</b>';
             }else{
                 $sku=$product->getone_temp($items[$row]['pid']);
+                //-- get cat name 
+                $cat_name = $product->get_category_one($sku[0]['cat']);
                 echo $sku[0]['sku'].'<br>';
-                echo '<b class="text-secondary">'.$sku[0]['product_name'].'</b>';
+                echo '<b class="text-success">'.$sku[0]['product_name'].'</b><br>';
+                echo '<b class="text-secondary">'.$cat_name[0]['cat'].'</b>';
             }
             ?>
             <br>

@@ -404,7 +404,7 @@
           </a>
         </li>
 		<li>
-          <a href="<?php echo $base_url.'index.php?action=dashboard&page=sales_rfq_4-0_approval_list';?>">
+          <a href="<?php echo $base_url.'index.php?action=dashboard&page=sales_rfq_3-0_approval_list';?>">
             <i class="fa fa-inr text-warning"></i> <span>Pending Request</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-right pull-right"></i>

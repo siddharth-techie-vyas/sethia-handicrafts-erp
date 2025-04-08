@@ -1,5 +1,5 @@
 <h6 class="text-secondary">Step 2.0</h6>
-<h3 class="text-secondary">Review The Line Sheet (Gap Solving)</h3>
+<h3 class="text-secondary">RFQ - SKU Wise Qty Projection</h3>
 <hr>
 <style>
     .form-control-sm{width:90%;}
@@ -12,6 +12,7 @@
         <th>Image</th>
         <th>SKU & Type</th>
         <th class="bg-primary">MOQ</th>
+        <th class="bg-secondary">Target Price (INR)</th>
         <th class="bg-warning">Repeat PA</th>
         <th class="bg-success">PLC Year</th>
         <th class="bg-danger">Remark</th>
@@ -65,6 +66,7 @@
     </td>
 
       <td><input type="number" name="moq[]"  class="form-control" value="<?php echo $items[$row]['moq'];?>" required="required"></td>
+      <td><input type="number" name="target_price[]"  class="form-control" value="<?php echo $items[$row]['target_price'];?>" required="required"></td>
       <td><input type="number" name="repeat_pa[]"  class="form-control" value="<?php echo $items[$row]['repeat_pa'];?>" required="required"></td>
       <td><input type="number" name="plc[]"  class="form-control" value="<?php echo $items[$row]['plc'];?>" required="required"></td>
       <td><textarea col="4" rows="4" name="remark[]"  class="form-control" required="required"><?php echo $items[$row]['remark'];?></textarea></td>

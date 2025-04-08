@@ -162,7 +162,7 @@ foreach($items as $row=>$v){
 
   <input type="button" name="btn"  class="btn btn-xs btn-secondary" value="Add Item From SHPL Catalogue" id="btn">
 
-  <input type="button" name="btn"  class="btn btn-xs btn-warning" value="Client Design" id="btn"  data-toggle="modal" data-target="#modal-fill" onclick="show_page_model_fill('Add Client Design','<?php echo $base_url.'index.php?action=dashboard&nocss=sales_rfq_0-5_item-custom&sid='.$_GET['id'];?>')">
+  <input type="button" name="btn"  class="btn btn-xs btn-warning" value="Client Design" id="btn"  data-toggle="modal" data-target="#exampleModal" onclick="show_page_model('Add Client Design','<?php echo $base_url.'index.php?action=dashboard&nocss=sales_rfq_0-5_item-custom&sid='.$_GET['id'];?>')">
 
   <input type="button" onclick="form_submit('step0_edit')" name="Update" value="Update" class="btn btn-primary" id="submit_btn">
 

@@ -1,31 +1,4 @@
-<div class="content-wrapper">
-	  <div class="container-full">
-    	  <div class="content-header">
-			<div class="d-flex align-items-center">
-				<div class="mr-auto">
-					<h3 class="page-title">Request For Quotation (Approved / Denied)</h3>
-					<div class="d-inline-block align-items-center">
-						<nav>
-							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
-								<li class="breadcrumb-item">Sales</li>
-								<li class="breadcrumb-item" >Request For Quotation</li>
-                                <li class="breadcrumb-item active" aria-current="page">Apprval</li>
-							</ol>
-						</nav>
-					</div>
-				</div>
-				
-			</div>
-		</div>
-
-        <div class="col-sm-12">
-        <?php include('alert.php');?>
-        <div class="box-body">
-
-        <?php 
-        $view=$sales->get_rfq_one($_GET['id']);
-        $items=$sales->sales_rfq_items($_GET['id']);
+<?php $items=$sales->sales_rfq_items($_GET['id']);
         $item_count = count($items);
         $counter=1;
        
@@ -33,48 +6,15 @@
         $bene=$sales->get_baneficiery($view[0]['prospect']);
         ?>
 
-<script>
-    $( document ).ready(function() {
-        $('#status').change(function() {
-            var dval = $('#status').val();
-            if(dval!='1')
-            {$("#remark").show();}
-            else
-            {$("#remark").hide();}
-        });
-    });
-</script>
-<span id="msgstep40_edit2"></span>
-<form name="step40_edit" id="step40_edit2" action="<?php echo $base_url.'index.php?action=sales&query=rfq_step40_edit_approval'?>" method="post">
-<input type="hidden" name="sid" value="<?php echo $view[0]['id'];?>"> 
-<input type="hidden" name="created_by" value="<?php echo $view[0]['created_by'];?>">          
-<table class="table table-bordered">
-    <tr>
-        <th>Change Approval Status</th>
-        <td>
-            <select name="approval" id="status" class="form-control">
-                <option disabled="disabled" selected="selected">-Select-</option>
-                        <option value="0" <?php if($view[0]['approval_status']=='0'){echo "selected='selected'";}?>>Send For Re-Check</option>
-                        <option value="1" <?php if($view[0]['approval_status']=='1'){echo "selected='selected'";}?>>Approve</option>
-                        <option value="3" <?php if($view[0]['approval_status']=='3'){echo "selected='selected'";}?>>Reject</option>
-            </select>
-        </td>
-    </tr>
-    <tr>
-        <td id="remark" <?php if($view[0]['approval_status'] == 1 ){?>style="display:none;"<?php }?>>
-            <label>Remark</label>
-            <textarea col="3" row="3" name="remark_approval" class="form-control"><?php echo $view[0]['remark_approval'];?></textarea>
-        </td>
-        
-        <td>
-        <a href="<?php echo $base_url.'index.php?action=dashboard&page=sales_rfq_4-0_approval_list';?>" class="btn btn-secondary">Back</a>    
-        <input type="button" name="submit" onclick="form_submit('step40_edit2')" class="btn btn-success" value="Send For Approval">
-        </td>
-    </tr>
-</table>
+<a href="#" type="button" class='btn btn-info' name="pdf"  type="button" onclick="htmlget('pdfdown','<?php echo 'SHPL-RFQ-'.$_GET['id'];?>')" value="get html" style="display:inline"><i class="fa fa-file-pdf"></i> Download PDF</a>
 
-</form>
 
+
+
+<div id="editor"></div>
+<hr>
+
+<div id="pdfdown">
 <table class="table table-bordered border-dark">
     <tr>
         <th colspan="7">
@@ -93,7 +33,7 @@
         <td colspan="7">
 <br>
         <?php
-        $path = $base_url.'images/addlogo1.jpeg';
+        $path = $base_url.'/images/addlogo1.jpeg';
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data = file_get_contents($path);
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
@@ -101,7 +41,7 @@
         <img src="<?php echo $base64?>" width="auto" height="60"/> 
 
         <?php
-        $path = $base_url.'images/addlogo2.jpeg';
+        $path = $base_url.'/images/addlogo2.jpeg';
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data = file_get_contents($path);
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
@@ -109,7 +49,7 @@
         <img src="<?php echo $base64?>" width="auto" height="60"/> 
 
         <?php
-        $path = $base_url.'images/addlogo3.jpeg';
+        $path = $base_url.'/images/addlogo3.jpeg';
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data = file_get_contents($path);
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
@@ -290,10 +230,3 @@ $items=$sales->sales_rfq_items($_GET['id']);
         </tr>
 </table>
 </div>
-
-        </div>
-
-        </div>
-        </div>
-
-        </div>

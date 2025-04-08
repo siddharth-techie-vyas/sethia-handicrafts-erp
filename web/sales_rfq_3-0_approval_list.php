@@ -58,10 +58,9 @@
                         if($req_price_list[$row]['approval_status']=='3'){echo "Rejected";}
                 echo "</td>";
                 echo "<td>";
-                if($req_price_list[$row]['step']=='4.0'){
-                ?>
+                if($req_price_list[$row]['step']=='3.0'){?>
 
-                <a href='<?php echo $base_url;?>index.php?action=dashboard&page=sales_rfq_4-0_approval&id=<?php echo $req_price_list[$row]['id'];?>' class='btn btn-info btn-sm'><i class='fa fa-arrow-right'></i></a>
+                <a href='<?php echo $base_url;?>index.php?action=dashboard&page=sales_rfq_3-0_approval&id=<?php echo $req_price_list[$row]['id'];?>' class='btn btn-info btn-sm'><i class='fa fa-arrow-right'></i></a>
                 <?php } if($req_price_list[$row]['step']=='7.0'){?>
                 <a href='<?php echo $base_url;?>index.php?action=dashboard&page=sales_rfq_7-0_approval&id=<?php echo $req_price_list[$row]['id'];?>' class='btn btn-warning btn-sm'><i class='fa fa-arrow-right'></i></a>
                 <?php     
