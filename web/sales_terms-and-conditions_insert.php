@@ -678,7 +678,7 @@
                             <label for="radio_c3">Sample Freight Foc</label>
                         </div>
                         <div class="col-sm-3">    
-                            <input name="sample_qty0" type="checkbox" id="radio_c4" value="sample_paid_client" onclick="show_bycheck('radio_c4','sample_paid_foc_qty')">
+                            <input name="sample_qty0" type="checkbox" id="radio_c4" value="sample_paid_client" value="1" onclick="show_bycheck('radio_c4','sample_paid_foc_qty')">
                             <label for="radio_c4">Quantity Required</label>
                             <input name="sample_qty" id="sample_paid_foc_qty" type="number" value="" class="form-control" style="display:none;">      
                         </div>

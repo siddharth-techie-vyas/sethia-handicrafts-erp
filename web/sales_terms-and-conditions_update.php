@@ -516,7 +516,7 @@ $selected="selected='selected'";
                             <label for="radio_sh2">Discussed</label>
                         </div>
 
-                        <div class="col-sm-8 row" id="shipment" <?php if($tandc[0]['shipment_penelty']!='Discussed'){?>style="display:none;"<?php }?>>
+                        <div class="col-sm-8 row" id="shipment_penelty" <?php if($tandc[0]['shipment_penelty']!='Discussed'){?>style="display:none;"<?php }?>>
 
                             <div class="col-sm-4">
                                 <label>%</label>
@@ -658,21 +658,21 @@ $selected="selected='selected'";
             <td colspan="2">
                     <div class="demo-radio-button row">
                         <div class="col-sm-2">
-                            <input name="sample" type="radio" id="radio_c1" value="Sample & Freight Paid by client">
+                            <input name="sample" type="radio" id="radio_c1" value="Sample & Freight Paid by client" <?php if($tandc[0]['sample']=='Sample & Freight Paid by client'){echo "$checked";}?>>
                             <label for="radio_c1">Sample & Freight Paid by client</label>
                         </div>
                         <div class="col-sm-3">
-                            <input name="sample" type="radio" id="radio_c2" value="Sample Foc Freight paid by client">
+                            <input name="sample" type="radio" id="radio_c2" value="Sample Foc Freight paid by client" <?php if($tandc[0]['sample']=='Sample Foc Freight paid by client'){echo "$checked";}?>>
                             <label for="radio_c2">Sample Foc Freight paid by client</label>                       
                         </div>
                         <div class="col-sm-2">    
-                            <input name="sample" type="radio" id="radio_c3" value="Sample Freight Foc">
+                            <input name="sample" type="radio" id="radio_c3" value="Sample Freight Foc" <?php if($tandc[0]['sample']=='Sample Freight Foc'){echo "$checked";}?>>
                             <label for="radio_c3">Sample Freight Foc</label>
                         </div>
                         <div class="col-sm-3">    
-                            <input name="sample_qty0" type="checkbox" id="radio_c4" value="sample_paid_client" onclick="show_bycheck('radio_c4','sample_paid_foc_qty')">
+                            <input name="sample_qty0" type="checkbox" id="radio_c4" value="1"  <?php if($tandc[0]['sample_qty0']=='1'){echo "$checked";}?> onclick="show_bycheck('radio_c4','sample_paid_foc_qty')">
                             <label for="radio_c4">Quantity Required</label>
-                            <input name="sample_qty" id="sample_paid_foc_qty" type="number" value="" class="form-control" style="display:none;">      
+                            <input name="sample_qty" id="sample_paid_foc_qty" type="number" value="<?php echo $tandc[0]['sample_qty'];?>" class="form-control" <?php if($tandc[0]['sample_qty0']!='1'){?>style="display:none;"<?php }?>>      
                         </div>
                        
 					</div>
@@ -688,32 +688,32 @@ $selected="selected='selected'";
 
             <div class="demo-radio-button row">
                         <div class="col-sm-2">
-                            <input name="photography" type="radio" id="radio_po1" value="Not Required" onchange="hide_txtbox('photography')">
+                            <input name="photography" type="radio" id="radio_po1" value="Not Required" onchange="hide_txtbox('photography')" <?php if($tandc[0]['photography']=='Not Required'){echo "$checked";}?>>
                             <label for="radio_po1">Not Required</label>
                         </div>
 
                         <div class="col-sm-2">
-                            <input name="photography" type="radio" id="radio_po2" value="Required" onchange="show_txtbox('photography')">
+                            <input name="photography" type="radio" id="radio_po2" value="Required" onchange="show_txtbox('photography')" <?php if($tandc[0]['photography']=='Required'){echo "$checked";}?>>
                             <label for="radio_po2">Required</label>
                         </div>
 
-                     <div class="col-sm-8 row" id="photography" style="display:none;">
+                     <div class="col-sm-8 row" id="photography"<?php if($tandc[0]['photography']!='Required'){?> style="display:none;" <?php }?>>
                         <div class="col-sm-4">
-                            <input name="photography1" type="radio" id="radio_p1" value="Sample & Freight Paid by client" onclick="hide_txtbox('photography_qty')">
+                            <input name="photography1" type="radio" id="radio_p1" value="Sample & Freight Paid by client" onclick="hide_txtbox('photography_qty')" <?php if($tandc[0]['photography1']=='Sample & Freight Paid by client'){echo "$checked";}?>>
                             <label for="radio_p1">Sample & Freight Paid by client</label>
                         </div>
                         <div class="col-sm-4">
-                            <input name="photography1" type="radio" id="radio_p2" value="Sample Foc Freight paid by client" onclick="hide_txtbox('photography_qty')">
+                            <input name="photography1" type="radio" id="radio_p2" value="Sample Foc Freight paid by client" onclick="hide_txtbox('photography_qty')" <?php if($tandc[0]['photography1']=='Sample Foc Freight paid by client'){echo "$checked";}?>>
                             <label for="radio_p2">Sample Foc Freight paid by client</label>                       
                         </div>
                         <div class="col-sm-4">    
-                            <input name="photography1" type="radio" id="radio_p3" value="Sample Freight Foc" onclick="hide_txtbox('photography_qty')">
+                            <input name="photography1" type="radio" id="radio_p3" value="Sample Freight Foc" onclick="hide_txtbox('photography_qty')" <?php if($tandc[0]['photography1']=='Sample Freight Foc'){echo "$checked";}?>>
                             <label for="radio_p3">Sample Freight Foc</label>
                         </div>
                         <div class="col-sm-4">    
-                            <input name="photography_qty" type="checkbox" id="radio_p4" value="quanity_required" onclick="show_bycheck('radio_p4','photography_qty')">
+                            <input name="photography_qty" type="checkbox" id="radio_p4" value="quanity_required" onclick="show_bycheck('radio_p4','photography_qty_req')" <?php if($tandc[0]['photography_qty']=='quanity_required'){echo "$checked";}?>>
                             <label for="radio_p4">Quantity Required</label>
-                            <input name="photography_qty" id="photography_qty" type="number" value="" class="form-control" style="display:none;">      
+                            <input name="photography_qty_req" id="photography_qty_req" type="number" value="<?php echo $tandc[0]['photography_qty_req'];?>" class="form-control" <?php if($tandc[0]['photography_qty']!='quanity_required'){?>style="display:none;"<?php }?>>      
                         </div>  
                         
 					</div>
@@ -730,16 +730,16 @@ $selected="selected='selected'";
                 <label>Type</label>
                 <select name="packing" class="form-control" onchange="show_txtbox('special_notes');">
                     <option disbaled="disbaled" VALUE="" >-Select-</option>
-                    <option>Nothing specified</option>
-                    <option>Container Worthy</option>
-                    <option>ISTA 2</option>
-                    <option>ISTA 3</option>
-                    <option>ISTA 6</option>
+                    <option <?php if($tandc[0]['packing']=='Nothing specified'){echo $selected;}?>>Nothing specified</option>
+                    <option <?php if($tandc[0]['packing']=='Container Worthy'){echo $selected;}?>>Container Worthy</option>
+                    <option <?php if($tandc[0]['packing']=='ISTA 2'){echo $selected;}?>>ISTA 2</option>
+                    <option <?php if($tandc[0]['packing']=='ISTA 3'){echo $selected;}?>>ISTA 3</option>
+                    <option <?php if($tandc[0]['packing']=='ISTA 6'){echo $selected;}?>>ISTA 6</option>
                 </select>
             </td>
             <td>
                 <label>Special Notes</label>
-                <textarea name="packing_notes" id="special_notes"  class="form-control"></textarea>
+                <textarea name="packing_notes" id="special_notes"  class="form-control"><?php echo $tandc[0]['packing_notes']; ?></textarea>
             </td>
         </tr>
 
@@ -750,20 +750,20 @@ $selected="selected='selected'";
             <td>
                     <div class="demo-radio-button row">
                         <div class="col-sm-4">
-                            <input name="product_testing" type="radio" id="radio_pt01" value="Internal Testing Required" onclick="hide_txtbox('product_testing');">
+                            <input name="product_testing" type="radio" id="radio_pt01" value="Internal Testing Required" onclick="hide_txtbox('product_testing');" <?php if($tandc[0]['product_testing']=='Internal Testing Required'){echo "$checked";}?>>
                             <label for="radio_pt01">Internal Testing Required</label>
                         </div>
                         <div class="col-sm-4">
-                            <input name="product_testing" type="radio" id="radio_pt02" value="Laboratory Testing Required" onclick="show_bycheck('radio_pt02','product_testing');">
+                            <input name="product_testing" type="radio" id="radio_pt02" value="Laboratory Testing Required" onclick="show_bycheck('radio_pt02','product_testing');" <?php if($tandc[0]['product_testing']=='Laboratory Testing Required'){echo "$checked";}?>>
                             <label for="radio_pt02">Laboratory Testing Required</label>                       
                         </div>
-                        <div class="col-sm-4" id="product_testing" style="display:none;">    
+                        <div class="col-sm-4" id="product_testing" <?php if($tandc[0]['product_testing']!='Laboratory Testing Required'){?>style="display:none;"<?php }?>>    
                             <label for="radio_pt3">Testing Frequency</label>
                             <select class="form-control" name="product_testing_frequency" id="product_testing_frequency">
                             <option disbaled="disbaled" VALUE="" >-Select-</option>
-                            <option>One Time</option>
-                            <option>Annual</option>
-                            <option>Bi-Annual</option>
+                            <option <?php if($tandc[0]['product_testing_frequency']=='One Time'){echo $selected;}?>>One Time</option>
+                            <option <?php if($tandc[0]['product_testing_frequency']=='Annual'){echo $selected;}?>>Annual</option>
+                            <option <?php if($tandc[0]['product_testing_frequency']=='Bi-Annual'){echo $selected;}?>>Bi-Annual</option>
                         </select>  
                         </div> 
 					</div>
@@ -772,8 +772,8 @@ $selected="selected='selected'";
                 <label>Paid by Customer</label>
                 <select name="product_testing_paid" class="form-control">
                     <option disbaled="disbaled" VALUE="" >-Select-</option>
-                    <option>- Yes</option>
-                    <option>- No</option>
+                    <option <?php if($tandc[0]['product_testing_paid']=='- Yes'){echo $selected;}?>>- Yes</option>
+                    <option <?php if($tandc[0]['product_testing_paid']=='- No'){echo $selected;}?>>- No</option>
                 </select>
             </td>
         </tr>
@@ -786,14 +786,14 @@ $selected="selected='selected'";
             <td>
                 <div class="demo-radio-button row">
                     <div class="col-sm-4">
-                        <input name="packing_testing" type="radio" id="radio_pc1" value="Only Internal Testing Required" onclick="hide_txtbox('packing_testing_frequency');">
+                        <input name="packing_testing" type="radio" id="radio_pc1" value="Only Internal Testing Required" onclick="hide_txtbox('packing_testing_frequency');" <?php if($tandc[0]['packing_testing']=='Only Internal Testing Required'){echo "$checked";}?>>
                         <label for="radio_pc1">Only Internal Testing Required</label>
                     </div>
                     <div class="col-sm-4">
-                        <input name="packing_testing" type="radio" id="radio_pc2" value="Laboratory Testing Required" onclick="show_bycheck('radio_pc2','packing_testing_frequency');">
+                        <input name="packing_testing" type="radio" id="radio_pc2" value="Laboratory Testing Required" onclick="show_bycheck('radio_pc2','packing_testing_frequency');" <?php if($tandc[0]['packing_testing']=='Laboratory Testing Required'){echo "$checked";}?>>
                         <label for="radio_pc2">Laboratory Testing Required</label>                       
                     </div>
-                    <div class="col-sm-4" id="packing_testing_frequency" style="display:none;">    
+                    <div class="col-sm-4" id="packing_testing_frequency" <?php if($tandc[0]['packing_testing_frequency']!='Laboratory Testing Required'){?>style="display:none;"<?php }?>>    
                         <label for="radio_pc3">Testing Frequency</label>
                         <select class="form-control" name="packing_testing_frequency" id="packing_testing_frequency">
                             <option disbaled="disbaled" VALUE="" >-Select-</option>
@@ -808,8 +808,8 @@ $selected="selected='selected'";
                 <label>Paid by Customer</label>
                 <select name="packing_testing_paid" class="form-control">
                     <option disbaled="disbaled" VALUE="" >-Select-</option>
-                    <option>Yes</option>
-                    <option>No</option>
+                    <option <?php if($tandc[0]['packing_testing_paid']=='- Yes'){echo $selected;}?>>Yes</option>
+                    <option <?php if($tandc[0]['packing_testing_paid']=='- No'){echo $selected;}?>>No</option>
                 </select>
             </td>
         </tr>
@@ -825,42 +825,42 @@ $selected="selected='selected'";
                     <div class="demo-radio-button row">
                         
                         <div class="col-sm-2">    
-                            <input name="fsc" type="radio" id="radio_f2" value="No" onclick="hide_txtbox('fsc_yes1'); hide_txtbox('fsc_yes0'); hide_txtbox('fsc_yes'); show_txtbox('fsc_yes2');">
+                            <input name="fsc" type="radio" id="radio_f2" value="No" onclick="hide_txtbox('fsc_yes1'); hide_txtbox('fsc_yes0'); hide_txtbox('fsc_yes'); show_txtbox('fsc_yes2');" <?php if($tandc[0]['fsc']=='No'){echo "$checked";}?>>
                             <label for="radio_f2">No</label>
 
                         </div>
                         <div class="col-sm-2">
-                            <input name="fsc" type="radio" id="radio_f1" value="Yes" onclick="show_txtbox('fsc_yes'); show_txtbox('fsc_yes0'); show_txtbox('fsc_yes1'); hide_txtbox('fsc_yes2');">
+                            <input name="fsc" type="radio" id="radio_f1" value="Yes" onclick="show_txtbox('fsc_yes'); show_txtbox('fsc_yes0'); show_txtbox('fsc_yes1'); hide_txtbox('fsc_yes2');" <?php if($tandc[0]['fsc']=='Yes'){echo "$checked";}?>>
                             <label for="radio_f1">Yes</label>
                         </div>
 
-                        <div class="col-sm-2" id="fsc_yes" style="display:none;">    
+                        <div class="col-sm-2" id="fsc_yes" <?php if($tandc[0]['fsc']!='Yes'){?>style="display:none;"<?php }?>>    
                             <label>Year(s)</label>
                             <select name="fsc_years" class="form-control">
                                 <option disbaled="disbaled" VALUE="" >-Select-</option>
-                                <option>1 Year</option>
-                                <option>2 Year</option>
-                                <option>3 Year</option>
+                                <option <?php if($tandc[0]['fsc_years']=='1 Year'){echo $selected;}?>>1 Year</option>
+                                <option <?php if($tandc[0]['fsc_years']=='2 Year'){echo $selected;}?>>2 Year</option>
+                                <option <?php if($tandc[0]['fsc_years']=='3 Year'){echo $selected;}?>>3 Year</option>
                             </select>
                         </div>
                         
-                        <div class="col-sm-2" id="fsc_yes1" style="display:none;">    
+                        <div class="col-sm-2" id="fsc_yes1" <?php if($tandc[0]['fsc']!='Yes'){?>style="display:none;"<?php }?>>    
                             <label>FSC Current</label>
                             <input type="text" name="fsc_current" class="form-control"  >
                         </div>
 
-                        <div clas="col-sm-2" id="fsc_yes0" style="display:none;">    
+                        <div clas="col-sm-2" id="fsc_yes0" <?php if($tandc[0]['fsc']!='Yes'){?>style="display:none;"<?php }?>>    
                             <label for="fsc_yes0">FSC % Target in 1 Years</label>   
-                            <input name="fsc_target1" type="number" value="" class="form-control"> 
+                            <input name="fsc_target1" type="number" value="<?php echo $tandc[0]['fsc_target1'];?>" class="form-control"> 
                             <label for="fsc_yes02">FSC % Target in 2 Years</label>   
-                            <input name="fsc_target2" type="number" value="" class="form-control"> 
+                            <input name="fsc_target2" type="number" value="<?php echo $tandc[0]['fsc_target2'];?>" class="form-control"> 
                             <label for="fsc_yes03">FSC % Target in 3 Years</label>   
-                            <input name="fsc_target3" type="number" value="" class="form-control"> 
+                            <input name="fsc_target3" type="number" value="<?php echo $tandc[0]['fsc_target3'];?>" class="form-control"> 
                         </div>
                         
 
-                        <div class="col-sm-2 demo-radio-button" id="fsc_yes2" style="display:none;">    
-                            <input name="fsc_target_no" type="checkbox" id="fsc_yes20" value="1" class="form-control">
+                        <div class="col-sm-2 demo-radio-button" id="fsc_yes2" <?php if($tandc[0]['fsc']!='Yes'){?>style="display:none;"<?php }?>>    
+                            <input name="fsc_target_no" type="checkbox" id="fsc_yes20" value="1" class="form-control" <?php if($tandc[0]['fsc_target_no']=='1'){echo "$checked";}?>>
                             <label for="fsc_yes20">No Target</label>
                         </div>
     
@@ -877,23 +877,23 @@ $selected="selected='selected'";
                 <div class="demo-radio-button row">
                     <div class="col-sm-6 row">
                         <div class="col-sm-6">    
-                            <input name="branding" type="radio" value="No" id="radio_b2" onclick="hide_txtbox('branding_yes')">
+                            <input name="branding" type="radio" value="No" id="radio_b2" onclick="hide_txtbox('branding_yes')" <?php if($tandc[0]['branding']=='No'){echo "$checked";}?>>
                             <label for="radio_b2">No</label>
                         </div>
 
-                        <div class="col-sm-6">
-                            <input name="branding" type="radio" value="Yes" id="radio_b1" onclick="show_txtbox('branding_yes')">
+                        <style= class="col-sm-6">
+                            <input name="branding" type="radio" value="Yes" id="radio_b1" onclick="show_txtbox('branding_yes')" <?php if($tandc[0]['branding']=='Yes'){echo "$checked";}?>>
                             <label for="radio_b1">Yes</label>
                         </div>    
                             
 
                     </div>
-                    <div class="col-sm-6" id="branding_yes" style="display:none;">    
+                    <div class="col-sm-6" id="branding_yes" <?php if($tandc[0]['branding']!='Yes'){?>style="display:none;"<?php }?>>    
                         <label>Provided By</label>
                         <select name="branding_req" class="form-control" >
                             <option disbaled="disbaled" VALUE="" >-Select-</option>
-                            <option>Provided By Client</option>
-                            <option>Factory Procurement</option>                    
+                            <option <?php if($tandc[0]['branding_req']=='Provided By Client'){echo $selected;}?>>Provided By Client</option>
+                            <option <?php if($tandc[0]['branding_req']=='Factory Procurement'){echo $selected;}?>>Factory Procurement</option>                    
                         </select>
                     </div>    
                 </div>
