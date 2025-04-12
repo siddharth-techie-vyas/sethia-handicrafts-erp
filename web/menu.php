@@ -395,7 +395,7 @@
 		  </li>
 
 		
-
+<!--------- MD------------->
 		<?php }if($_SESSION['utype']=='9'){?>
 			<li class="header">Prospect & RFQ</li>
 			<li>
@@ -455,6 +455,37 @@
             </span>
           </a>
         </li>
+
+
+		<li class="treeview">
+          <a href="#">
+            <i class="mdi mdi-more"></i> <span>Prospect</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?php echo $base_url.'index.php?action=dashboard&page=sales_addprospect';?>"><i class="ti-more"></i>Registration</a></li>
+            <li><a href="<?php echo $base_url.'index.php?action=dashboard&page=sales_prospect-viewall';?>"><i class="ti-more"></i>View All</a></li>
+          </ul>
+        </li>
+
+		<li class="treeview">
+          <a href="#">
+            <i class="ti-comments"></i> <span>RFQ</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?php echo $base_url.'index.php?action=dashboard&page=sales_rfq';?>"><i class="ti-more"></i>Create</a></li>
+            <li><a href="<?php echo $base_url.'index.php?action=dashboard&page=sales_rfq-viewall';?>"><i class="ti-more"></i>View All</a></li>
+          </ul>
+        </li>
+
+
+
+
 		<?php }if($_SESSION['utype']=='11'){?>
 		<li class="header">Leads</li>
 		<li>
