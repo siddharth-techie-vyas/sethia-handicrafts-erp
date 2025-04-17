@@ -327,9 +327,12 @@ $finish_all='';
                 $material_all.= '<option value="'.$mv0['id'].'">'.$mv0['material_name'].'</option>';
             //-- get subcat
             $subcat0 = $product->get_material_sub($mv0['id']);
-            foreach ($subcat0 as $key00 => $msv0) {
+            if($subcat0)
+            {
+                foreach ($subcat0 as $key00 => $msv0) {
                 $material_all.= '<option value="'.$msv0['id'].'" style="background:#c96;"> -> '.$msv0['material_name'].'</option>';
-            }
+                }
+            }    
         }
 
         $finish0= $product->get_finish();
