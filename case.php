@@ -1532,6 +1532,83 @@ case "hr":
 case "product":
 	if($_GET['action']=='product')
 	{
+		//---------- product master
+		if($_GET['query']=='products-add')
+		{
+			$get=$product->save($_POST['group_name'],$_POST['productname'],$_POST['sku'],$_POST['design_nu'],$_POST['cat'],$_POST['wcm'],$_POST['dcm'],$_POST['hcm'],$_POST['winch'],$_POST['dinch'],$_POST['hinch'],$_POST['logistics'],$_POST['cbm'],$_POST['desc'],$_POST['material_all'],$_POST['finish_all'],$_POST['usd']);
+			if($get)
+			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-update&status=1&id=$get';</script>";}   
+			else
+			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-update&status=2&id=$get';</script>";}
+		}
+
+		if($_GET['query']=='gallery')
+		{
+			
+			if($_FILES['img'])
+			{$pic=$admin->upload_file($_FILES['img']);}
+			else
+			{$pic=$_POST['oldpic'];}
+
+			$id=$_POST['pid'];
+			$gallery_img=array();
+			if($_FILES['gallery_img'])
+			{
+				$gallery = $_FILES['gallery_img'];
+				foreach($_FILES['gallery_img']['name'] as $k=>$v)
+				{
+					echo $picname1 = $admin->upload_file_multi($_FILES['gallery_img']['name'][$k],$_FILES['gallery_img']['tmp_name'][$k]);
+					array_push($gallery_img,$picname1);
+				}
+				$galley_img0 = implode(",",$gallery_img);							
+			}
+			else
+			{$galley_img0=$_POST['oldgallery'];}
+				
+			
+			$get=$product->save_gallery($id,$pic,$galley_img0);
+			if(!$get)
+			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-update&status=1&id=$id';</script>";}   
+			else
+			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-update&status=2&id=$id';</script>";}
+
+		}
+
+		if($_GET['query']=='products-update')
+		{
+			$get=$product->update($_POST['group_name'],$_POST['productname'],$_POST['sku'],$_POST['design_nu'],$_POST['cat'],$_POST['wcm'],$_POST['dcm'],$_POST['hcm'],$_POST['winch'],$_POST['dinch'],$_POST['hinch'],$_POST['logistics'],$_POST['cbm'],$_POST['desc'],$_POST['material_all'],$_POST['finish_all'],$_POST['usd'],$_POST['pid']);
+			if($get)
+			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-update&status=3&id=$_POST[pid]';</script>";}   
+			else
+			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-update&status=2&id=$_POST[pid]';</script>";}
+		}
+		//---------- material master
+		if($_GET['query']=='add_material')
+		{
+			//---updalod file 
+			if($_FILES['pic'])
+			{$pic=$admin->upload_file($_FILES['pic']);}
+			else
+			{$pic='';}
+			$get=$product->add_material($_POST['mname'],$_POST['mid'],$_POST['mtype'],$pic,$_POST['labour_inr'],$_POST['uom']);
+			if(!$get)
+			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-material&status=1';</script>";}   
+			else
+			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-material&status=2';</script>";}
+		}
+		if($_GET['query']=='updatematerial')
+		{}
+		if($_GET['query']=='deltematerial')
+		{}
+
+		//---------- finish master
+		if($_GET['query']=='addfinish')
+		{}
+		if($_GET['query']=='updatefinish')
+		{}
+		if($_GET['query']=='deltefinish')
+		{}
+
 		if($_GET['query']=='get_details')
 		{
 			
