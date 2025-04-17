@@ -487,6 +487,42 @@
 
 
 		<?php }if($_SESSION['utype']=='11'){?>
+      <li class="header">Product(s)</li>
+		  
+        <li class="treeview">
+          <a href="#">
+            <i class="mdi mdi-arrow-right"></i> <span>Add / Edit</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=products-add-group';?>"><i class="ti-more"></i>Add New Group</a></li>   			
+			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=products-category';?>"><i class="ti-more"></i>Add New Category</a></li> 
+			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=products-add';?>"><i class="ti-more"></i>Add Product</a></li>	
+			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=products-viewall';?>"><i class="ti-more"></i>View All Product</a></li>  			
+          </ul>
+        </li>
+
+		<li class="treeview">
+          <a href="#">
+            <i class="mdi mdi-arrow-right"></i> <span>Master(s)</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=products-material';?>"><i class="ti-more"></i>Material</a></li>   			
+			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=products-finish';?>"><i class="ti-more"></i>Finish</a></li> 
+			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=products-logistics';?>"><i class="ti-more"></i>Logistics</a></li>	
+			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=products-packing';?>"><i class="ti-more"></i>Packing</a></li>	
+          </ul>
+        </li>
+
+		
+        </li>
+      	
+        
 		<li class="header">Leads</li>
 		<li>
           <a href="<?php echo $base_url.'index.php?action=dashboard&page=leads_approval_steps_graphic';?>">
