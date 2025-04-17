@@ -8,7 +8,15 @@ private $db_handle;
     function __construct() {
         $this->db_handle = new DBController();
     }
-	
+
+    function add_group($group_name,$group_code,$desc)
+    {
+        $query = "insert into products_group (group_name,group_code,descs)VALUES(?,?,?)";
+        $paramType = "sss";
+        $paramValue = array($group_name,$group_code,$desc);
+        $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
+        return $insertId;
+    }
     function tempsave($sku,$file,$name,$cat)
     {
         $query = "insert into temp_products(sku,file,product_name,cat)VALUES(?,?,?,?)";
