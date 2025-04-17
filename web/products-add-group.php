@@ -18,7 +18,7 @@
 				
 			</div>
 		</div>
-
+<?php include('alert.php');?>
 		<!-- Main content -->
 		<div class="col-12">
 			  <div class="box box-default">
@@ -29,7 +29,7 @@
 			    	<h3 id="steps-uid-0-h-0" tabindex="-1" class="title current">Add New Group</h3>
 
 
-                        <form>
+                        <form action="<?php echo $base_url.'index.php?action=product&query=add_group'?>" method="post" name="group">
                             <div class="row g-3">
                                 <!-- First Row -->
                                 <div class="col-md-3">
@@ -87,7 +87,7 @@
                                     <th><?php echo $counter++;?></th>
                                     <td><?php echo $all[$r]['group_name'];?></td>
                                     <td><?php echo $all[$r]['group_code'];?></td>
-                                    <td><?php echo $all[$r]['desc'];?></td>
+                                    <td><?php echo $all[$r]['descs'];?></td>
                                     <td>
                                         <i class='fa fa-eye btn btn-xs btn-info'></i>
                                         <i class='fa fa-pencil btn btn-xs btn-warning'></i>

@@ -1533,6 +1533,14 @@ case "product":
 	if($_GET['action']=='product')
 	{
 		//---------- product master
+		if($_GET['query']=='add_group')
+		{
+			$get=$product->add_group($_POST['group_name'],$_POST['group_code'],$_POST['desc']);
+			if($get)
+			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-add-group&status=1';</script>";}   
+			else
+			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-add-group&status=2';</script>";}
+		}
 		if($_GET['query']=='products-add')
 		{
 			$get=$product->save($_POST['group_name'],$_POST['productname'],$_POST['sku'],$_POST['design_nu'],$_POST['cat'],$_POST['wcm'],$_POST['dcm'],$_POST['hcm'],$_POST['winch'],$_POST['dinch'],$_POST['hinch'],$_POST['logistics'],$_POST['cbm'],$_POST['desc'],$_POST['material_all'],$_POST['finish_all'],$_POST['usd']);
