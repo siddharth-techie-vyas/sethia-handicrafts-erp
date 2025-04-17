@@ -9,11 +9,11 @@ private $db_handle;
         $this->db_handle = new DBController();
     }
 	
-    function tempsave($sku,$file,$name)
+    function tempsave($sku,$file,$name,$cat)
     {
-        $query = "insert into temp_products(sku,file,product_name)VALUES(?,?,?)";
-        $paramType = "sss";
-        $paramValue = array($sku,$file,$name);
+        $query = "insert into temp_products(sku,file,product_name,cat)VALUES(?,?,?,?)";
+        $paramType = "sssi";
+        $paramValue = array($sku,$file,$name,$cat);
         $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
 
         //-- get maxid and return
@@ -29,21 +29,43 @@ private $db_handle;
         $result = $this->db_handle->runBaseQuery($sql);
         return $result;
 	}
-	function save($picture, $buyer_code, $sku_code, $shipping_mark, $product_name, $hsn_code, $width, $length, $height, $gross_cbm, $color, $assembly, $case_number, $fob, $usd, $pcs_cartoon, $cartoon_per_pcs, $l_shape)
+	function save($group_name,$productname,$sku,$design_nu,$cat,$wcm,$dcm,$hcm,$winch,$dinch,$hinch,$logistics,$cbm,$desc,$material_all,$finish_all,$usd)
     {
 
-        $fob = number_format((float)$fob, 2, '.', '');
-        $query = "INSERT INTO products(picture, buyer_code, sku_code, shipping_mark, product_name, hsn_code, width,length,height,gross_cbm,color,assembly,case_number, fob, usd, pcs_cartoon, cartoon_per_pcs, l_shape)VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        $paramType = "ssssssssssssssssss";
-        $paramValue = array($picture, $buyer_code, $sku_code, $shipping_mark, $product_name, $hsn_code, $width, $length, $height, $gross_cbm, $color, $assembly, $case_number, $fob, $usd, $pcs_cartoon, $cartoon_per_pcs, $l_shape);
+        $usd = number_format((float)$usd, 2, '.', '');
+        $query = "INSERT INTO products(group_name,productname,sku,design_nu,cat,wcm,dcm,hcm,winch,dinch,hinch,logistics,cbm,descs,material_all,finish_all,usd)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        $paramType = "sssssssssssssssss";
+        $paramValue = array($group_name,$productname,$sku,$design_nu,$cat,$wcm,$dcm,$hcm,$winch,$dinch,$hinch,$logistics,$cbm,$desc,$material_all,$finish_all,$usd);
         
         $this->db_handle->insert($query, $paramType, $paramValue);
+
+        
 
         //-- get maxid and return
         $sql = "SELECT MAX(id) AS maxid FROM products";
         $result = $this->db_handle->runBaseQuery($sql);
         $maxid=$result[0]['maxid'];
+
+        //-- create gallery row 
+        $insert0 = "insert into products_gallery(pid)Values($maxid)";
+        $insert =$this->db_handle->update($insert0);
+
         return $maxid;
+    }
+
+    function update($group_name,$productname,$sku,$design_nu,$cat,$wcm,$dcm,$hcm,$winch,$dinch,$hinch,$logistics,$cbm,$desc,$material_all,$finish_all,$usd,$pid)
+    {
+        $usd = number_format((float)$usd, 2, '.', '');
+        $query = "update products SET group_name='$group_name',productname='$productname',sku='$sku',design_nu='$design_nu',cat='$cat',wcm='$wcm',dcm='$dcm',hcm='$hcm',winch='$winch',dinch='$dinch',hinch='$hinch',logistics='$logistics',cbm='$cbm',descs='$desc',material_all='$material_all',finish_all='$finish_all',usd='$usd' where id='$pid' ";
+        $insert =$this->db_handle->update($query);
+        return $insert;
+    }
+
+    function save_gallery($id,$pic,$gallery_img)
+    {
+         $query = "update products_gallery SET pic='$pic',gallery_img='$gallery_img' where pid='$id'";
+        $insert =$this->db_handle->update($query);
+        return $insert;
     }
 	
 	function getall()
@@ -74,6 +96,13 @@ private $db_handle;
         $result = $this->db_handle->runBaseQuery($sql);
         return $result;
 	}
+
+    function getone_gallery($id)
+    {
+        $sql = "select *  FROM products_gallery where pid = $id ";
+        $result = $this->db_handle->runBaseQuery($sql);
+        return $result;
+    }
 
     function getone_temp($id)
 	{
@@ -134,12 +163,7 @@ private $db_handle;
         $this->db_handle->insert($query, $paramType, $paramValue);
     }
 	
-	function update($picture, $buyer_code, $sku_code, $shipping_mark, $product_name, $hsn_code, $width, $length, $height, $gross_cbm, $color, $assembly, $case_number, $fob, $usd, $pcs_cartoon, $cartoon_per_pcs, $lshape, $id)
-    {
-        $query = "update products SET picture='$picture',buyer_code='$buyer_code',sku_code='$sku_code',shipping_mark='$shipping_mark',product_name='$product_name',hsn_code='$hsn_code',width='$width',length='$length',height='$height',gross_cbm='$gross_cbm' ,color='$color',assembly='$assembly',case_number='$case_number',fob='$fob',usd='$usd',pcs_cartoon='$pcs_cartoon',cartoon_per_pcs='$cartoon_per_pcs',l_shape='$lshape' where id='$id' ";
-        $insertId = $this->db_handle->update($query);
-    	return $insertId;
-    }   
+	
     
     function add_product_details($pid,$acce0,$qty0,$remark0)
     {
@@ -193,9 +217,16 @@ private $db_handle;
         return $result;
     }
 
+    function get_category_one($id)
+    {
+        $sql = "SELECT * FROM product_category where id='$id' ";
+        $result = $this->db_handle->runBaseQuery($sql);
+        return $result;
+    }
+
     function get_category_all()
     {
-        $sql = "SELECT DISTINCT(cat),id,image FROM product_category where cat NOT REGEXP '^[0-9]+$' AND collection='0' ORDER BY cat ASC ";
+        $sql = "SELECT DISTINCT(cat),id FROM product_category where cat NOT REGEXP '^[0-9]+$' ORDER BY cat ASC ";
         $result = $this->db_handle->runBaseQuery($sql);
         return $result;
     }
@@ -207,19 +238,7 @@ private $db_handle;
         return $result;
     }
 
-    function get_material()
-    {
-        $sql = "SELECT * FROM products_material ORDER BY material_type ASC ";
-        $result = $this->db_handle->runBaseQuery($sql);
-        return $result;
-    }
-
-    function get_material_unique()
-    {
-        $sql = "SELECT DISTINCT(material_type) FROM products_material  ";
-        $result = $this->db_handle->runBaseQuery($sql);
-        return $result;
-    }
+    
 
     function get_finish()
     {
@@ -260,7 +279,7 @@ private $db_handle;
 
     function get_material_bytype($type)
     {
-       echo $sql = "SELECT * FROM products_material where material_type='$type' ";
+        $sql = "SELECT * FROM products_material where material_type='$type' ";
         $result = $this->db_handle->runBaseQuery($sql);
         return $result;
     }
@@ -282,6 +301,36 @@ private $db_handle;
     function get_partlist($pid)
     {
         $sql = "SELECT * FROM product_cuttinglist_items where pid='$pid' ";
+        $result = $this->db_handle->runBaseQuery($sql);
+        return $result;
+    }
+
+
+    //=============material master
+    function add_material($mname,$mid,$mtype,$pic,$labuour_inr,$uom)
+    {
+        $query = "INSERT INTO products_material(material_name,mid,material_type,pic,labour_inr,uom)VALUES (?,?,?,?,?,?)";
+        $paramType = "ssssss";
+        $paramValue = array($mname,$mid,$mtype,$pic,$labuour_inr,$uom);
+        $this->db_handle->insert($query, $paramType, $paramValue);
+    }
+    function get_material()
+    {
+        $sql = "SELECT * FROM products_material where mid = '0' ORDER BY material_name ASC ";
+        $result = $this->db_handle->runBaseQuery($sql);
+        return $result;
+    }
+
+    function get_material_sub($mid)
+    {
+        $sql = "SELECT * FROM products_material where mid = '$mid'";
+        $result = $this->db_handle->runBaseQuery($sql);
+        return $result;
+    }
+
+    function get_material_unique()
+    {
+        $sql = "SELECT DISTINCT(material_type) FROM products_material  ";
         $result = $this->db_handle->runBaseQuery($sql);
         return $result;
     }

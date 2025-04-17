@@ -368,10 +368,10 @@ function upload_file($pic)
         $filename = $name;
 		$tempname = $temp;
 		
-
+        $rand = rand(1111111,9999999999);
         //-- rename file
         $temp = explode(".", $filename);
-        $newfilename = round(microtime(true)) . '.' . end($temp);
+        $newfilename = $rand. '.' . end($temp);
         $folder = "./images/". $newfilename;
     
 		if (move_uploaded_file($tempname, $folder)) {

@@ -35,16 +35,28 @@
                             <div class="p-15">
 								<h3 id="steps-uid-0-h-0" tabindex="-1" class="title current">Add New Product</h3>
 
-        <form>
+        <form name="products-add" action="<?php echo $base_url.'index.php?action=product&query=products-add';?>" method="post">
             <div class="row g-3">
                 <!-- First Row -->
                 <div class="col-md-3">
                     <label class="form-label">Group Name</label>
-                    <input type="text" class="form-control" name="group_name">
+                    <select class="form-control" name="group_name" required>
+                        <option disabled="disabled" selected="selected">-Select-</option>
+                        <?php 
+                        $gname = $product->getall_group();
+                        foreach ($gname as $key => $value) {
+                            echo '<option value="'.$value['id'].'">'.$value['group_name'].'</option>';
+                        }
+                        ?>
+                    </select> 
                 </div>
                 <div class="col-md-3">
-                    <label class="form-label">Product Name No Grp</label>
-                    <input type="text" class="form-control" name="productname_nogrp">
+                    <label class="form-label">Product Name</label>
+                    <input type="text" class="form-control" name="productname">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Product Code</label>
+                    <input type="text" class="form-control" name="sku">
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Design Number</label>
@@ -52,18 +64,20 @@
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Category</label>
-                    <input type="text" class="form-control" name="cat">
+                    <select class="form-control" name="cat" required>
+                        <option disabled="disabled" selected="selected">-Select-</option>
+                        <?php 
+                        $cat = $product->get_products_cat();
+                        foreach ($cat as $key => $cv) {
+                            echo '<option value="'.$cv['id'].'">'.$cv['cat'].'</option>';
+                        }
+                        ?>
+                    </select> 
                 </div>
                 
                 <!-- Second Row -->
-                <div class="col-md-3">
-                    <label class="form-label">Group Code</label>
-                    <input type="text" class="form-control" name="group_code">
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">Product Code</label>
-                    <input type="text" class="form-control" name="product_code">
-                </div>
+                
+                
                 <div class="col-md-3">
                     <label class="form-label">Width (CM)</label>
                     <input type="text" class="form-control" name="wcm">
@@ -91,37 +105,7 @@
                     <input type="text" class="form-control" name="hinch">
                 </div>
                 
-                <!-- Fourth Row -->
-                <div class="col-md-3">
-                    <label class="form-label">Material Wood</label>
-                    <input type="text" class="form-control" name="material_wood">
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">Material Board</label>
-                    <input type="text" class="form-control" name="material_board">
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">Material Metal</label>
-                    <input type="text" class="form-control" name="material_metal">
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">Material Other</label>
-                    <input type="text" class="form-control" name="material_other">
-                </div>
                 
-                <!-- Fifth Row -->
-                <div class="col-md-3">
-                    <label class="form-label">Finish Wood Outer</label>
-                    <input type="text" class="form-control" name="finish_wood_outer">
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">Finish Wood Inner</label>
-                    <input type="text" class="form-control" name="finish_wood_inner">
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">Finish Metal</label>
-                    <input type="text" class="form-control" name="finish_metal">
-                </div>
                 <div class="col-md-3">
                     <label class="form-label">Logistics</label>
                     <input type="text" class="form-control" name="logistics">
@@ -132,42 +116,53 @@
                     <label class="form-label">CBM</label>
                     <input type="text" class="form-control" name="cbm">
                 </div>
-                <div class="col-md-3">
-                    <label class="form-label">Product Name</label>
-                    <input type="text" class="form-control" name="productname">
-                </div>
+               
                 <div class="col-md-3">
                     <label class="form-label">Description</label>
                     <input type="text" class="form-control" name="desc">
                 </div>
-                <div class="col-md-3">
-                    <label class="form-label">SKU</label>
-                    <input type="text" class="form-control" name="sku">
-                </div>
                 
                 <!-- second Last Rows -->
                 <div class="col-md-3">
-                    <label class="form-label">Material All</label>
-                    <input type="text" class="form-control" name="material_all">
+                    <label class="form-label">Material</label>
+                    <select class="form-control" name="material_all" required>
+                        <option disabled="disabled" selected="selected">-Select-</option>
+                        <?php 
+                        $mat = $product->get_material();
+                        foreach ($mat as $key => $mv) {
+                            echo '<option value="'.$mv['id'].'">'.$mv['material_name'].'</option>';
+                            //-- get subcat
+                            $subcat = $product->get_material_sub($mv['id']);
+                            foreach ($subcat as $key => $msv) {
+                                echo '<option value="'.$msv['id'].'" style="background:#c96;"> -> '.$msv['material_name'].'</option>';
+                            }
+                        }
+                        ?>
+                    </select>
                 </div>
                 <div class="col-md-3">
-                    <label class="form-label">Finish All</label>
-                    <input type="text" class="form-control" name="finish_all">
+                    <label class="form-label">Finish</label>
+                    <select class="form-control" name="finish_all" required>
+                        <option disabled="disabled" selected="selected">-Select-</option>
+                        <?php 
+                        $finish = $product->get_finish();
+                        foreach ($finish as $key => $fv) {
+                            echo '<option value="'.$fv['id'].'">'.$fv['finish_name'].'</option>';
+                        }
+                        ?>
+                    </select>
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">USD</label>
                     <input type="text" class="form-control" name="usd">
                 </div>
-                <div class="col-md-3">
-                    <label class="form-label">Price 80</label>
-                    <input type="text" class="form-control" name="price_80">
-                </div>
+                
 
                  <!-- Last Rows -->
-                 <div class="col-md-3"><br>
+                 <div class="col-md-1"><br>
                     <input type="reset" name="reset" value="Reset" class="btn btn-warning btn-md">
                 </div>
-                <div class="col-md-3"><br>
+                <div class="col-md-1"><br>
                     <input type="submit" name="submit" value="Submit" class="btn btn-success btn-md">
                 </div>
 

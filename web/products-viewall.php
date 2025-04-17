@@ -59,8 +59,10 @@
                                     <td><?php echo $all[$r]['finish_all'];?></td>
                                     <td>
                                         <i class='fa fa-eye btn btn-xs btn-info'></i>
-                                        <i class='fa fa-pencil btn btn-xs btn-warning'></i>
-                                        <i class='fa fa-trash btn btn-xs btn-danger'></i>
+                                        
+										<a href="<?php echo $base_url.'index.php?action=dashboard&page=products-update&id='.$all[$r]['id'];?>"><i class='fa fa-pencil btn btn-xs btn-warning'></i></a>
+
+                                        <i class='fa fa-trash btn btn-xs btn-danger' onclick="deleteme()"></i>
                                     </td>
                                 </tr>
                             <?php }?>
