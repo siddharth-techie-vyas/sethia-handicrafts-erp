@@ -19,15 +19,20 @@ private $db_handle;
     }
     function tempsave($sku,$file,$name,$cat)
     {
-        $query = "insert into temp_products(sku,file,product_name,cat)VALUES(?,?,?,?)";
-        $paramType = "sssi";
-        $paramValue = array($sku,$file,$name,$cat);
+        $query = "insert into products(sku,productname,cat)VALUES(?,?,?)";
+        $paramType = "sss";
+        $paramValue = array($sku,$name,$cat);
         $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
 
         //-- get maxid and return
-        $sql = "SELECT MAX(id) AS maxid FROM temp_products";
+        $sql = "SELECT MAX(id) AS maxid FROM products";
         $result = $this->db_handle->runBaseQuery($sql);
         $maxid=$result[0]['maxid'];
+
+        //-- create gallery row 
+        echo $insert0 = "insert into products_gallery(pid,pic)Values('$maxid','$file')";
+        $insert =$this->db_handle->update($insert0);
+
         return $maxid;
     }
 
@@ -37,13 +42,13 @@ private $db_handle;
         $result = $this->db_handle->runBaseQuery($sql);
         return $result;
 	}
-	function save($group_name,$productname,$sku,$design_nu,$cat,$wcm,$dcm,$hcm,$winch,$dinch,$hinch,$logistics,$cbm,$desc,$material_all,$finish_all,$usd)
+	function save($group_name,$productname,$sku,$design_nu,$cat,$wcm,$dcm,$hcm,$winch,$dinch,$hinch,$logistics,$cbm,$desc,$material_all,$finish_all,$usd,$tags)
     {
 
         $usd = number_format((float)$usd, 2, '.', '');
-        $query = "INSERT INTO products(group_name,productname,sku,design_nu,cat,wcm,dcm,hcm,winch,dinch,hinch,logistics,cbm,descs,material_all,finish_all,usd)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        $paramType = "sssssssssssssssss";
-        $paramValue = array($group_name,$productname,$sku,$design_nu,$cat,$wcm,$dcm,$hcm,$winch,$dinch,$hinch,$logistics,$cbm,$desc,$material_all,$finish_all,$usd);
+        $query = "INSERT INTO products(group_name,productname,sku,design_nu,cat,wcm,dcm,hcm,winch,dinch,hinch,logistics,cbm,descs,material_all,finish_all,usd,tags)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        $paramType = "ssssssssssssssssss";
+        $paramValue = array($group_name,$productname,$sku,$design_nu,$cat,$wcm,$dcm,$hcm,$winch,$dinch,$hinch,$logistics,$cbm,$desc,$material_all,$finish_all,$usd,$tags);
         
         $this->db_handle->insert($query, $paramType, $paramValue);
 
@@ -61,10 +66,10 @@ private $db_handle;
         return $maxid;
     }
 
-    function update($group_name,$productname,$sku,$design_nu,$cat,$wcm,$dcm,$hcm,$winch,$dinch,$hinch,$logistics,$cbm,$desc,$material_all,$finish_all,$usd,$pid)
+    function update($group_name,$productname,$sku,$design_nu,$cat,$wcm,$dcm,$hcm,$winch,$dinch,$hinch,$logistics,$cbm,$desc,$material_all,$finish_all,$usd,$tags,$pid)
     {
         $usd = number_format((float)$usd, 2, '.', '');
-        $query = "update products SET group_name='$group_name',productname='$productname',sku='$sku',design_nu='$design_nu',cat='$cat',wcm='$wcm',dcm='$dcm',hcm='$hcm',winch='$winch',dinch='$dinch',hinch='$hinch',logistics='$logistics',cbm='$cbm',descs='$desc',material_all='$material_all',finish_all='$finish_all',usd='$usd' where id='$pid' ";
+        $query = "update products SET group_name='$group_name',productname='$productname',sku='$sku',design_nu='$design_nu',cat='$cat',wcm='$wcm',dcm='$dcm',hcm='$hcm',winch='$winch',dinch='$dinch',hinch='$hinch',logistics='$logistics',cbm='$cbm',descs='$desc',material_all='$material_all',finish_all='$finish_all',usd='$usd',tags='$tags' where id='$pid' ";
         $insert =$this->db_handle->update($query);
         return $insert;
     }
@@ -227,7 +232,7 @@ private $db_handle;
 
     function get_category_one($id)
     {
-        $sql = "SELECT * FROM product_category where id='$id' ";
+         $sql = "SELECT * FROM product_category where id='$id' ";
         $result = $this->db_handle->runBaseQuery($sql);
         return $result;
     }
@@ -294,7 +299,7 @@ private $db_handle;
 
     function get_finish_type($type)
     {
-       echo  $sql = "SELECT * FROM products_finish where finish_material='$type' ";
+         $sql = "SELECT * FROM products_finish where finish_material='$type' ";
         $result = $this->db_handle->runBaseQuery($sql);
         return $result;
     }
@@ -324,7 +329,7 @@ private $db_handle;
     }
     function get_material()
     {
-        $sql = "SELECT * FROM products_material where mid = '0' ORDER BY material_name ASC ";
+        $sql = "SELECT * FROM products_material  ORDER BY material_name ASC ";
         $result = $this->db_handle->runBaseQuery($sql);
         return $result;
     }
@@ -341,6 +346,15 @@ private $db_handle;
         $sql = "SELECT DISTINCT(material_type) FROM products_material  ";
         $result = $this->db_handle->runBaseQuery($sql);
         return $result;
+    }
+
+    //--catalogue
+    function get_catalogue($tags)
+    {
+        $sql = "SELECT * FROM products where tags LIKE '%$tags%'";
+        $result = $this->db_handle->runBaseQuery($sql);
+        return $result; 
+        
     }
 }
 ?>

@@ -157,6 +157,10 @@
                     <input type="text" class="form-control" name="usd">
                 </div>
                 
+                <div class="col-md-6">
+                    <label class="form-label">Tags (For catalog development)</label>
+                    <input type="text" class="form-control" name="tags" value="">
+                </div>
 
                  <!-- Last Rows -->
                  <div class="col-md-1"><br>

@@ -193,6 +193,10 @@ $gallery = $product->getone_gallery($_GET['id']);
                     <label class="form-label">USD</label>
                     <input type="text" class="form-control" name="usd" value="<?php echo $detail[0]['usd'];?>">
                 </div>
+                <div class="col-md-6">
+                    <label class="form-label">Tags (For catalog development)</label>
+                    <input type="text" class="form-control" name="tags" value="<?php echo $detail[0]['tags'];?>">
+                </div>
                 
 
                  <!-- Last Rows -->
@@ -270,7 +274,7 @@ $gallery = $product->getone_gallery($_GET['id']);
 </div>
 <div class="col-sm-2">
     <label>Material 1</label>
-    <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Select a Material" style="width: 100%;" tabindex="-1" aria-hidden="true" name="material[]" required>
+    <select class="form-control " multiple="" data-placeholder="Select a Material" style="width: 100%;" tabindex="-1" aria-hidden="true" name="material[]" required>
         <option disabled="disabled">-Select-</option>
         <?php 
         $mat = $product->get_material();
@@ -287,7 +291,7 @@ $gallery = $product->getone_gallery($_GET['id']);
 </div>
 <div class="col-sm-2">
     <label>Finish 1</label>
-    <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Select a Finish" style="width: 100%;" tabindex="-1" aria-hidden="true" name="finish[]" required>
+    <select class="form-control " multiple="" data-placeholder="Select a Finish" style="width: 100%;" tabindex="-1" aria-hidden="true" name="finish[]" required>
         <option disabled="disabled">-Select-</option>
         <?php 
         $finish = $product->get_finish();
@@ -355,7 +359,7 @@ $(add_button).click(function(e)
     e.preventDefault();
     if(x < max_fields){ 
         x++; 
-    $(wrapper).append('<div id="addmore'+x+'"  class="row g-3"><div class="col-sm-2"><label>Part Name 1</label><input type="text" class="form-control" name="partname[]"></div><div class="col-sm-2"><label>Material 1</label><select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Select a Material" style="width: 100%;" tabindex="-1" aria-hidden="true" name="material[]" required><option disabled="disabled">-Select-</option><?php echo $material_all;?></select></div><div class="col-sm-2"><label>Finish 1</label><select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Select a Finish" style="width: 100%;" tabindex="-1" aria-hidden="true" name="finish[]" required><option disabled="disabled">-Select-</option><?php echo $finish_all?></select></div><div class="col-sm-2"><label>Services 1</label><input type="text" class="form-control" name="sevices[]"></div><div class="col-sm-2"><input type="button" onclick=removeme("addmore'+x+'") class="btn btn-xs btn-danger" value="X"></div></div>');}
+    $(wrapper).append('<div id="addmore'+x+'"  class="row g-3"><div class="col-sm-2"><label>Part Name 1</label><input type="text" class="form-control" name="partname[]"></div><div class="col-sm-2"><label>Material 1</label><select class="form-control" multiple="" data-placeholder="Select a Material" style="width: 100%;" tabindex="-1" aria-hidden="true" name="material[]" required><option disabled="disabled">-Select-</option><?php echo $material_all;?></select></div><div class="col-sm-2"><label>Finish 1</label><select class="form-control" multiple="" data-placeholder="Select a Finish" style="width: 100%;" tabindex="-1" aria-hidden="true" name="finish[]" required><option disabled="disabled">-Select-</option><?php echo $finish_all?></select></div><div class="col-sm-2"><label>Services 1</label><input type="text" class="form-control" name="sevices[]"></div><div class="col-sm-2"><input type="button" onclick=removeme("addmore'+x+'") class="btn btn-xs btn-danger" value="X"></div></div>');}
       
     
     else

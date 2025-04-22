@@ -1543,7 +1543,7 @@ case "product":
 		}
 		if($_GET['query']=='products-add')
 		{
-			$get=$product->save($_POST['group_name'],$_POST['productname'],$_POST['sku'],$_POST['design_nu'],$_POST['cat'],$_POST['wcm'],$_POST['dcm'],$_POST['hcm'],$_POST['winch'],$_POST['dinch'],$_POST['hinch'],$_POST['logistics'],$_POST['cbm'],$_POST['desc'],$_POST['material_all'],$_POST['finish_all'],$_POST['usd']);
+			$get=$product->save($_POST['group_name'],$_POST['productname'],$_POST['sku'],$_POST['design_nu'],$_POST['cat'],$_POST['wcm'],$_POST['dcm'],$_POST['hcm'],$_POST['winch'],$_POST['dinch'],$_POST['hinch'],$_POST['logistics'],$_POST['cbm'],$_POST['desc'],$_POST['material_all'],$_POST['finish_all'],$_POST['usd'],$_POST['tags']);
 			if($get)
 			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-update&status=1&id=$get';</script>";}   
 			else
@@ -1584,7 +1584,7 @@ case "product":
 
 		if($_GET['query']=='products-update')
 		{
-			$get=$product->update($_POST['group_name'],$_POST['productname'],$_POST['sku'],$_POST['design_nu'],$_POST['cat'],$_POST['wcm'],$_POST['dcm'],$_POST['hcm'],$_POST['winch'],$_POST['dinch'],$_POST['hinch'],$_POST['logistics'],$_POST['cbm'],$_POST['desc'],$_POST['material_all'],$_POST['finish_all'],$_POST['usd'],$_POST['pid']);
+			$get=$product->update($_POST['group_name'],$_POST['productname'],$_POST['sku'],$_POST['design_nu'],$_POST['cat'],$_POST['wcm'],$_POST['dcm'],$_POST['hcm'],$_POST['winch'],$_POST['dinch'],$_POST['hinch'],$_POST['logistics'],$_POST['cbm'],$_POST['desc'],$_POST['material_all'],$_POST['finish_all'],$_POST['usd'],$_POST['tags'],$_POST['pid']);
 			if($get)
 			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-update&status=3&id=$_POST[pid]';</script>";}   
 			else
@@ -1604,8 +1604,30 @@ case "product":
 			else
 			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-material&status=2';</script>";}
 		}
-		if($_GET['query']=='updatematerial')
-		{}
+		if($_GET['query']=='component')
+		{
+			print_r($_POST);
+			$partname = $_POST['partname'];
+			$material = $_POST['material'];
+			$finish = $_POST['finish'];
+			$sevices = $_POST['sevices'];
+			$pid = $_POST['pid'];
+							
+							 for ($i = 0; $i < count($partname); $i++) 
+							{
+										$partname = mysqli_real_escape_string($con, $partname[$i]);
+										$material = mysqli_real_escape_string($con, $material[$i]);
+										echo $material0=implode(",", $material[$i]);
+										$finish = mysqli_real_escape_string($con, $finish[$i]);
+										$sevices = mysqli_real_escape_string($con, $sevices[$i]);
+										
+										$update=$product->component_add($partname,$material,$finish,$services,$pid);
+										
+							}
+
+			//echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-update&status=1&id=$pid';</script>";
+			
+		}
 		if($_GET['query']=='deltematerial')
 		{}
 
