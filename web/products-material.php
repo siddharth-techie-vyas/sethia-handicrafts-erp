@@ -35,6 +35,17 @@
                             <div class="row g-3">
                                 <!-- First Row -->
                                 <div class="col-md-3">
+                                    <label class="form-label">Capablity</label>
+                                    <select class="form-control" name="capability">
+                                        <option value="0">-Select-</option>
+                                        <?php 
+                                        $cap=$product->get_capability();
+                                        foreach($cap as $r=>$v){?>  
+                                        <option value="<?php echo $cap[$r]['id'];?>" ><?php echo $cap[$r]['capability'];?></option>
+                                        <?php }?>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
                                     <label class="form-label">Material Name</label>
                                     <input type="text" class="form-control" name="mname" required>
                                 </div>
@@ -49,8 +60,17 @@
                                         <?php }?>
                                     </select>
                                 </div>
+                                
                                 <div class="col-md-3">
-                                    <label class="form-label">Material Type</label>
+                                    <label class="form-label">HSN Code</label>
+                                    <input type="text" class="form-control" name="hsn" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Material Name</label>
+                                    <input type="text" class="form-control" name="mname" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Material Type / Group</label>
                                     <select name="mtype" class="form-control" required>
                                         <option value="" disbaled="disabled">Select Material Type</option>
                                         <?php $material_type=$admin->get_metaname_byvalue('material_type'); foreach($material_type as $mtype => $value){?>
@@ -66,8 +86,8 @@
                                     <label class="form-label">Labour Cost UOM</label>
                                     <select name="uom" class="form-control">
                                         <option value="" disbaled="disabled">Select Labpour Cost UOM</option>
-                                        <?php $labour_uom=$admin->get_metaname_byvalue('labour_uom'); foreach($labour_uom as $mtype => $value){?>
-                                        <option value="<?php echo $labour_uom[$mtype]['value1'];?>"><?php echo strtoupper($labour_uom[$mtype]['value1']);?></option>
+                                        <?php $labour_uom=$store->get_unit('labour_uom'); foreach($labour_uom as $mtype => $value){?>
+                                        <option value="<?php echo $labour_uom[$mtype]['id'];?>"><?php echo strtoupper($labour_uom[$mtype]['unit']);?></option>
                                         <?php }?>
                                     </select>
                                 </div>
@@ -102,6 +122,9 @@
 							<tr>
 								<th>#</th>
                                 <th>Image</th>
+                                <th>HSN</th>
+                                <th>Capabilities</th>
+                                <th>Group</th>
 								<th>Material Name</th>
                                 <th>Parent Material</th>
 								<th>Type</th>
@@ -119,8 +142,11 @@
                                 <tr>
                                     <th><?php echo $counter++;?></th>
                                     <td><?php if($all[$r]['pic'] != ''){echo "<img src=".$base_url."images/".$all[$r]['pic']." width='50px' height='50px'>";$all[$r]['pic'];}?></td>
+                                    <td><?php echo $all[$r]['hsn'];?></td>
+                                    <td><?php echo $all[$r]['capablities'];?></td>
+                                    <td><?php echo $all[$r]['material_group'];?></td>                                    
                                     <td><?php echo $all[$r]['material_name'];?></td>
-                                    <td><?php if($all[$r]['mid'] != 0){echo $all[$r]['mid'];}?></td>
+                                    <td><?php $mname = $product->get_material_byid($all[$r]['mid']); echo $mname[0]['material_name'];?></td>
                                     <td><?php echo $all[$r]['material_type'];?></td>
                                     <td><?php echo $all[$r]['labour_inr'].' / '.$all[$r]['uom'];?></td>
                                     <td>

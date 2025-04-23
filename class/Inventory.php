@@ -320,11 +320,11 @@ private $db_handle;
 
 
     //=============material master
-    function add_material($mname,$mid,$mtype,$pic,$labuour_inr,$uom)
+    function add_material($mname,$mid,$mtype,$pic,$labuour_inr,$uom,$capability,$hsn)
     {
-        $query = "INSERT INTO products_material(material_name,mid,material_type,pic,labour_inr,uom)VALUES (?,?,?,?,?,?)";
-        $paramType = "ssssss";
-        $paramValue = array($mname,$mid,$mtype,$pic,$labuour_inr,$uom);
+        $query = "INSERT INTO products_material(material_name,mid,material_type,pic,labour_inr,uom,capabilities,hsn)VALUES (?,?,?,?,?,?,?,?)";
+        $paramType = "ssssssss";
+        $paramValue = array($mname,$mid,$mtype,$pic,$labuour_inr,$uom,$capability,$hsn);
         $this->db_handle->insert($query, $paramType, $paramValue);
     }
     function get_material()
@@ -352,6 +352,15 @@ private $db_handle;
     function get_catalogue($tags)
     {
         $sql = "SELECT * FROM products where tags LIKE '%$tags%'";
+        $result = $this->db_handle->runBaseQuery($sql);
+        return $result; 
+        
+    }
+
+    //-- capability
+    function get_capability()
+    {
+        $sql = "SELECT * FROM products_capability ORDER BY id ASC";
         $result = $this->db_handle->runBaseQuery($sql);
         return $result; 
         

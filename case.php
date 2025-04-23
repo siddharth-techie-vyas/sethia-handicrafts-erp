@@ -1598,7 +1598,7 @@ case "product":
 			{$pic=$admin->upload_file($_FILES['pic']);}
 			else
 			{$pic='';}
-			$get=$product->add_material($_POST['mname'],$_POST['mid'],$_POST['mtype'],$pic,$_POST['labour_inr'],$_POST['uom']);
+			$get=$product->add_material($_POST['mname'],$_POST['mid'],$_POST['mtype'],$pic,$_POST['labour_inr'],$_POST['uom'],$_POST['capability'],$_POST['hsn']);
 			if(!$get)
 			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-material&status=1';</script>";}   
 			else
