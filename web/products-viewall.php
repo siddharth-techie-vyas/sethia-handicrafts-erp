@@ -47,6 +47,9 @@
                             $all = $product->getall();
                             foreach($all as $r=>$v)
                             {
+								//-- get material
+								$material = $product->get_material_byid($all[$r]['material_all']);
+								$finish = $product->get_finish_byid($all[$r]['finish_all']);
                             ?>  
                                 <tr>
                                     <th><?php echo $counter++;?></th>
@@ -55,8 +58,8 @@
                                     <td><?php echo $all[$r]['group_name'];?></td>
                                     <td><?php echo $all[$r]['wcm'].' x '.$all[$r]['dcm'].' x '.$all[$r]['hcm'];?></td>
                                     <td><?php echo $all[$r]['usd'];?></td>
-                                    <td><?php echo $all[$r]['material_all'];?></td>
-                                    <td><?php echo $all[$r]['finish_all'];?></td>
+                                    <td><?php echo $material[0]['material_name'];?></td>
+                                    <td><?php echo $finish[0]['finish_name'];?></td>
                                     <td>
                                         <i class='fa fa-eye btn btn-xs btn-info'></i>
                                         
