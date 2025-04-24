@@ -500,7 +500,8 @@
 			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=products-add-group';?>"><i class="ti-more"></i>Add New Group</a></li>   			
 			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=products-category';?>"><i class="ti-more"></i>Add New Category</a></li> 
 			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=products-add';?>"><i class="ti-more"></i>Add Product</a></li>	
-			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=products-viewall';?>"><i class="ti-more"></i>View All Product</a></li>  			
+			<li><a href="<?php echo $base_url.'index.php?action=dashboard&page=products-viewall';?>"><i class="ti-more"></i>View All Product</a></li>
+      <li><a href="<?php echo $base_url.'index.php?action=dashboard&page=products-catalog';?>"><i class="ti-more"></i>Create Catalogue</a></li>  			
           </ul>
         </li>
 
