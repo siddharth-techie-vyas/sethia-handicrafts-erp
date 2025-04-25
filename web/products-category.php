@@ -22,14 +22,14 @@
 		<!-- Main content -->
 		<div class="col-12">
 			  <div class="box box-default">
-				
+				<?PHP include('alert.php');?>
 				<!-- /.box-header -->
 				<div class="box-body">
 					<!-- Nav tabs -->
 			    	<h3 id="steps-uid-0-h-0" tabindex="-1" class="title current">Add New Category</h3>
 
 
-                        <form action="<?php echo $base_url.'index.php?action=products&query=add_category';?>" method="post" name="add_category">
+                        <form action="<?php echo $base_url.'index.php?action=product&query=add_category';?>" method="post" name="add_category">
                             <div class="row g-3">
                                 <!-- First Row -->
                                 <div class="col-md-3">

@@ -1631,12 +1631,13 @@ case "product":
 		if($_GET['query']=='add_category')
 		{
 			$get=$product->add_category($_POST['cat_name'],$_POST['cat_code'],$_POST['desc'],$_POST['room']);
-			if($get)
+			if(!$get)
 			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-category&status=1';</script>";}   
 			else
 			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-category&status=2';</script>";}
 			
 		}
+		
 		if($_GET['query']=='deltematerial')
 		{}
 
