@@ -1637,6 +1637,22 @@ case "product":
 			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-category&status=2';</script>";}
 			
 		}
+
+		if($_GET['query']=='add_finish')
+		{
+			//---updalod file 
+			if($_FILES['image'])
+			{$pic=$admin->upload_file($_FILES['image']);}
+			else
+			{$pic='';}
+
+			$get=$product->add_finish($_POST['finish_name'],$_POST['coating_system'],$_POST['finish_material'],$_POST['distressing'],$_POST['inhouse'],$_POST['labour_inr'],$pic,$_POST['lead_free'],$_POST['low_voc']);
+			if(!$get)
+			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-finish&status=1';</script>";}   
+			else
+			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-finish&status=2';</script>";}
+			
+		}
 		
 		if($_GET['query']=='deltematerial')
 		{}

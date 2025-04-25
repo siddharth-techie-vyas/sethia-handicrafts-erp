@@ -328,6 +328,14 @@ private $db_handle;
         $this->db_handle->insert($query, $paramType, $paramValue);
     }
 
+    function add_finish($finish_name,$coating_system,$finish_material,$distressing,$inhouse,$labour_inr,$pic,$lead_free,$low_voc)
+    {
+        $query = "INSERT INTO products_finish(finish_name,coating_system,finish_material,distressing,inhouse,labour_inr,image,lead_free,low_voc)VALUES (?,?,?,?,?,?,?,?,?)";
+        $paramType = "sssssssss";
+        $paramValue = array($finish_name,$coating_system,$finish_material,$distressing,$inhouse,$labour_inr,$pic,$lead_free,$low_voc);
+        $this->db_handle->insert($query, $paramType, $paramValue);
+    }
+
     function add_category($cat_name,$cat_code,$desc,$room)
     {
         $query = "INSERT INTO product_category(cat,cat_code,remark,room)VALUES (?,?,?,?)";
