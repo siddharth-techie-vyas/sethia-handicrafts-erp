@@ -327,6 +327,14 @@ private $db_handle;
         $paramValue = array($mname,$mid,$mtype,$pic,$labuour_inr,$uom,$capability,$hsn);
         $this->db_handle->insert($query, $paramType, $paramValue);
     }
+
+    function add_category($cat_name,$cat_code,$desc,$room)
+    {
+        $query = "INSERT INTO product_category(cat,cat_code,remark,room)VALUES (?,?,?,?)";
+        $paramType = "ssss";
+        $paramValue = array($cat_name,$cat_code,$desc,$room);
+        $this->db_handle->insert($query, $paramType, $paramValue);
+    }
     function get_material()
     {
         $sql = "SELECT * FROM products_material  ORDER BY material_name ASC ";

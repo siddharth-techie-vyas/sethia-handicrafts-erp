@@ -1606,7 +1606,6 @@ case "product":
 		}
 		if($_GET['query']=='component')
 		{
-			print_r($_POST);
 			$partname = $_POST['partname'];
 			$material = $_POST['material'];
 			$finish = $_POST['finish'];
@@ -1626,6 +1625,16 @@ case "product":
 							}
 
 			//echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-update&status=1&id=$pid';</script>";
+			
+		}
+
+		if($_GET['query']=='add_category')
+		{
+			$get=$product->add_category($_POST['cat_name'],$_POST['cat_code'],$_POST['desc'],$_POST['room']);
+			if($get)
+			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-category&status=1';</script>";}   
+			else
+			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-category&status=2';</script>";}
 			
 		}
 		if($_GET['query']=='deltematerial')
@@ -1656,6 +1665,8 @@ case "product":
 			{echo "No data found";}
 
 		}	
+
+		
 		
 	}
 	break;

@@ -29,7 +29,7 @@
 			    	<h3 id="steps-uid-0-h-0" tabindex="-1" class="title current">Add New Category</h3>
 
 
-                        <form>
+                        <form action="<?php echo $base_url.'index.php?action=products&query=add_category';?>" method="post" name="add_category">
                             <div class="row g-3">
                                 <!-- First Row -->
                                 <div class="col-md-3">
