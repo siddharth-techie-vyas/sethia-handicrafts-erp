@@ -85,7 +85,7 @@
                                 <div class="col-md-2">
                                     <label class="form-label">Labour Cost UOM</label>
                                     <select name="uom" class="form-control">
-                                        <option value="" disbaled="disabled">Select Labpour Cost UOM</option>
+                                        <option value="" disbaled="disabled">Select Labour Cost UOM</option>
                                         <?php $labour_uom=$store->get_unit('labour_uom'); foreach($labour_uom as $mtype => $value){?>
                                         <option value="<?php echo $labour_uom[$mtype]['id'];?>"><?php echo strtoupper($labour_uom[$mtype]['unit']);?></option>
                                         <?php }?>

@@ -1654,8 +1654,14 @@ case "product":
 			
 		}
 		
-		if($_GET['query']=='deltematerial')
-		{}
+		if($_GET['query']=='add_logistics')
+		{
+			$get=$product->add_logistics($_POST['logistics_name'],$_POST['assembly_req'],$_POST['no_of_case'],$_POST['no_of_item']);
+			if(!$get)
+			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-logistics&status=1';</script>";}   
+			else
+			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-logistics&status=2';</script>";}
+		}
 
 		//---------- finish master
 		if($_GET['query']=='addfinish')

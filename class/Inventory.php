@@ -336,6 +336,14 @@ private $db_handle;
         $this->db_handle->insert($query, $paramType, $paramValue);
     }
 
+    function add_logistics($logistics_name,$assembly_req,$no_of_case,$no_of_item)
+    {
+        $query = "INSERT INTO products_logistics(logistics_name,assembly_req,no_of_case,no_of_item)VALUES (?,?,?,?)";
+        $paramType = "ssss";
+        $paramValue = array($logistics_name,$assembly_req,$no_of_case,$no_of_item);
+        $this->db_handle->insert($query, $paramType, $paramValue);
+    }
+
     function add_category($cat_name,$cat_code,$desc,$room)
     {
         $query = "INSERT INTO product_category(cat,cat_code,remark,room)VALUES (?,?,?,?)";
