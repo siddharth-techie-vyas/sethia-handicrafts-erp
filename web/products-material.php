@@ -65,10 +65,7 @@
                                     <label class="form-label">HSN Code</label>
                                     <input type="text" class="form-control" name="hsn" required>
                                 </div>
-                                <div class="col-md-3">
-                                    <label class="form-label">Material Name</label>
-                                    <input type="text" class="form-control" name="mname" required>
-                                </div>
+                                
                                 <div class="col-md-3">
                                     <label class="form-label">Material Type / Group</label>
                                     <select name="mtype" class="form-control" required>
