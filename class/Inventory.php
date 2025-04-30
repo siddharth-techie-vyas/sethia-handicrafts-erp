@@ -130,7 +130,7 @@ private $db_handle;
 
     function getone_gallery($id)
     {
-        echo $sql = "select *  FROM products_gallery where pid = '$id' ";
+         $sql = "select *  FROM products_gallery where pid = '$id' ";
         $result = $this->db_handle->runBaseQuery($sql);
         return $result;
     }
@@ -427,7 +427,7 @@ private $db_handle;
     //---------------- api
     function wordpress_product($key)
     {
-      $data=array();
+        $data=array();
         $query="select * from products where tags LIKE '%$key%'";
         $result = $this->db_handle->runBaseQuery($query);
         if($result)
