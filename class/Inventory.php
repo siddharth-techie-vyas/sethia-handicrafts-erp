@@ -9,6 +9,24 @@ private $db_handle;
         $this->db_handle = new DBController();
     }
 
+    function successResponse($res)
+    {
+        $succResp = new stdClass();
+        $succResp->success = true;
+        $succResp->error = false;
+        $succResp->response = $res;
+        return $succResp;
+    }
+
+    function errorResponse($res)
+    {
+        $errorResp = new stdClass();
+        $errorResp->success = false;
+        $errorResp->error = true;
+        $errorResp->response = $res;
+        return $errorResp;
+    }
+
     function add_group($group_name,$group_code,$desc)
     {
         $query = "insert into products_group (group_name,group_code,descs)VALUES(?,?,?)";
@@ -30,7 +48,7 @@ private $db_handle;
         $maxid=$result[0]['maxid'];
 
         //-- create gallery row 
-        echo $insert0 = "insert into products_gallery(pid,pic)Values('$maxid','$file')";
+        $insert0 = "insert into products_gallery(pid,pic)Values('$maxid','$file')";
         $insert =$this->db_handle->update($insert0);
 
         return $maxid;
@@ -112,7 +130,7 @@ private $db_handle;
 
     function getone_gallery($id)
     {
-        $sql = "select *  FROM products_gallery where pid = $id ";
+        echo $sql = "select *  FROM products_gallery where pid = '$id' ";
         $result = $this->db_handle->runBaseQuery($sql);
         return $result;
     }
@@ -292,7 +310,7 @@ private $db_handle;
 
     function get_material_bytype($type)
     {
-        $sql = "SELECT * FROM products_material where material_type='$type' ";
+        echo $sql = "SELECT * FROM products_material where material_type='$type' ";
         $result = $this->db_handle->runBaseQuery($sql);
         return $result;
     }
@@ -344,6 +362,14 @@ private $db_handle;
         $this->db_handle->insert($query, $paramType, $paramValue);
     }
 
+    function add_packing($packing_name,$weight_category,$remark,$pic,$labour_inr,$uom)
+    {
+        $query = "INSERT INTO products_packing(packing_name,weight_category,remark,image,labour_inr,uom)VALUES (?,?,?,?,?,?)";
+        $paramType = "ssssss";
+        $paramValue = array($packing_name,$weight_category,$remark,$pic,$labour_inr,$uom);
+        $this->db_handle->insert($query, $paramType, $paramValue);
+    }
+
     function add_category($cat_name,$cat_code,$desc,$room)
     {
         $query = "INSERT INTO product_category(cat,cat_code,remark,room)VALUES (?,?,?,?)";
@@ -388,6 +414,62 @@ private $db_handle;
         $result = $this->db_handle->runBaseQuery($sql);
         return $result; 
         
+    }
+    function get_capability_byid($id)
+    {
+        $sql = "SELECT * FROM products_capability where id='$id' ";
+        $result = $this->db_handle->runBaseQuery($sql);
+        return $result; 
+        
+    }
+
+
+    //---------------- api
+    function wordpress_product($key)
+    {
+      $data=array();
+        $query="select * from products where tags LIKE '%$key%'";
+        $result = $this->db_handle->runBaseQuery($query);
+        if($result)
+                        {
+                            // foreach($result as $r=>$v)
+                            // {
+                            //     //-- get city name 
+                            //     $city = $this->admin->get_city($result[$r]['city']);
+
+                            //     $returnObj = new stdClass();
+                            // $returnObj->city = $city[0]['name'];
+                            
+                            // }
+                    
+                            //     $result1 = $this->successResponse($data);
+                            //     echo json_encode($result1);
+
+                            foreach($result as $k=>$v)
+                            {
+                                $returnObj = new stdClass();
+                                $returnObj->product_name = $result[$k]['productname'];
+                                $returnObj->height = $result[$k]['hcm'];
+                                $returnObj->width = $result[$k]['wcm'];
+                                $returnObj->depth = $result[$k]['dcm'];
+                                
+                                $gallery=$this->getone_gallery($result[$k]['id']);
+                                $returnObj->featured_image = $gallery[0]['pic'];
+                                array_push($data, $returnObj);
+                                
+                            }
+                                $result1 = $this->successResponse($data);
+                                echo json_encode($result1);
+                                
+                        }  
+                        else
+                        {
+                            $returnObj = new stdClass();
+                            $returnObj->msg = "No Product Found";   
+                            $result1 = $this->errorResponse($returnObj);
+                            echo json_encode($result1);
+        
+                        }
     }
 }
 ?>
