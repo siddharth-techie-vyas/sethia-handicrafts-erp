@@ -505,6 +505,7 @@ private $db_handle;
                             foreach($result as $k=>$v)
                             {
                                 $returnObj = new stdClass();
+                                $returnObj->product_id = $result[$k]['id'];
                                 $returnObj->product_name = $result[$k]['productname'];
                                 $returnObj->height = $result[$k]['hcm'];
                                 $returnObj->width = $result[$k]['wcm'];
