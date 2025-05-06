@@ -301,6 +301,46 @@ private $db_handle;
         return $result;
     }
 
+    function get_material_bycapability($capability)
+    {
+        //-- get capability details
+        $cap=$this->get_capability_byid($capability);
+        $table_name = $cap[0]['table_name'];
+        $query='';
+        if($table_name=='products_material')
+        {
+            $col='id AS col1,material_name AS col2';
+            $query="where capabilities='$capability' AND mid='0'";
+        }
+        if($table_name=='products_packing')
+        {
+            $col='id AS col1,packing_name AS col2';
+        }
+        if($table_name=='products_finish')
+        {
+            $col='id AS col1,finish_name AS col2';
+        }
+        if($table_name=='products_logistics')
+        {
+            $col='id AS col1,logistics_name AS col2';
+        }
+
+        $sql = "SELECT $col FROM $table_name  $query ORDER BY id ASC";
+        $result = $this->db_handle->runBaseQuery($sql);
+        return $result;
+
+        // $sql = "SELECT * FROM products_material where capabilities='$capability' AND mid='0' ";
+        // $result = $this->db_handle->runBaseQuery($sql);
+        // return $result;
+    }
+    
+    function get_material_bycapability_child($capability,$mid)
+    {
+        $sql = "SELECT * FROM products_material where capabilities='$capability' AND mid='$mid' ORDER BY id ASC";
+        $result = $this->db_handle->runBaseQuery($sql);
+        return $result; 
+        
+    }
     function get_material_byname($name)
     {
         $sql = "SELECT * FROM products_material where material_name='$name' ";
@@ -384,6 +424,21 @@ private $db_handle;
         return $result;
     }
 
+    function get_parent_material()
+    {
+        $sql = "SELECT * FROM products_material  where mid='0' ORDER BY material_name ASC ";
+        $result = $this->db_handle->runBaseQuery($sql);
+        return $result;
+    }
+
+    function get_child_material($mid)
+    {
+        $sql = "SELECT * FROM products_material  where mid='$mid' ORDER BY material_name ASC ";
+        $result = $this->db_handle->runBaseQuery($sql);
+        return $result;
+    }
+
+
     function get_material_sub($mid)
     {
         $sql = "SELECT * FROM products_material where mid = '$mid'";
@@ -415,6 +470,8 @@ private $db_handle;
         return $result; 
         
     }
+
+    
     function get_capability_byid($id)
     {
         $sql = "SELECT * FROM products_capability where id='$id' ";
@@ -454,7 +511,7 @@ private $db_handle;
                                 $returnObj->depth = $result[$k]['dcm'];
                                 
                                 $gallery=$this->getone_gallery($result[$k]['id']);
-                                $returnObj->featured_image = $gallery[0]['pic'];
+                                $returnObj->featured_image = 'https://sethiahandicrafts.in/images/'.$gallery[0]['pic'];
                                 array_push($data, $returnObj);
                                 
                             }
