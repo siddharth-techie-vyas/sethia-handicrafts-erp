@@ -507,12 +507,30 @@ private $db_handle;
                                 $returnObj = new stdClass();
                                 $returnObj->product_id = $result[$k]['id'];
                                 $returnObj->product_name = $result[$k]['productname'];
-                                $returnObj->height = $result[$k]['hcm'];
-                                $returnObj->width = $result[$k]['wcm'];
-                                $returnObj->depth = $result[$k]['dcm'];
-                                
+                                $returnObj->description = $result[$k]['descs'];
+                                $returnObj->sku = $result[$k]['sku'];
+                                $returnObj->height_cm = $result[$k]['hcm'];
+                                $returnObj->width_cm = $result[$k]['wcm'];
+                                $returnObj->depth_cm = $result[$k]['dcm'];
+                                $returnObj->height_inch = $result[$k]['hinch'];
+                                $returnObj->width_inch = $result[$k]['winch'];
+                                $returnObj->depth_inch = $result[$k]['dinch'];
+                                //-- material
+                                $material=$this->get_material_byid($result[$k]['material_all']);
+                                $returnObj->material = $material[0]['material_name'];
+                                //-finish
+                                $finish=$this->get_finish_byid($result[$k]['finish_all']);
+                                $returnObj->finish = $material[0]['finish_name'];
+                                //-logistics
+                                $returnObj->logistics = $material[0]['logistics'];
+
                                 $gallery=$this->getone_gallery($result[$k]['id']);
+                                //-- add url
+                                $gallery_img=str_replace(",",",https://sethiahandicrafts.in/images/",$gallery[0]['gallery_img']);
+                                
                                 $returnObj->featured_image = 'https://sethiahandicrafts.in/images/'.$gallery[0]['pic'];
+                                $returnObj->gallery_img = $gallery_img;
+
                                 array_push($data, $returnObj);
                                 
                             }
