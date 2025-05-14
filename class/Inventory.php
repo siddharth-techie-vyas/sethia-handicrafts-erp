@@ -94,8 +94,19 @@ private $db_handle;
 
     function save_gallery($id,$pic,$gallery_img)
     {
-         $query = "update products_gallery SET pic='$pic',gallery_img='$gallery_img' where pid='$id'";
-        $insert =$this->db_handle->update($query);
+        $select="select * from products_gallery where pid='$id'";
+        $select =$this->db_handle->runBaseQuery($select);
+        if($select)
+        {
+            echo $update = "update products_gallery SET pic='$pic',gallery_img='$gallery_img' where pid='$id'";
+            $update =$this->db_handle->update($update);
+        }    
+        else
+        {
+            echo $update = "insert into products_gallery (pic,gallery_img,pid)Values('$pic','$gallery_img','$id') ";
+            $update =$this->db_handle->update($update);
+        }
+
         return $insert;
     }
 	
@@ -324,6 +335,10 @@ private $db_handle;
         {
             $col='id AS col1,logistics_name AS col2';
         }
+        if($table_name=='store_item')
+        {
+            $col='id AS col1,product_name AS col2';
+        }
 
         $sql = "SELECT $col FROM $table_name  $query ORDER BY id ASC";
         $result = $this->db_handle->runBaseQuery($sql);
@@ -504,6 +519,9 @@ private $db_handle;
 
                             foreach($result as $k=>$v)
                             {
+                                $cat = $this->get_category_one($result[$k]['cat']);
+                                $cat = $cat[0]['cat'];
+
                                 $returnObj = new stdClass();
                                 $returnObj->product_id = $result[$k]['id'];
                                 $returnObj->product_name = $result[$k]['productname'];
@@ -515,6 +533,9 @@ private $db_handle;
                                 $returnObj->height_inch = $result[$k]['hinch'];
                                 $returnObj->width_inch = $result[$k]['winch'];
                                 $returnObj->depth_inch = $result[$k]['dinch'];
+                                $returnObj->cat = $cat;
+
+                                
                                 //-- material
                                 $material=$this->get_material_byid($result[$k]['material_all']);
                                 $returnObj->material = $material[0]['material_name'];
@@ -526,10 +547,29 @@ private $db_handle;
 
                                 $gallery=$this->getone_gallery($result[$k]['id']);
                                 //-- add url
-                                $gallery_img=str_replace(",",",https://sethiahandicrafts.in/images/",$gallery[0]['gallery_img']);
+                                $gallery_img0 = array();
+                                $gallery_img = explode(",",$gallery[0]['gallery_img']);
+                                //print_r($gallery_img);
+                                if(!empty($gallery[0]['gallery_img']))
+                                {
+                                    foreach($gallery_img as $g=>$v)
+                                    {
+                                        $gallery_img0[] = 'https://sethiahandicrafts.in/images/'.$gallery_img[$g];
+                                    }
+                                    $gallery_img2=implode(",",$gallery_img0);
+                                }
+                                else
+                                {$gallery_img2="";}
                                 
-                                $returnObj->featured_image = 'https://sethiahandicrafts.in/images/'.$gallery[0]['pic'];
-                                $returnObj->gallery_img = $gallery_img;
+                                
+                                if(!empty($gallery[0]['pic']))
+                                {$gallery_img1='https://sethiahandicrafts.in/images/'.$gallery[0]['pic'];} 
+                                else 
+                                {$gallery_img1="";}
+                                
+
+                                $returnObj->featured_image = $gallery_img1;
+                                $returnObj->gallery_img = $gallery_img2;
 
                                 array_push($data, $returnObj);
                                 
@@ -546,6 +586,36 @@ private $db_handle;
                             echo json_encode($result1);
         
                         }
+    }
+    //------ wordpress api ends
+
+    function get_nearby_pillar($cft_current,$mid)
+    {
+        $query="SELECT * FROM products_material2 where mid='$mid' ORDER BY ABS(cft - $cft_current) ASC LIMIT 1";
+        $result = $this->db_handle->runBaseQuery($query);
+        return $result;
+    }
+
+    function get_cft($l,$w,$h)
+    {   
+        //-- all are in mm so change this into inches and divide by 1728
+        $l = $l/25.4;
+        $w = $w/25.4;
+        $h = $h/25.4;
+        $all = $l*$w*$h;
+        $item_cft = $all/1728;
+
+        $item_cft = number_format((float)$item_cft, 2, '.', '');
+        return $item_cft;
+    }
+
+    function get_cft2($l,$w,$h)
+    {
+        $one= ($l/25.4*$w/25.4)*2/144;
+        $two= ($l/25.4*$h/25.4)*2/144;
+        $three=($w/25.4*$h/25.4)*2/144;
+        $all = $one+$two+$three;
+        return $all;
     }
 }
 ?>

@@ -1109,17 +1109,15 @@ case "sales":
 				{
 					$sid=$_POST['sid'];
 					$itemid=$_POST['pid'];
-					$mtype=$_POST['mtype'];
-					$finish=$_POST['finish'];
-					$part=$_POST['part'];
-					foreach($mtype as $key=>$value) 
+					$capability=$_POST['capability'];
+					$remark=$_POST['remark'];
+					foreach($capability as $key=>$value) 
 									{ 
 										
-										$mtype_single = mysqli_real_escape_string($con,$mtype[$key]);
-										$finish_single = mysqli_real_escape_string($con,$finish[$key]);
-										$part_single = mysqli_real_escape_string($con,$part[$key]);
+										$capability_single = mysqli_real_escape_string($con,$capability[$key]);
+										$remark_single = mysqli_real_escape_string($con,$remark[$key]);
 										//=== update
-										$save = $sales->rfq_step0_5_material($sid,$itemid,$mtype_single,$finish_single,$part_single); 
+										$save = $sales->rfq_step0_5_material($sid,$itemid,$capability_single,$remark_single); 
 										
 									}
 									echo "<div class='alert alert-success'>Material Saved</div>";
@@ -1449,6 +1447,221 @@ case "sales":
 					else
 					{ echo "<option disabled='disabled' selected='selected' value='0'>No Data Found</option>";}	
 				}
+
+
+
+				//================estimator steps 
+				if($_GET['query']=='step2-estimator')
+				{
+					//print_r($_POST);
+					$partid=$_POST['part_id'];
+					// $mtype=$_POST['mtype'];
+					$mtype_remark=$_POST['mtype_remark'];
+					for ($i = 0; $i < count($partid); $i++) 
+							{
+								 		$mtype=implode(","	,$_POST['mtype'.$i]);
+										$mtypeid = mysqli_real_escape_string($con,$mtype);
+										$remark = mysqli_real_escape_string($con, $mtype_remark[$i]);
+										$id = mysqli_real_escape_string($con, $partid[$i]);
+										$update=$sales->save_mtype_estimator($mtypeid,$remark,$id);
+										
+							}
+							echo "<div class='alert alert-success'>Material Saved Successfully !!!</div>";
+				}
+
+				if($_GET['query']=='step3-estimator')
+				{
+					$finalval = array();
+					$part = $_POST['part_name'];
+					$qty = $_POST['qty'];
+					if(isset($_POST['length'])) {$length = $_POST['length'];}else{$length=0;}
+					if(isset($_POST['width'])) {$width = $_POST['width'];}else{$width=0;}
+					if(isset($_POST['height'])) {$height = $_POST['height'];}else{$height=0;}
+					if(isset($_POST['total'])) {$total = $_POST['total'];}else{$total=0;}
+					if(isset($_POST['wood'])) {$wood = $_POST['wood'];}else{$wood='';}
+					
+					foreach($part as $key=>$v)
+					{
+						$val = array (
+							"part_name"=>$part[$key],
+							"qty"=>$qty[$key],
+							"length"=>$length[$key],
+							"width"=>$width[$key],
+							"height"=>$height[$key],
+							"wood"=>$wood[$key],
+							"total"=>$total[$key]);
+
+						array_push($finalval,$val);
+					}
+					$part_details = json_encode($finalval);
+					$get=$sales->save_part_estimator($part_details,$_POST['id']);
+					echo "<div class='alert alert-success'>Part Saved Successfully !!!</div>";
+				}
+
+				if($_GET['query']=='delete_mtype_step3-estimator')
+				{
+					$key = $_GET['id'];
+					$items=$sales->sales_rfq_items_item($_GET['sid']);
+					$part = json_decode($items[0]['part']);
+					$search = $part[$key];
+					unset($part[$key]);
+					//--- update unset array
+				}
+
+
+				if($_GET['query']=='step5-estimator')
+				{
+					$finalval = array();
+
+					$part = $_POST['part_name'];
+					$type = $_POST['cane_type'];
+					$qty = $_POST['qty'];
+					$labour_cost = $_POST['labour_cost'];
+					$length = $_POST['length'];
+					$width = $_POST['width'];
+					$total = $_POST['total'];
+					foreach($part as $key=>$v)
+					{
+						$val = array (
+							"part_name"=>$part[$key],
+							"type"=>$type[$key],
+							"qty"=>$qty[$key],
+							"length"=>$length[$key],
+							"width"=>$width[$key],
+							"total"=>$total[$key],
+							"labour_cost"=>$labour_cost[$key]);
+
+						array_push($finalval,$val);
+					}
+					$part_details = json_encode($finalval);
+					$get=$sales->save_cane_estimator($part_details,$_POST['id']);
+					echo "<div class='alert alert-secondary'>Part Saved Successfully !!!</div>";
+				}
+
+				if($_GET['query']=='step6-estimator')
+				{
+					$finalval = array();
+
+					$part = $_POST['part_name'];
+					$type = $_POST['up_type'];
+					$qty = $_POST['qty'];
+					$labour_cost = $_POST['labour_cost'];
+					$length = $_POST['length'];
+					$width = $_POST['width'];
+					$total = $_POST['total'];
+					foreach($part as $key=>$v)
+					{
+						$val = array (
+							"part_name"=>$part[$key],
+							"type"=>$type[$key],
+							"qty"=>$qty[$key],
+							"length"=>$length[$key],
+							"width"=>$width[$key],
+							"total"=>$total[$key],
+							"labour_cost"=>$labour_cost[$key]);
+
+						array_push($finalval,$val);
+					}
+					$part_details = json_encode($finalval);
+					$get=$sales->save_up_estimator($part_details,$_POST['id']);
+					echo "<div class='alert alert-secondary'>Part Saved Successfully !!!</div>";
+				}
+
+				if($_GET['query']=='step7-estimator')
+				{
+					$finalval = array();
+
+					$finish = $_POST['finish'];
+					$labour_cost = $_POST['labour_cost'];
+					$total_cft = $_POST['total_cft'];
+					$total = $_POST['total'];
+					foreach($finish as $key=>$v)
+					{
+						$val = array (
+							"finish"=>$finish[$key],
+							"labour_cost"=>$labour_cost[$key],
+							"total_cft"=>$total_cft[$key],
+							"total"=>$total[$key]
+							);
+
+						array_push($finalval,$val);
+					}
+					$part_details = json_encode($finalval);
+					$get=$sales->save_finish_estimator($part_details,$_POST['id']);
+					echo "<div class='alert alert-secondary'>Finish Saved Successfully !!!</div>";
+				}
+
+				if($_GET['query']=='step8-estimator')
+				{
+					$finalval = array();
+					$length = $_POST['length'];
+					$width = $_POST['width'];
+					$height = $_POST['height'];
+					$cbm = $_POST['cbm'];
+					$labour_cost = $_POST['labour_cost'];
+					$total = $_POST['total'];
+
+					
+						$val = array (
+							"length"=>$length,
+							"width"=>$width,
+							"height"=>$height,
+							"cbm"=>$cbm,
+							"labour_cost"=>$labour_cost,
+							"total"=>$total
+							);
+
+						
+					echo $part_details = json_encode($val);
+					$get=$sales->save_packing_estimator($part_details,$_POST['id']);
+					echo "<div class='alert alert-secondary'>Master Cartoon Added Successfully !!!</div>";
+				}
+
+				if($_GET['query']=='step8-estimator1')
+				{
+					$finalval = array();
+
+					$case = $_POST['case'];
+					$length = $_POST['length'];
+					$width = $_POST['width'];
+					$height = $_POST['height'];
+					foreach($case as $key=>$v)
+					{
+						$val = array (
+							"case"=>$case[$key],
+							"length"=>$length[$key],
+							"width"=>$width[$key],
+							"height"=>$height[$key]
+							);
+
+						array_push($finalval,$val);
+					}
+					$part_details = json_encode($finalval);
+					$get=$sales->save_packing2_estimator($part_details,$_POST['id']);
+					echo "<div class='alert alert-secondary'>Case Saved Successfully !!!</div>";
+				}
+
+				if($_GET['query']=='step9-estimator')
+				{
+					$finalval = array();
+
+					$case = $_POST['case'];
+					$kg = $_POST['kg'];
+					foreach($case as $key=>$v)
+					{
+						$val = array (
+							"case"=>$case[$key],
+							"kg"=>$kg[$key]
+							);
+
+						array_push($finalval,$val);
+					}
+					$part_details = json_encode($finalval);
+					$get=$sales->save_logistics_estimator($part_details,$_POST['id']);
+					echo "<div class='alert alert-secondary'>Case Saved Successfully !!!</div>";
+				}
+
+				
 	}
 	break;
 //-- sales close
@@ -1565,7 +1778,7 @@ case "product":
 				$gallery = $_FILES['gallery_img'];
 				foreach($_FILES['gallery_img']['name'] as $k=>$v)
 				{
-					echo $picname1 = $admin->upload_file_multi($_FILES['gallery_img']['name'][$k],$_FILES['gallery_img']['tmp_name'][$k]);
+					 $picname1 = $admin->upload_file_multi($_FILES['gallery_img']['name'][$k],$_FILES['gallery_img']['tmp_name'][$k]);
 					array_push($gallery_img,$picname1);
 				}
 				$galley_img0 = implode(",",$gallery_img);							
@@ -1651,6 +1864,22 @@ case "product":
 			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-finish&status=1';</script>";}   
 			else
 			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-finish&status=2';</script>";}
+			
+		}
+
+		if($_GET['query']=='add_packing')
+		{
+			//---updalod file 
+			if($_FILES['image'])
+			{$pic=$admin->upload_file($_FILES['image']);}
+			else
+			{$pic='';}
+
+			$get=$product->add_packing($_POST['packing_name'],$_POST['weight_category'],$_POST['remark'],$pic,$_POST['labour_inr'],$_POST['uom']);
+			if(!$get)
+			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-packing&status=1';</script>";}   
+			else
+			{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=products-packing&status=2';</script>";}
 			
 		}
 		
@@ -1770,7 +1999,7 @@ case "store":
 			{
 				//---updalod file 
 				$pic=$admin->upload_file($_FILES['pic']);
-				$get=$store->create_store_item($_POST['product_name'],$_POST['hsn_code'],$_POST['cat'],$_POST['subcat'],$pic,$_POST['unit']);
+				$get=$store->create_store_item($_POST['product_name'],$_POST['hsn_code'],$_POST['cat'],$_POST['subcat'],$pic,$_POST['unit'],$_POST['mtype'],$_POST['capability'],$_POST['labour_inr']);
 				if($get)
 				{echo "<script>window.location.href='".$base_url."index.php?action=dashboard&page=add-item&status=1';</script>";}   
 				else
