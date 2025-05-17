@@ -113,7 +113,7 @@
                                     <td colspan="3"><input type="text" class="form-control" name="point" value=""></td>
                                 </tr>
                                 <tr>
-                                    <th>Boying Motivations</th>
+                                    <th>Buying Motivations</th>
                                     <td colspan="3"><input type="text" class="form-control" name="motivation" value=""></td>
                                 </tr>
                                 <tr>
