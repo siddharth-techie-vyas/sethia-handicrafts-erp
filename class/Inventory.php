@@ -533,6 +533,7 @@ private $db_handle;
                                 $returnObj->height_inch = $result[$k]['hinch'];
                                 $returnObj->width_inch = $result[$k]['winch'];
                                 $returnObj->depth_inch = $result[$k]['dinch'];
+                                $returnObj->tags = $result[$k]['tags'];
                                 $returnObj->cat = $cat;
 
                                 
