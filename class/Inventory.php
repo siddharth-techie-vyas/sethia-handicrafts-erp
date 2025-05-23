@@ -597,6 +597,13 @@ private $db_handle;
         return $result;
     }
 
+    function get_pillar_one($id)
+    {
+        $query="SELECT * FROM products_material2 where id='$id' ";
+        $result = $this->db_handle->runBaseQuery($query);
+        return $result;
+    }
+
     function get_cft($l,$w,$h)
     {   
         //-- all are in mm so change this into inches and divide by 1728
@@ -617,6 +624,90 @@ private $db_handle;
         $three=($w/25.4*$h/25.4)*2/144;
         $all = $one+$two+$three;
         return $all;
+    }
+
+    //------ yield 
+    function get_wood_yield($wood,$type,$value)
+    {
+        //.-- get wood name from products_material
+        $mtype=$this->get_material_byid($wood);
+        $mid=$mtype[0]['mid'];
+        if($mid!='0')
+        {
+            //-- get parent mtype
+            $pmtype=$this->get_material_byid($mid);
+            $wood_main = $pmtype[0]['material_name'];
+        }
+        else
+        {   $wood_main = $mtype[0]['material_name'];}
+
+        // $number = $value;
+        // $array  = array_map('intval', str_split($number));
+                
+        $number = $value;
+        $formatted = sprintf('%04d', $number);
+        //$wood_main = $wood_main.'%'.$value.'%';
+
+    //    $query="SELECT *,
+    //             (CASE WHEN SUBSTRING(wood_name, -4, 1) = '$array[0]' THEN 1 ELSE 0 END) +
+    //             (CASE WHEN SUBSTRING(wood_name, -3, 1) = '$array[1]' THEN 1 ELSE 0 END) +
+    //             (CASE WHEN SUBSTRING(wood_name, -2, 1) = '$array[2]' THEN 1 ELSE 0 END) +
+    //             (CASE WHEN SUBSTRING(wood_name, -1, 1) = '$array[3]' THEN 1 ELSE 0 END) AS match_score
+    //             FROM products_material_yield
+    //             WHERE wood_name LIKE '$wood_main%' AND type = '$type'
+    //             ORDER BY match_score DESC
+    //             LIMIT 1";  
+
+   
+
+        $query="select * from products_material_yield where wood_name LIKE '$wood_main%'  AND type = '$type' ORDER BY ABS(min_mm - '$value') LIMIT 1";
+        $result = $this->db_handle->runBaseQuery($query);
+        return $result;
+    }
+
+    function get_rm_group($woodid,$l,$w,$h)
+    { 
+        //-- get wood name from mis
+        $mtype=$this->get_material_byid($woodid);
+        $mname=$mtype[0]['material_name'];
+
+        //-- get group
+        $query="select * from products_material_group where specied='$mname' AND lft='$l' AND wmm='$w' AND hmm='$h' ";
+        $result = $this->db_handle->runBaseQuery($query);
+        return $result;
+    }
+
+    function get_rm_rate($mname,$rate_group)
+    {
+        
+        //-- get group price
+        $query0="select * from products_material_group_rate where wood='$mname' AND rate_grp='$rate_group'";
+        $result0 = $this->db_handle->runBaseQuery($query0);
+        $rate_cft=$result0[0]['rate_cft'];
+        $extra=$result0[0]['extra'];
+
+        //-- calc
+        if($rate_addon != '' OR $rate_addon != 'N')
+        {
+            $final_cft = $rate_cft+$extra;
+        }
+        else
+        {
+            $final_cft=$rate_cft;
+        }
+
+        return $final_cft;
+    }
+
+    function get_yield($material_name,$length,$width,$height,$cft,$qty)
+    {
+        $yield=$length*$width*$height*$qty;
+        $yield=$yield/1000000000;
+        $yield=$yield*35.314;
+        $yield=$yield/$cft;
+        $yield=$yield*100;
+        $yield=number_format((float)$yield, 2, '.', '').' %';
+        return $yield;
     }
 }
 ?>

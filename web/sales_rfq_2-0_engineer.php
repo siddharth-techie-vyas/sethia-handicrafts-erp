@@ -60,16 +60,11 @@ $itemtype=$items[0]['item_type'];
                     <h5>
                     <?php echo $counter++.')';  
                     $itemtype=$items[0]['item_type'];
-                    if($itemtype=='2' || $itemtype=='3' || $itemtype=='1')
-                    { 
+                     
                         $sku=$product->getone($items[0]['pid']);
                         echo $sku[0]['sku'].'<br>';
                         echo '<small class="text-secondary">'.$sku[0]['product_name'].'</small>';
-                    }else{
-                        $sku=$product->getone_temp($items[0]['pid']);
-                        echo $sku[0]['sku'].'<br>';
-                        echo '<small class="text-secondary">'.$sku[0]['product_name'].'</small>';
-                    }
+                   
                     ?>
                     </h5>
                     <h6 class="text-danger">( 
@@ -81,57 +76,29 @@ $itemtype=$items[0]['item_type'];
                <?php if($items[0]['item_type']=='6'){?>Product To Be Ordered As Per Client Design<?php }?>
             )</h6>
 
-                    <table class="table table-bordered" style="font-size:12px;">
-                        <tr colspan="5">
-                            <th colspan="5" class='bg-info'>Customization</th>
-                        </tr>
-                        <tr>
-                            <th class="bg-secondary" width="20%">Part</th>
-                            <th class="bg-success" width="20%">Material</th>
-                            <!-- <th class="bg-danger" width="20%">Material Labour Cost</th> -->
-                            <th class="bg-primary" width="20%">Finish</th>
-                            <!-- <th class="bg-dark" width="20%">Finish Labour Cost</th> -->
-                        </tr>
-            <?php if($itemtype =='4' || $itemtype =='5' || $itemtype =='6'|| $itemtype =='2'){
+            <?php if($itemtype =='4' || $itemtype =='5' || $itemtype =='6' || $itemtype =='2'){?>
+                <table class="table table-bordered" style="font-size:12px;">
+                <tr><th colspan="4">Add Capabilities</th></tr>
+                <tr>
+                    <th class="bg-danger" width="30%">Capability</th>
+                    <th class="bg-primary" width="60%">Remark</th>
+                </tr>
+                <?php
 
                 $material_list = $sales->get_temp_item_material($items[0]['sid'],$items[0]['pid']);
                 foreach($material_list as $r=>$v)
                     {
-                    $material = $product->get_material_byid($material_list[$r]['mtype']);
-                    $finish = $product->get_finish_byid($material_list[$r]['finish']);
+                    $service = $product->get_capability_byid($material_list[$r]['capability']);
+                    
                     echo "<tr id='".$material_list[$r]['id']."'>";
-                    echo "<td>".$material_list[$r]['part']."</td>";
-                    echo "<td>".$material[0]['material_name']."</td>";
-                    // echo "<td>".$material[0]['labour_inr']." / ".$material[0]['uom']."</td>";
-                    echo "<td>".$finish[0]['finish_name']."</td>";
-                    // echo "<td>".$finish[0]['labour_inr']." / ".$finish[0]['uom']."</td>";
+                    echo "<td>".$service[0]['capability']."</td>";
+                    echo "<td>".$material_list[$r]['remark']."</td>";
                     echo "</tr>";
                     } 
-               
-                }if($itemtype =='1' ){
-                //-- show part list
-                $partlist=$product->get_partlist($items[0]['pid']);
-                if($partlist)
-                {
-                foreach($partlist as $p=>$v)
-                {
-                    $material_name = $product->get_material_byname($partlist[$p]['wood']);
-                    echo "<tr>";
-                        echo "<td>".$partlist[$p]['partname']."</td>";
-                        echo "<td>".$partlist[$p]['wood']."</td>";
-                        echo "<td>".$material_name[0]['labour_inr'].' / '.$material_name[0]['uom']."</td>";
-                        echo "<td></td>";
-                        echo "<td></td>";
-                    echo "<tr>";
-                }
-                
-                }
-                else{echo "<b>No Part List Available</b>";}
-            }
-            
-                ?>
-
+                    ?>
                 </table>
+                <?php
+                }?>
                 </div>
                 
                 <div class="col-sm-2">

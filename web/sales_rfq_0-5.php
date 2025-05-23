@@ -91,7 +91,7 @@ foreach($items as $row=>$v){
           
           <?php 
           $itemtype=$items[$row]['item_type'];
-          if($itemtype==2 || $itemtype==3 || $itemtype==1){?>
+          ?>
           <select class="form-control select2" name="sku[]" id="sku" onchange="get_details('sku','<?php echo $base_url.'index.php?action=product&query=get_details';?>','product_details')">
             <option disabled="disabled" selected="selected">-Select-</option>
             <?php 
@@ -106,22 +106,8 @@ foreach($items as $row=>$v){
             <option value="<?php echo $sku[$s]['id'];?>" <?php echo $selection;?>><?php echo $sku[$s]['sku'].' / '.$sku[$s]['productname'];?></option>
             <?php }?>
           </select>
-          <?php }else{?>
-          <select class="form-control select2" name="sku[]" id="sku" onchange="get_details('sku','<?php echo $base_url.'index.php?action=product&query=get_details_temp';?>','product_details')">
-            <option disabled="disabled" selected="selected">-Select-</option>
-            <?php 
-            $sku=$product->getall_temp();
-            foreach($sku as $s=>$v){
-            
-                if($items[$row]['pid']==$sku[$s]['id'])
-                {$selection = "selected='selected'";}
-                else
-                {$selection = "";}
-            ?>
-            <option value="<?php echo $sku[$s]['id'];?>" <?php echo $selection;?>><?php echo $sku[$s]['sku'];?></option>
-            <?php }?>
-          </select>
-          <?php }?>
+          
+          
         </div>
     </div>
 

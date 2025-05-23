@@ -195,30 +195,18 @@ $items=$sales->sales_rfq_items($_GET['id']);
         <tr>
             <td>
                 <?php
-                if($itemtype=='1' OR $itemtype=='2')
-                { 
+                 
                     $sku=$product->getone($items[$row]['pid']);
-                    if(file_exists('images/'.$sku[0]['picture']))
-                    {echo '<img src="'.$base_url.'images/'.$sku[0]['picture'].'" height="auto" width="80"/>';}
-                }else{
-                    $sku=$product->getone_temp($items[$row]['pid']);
-                    if(file_exists('images/'.$sku[0]['file']))
-                    {echo '<img src="'.$base_url.'images/'.$sku[0]['file'].'" height="auto" width="80"/>';}
-                }
+
+                    $gallery=$product->getone_gallery($items[$row]['pid']);
+                    if(file_exists('images/'.$gallery[0]['pic']))
+                    {echo '<img src="'.$base_url.'images/'.$gallery[0]['pic'].'" height="auto" width="100"/>';}
+
                 ?>
             </td>
             <td><?php 
-            if($itemtype=='2' || $itemtype=='3' || $itemtype=='1')
-            { 
-               
                 echo $sku[0]['sku'];
                 $pname=$sku[0]['productname'];
-            }else{
-                
-                echo $sku[0]['sku'];
-                $pname=$sku[0]['product_name'];
-                // get material of temp items 
-            }
             ?></td>
             <td><?php echo $pname;?></td>
             <td><?php echo $items[$row]['length'].' x '.$items[$row]['width'].' x '.$items[$row]['height'];?></td>
@@ -234,30 +222,22 @@ $items=$sales->sales_rfq_items($_GET['id']);
                         ?>
                 <table style="font-size:12px;">
                     <tr>
-                        <th>Part</th>
-                        <th>Material</th>
-                        <th>Finish</th>
-                        
+                        <th class="bg-danger" width="30%">Capability</th>
+                        <th class="bg-primary" width="60%">Remark</th>
                     </tr>
-                <?php
-
                
-                foreach($material_list as $r=>$v)
-                    {
-                    $material = $product->get_material_byid($material_list[$r]['mtype']);
-                    $finish = $product->get_finish_byid($material_list[$r]['finish']);
 
-                    if($material_list[$r]['part']=='hardware')
-                    {$mtype0=$store->get_subcat_single($material_list[$r]['mtype']); $mtype=$mtype0[0]['subcat'];}
-                    else{$material = $product->get_material_byid($material_list[$r]['mtype']); $mtype=$material[0]['material_name'];}
-
-                    echo "<tr id='".$material_list[$r]['id']."'>";
-                    echo "<td>".$material_list[$r]['part']."</td>";
-                    echo "<td>".$mtype."</td>";
-                    echo "<td>".$finish[0]['finish_name']."</td>";
-                    echo "</tr>";
-                    } 
-                    ?>
+    <?php
+     foreach($material_list as $r=>$v)
+    {
+    $service = $product->get_capability_byid($material_list[$r]['capability']);
+    
+    echo "<tr id='".$material_list[$r]['id']."'>";
+    echo "<td>".$service[0]['capability']."</td>";
+    echo "<td>".$material_list[$r]['remark']."</td>";
+    echo "</tr>";
+    } 
+    ?>
                 </table>
                     <?php } else {echo "No Customization Added";} } 
                 ?>

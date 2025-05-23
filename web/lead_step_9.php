@@ -99,8 +99,8 @@
                                             //	$user = array_unique($user0);
                                             foreach($religion as $k=>$value)
                                             {
-                                            if($religion[$k]['meta_value2']=='1'){continue;}
-                                            echo "<option value='".$religion[$k]['value1']."'>".$religion[$k]['value1']."</option>";
+                                                if($religion[$k]['meta_value2']=='1'){continue;}
+                                                echo "<option value='".$religion[$k]['value1']."'>".$religion[$k]['value1']."</option>";
                                             }
                                             ?>
                                             </select>

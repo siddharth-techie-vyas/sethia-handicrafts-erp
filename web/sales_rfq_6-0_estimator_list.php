@@ -55,24 +55,18 @@ $itemtype=$items[0]['item_type'];
     <div class="col-md-12">
         <div class="row">               
                 
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                     <input type="hidden" name="itemid" value="<?php echo $items[0]['id'];?>"/>
                     <h5>
                     <?php echo $counter++.')';  
                     $itemtype=$items[0]['item_type'];
-                    if($itemtype=='2' || $itemtype=='3' || $itemtype=='1')
-                    { 
                         $sku=$product->getone($items[0]['pid']);
                         echo $sku[0]['sku'].'<br>';
-                        echo '<small class="text-secondary">'.$sku[0]['product_name'].'</small>';
-                    }else{
-                        $sku=$product->getone_temp($items[0]['pid']);
-                        echo $sku[0]['sku'].'<br>';
-                        echo '<small class="text-secondary">'.$sku[0]['product_name'].'</small>';
-                    }
+                        echo '<small class="text-secondary">'.$sku[0]['productname'].'</small><br>';
+                    
                     ?>
                     </h5>
-                    <h6 class="text-danger">( 
+            <h6 class="text-danger">( 
                <?php if($items[0]['item_type']=='1'){?>Standard Product<?php }?>
                <?php if($items[0]['item_type']=='2'){?>Standard Product With Customization (eg: wood / fitting /finish)<?php }?>
                <!-- <?php if($items[0]['item_type']=='3'){?>Standard Product With Size & Design Customization<?php }?> -->
@@ -81,61 +75,6 @@ $itemtype=$items[0]['item_type'];
                <?php if($items[0]['item_type']=='6'){?>Product To Be Ordered As Per Client Design<?php }?>
             )</h6>
 
-                    <table class="table table-bordered" style="font-size:12px;">
-                        <tr colspan="5">
-                            <th colspan="5" class='bg-info'>Customization</th>
-                        </tr>
-                        <tr>
-                            <th class="bg-secondary" width="20%">Part</th>
-                            <th class="bg-success" width="20%">Material</th>
-                            <!-- <th class="bg-danger" width="20%">Material Labour Cost</th> -->
-                            <th class="bg-primary" width="20%">Finish</th>
-                            <!-- <th class="bg-dark" width="20%">Finish Labour Cost</th> -->
-                        </tr>
-            <?php if($itemtype =='4' || $itemtype =='5' || $itemtype =='6'|| $itemtype =='2'){
-
-                $material_list = $sales->get_temp_item_material($items[0]['sid'],$items[0]['pid']);
-                foreach($material_list as $r=>$v)
-                    {
-                    $material = $product->get_material_byid($material_list[$r]['mtype']);
-                    $finish = $product->get_finish_byid($material_list[$r]['finish']);
-                    echo "<tr id='".$material_list[$r]['id']."'>";
-                    echo "<td>".$material_list[$r]['part']."</td>";
-                    echo "<td>".$material[0]['material_name']."</td>";
-                    // echo "<td>".$material[0]['labour_inr']." / ".$material[0]['uom']."</td>";
-                    echo "<td>".$finish[0]['finish_name']."</td>";
-                    // echo "<td>".$finish[0]['labour_inr']." / ".$finish[0]['uom']."</td>";
-                    echo "</tr>";
-                    } 
-               
-                }if($itemtype =='1' ){
-                //-- show part list
-                $partlist=$product->get_partlist($items[0]['pid']);
-                if($partlist)
-                {
-                foreach($partlist as $p=>$v)
-                {
-                    $material_name = $product->get_material_byname($partlist[$p]['wood']);
-                    echo "<tr>";
-                        echo "<td>".$partlist[$p]['partname']."</td>";
-                        echo "<td>".$partlist[$p]['wood']."</td>";
-                        echo "<td>".$material_name[0]['labour_inr'].' / '.$material_name[0]['uom']."</td>";
-                        echo "<td></td>";
-                        echo "<td></td>";
-                    echo "<tr>";
-                }
-                
-                }
-                else{echo "<b>No Part List Available</b>";}
-            }
-            
-                ?>
-
-                </table>
-                </div>
-                
-                <div class="col-sm-2">
-                    <div class="form-group">
                         <label for="sku">Client Attachment</label><br>
                         <?php
                          $file=$items[0]['file'];
@@ -144,7 +83,7 @@ $itemtype=$items[0]['item_type'];
                             $ext = pathinfo($file, PATHINFO_EXTENSION);
                             //-- image
                             if($ext=='jpg' || $ext=='avi' || $ext=='jpeg' || $ext=='png' || $ext=='gif' )
-                            { echo "<img src='".$base_url."images/".$file."' width='100px' height='auto'>";}
+                            { echo "<img src='".$base_url."images/".$file."' width='150px' height='auto'>";}
                             else
                             {
                                 echo "<a target='_blank' href='".$base_url."images/".$file."' class='btn btn-secondary btn-sm'>View</a>";
@@ -152,18 +91,20 @@ $itemtype=$items[0]['item_type'];
                          }
                          else{echo "<span class='text-danger'>No Attachment(s)</span>";}
                          ?>
-                    <hr>
+                   
+                </div>
+                
+                <div class="col-sm-3">
                         <label>Similar Item(s) Image(s)</label><br>
                         <?php if($items[0]['sfile'] != '0' && $items[0]['sfile'] != '' ){ $imgs=explode(",",$items[0]['sfile']);
                         foreach($imgs as $img){
                         ?>
                         <img src="<?php echo $base_url.'images/'.$img; ?>" height="80" width="auto" style="display:inline; margin:1px;">
                         <?php } }?>
-                </div>  
-                      
                 </div>
                
-                <div class="col-sm-2">
+
+                <div class="col-sm-3">
                     <div class="form-group">
                         <label for="price">MRP</label><br>
                         <input type="text" name="mrp" value="<?php echo $items[0]['mrp'];?>" class="form-control" readonly="readonly">
@@ -180,7 +121,7 @@ $itemtype=$items[0]['item_type'];
                     
                 </div>
 
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                     <div class="form-group">
                         <label for="sitems">Similar Items Price </label><br>
                         <input type="text" name="sprice" value="<?php echo $items[0]['sprice'];?>" class="form-control"  readonly="readonly">
@@ -196,7 +137,19 @@ $itemtype=$items[0]['item_type'];
                         <option value="2" <?php if($items[0]['estimator_pass']=='2'){echo "selected='selected'";}?>>Sent For Approval (MD)</option>
                     </select>
                 <hr>
-            </div>    
+            </div>  
+            
+            <div class="row">
+
+<div class="col-sm-3">
+    <a href="<?php echo $base_url.'index.php?action=dashboard&page=sales_rfq_6-0_engineer_list_all';?>" class="btn btn-secondary">Back</a>
+</div>
+<div class="col-sm-3">
+<input type="submit" name="submit" value="Update" class="btn btn-success"/>
+</div>
+   
+</div>
+</form>
 
 
         </div>
@@ -208,17 +161,775 @@ $itemtype=$items[0]['item_type'];
     </div>
 
 
-<div class="row">
+    <div class="col-sm-12">
+        <!---------- tabs------------>
+        <div class="box-body vtabs">
+					<!-- Nav tabs -->
+					<ul class="nav nav-tabs tabs-vertical" role="tablist">
+						<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#home11" role="tab"><span><i class="ion-home"></i></span> <span class="hidden-xs-down ml-15">Services</span></a> </li>
+						<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile11" role="tab"><span><i class="ion-person"></i></span> <span class="hidden-xs-down ml-15">Specification Of Material</span></a> </li>
+						<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages11" role="tab"><span><i class="ion-email"></i></span> <span class="hidden-xs-down ml-15">Sub Assembly</span></a> </li>
+						<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#setting11" role="tab"><span><i class="ion-settings"></i></span> <span class="hidden-xs-down ml-15">Wood Work</span></a> </li>
+                        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#hardware" role="tab"><span><i class="fa fa-wrench"></i></span> <span class="hidden-xs-down ml-15">Hardware</span></a> </li>
+						<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#about11" role="tab"><span><i class="fa fa-th""></i></span> <span class="hidden-xs-down ml-15">Canework</span></a> </li>
+						<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#upholestry" role="tab"><span><i class="ion-camera"></i></span> <span class="hidden-xs-down ml-15">Upholestry</span></a> </li>
+                        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#contact11" role="tab"><span><i class="ion-camera"></i></span> <span class="hidden-xs-down ml-15">Polish</span></a> </li>
+                        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#packing" role="tab"><span><i class="fa fa-th-large"></i></span> <span class="hidden-xs-down ml-15">Packing</span></a> </li>
+                        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#logistics" role="tab"><span><i class="fa fa-truck"></i></span> <span class="hidden-xs-down ml-15">Logistics</span></a> </li>
+                        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#Summary" role="tab"><span><i class="fa fa-list"></i></span> <span class="hidden-xs-down ml-15">Summary</span></a> </li>
+                        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#final_result" role="tab"><span><i class="fa fa-file-pdf-o"></i></span> <span class="hidden-xs-down ml-15">Final Result</span></a> </li>
+					</ul>
+					<!-- Tab panes -->
+					<div class="tab-content tabcontent-border">
+                        <!----- service offered ---->
+						<div class="tab-pane active" id="home11" role="tabpanel">
+							<div class="p-15">
+								<h4>Step 1) Services</h4>
+								<table class="table table-bordered">
+                                    <?php
+                                    $material_list = $sales->get_temp_item_material($items[0]['sid'],$items[0]['pid']);
+                                    foreach($material_list as $r=>$v)
+                                    {
+                                    $service = $product->get_capability_byid($material_list[$r]['capability']);
+                                    
+                                    echo "<tr id='".$material_list[$r]['id']."'>";
+                                    echo "<td>".$service[0]['capability']."</td>";
+                                    echo "<td>".$material_list[$r]['remark']."</td>";
+                                    echo "</tr>";
+                                    } 
+                                    ?>
+                
+                                </table>
+							</div>
+						</div>
+						<div class="tab-pane" id="profile11" role="tabpanel">
+							<div class="p-15">
+                                <span id="msgstep2-estimator"></span>
+                            <h4>Step 2) Specification of Materials</h4>
+                            <form name="step2-estimator" id="step2-estimator" action="<?php echo $base_url.'index.php?action=sales&query=step2-estimator';?>" method="post">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Service</th>
+                                        <th>Remark(s)</th>
+                                        <th>Material Type</th>
+                                        <th>Special Remark</th>
+                                    </tr>
+                                </thead>
+                                <?php
 
-<div class="col-sm-1">
-    <a href="<?php echo $base_url.'index.php?action=dashboard&page=sales_rfq_6-0_engineer_list_all';?>" class="btn btn-secondary">Back</a>
-</div>
-<div class="col-sm-1">
-<input type="submit" name="submit" value="Update" class="btn btn-success"/>
-</div>
-   
-</div>
-</form>
+                                $material='';
+                                $mtype=$product->get_material_unique();
+
+                                foreach($mtype as $w=>$v)
+                                {
+                                    $material.= '<option>'.$mtype[$w]['material_type'].'</option>';
+                                }    
+    
+
+                                $counter=1;
+                                    $material_list = $sales->get_temp_item_material($items[0]['sid'],$items[0]['pid']);
+                                    foreach($material_list as $r=>$v)
+                                    {
+                                    $service = $product->get_capability_byid($material_list[$r]['capability']);
+                                    
+                                    echo "<tr id='".$r."'>";
+                                    echo "<td>".$counter++."</td>";
+                                    echo "<td>".$service[0]['capability']."</td>";
+                                    echo "<td>".$material_list[$r]['remark']."</td>";
+                                    //-- get material by offered capability 
+                                    $material1 = $product->get_material_bycapability($material_list[$r]['capability']);
+                                    ?>
+                                    <td>
+                                        <input type="hidden" name="part_id[]" value="<?php echo $material_list[$r]['id'];?>">
+                                        <select name="mtype<?php echo $r;?>[]" id="mtype[]" class="form-control " style="width:90%" multiple="multiple">
+                                            <option>-Select-</option>
+                                            <?php foreach($material1 as $w=>$v)
+                                            {
+                                                $mtype_selection = explode("," ,$material_list[$r]['mtype']);
+                                                if(in_array($material1[$w]['col1'], $mtype_selection)){$selected='selected="selected"';}else{$selected='';}
+
+                                                echo '<option value="'.$material1[$w]['col1'].'" '.$selected.'>'.$material1[$w]['col2'].'</option>';
+
+                                                //-- get child material 
+                                                $material2 = $product->get_material_bycapability_child($material_list[$r]['capability'],$material1[$w]['col1']);
+                                                foreach($material2 as $w=>$v)
+                                                {
+                                                    if(in_array($material2[$w]['id'], $mtype_selection)){$selected='selected="selected"';}else{$selected='';}
+
+                                                    echo '<option value="'.$material2[$w]['id'].'" '.$selected.'> - '.$material2[$w]['material_name'].'</option>';
+                                                }
+                                            }
+                                            ?>
+                                        
+                                        </select>                                   
+                                    </td>
+                                    <td>
+                                    <input type="text" name="mtype_remark[]" class="form-control" value="<?php echo $material_list[$r]['mtype_remark'];?>">
+                                    </td>
+                                    
+                                    <?php
+                                    echo "</tr>";
+                                    } 
+                                    ?>
+                                    <tr>
+                                        <td><input type="button" onclick="form_submit('step2-estimator')" class="btn btn-md btn-warning" value="Save"></td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                                </form>
+							</div>
+						</div>
+						<div class="tab-pane" id="messages11" role="tabpanel">
+							<div class="p-15">
+                                <h4>Step 3) Sub Assembly</h4>
+                                <span id="msgstep3-estimator"></span>
+                                <form name="step3-estimator" id="step3-estimator" action="<?php echo $base_url.'index.php?action=sales&query=step3-estimator';?>" method="post">
+                                <table class="table table-bordered" id="tablepart">
+                                    <tr>
+                                        <th>Part Name</th>
+                                        <th>Qty</th>
+                                    </tr>
+                                    <?php
+                                    $part_details = json_decode($items[0]['part']);
+                                    
+                                    if($part_details !='')
+                                    {
+                                    foreach($part_details as $r=>$v)
+                                        {
+                                            echo "<tr id='".$r."'>";
+                                            echo "<td><input type='text' name='part_name[]' class='form-control' value=".$v->part_name."></td>";
+                                            echo "<td><input type='number' name='qty[]' class='form-control' value='".$v->qty."'></td>";
+                                            ?>
+                                            <td><i class="fa fa-trash" onclick="deleteme('sales','delete_mtype_step3-estimator','<?php echo $r.'&sid='.$items[0]['id'];?>')"></i></td>
+                                            <?php
+                                            echo "</tr>";
+                                        }
+                                    }
+                                    ?>
+
+                                </table>
+                                <input type="hidden" name="id" value="<?php echo $_GET['id'];?>" id="id">
+                                <input type="button" name="addmore" class="btn btn-md btn-warning" value="Add More Assembly Part" id="addmore_part">
+                                <input type="button" onclick="form_submit('step3-estimator')" class="btn btn-md btn-warning" value="Save">
+                                </form>
+							</div>
+						</div>
+						<div class="tab-pane" id="setting11" role="tabpanel">
+							<div class="p-15">
+                                <h4>Step 4) Wood Work</h4>
+                                <table class="table table-bordered">
+                                <span id="msgstep4-estimator"></span>
+                                <!---------- form action will be same due to a single column handled in this ----------->
+                                    <form name="step4-estimator" id="step4-estimator" action="<?php echo $base_url.'index.php?action=sales&query=step3-estimator';?>" method="post">
+                                        <tr>
+                                            <th>Part Name</th>
+                                            <th>Qty</th>
+                                            <th>Material</th>
+                                            <th>Length (MM)</th>
+                                            <th>Width (MM)</th>
+                                            <th>Height (MM)</th>
+                                            <th>Total (CFT)</th>
+                                        </tr>
+                                        <?php
+                                        if($part_details !='')
+                                        {
+                                        foreach($part_details as $r=>$v)
+                                            {
+                                                echo "<tr>";?>
+                                                    <td>    
+                                                    <input type='hidden' name='part_name[]' class='form-control' value='<?php echo $v->part_name;?>'><?php echo $v->part_name;?></td>
+                                                    <td>
+                                                    <!-- qty -->
+                                                    <input type='hidden' name='qty[]' class='form-control' id="qty<?php echo 'mm'.$r;?>" value='<?php echo $v->qty;?>'><?php echo $v->qty;?></td>
+                                                    <!-- material type -->
+                                                     <td>
+                                                        <select name="wood[]" class="form-control">
+                                                            <option value="">Select Material</option>
+                                                            <?php
+                                                            $wood = $product->get_material_bycapability('1');
+                                                            foreach($wood as $w=>$v1)
+                                                            {
+                                                                if($wood[$w]['col1']==$v->wood){$selected='selected="selected"';}else{$selected='';}
+                                                                echo "<option value='".$wood[$w]['col1']."' ".$selected.">".$wood[$w]['col2']."</option>";
+                                                                //-- get child material 
+                                                                $wood2 = $product->get_material_bycapability_child('1',$wood[$w]['col1']);
+                                                                foreach($wood2 as $w2=>$v2)
+                                                                {
+                                                                    if($wood2[$w2]['id']==$v->wood){$selected='selected="selected"';}else{$selected='';}
+                                                                    echo '<option value="'.$wood2[$w2]['id'].'" '.$selected.'> - '.$wood2[$w2]['material_name'].'</option>';
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                     </td>
+                                                    <td><input type='number' name='length[]' id="length<?php echo 'mm'.$r;?>" class='form-control' value='<?php echo $v->length;?>' onkeypress="mm_to_foot('<?php echo 'mm'.$r;?>','<?php echo 'cft'.$r;?>')"></td>
+                                                    <td><input type='number' name='width[]' id="width<?php echo 'mm'.$r;?>" class='form-control' value='<?php echo $v->width;?>' onkeypress="mm_to_foot('<?php echo 'mm'.$r;?>','<?php echo 'cft'.$r;?>')"></td>
+                                                    <td><input type='number' name='height[]' id="height<?php echo 'mm'.$r;?>" class='form-control' value='<?php echo $v->height;?>' onkeypress="mm_to_foot('<?php echo 'mm'.$r;?>','<?php echo 'cft'.$r;?>')"></td>
+                                                    <td><input type='number' name='total[]' class='form-control' id='<?php echo 'cft'.$r;?>' value='<?php echo $v->total;?>'></td>
+                                                <?php echo "</tr>";
+                                            }
+                                        }
+                                        ?>
+                                        <tr>
+                                            <td>
+                                                <input type="hidden" name="id" value="<?php echo $_GET['id'];?>" id="id">    
+                                                <input type="button" class="btn btn-md btn-secondary" onclick="form_submit('step4-estimator')"  value="Save">
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    </form>
+                                </table>
+							</div>
+						</div>
+                        <div class="tab-pane" id="hardware" role="tabpanel">
+							<div class="p-15">
+                                <h4>Step 5) Hardware</h4>
+                                <span id="msgstep-hardware-estimator"></span>
+                                <form name="step-hardware-estimator" id="step-hardware-estimator" action="<?php echo $base_url.'index.php?action=sales&query=step-hardware-estimator';?>" method="post">
+                                <table class="table table-bordered" id="table_hardware">                                
+                                <!---------- form action will be same due to a single column handled in this ----------->
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Hardware</th>
+                                            <th>Price</th>
+                                            <th>Qty</th>
+                                            <th>Total</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                        <?php 
+                                        $hardware_details=json_decode($items[0]['hardware']);
+                                        $hcount=1;
+                                        if($hardware_details !='')
+                                        {
+                                        
+                                        foreach($hardware_details as $h1=>$h)
+                                            {
+                                                echo "<tr>";
+                                                    echo "<td>".$hcount."</td>";
+                                                    echo "<td>";
+                                                        echo '<select class="select2 form-control" name="hardware_id[]"><option disabled="disabled" selected="selected">Select</option>';
+                                                            $hlist = $store->get_items();
+                                                            foreach($hlist as $k=>$c1){
+                                                                 $subcat=$store->get_cat_single($hlist[$k]['subcat']);
+                                                                if($hlist[$k]['id']==$h->hardware){$selected="selected='selected'";}else{$selected="";}
+                                                                echo '<option value="'.$hlist[$k]['id'].'" '.$selected.'>'.$subcat[0]['subcat'].' - '.$hlist[$k]['product_name'].'</option>';
+                                                            }
+                                                        echo '</select>';
+                                                    echo "</td>";
+                                                    echo "<td><input type='number' name='price[]' class='form-control' value='".$h->price."'></td>";
+                                                    echo "<td><input type='number' name='qty[]' class='form-control' value='".$h->qty."'></td>";
+                                                    echo "<td><input type='number' name='total[]' class='form-control' value='".$h->total."'></td>";
+                                                    echo "<td>";
+                                                    ?><i class='fa fa-trash' onclick="deleteme('sales','delete_hardware','<?php echo $h1.'&sid='.$items[0]['id'];?>')"><?php echo "</td>";   
+                                                echo "</tr>";
+                                                $hcount++;
+                                                
+                                            }
+                                        }
+                                        ?>
+                                        </table>
+                                        <input type="button" class="btn btn-md btn-secondary" id="addmore_hardware" value="Add Hardware">
+                                        <input type="hidden" name="id" value="<?php echo $_GET['id'];?>" id="id">
+                                        <input type="button" class="btn btn-md btn-primary" onclick="form_submit('step-hardware-estimator')"  value="Save">
+                                    </form>
+
+                            </div>
+                        </div>    
+						<div class="tab-pane" id="about11" role="tabpanel">
+							<div class="p-15">
+                                <h4>Step 6) Canework</h4>
+                                <span id="msgstep5-estimator"></span>
+                                <form name="step5-estimator" id="step5-estimator" action="<?php echo $base_url.'index.php?action=sales&query=step5-estimator';?>" method="post">
+                                <table class="table table-bordered" id="table_cane">
+                                    <tr>
+                                        <th>Part Name</th>
+                                        <th>Qty</th>
+                                        <th>Type</th>
+                                        <th>Labour Cost</th>
+                                        <th>Length (MM)</th>
+                                        <th>Width (MM)</th>
+                                        <th>Total</th>
+                                    </tr>
+                                   <?php 
+                                   $cane_details = json_decode($items[0]['cane']);
+                                   if($cane_details !='')
+                                   {
+                                   foreach($cane_details as $r=>$c)
+                                       {
+                                           echo "<tr>";
+                                               echo "<td><input type='text' name='part_name[]' class='form-control' value='".$c->part_name."'></td>";
+                                               echo "<td><input type='text' name='qty[]' class='form-control' value='".$c->qty."'></td>";
+                                               echo "<td>";
+                                                echo '<select class="form-control" name="cane_type[]"><option disabled="disabled" selected="selected">Select</option>';
+                                                    $canework = $product->get_material_bycapability_child('8','91');
+                                                    foreach($canework as $k=>$c1){
+                                                        if($canework[$k]['id']==$c->type){$selected="selected='selected'";}else{$selected="";}
+                                                        echo '<option value="'.$canework[$k]['id'].'" '.$selected.'>'.$canework[$k]['material_name'].'</option>';
+                                                    }
+                                                echo '</select>';
+                                               echo "</td>";
+                                               echo "<td><input type='number' name='labour_cost[]' class='form-control' value='".$c->labour_cost."'></td>";
+                                               echo "<td><input type='number' name='length[]' class='form-control' value='".$c->length."'></td>";
+                                               echo "<td><input type='number' name='width[]' class='form-control' value='".$c->width."'></td>";
+                                               echo "<td><input type='number' name='total[]' class='form-control' value='".$c->total."'></td>";
+                                           echo "</tr>";
+                                       }
+                                   }
+                                   ?>
+                                    
+                                </table>
+                                <input type="hidden" name="id" value="<?php echo $_GET['id'];?>" id="id">
+                                <input type="button" name="addmore_cane" class="btn btn-md btn-info" value="Add More Cane Part" id="addmore_cane">
+                                <input type="button" onclick="form_submit('step5-estimator')" class="btn btn-md btn-success" value="Save">
+                                </form>
+							</div>
+						</div>
+						<div class="tab-pane" id="upholestry" role="tabpanel">
+							<div class="p-15">
+                                 <h4>Step 7) Upholestry</h4>
+                                 <span id="msgstep6-estimator"></span>
+                                <form name="step6-estimator" id="step6-estimator" action="<?php echo $base_url.'index.php?action=sales&query=step6-estimator';?>" method="post">
+                                <table class="table table-bordered" id="table_up">
+                                    <tr>
+                                        <th>Part Name</th>
+                                        <th>Qty</th>
+                                        <th>Type</th>
+                                        <th>Labour Cost</th>
+                                        <th>Length (MM)</th>
+                                        <th>Width (MM)</th>
+                                        <th>Total</th>
+                                    </tr>
+                                   <?php 
+                                   $up_details = json_decode($items[0]['upholestry']);
+                                   if($up_details !='')
+                                   {
+                                   foreach($up_details as $r=>$u)
+                                       {
+                                           echo "<tr>";
+                                               echo "<td><input type='text' name='part_name[]' class='form-control' value='".$u->part_name."'></td>";
+                                               echo "<td><input type='text' name='qty[]' class='form-control' value='".$u->qty."'></td>";
+                                               echo "<td>";
+                                                echo '<select class="form-control" name="up_type[]"><option disabled="disabled" selected="selected">Select</option>';
+                                                    $upholestry = $product->get_material_bycapability('3');
+                                                    foreach($upholestry as $k=>$u1){
+                                                        if($upholestry[$k]['col1']==$u->type){$selected0="selected='selected'";}else{$selected0="";}
+                                                        echo '<option value="'.$upholestry[$k]['col1'].'" '.$selected0.'>'.$upholestry[$k]['col2'].'</option>';
+                                                    }
+                                                echo '</select>';
+                                               echo "</td>";
+                                               echo "<td><input type='number' name='labour_cost[]' class='form-control' value='".$u->labour_cost."'></td>";
+                                               echo "<td><input type='number' name='length[]' class='form-control' value='".$u->length."'></td>";
+                                               echo "<td><input type='number' name='width[]' class='form-control' value='".$u->width."'></td>";
+                                               echo "<td><input type='number' name='total[]' class='form-control' value='".$u->total."'></td>";
+                                           echo "</tr>";
+                                       }
+                                   }
+                                   ?>
+                                    
+                                </table>
+                                <input type="hidden" name="id" value="<?php echo $_GET['id'];?>" id="id">
+                                <input type="button" name="addmore_up" class="btn btn-md btn-info" value="Add More Cane Part" id="addmore_up">
+                                <input type="button" onclick="form_submit('step6-estimator')" class="btn btn-md btn-success" value="Save">
+                                </form>
+                                
+							</div>
+						</div>
+                        <div class="tab-pane" id="contact11" role="tabpanel">
+							<div class="p-15">
+                                 <h4>Step 8) Polish</h4>
+                                 
+
+                                <span id="msgstep7-estimator"></span>
+                                <form name="step7-estimator" id="step7-estimator" action="<?php echo $base_url.'index.php?action=sales&query=step7-estimator';?>" method="post">
+                                <table class="table table-bordered" id="tablepart">
+                                    <tr>
+                                        <th>Part Name</th>
+                                        <th>Qty</th>
+                                        <th>Polish Name</th>
+                                        <th>Labour Cost</th>
+                                        <th>Total CFT</th>
+                                        <th>Total (INR)</th>
+                                    </tr>
+                                    <?php
+                                    $part_details = json_decode($items[0]['part']);
+                                    $finish_details0=array();
+                                    $finish_details = json_decode($items[0]['finish']);
+                                    foreach($finish_details as $r=>$f0)
+                                        {
+                                            $val = array (
+                                                "finish"=>$f0->finish,
+                                                "labour_cost"=>$f0->labour_cost,
+                                                "total_cft"=>$f0->total_cft,
+                                                "total"=>$f0->total
+                                                );
+                    
+                                            array_push($finish_details0,$val);
+                                        }
+                                    
+                                       
+                                    // $finish = $product->get_finish();
+                                    //             foreach ($finish as $key => $fv) {
+                                    //                 $finish0 .= '<option value="'.$fv['id'].'">'.$fv['finish_name'].'('.$fv['coating_system'].')</option>';
+                                    //             }
+
+                                    if($part_details !='')
+                                    {
+                                        $final_labour_cost_sum=0;
+                                    foreach($part_details as $r=>$f)
+                                        {
+                                            echo "<tr>";
+                                            echo "<td>".$f->part_name."</td>";
+                                            echo "<td>".$f->qty."</td>";
+                                            echo "<td><select class='form-control' name='finish[]'><option disabled='disabled' selected='selected'>Select</option>";
+                                            $finish = $product->get_finish();
+                                                foreach ($finish as $key => $fv) {
+                                                    if($fv['id']==$finish_details0[$r]['finish']){$selected1="selected='selected'";}else{$selected1="";}
+                                                   echo '<option value="'.$fv['id'].'" '.$selected1.'>'.$fv['finish_name'].'('.$fv['coating_system'].')</option>';
+                                                }
+                                            echo "</select></td>";
+                                            //-- get labour cost 
+                                            $finish_labour0 = $product->get_finish_byid($finish_details0[$r]['finish']);
+                                            if(!empty($finish_details0[$r]['labour_cost']))
+                                            {
+                                                $flabour=$finish_details0[$r]['labour_cost'];
+                                            }
+                                            else{$flabour=$finish_labour0[0]['labour_inr'];
+                                            }
+                                            //-- as per crm
+                                            if($f->total==NULL)
+                                            {$ftotal=0;}
+                                            else{$ftotal=$f->total;}
+                                            $final_labour_cost = $flabour*$ftotal;
+
+                                                echo "<td><input type='number' name='labour_cost[]' class='form-control' value='".$flabour."'></td>";
+                                                echo "<td><input type='number' name='total_cft[]' class='form-control' value='".$ftotal."' readonly='readonly'></td>";
+                                                echo "<td><input type='number' name='total[]' class='form-control' value='".$final_labour_cost."' readonly='readonly'></td>";
+                                            echo "</tr>";
+
+                                            //-- sum of polish 
+                                            $final_labour_cost_sum +=$final_labour_cost;
+                                        }
+                                    }
+                                    ?>
+
+                                </table>
+                                <input type="hidden" name="id" value="<?php echo $_GET['id'];?>" id="id">
+                                <input type="button" onclick="form_submit('step7-estimator')" class="btn btn-md btn-warning" value="Save">
+                                </form>
+							</div>
+						</div>
+                        <div class="tab-pane" id="packing" role="tabpanel">
+							<div class="p-15">
+                                 <h4>Step 9) Packing</h4>
+                                 <span id="msgstep8-estimator"></span>
+                                 <form name="step8-estimator" id="step8-estimator" action="<?php echo $base_url.'index.php?action=sales&query=step8-estimator';?>" method="post">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th colspan="4">Master Cartoon Dimension</th>
+                                        <th rowsapn="2">Labour Cost</th>
+                                        <th>Total INR</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Length (MM)</td>
+                                        <td>Width (MM)</td>
+                                        <td>Height (MM)</td>
+                                        <td>Total CBM</td>
+                                    </tr>
+                                    <?php 
+                                        $pval=array();
+                                        $packing_details = json_decode($items[0]['packing']);
+                                        
+                                            $pval = array (
+                                                "length"=>$packing_details->length,
+                                                "width"=>$packing_details->width,
+                                                "height"=>$packing_details->height,
+                                                "cbm"=>$packing_details->cbm,
+                                                "labour_cost"=>$packing_details->labour_cost,
+                                                "total"=>$packing_details->total
+                                                );
+                                       
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <input type="hidden" name="id" value="<?php echo $_GET['id'];?>" id="id">
+                                            <input type="number" name="length" id="lengthpacking" onchange="calculate_cbm('packing')" value="<?php echo $pval['length'];?>"  class="form-control">
+                                        </td>
+                                        <td><input type="number" name="width" id="widthpacking" value="<?php echo $pval['width'];?>" class="form-control"></td>
+                                        <td><input type="number" name="height" id="heightpacking" value="<?php echo $pval['height'];?>" class="form-control"></td>
+                                        <td><input type="number" name="cbm" id="cbmpacking" value="<?php echo $pval['cbm'];?>" class="form-control"></td>
+                                        <td><input type="number" name="labour_cost"  id="labourpacking" value="<?php echo $pval['labour_cost'];?>" class="form-control"></td>
+                                        <td><input type="number" name="total" id="totalpacking" value="<?php echo $pval['total'];?>" class="total_inr  form-control"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="button" class="btn btn-md btn-dark" value="Save" onclick="form_submit('step8-estimator')"></td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                                </form>
+
+
+                                <hr>
+                                <span id="msgstep8-estimator1"></span>
+                                <form name="step8-estimator1" id="step8-estimator1" action="<?php echo $base_url.'index.php?action=sales&query=step8-estimator1';?>" method="post">
+                                <table class="table table-bordered" id="table_packing">
+                                    <tr>
+                                        <th rowspan="2">Number Of Case</th>
+                                        <th colspan="3">Dimension</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Length (MM)</td>
+                                        <td>Width (MM)</td>
+                                        <td>Height (MM)</td>
+                                    </tr>
+                                    <?php 
+                                    $packing_details = json_decode($items[0]['packing2']);
+                                    if($packing_details !='')
+                                    {
+                                    foreach($packing_details as $r=>$p2)
+                                        {
+                                            echo "<tr>";
+                                                echo "<td><input type='text' name='case[]' class='form-control' readonly='readonly' value='".$p2->case."'></td>";
+                                                echo "<td><input type='text' name='length[]' class='form-control' value='".$p2->length."'></td>";
+                                                echo "<td><input type='number' name='width[]' class='form-control' value='".$p2->width."'></td>";
+                                                echo "<td><input type='number' name='height[]' class='form-control' value='".$p2->height."'></td>";
+                                            echo "</tr>";
+                                        }
+                                    }
+                                    ?>
+                                </table>
+                                <input type="hidden" name="id" value="<?php echo $_GET['id'];?>" id="id">
+                                <input type="button" name="addmore_up" class="btn btn-md btn-warning" value="Add More Case" id="addmore_packing">
+                                <input type="button" onclick="form_submit('step8-estimator1')" class="btn btn-md btn-success" value="Save">
+                                </form>
+							</div>
+						</div>
+                        <div class="tab-pane" id="logistics" role="tabpanel">
+							<div class="p-15">
+                                 <h4>Step 10) Logistics</h4>
+                                <span id="msgstep9-estimator"></span>
+                                <form name="step9-estimator" id="step9-estimator" action="<?php echo $base_url.'index.php?action=sales&query=step9-estimator';?>" method="post">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>Case</th>
+                                        <th>Qty</th>
+                                        <th>Case</th>
+                                        <th>Kg</th>
+                                    </tr>
+                                    <?php
+                                    $case_nu = json_decode($items[0]['packing2']);
+                                   
+                                    $logitics = json_decode($items[0]['logistics']);
+                                    foreach($logitics as $l=>$f0)
+                                        {
+                                            $val = array (
+                                                "case"=>$f0->case,
+                                                "kg"=>$f0->kg
+                                                );
+                    
+                                            array_push($logitics0,$val);
+                                        }
+
+                                    if($part_details !='')
+                                    {
+                                    foreach($part_details as $r=>$v)
+                                        {
+                                            echo "<tr>";
+                                            echo "<td>".$v->part_name."</td>";
+                                            echo "<td><input type='number' name='qty[]' class='form-control' value='".$v->qty."' readonly='readonly'></td>";
+                                            echo "<td>";
+                                                echo "<select class='form-control' name='case[]'>";
+                                                    echo "<option disabled='disabled' selected='selected'>Select</option>";
+                                                    foreach($case_nu as $r1=>$v1)
+                                                    {
+                                                        if($logitics0[$r]['case']==$v1->case){$selected='selected';}else{$selected='';}
+                                                        echo "<option value='".$v1->case."' $selected>".$v1->case."</option>";
+                                                    }
+                                                echo "</select>";
+                                            echo "</td>";
+                                            echo "<td><input type='number' name='kg[]' class='form-control' value='".$logitics0[$r]['kg']."'></td>";
+                                            echo "</tr>";
+                                        }
+                                    }
+                                    ?>
+                                  
+                                    <tr>
+                                        <td>
+                                            <input type="hidden" name="id" value="<?php echo $_GET['id'];?>" id="id">
+                                            <input type="button" class="btn btn-md btn-primary" value="Update" onclick="form_submit('step9-estimator')">
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                                </form>
+							</div>
+						</div>
+
+                        
+
+                        <div class="tab-pane" id="Summary" role="tabpanel">
+							<div class="p-15">
+                                <h4>Cost Sheet</h4>
+                                <div class="row" style="overflow-x: scroll">
+                                    <style>
+                                        #costsheet{width:100%; border:1px solid; color:#000;}   
+                                        #costsheet tr th{
+                                            font-size:12px; background-color:#000; color:#FFF; padding:2px;
+                                        }
+                                        #costsheet tr td{
+                                            font-size:10px; padding:2px;
+                                        }
+                                        #costsheet th{min-width:40px; border:1px solid;}
+                                        #costsheet td{min-width:40px; border:1px solid;}
+                                    </style>
+                                   
+                                    <hr>   
+                                    <table id="costsheet">
+                                        <tr>
+                                            <th>Part Name</th>
+                                            <th>Wood / Board</th>
+                                            <th>L mm</th>
+                                            <th>W mm</th>
+                                            <th>T mm</th>
+                                            <th>Qty / Unit</th>
+                                            <th>Raw Material Selection</th>
+                                            <th>RM Qty (pcs) / Unit</th>
+                                            <th>Comp CFT/SFT / Unit</th>
+                                            <th>Rm Rate</th>
+                                            <th>Rm Cost / Unit</th>
+                                            <th>Rm Yield%</th>
+                                            <th>% of Comp for Wood or Board</th>
+                                            <th>length Cuts</th>
+                                            <th>Wood pcs per part width</th>
+                                            <th>Wood pcs per part thickness</th>
+                                            <th>Part Sq. Ft. (one side)</th>
+                                            <th>Unit Kg</th>
+                                            <th>Rough Est Kg.</th>
+                                            <th>Average Thickness</th>
+                                        </tr> 
+                                        
+                                        <?php
+                                        //-- items dimension for percentage into the product change into inches and then divide by 1728
+                                            $item_cft = $product->get_cft($items[0]['length'],$items[0]['width'],$items[0]['height']);
+                                            
+
+                                            //--- pdf array
+                                            $wood_pdf = array();
+                                            $rm_rate_total=0;
+                                            $comp_cft_total=0;
+                                            $rm_cost_total=0;
+                                            $rm_yield_total=0;
+
+                                        foreach($part_details as $cs=>$cv)
+                                        {   
+                                            //-- get wood type
+                                            $wood_type = $product->get_material_byid($cv->wood);
+                                            //-- cft of current part
+                                            $cft_current = $product->get_cft($cv->length,$cv->width,$cv->height);
+                                            $cft_total_part = $cft_current*$cv->qty;
+
+                                            //$wood_pillar = $product->get_nearby_pillar($cft_current,$cv->wood);
+
+                                            //-- get l,w,h of pillar from materal_yield table on the basis of type and wood
+                                            $wood_yield_l = $product->get_wood_yield($cv->wood,'L',$cv->length); 
+                                            $wood_yield_w = $product->get_wood_yield($cv->wood,'W',$cv->width); 
+                                            $wood_yield_h = $product->get_wood_yield($cv->wood,'H',$cv->height); 
+
+                                            //-- mm to feet and inches of wood pillar
+                                            // $l=$wood_pillar[0]['lmm']/304.8;
+                                            // $l = number_format((float)$l, 2, '.', '');
+                                            // $w=$wood_pillar[0]['wmm']/25.4;
+                                            // $w = number_format((float)$w, 2, '.', '');
+                                            // $h=$wood_pillar[0]['hmm']/25.4;
+                                            // $h = number_format((float)$h, 2, '.', '');
+
+                                            $pillar_size_converted=$wood_yield_l[0]['thickness']." ft x ".$wood_yield_w[0]['thickness']." in x ".$wood_yield_h[0]['thickness']." in ";
+                                            $rm_qty = $cv->qty*$wood_yield_l[0]['thickness_stack']*$wood_yield_w[0]['thickness_stack']*$wood_yield_h[0]['thickness_stack'];
+
+                                            //-- rm cft
+                                            $rm_group=$product->get_rm_group($cv->wood,$wood_yield_l[0]['thickness'],$wood_yield_w[0]['thickness'],$wood_yield_h[0]['thickness']);
+                                            $rm_cft = $rm_group[0]['paycft'];
+                                            //-- comp cft 
+                                            $comp_cft = $rm_qty*$rm_cft ;
+                                            $comp_cft=number_format((float)$comp_cft, 2, '.', '');
+                                            $comp_cft_total += $comp_cft;
+                                            //-- rm rate 
+                                            $rm_rate = $product->get_rm_rate($wood_type[0]['material_name'],$rm_group[0]['rate_group']);
+                                            $rm_rate_total += $rm_rate;
+                                            //-- rm cost
+                                            $rm_cost = $rm_rate*$comp_cft;
+                                            $rm_cost_total += $rm_cost;
+                                            //--yield
+                                            $yield=$product->get_yield($wood_type[0]['material_name'],$cv->length,$cv->width,$cv->height,$comp_cft,$cv->qty);
+                                            $rm_yield_total += $yield;
+                                            
+
+                                            
+                                            
+
+                                            echo "<tr>";
+                                                echo "<td>".$cv->part_name."</td>";
+                                                echo "<td>".$wood_type[0]['material_name']."</td>";
+                                                echo "<td>".$cv->length."</td>";
+                                                echo "<td>".$cv->width."</td>";
+                                                echo "<td>".$cv->height."</td>";
+                                                echo "<td>".$cv->qty."</td>";
+                                                echo "<td>".$pillar_size_converted."</td>";
+                                                echo "<td>".$rm_qty."</td>";
+                                                echo "<td>".$comp_cft."</td>";
+                                                echo "<td>".$rm_rate."</td>";
+                                                echo "<td>".$rm_cost."</td>";
+                                                echo "<td>".$yield."</td>";
+                                                echo "<td></td>";
+                                                echo "<td></td>";
+                                                echo "<td></td>";
+                                                echo "<td></td>";
+                                                echo "<td></td>";
+                                                echo "<td></td>";
+                                                echo "<td></td>";
+                                                echo "<td></td>";
+                                            echo "</tr>";
+                                        }
+                                        echo "<tr>";
+                                            echo "<td></td>";
+                                            echo "<td></td>";
+                                            echo "<td></td>";
+                                            echo "<td></td>";
+                                            echo "<td></td>";
+                                            echo "<td></td>";
+                                            echo "<td></td>";
+                                            echo "<td></td>";
+                                            echo "<th></th>";
+                                            echo "<th></th>";
+                                            echo "<th></th>";
+                                            echo "<th></th>";
+                                            echo "<td></td>";
+                                            echo "<td></td>";
+                                            echo "<td></td>";
+                                            echo "<td></td>";
+                                            echo "<td></td>";
+                                            echo "<td></td>";
+                                            echo "<td></td>";
+                                        echo "</tr>";
+                                        ?>
+                                        </table>
+                                        
+                                </div>
+                            <div>
+                        </div>
+                            
+                        
+                        
+                        
+
+                        
+					</div>
+				</div>
+    </div>
+
+
+
 
 </div>
 				</div>
@@ -230,3 +941,174 @@ $itemtype=$items[0]['item_type'];
 			</div>
 </div>
 
+
+
+<!--------- add more script ---------->
+<?php 
+//-- cane work list
+$canew='';
+$canework = $product->get_material_bycapability_child('8','91');
+foreach($canework as $k=>$v){
+    $canew .= '<option value="'.$canework[$k]['id'].'">'.$canework[$k]['material_name'].'</option>';
+}
+
+//-- upholesry list
+$upw='';
+$upwork = $product->get_material_bycapability('3');
+foreach($upwork as $k=>$v){
+    $upw .= '<option value="'.$upwork[$k]['col1'].'">'.$upwork[$k]['col2'].'</option>';
+    //-- get child material
+    $upchild = $product->get_material_bycapability_child('3',$upwork[$k]['col1']);
+    foreach($upchild as $k1=>$v1){
+        $upw .= '<option value="'.$upchild[$k1]['id'].'"> - '.$upchild[$k1]['material_name'].'</option>';
+    }
+}
+
+//---  hardware list
+$hard='';
+$hardware = $store->get_items();
+foreach($hardware as $h=>$v){
+    //-- get sub category
+    $subcat=$store->get_cat_single($hardware[$h]['subcat']);
+    $hard .= '<option value="'.$hardware[$h]['id'].'">'.$subcat[0]['subcat'].' - '.$hardware[$h]['product_name'].'</option>';
+}
+?>
+<script type="text/javascript">
+
+$(document).ready(function() {
+    
+var max_fields      = 50; //maximum input boxes allowed
+var wrapper         =  $("#tablepart"); //Fields wrapper
+var add_button      =  $("#addmore_part"); //Add button ID
+var x = 1; //initlal text box count
+    
+
+$(add_button).click(function(e)
+{ //on add input button click
+    e.preventDefault();
+    if(x < max_fields){ 
+        x++; 
+        $(wrapper).append('<tr id="addmore_part'+x+'"><td><input class="form-control" name="part_name[]"></td><td><input type="number" class="form-control" name="qty[]" value=""></td><td><i class="fa fa-trash" onclick="removeme(addmore_part'+x+')"></td></tr>'); 
+        }
+    else
+    {alert("Sorry, you can add only 50 Items in this segment");}
+
+});
+
+
+
+});
+
+
+//----------- cane work
+
+$(document).ready(function() {
+    
+    var max_fields      = 50; //maximum input boxes allowed
+    var wrapper         =  $("#table_cane"); //Fields wrapper
+    var add_button      =  $("#addmore_cane"); //Add button ID
+    var x = 1; //initlal text box count
+        
+    
+    $(add_button).click(function(e)
+    { //on add input button click
+        e.preventDefault();
+        if(x < max_fields){ 
+            x++; 
+            $(wrapper).append('<tr id="addmore_cane'+x+'"><td><input class="form-control" name="part_name[]"></td><td><input type="number" class="form-control" name="qty[]" value=""></td><td><select class="form-control" name="cane_type[]"><option disabled="disabled" selected="selected">Select</option><?php echo $canew; ?></select></td><td><input type="number" class="form-control" name="length[]" value=""></td><td><input type="number" class="form-control" name="width[]" value=""></td><td><input type="number" class="form-control" name="labour_cost[]" value=""></td><td><input type="number" class="form-control" name="total[]" value=""></td><td><i class="fa fa-trash" onclick="removeme(addmore_cane'+x+')"></td></tr>'); 
+            }
+        else
+        {alert("Sorry, you can add only 50 Items in this segment");}
+    
+    });
+    
+    
+    
+    });
+
+    //----------- cane work
+
+$(document).ready(function() {
+    
+    var max_fields      = 50; //maximum input boxes allowed
+    var wrapper         =  $("#table_up"); //Fields wrapper
+    var add_button      =  $("#addmore_up"); //Add button ID
+    var x = 1; //initlal text box count
+        
+    
+    $(add_button).click(function(e)
+    { //on add input button click
+        e.preventDefault();
+        if(x < max_fields){ 
+            x++; 
+            $(wrapper).append('<tr id="addmore_up'+x+'"><td><input class="form-control" name="part_name[]"></td><td><input type="number" class="form-control" name="qty[]" value=""></td><td><select class="form-control" name="cane_type[]"><option disabled="disabled" selected="selected">Select</option><?php echo $upw; ?></select></td><td><input type="number" class="form-control" name="length[]" value=""></td><td><input type="number" class="form-control" name="width[]" value=""></td><td><input type="number" class="form-control" name="labour_cost[]" value=""></td><td><input type="number" class="form-control" name="total[]" value=""></td><td><i class="fa fa-trash" onclick="removeme(addmore_up'+x+')"></td></tr>'); 
+            }
+        else
+        {alert("Sorry, you can add only 50 Items in this segment");}
+    
+    });
+    
+    
+    
+    });
+
+    //----------- packing case
+
+    $(document).ready(function() {
+    
+    var max_fields      = 5; //maximum input boxes allowed
+    var wrapper         =  $("#table_packing"); //Fields wrapper
+    var add_button      =  $("#addmore_packing"); //Add button ID
+    var x = <?php  if($packing_details != ''){echo count($packing_details);}else{echo "0";}?>; //initlal text box count
+        
+    
+    $(add_button).click(function(e)
+    { //on add input button click
+        e.preventDefault();
+        if(x < max_fields){ 
+            x++; 
+            $(wrapper).append('<tr id="addmore_packing'+x+'"><td><input type="number" name="case[]" class="form-control" value="'+x+'" readonly="readonly"></td><td><input type="number" name="length[]" class="form-control"></td><td><input type="number" name="width[]" class="form-control"></td><td><input type="number" name="height[]" class="form-control"></td></tr>'); 
+            }
+        else
+        {alert("Sorry, you can add only 5 Items in this segment");}
+    
+    });
+    
+    
+    
+    });
+
+    //----------- hardware
+
+    $(document).ready(function() {
+    
+    var max_fields      = 20; //maximum input boxes allowed
+    var wrapper         =  $("#table_hardware"); //Fields wrapper
+    var add_button      =  $("#addmore_hardware"); //Add button ID
+    var x = <?php  if($hardware_details != ''){echo count($hardware_details);}else{echo "0";}?>; //initlal text box count
+        
+    
+    $(add_button).click(function(e)
+    { //on add input button click
+        e.preventDefault();
+        if(x < max_fields){ 
+            x++; 
+            $(wrapper).append('<tr id="addmore_handware'+x+'"><td>'+x+'</td><td><select name="hardware_id[]" class="hardware form-control"><option disabled="disabled" selected="selected">Select</option><?php echo $hard;?></select></td><td><input type="number" name="price[]" class="form-control"></td><td><input type="number" name="qty[]" class="form-control"></td><td><input type="number" name="total[]" class="form-control"></td><td><i class="fa fa-trash" onclick="removeme(addmore_handware'+x+')"></td></tr>'); 
+            }
+        else
+        {alert("Sorry, you can add only 5 Items in this segment");}
+    
+        $('.hardware').select2();
+    });
+    
+    
+    
+    });
+    
+function removeme(x)
+{
+  //alert(x);
+  $(x).remove();
+    //get_subtotal(x);
+}  
+</script>

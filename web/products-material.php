@@ -54,10 +54,14 @@
                                     <select class="form-control" name="mid">
                                         <option value="" disbaled="disabled">Select Parent Material</option>
                                         <?php 
-                                        $mlist=$product->get_material();
+                                        $mlist=$product->get_parent_material();
                                         foreach($mlist as $r=>$v){?>
                                         <option value="<?php echo $mlist[$r]['id'];?>" ><?php echo $mlist[$r]['material_name'];?></option>
-                                        <?php }?>
+                                        <!--- get child materal -->
+                                        <?php $child=$product->get_child_material($mlist[$r]['id']); foreach($child as $c=>$v){?>
+                                        <option value="<?php echo $child[$c]['id'];?>"> - <?php echo $child[$c]['material_name'];?></option>
+
+                                        <?php }} ?>
                                     </select>
                                 </div>
                                 
@@ -135,17 +139,19 @@
                             $all = $product->get_material();
                             foreach($all as $r=>$v)
                             {
+                                $unit=$store->get_unit_one($all[$r]['uom']);
+                                $cap=$product->get_capability_byid($all[$r]['capabilities']);
                             ?>  
                                 <tr>
                                     <th><?php echo $counter++;?></th>
                                     <td><?php if($all[$r]['pic'] != ''){echo "<img src=".$base_url."images/".$all[$r]['pic']." width='50px' height='50px'>";$all[$r]['pic'];}?></td>
                                     <td><?php echo $all[$r]['hsn'];?></td>
-                                    <td><?php echo $all[$r]['capablities'];?></td>
+                                    <td><?php echo $cap[0]['capability'];?></td>
                                     <td><?php echo $all[$r]['material_group'];?></td>                                    
                                     <td><?php echo $all[$r]['material_name'];?></td>
                                     <td><?php $mname = $product->get_material_byid($all[$r]['mid']); echo $mname[0]['material_name'];?></td>
                                     <td><?php echo $all[$r]['material_type'];?></td>
-                                    <td><?php echo $all[$r]['labour_inr'].' / '.$all[$r]['uom'];?></td>
+                                    <td><?php echo $all[$r]['labour_inr'].' / '.$unit[0]['unit'];?></td>
                                     <td>
                                         <i class='fa fa-eye btn btn-xs btn-info'></i>
                                         <i class='fa fa-pencil btn btn-xs btn-warning'></i>

@@ -39,29 +39,18 @@ if($items){
             <td>
             <?php 
             $itemtype=$items[$row]['item_type'];
-            if($itemtype=='1' OR $itemtype=='2')
-            { 
+            
                 $sku=$product->getone($items[$row]['pid']);
-                if(file_exists('images/'.$sku[0]['picture']))
-                {echo '<img src="'.$base_url.'images/'.$sku[0]['picture'].'" height="auto" width="80"/>';}
-            }else{
-                $sku=$product->getone_temp($items[$row]['pid']);
-                if(file_exists('images/'.$sku[0]['file']))
-                {echo '<img src="'.$base_url.'images/'.$sku[0]['file'].'" height="auto" width="80"/>';}
-            }
+                $gallery=$product->getone_gallery($items[$row]['pid']);
+                if(file_exists('images/'.$gallery[0]['pic']))
+                {echo '<img src="'.$base_url.'images/'.$gallery[0]['pic'].'" height="auto" width="100"/>';}
+            
             ?>
             </td>
             <td><?php 
-            if($itemtype=='2' || $itemtype=='3' || $itemtype=='1')
-            { 
-                $sku=$product->getone($items[$row]['pid']);
+             
                 echo $sku[0]['sku'].'<br>';
-                
-            }else{
-                $sku=$product->getone_temp($items[$row]['pid']);
-                echo $sku[0]['sku'].'<br>';
-                
-            }
+                echo $sku[0]['productname'].'<br>';
             ?>
             <small><?php echo $sku[0]['product_name'];?></small>
             <small class="text-danger">( 

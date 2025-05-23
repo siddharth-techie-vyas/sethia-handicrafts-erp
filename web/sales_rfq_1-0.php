@@ -27,36 +27,24 @@
 <tr>
     <td>
         <?php
-        if($itemtype=='1' OR $itemtype=='2')
-        { 
+         
             $sku=$product->getone($items[$row]['pid']);
-            if(file_exists('images/'.$sku[0]['picture']))
-            {echo '<img src="'.$base_url.'images/'.$sku[0]['picture'].'" height="auto" width="80"/>';}
-        }else{
-            $sku=$product->getone_temp($items[$row]['pid']);
-            if(file_exists('images/'.$sku[0]['file']))
-            {echo '<img src="'.$base_url.'images/'.$sku[0]['file'].'" height="auto" width="80"/>';}
-        }
+            $cat=$product->get_category_one($sku[0]['cat']);
+            $gallery=$product->getone_gallery($items[$row]['pid']);
+            $itemtype=$items[$row]['item_type'];
+
+
+            if(file_exists('images/'.$gallery[0]['pic']))
+            {echo '<img src="'.$base_url.'images/'.$gallery[0]['pic'].'" height="auto" width="80"/>';}
+        
         ?>
     </td>
     <th colspan="3"> 
         (<?php echo $counter++;?>) 
-        <?php 
-            $itemtype=$items[$row]['item_type'];
-            if($itemtype=='2' || $itemtype=='3' || $itemtype=='1')
-            { 
-                $sku=$product->getone($items[$row]['pid']);
+            <?php 
                 echo $sku[0]['sku'].'<br>';
                 echo '<b class="text-success">'.$sku[0]['productname'].'</b><br>';
-                echo '<b class="text-secondary">'.$sku[0]['cat'].'</b>';
-            }else{
-                $sku=$product->getone_temp($items[$row]['pid']);
-                //-- get cat name 
-                $cat_name = $product->get_category_one($sku[0]['cat']);
-                echo $sku[0]['sku'].'<br>';
-                echo '<b class="text-success">'.$sku[0]['product_name'].'</b><br>';
-                echo '<b class="text-secondary">'.$cat_name[0]['cat'].'</b>';
-            }
+                echo '<b class="text-secondary">'.$cat[0]['cat'].'</b>';
             ?>
             <br>
             <small class="text-danger">( 
@@ -76,35 +64,29 @@
         <th>Width (MM)</th>
         <th>Height (MM)</th>
         <th>Branding</th>
-        <th>Packing</th>  
+        <!-- <th>Packing</th>   -->
+        
         <!----- partlist---------->
         <td rowspan="2" width="30%">
             <!--- material List------->
             
             <?php if($itemtype =='4' || $itemtype =='5' || $itemtype =='6' || $itemtype =='2'){?>
                 <table class="table table-bordered" style="font-size:12px;">
-                <tr><th colspan="4">Customization</th></tr>
+                <tr><th colspan="4">Add Capabilities</th></tr>
                 <tr>
-                    <th class="bg-danger" width="30%">Material</th>
-                    <th class="bg-primary" width="30%">Type</th>
-                    <th class="bg-secondary" width="30%">Finish / Changes</th>
+                    <th class="bg-danger" width="30%">Capability</th>
+                    <th class="bg-primary" width="60%">Remark</th>
                     <td width="10%"></td>
                 </tr><?php
 
                 $material_list = $sales->get_temp_item_material($_GET['id'],$items[$row]['pid']);
                 foreach($material_list as $r=>$v)
                     {
-                    $material = $product->get_material_byid($material_list[$r]['mtype']);
-                    $finish = $product->get_finish_byid($material_list[$r]['finish']);
-
-                    if($material_list[$r]['part']=='hardware')
-                    {$mtype0=$store->get_subcat_single($material_list[$r]['mtype']); $mtype=$mtype0[0]['subcat'];}
-                    else{$material = $product->get_material_byid($material_list[$r]['mtype']); $mtype=$material[0]['material_name'];}
-
+                    $service = $product->get_capability_byid($material_list[$r]['capability']);
+                    
                     echo "<tr id='".$material_list[$r]['id']."'>";
-                    echo "<td>".$material_list[$r]['part']."</td>";
-                    echo "<td>".$mtype."</td>";
-                    echo "<td>".$finish[0]['finish_name']."</td>";
+                    echo "<td>".$service[0]['capability']."</td>";
+                    echo "<td>".$material_list[$r]['remark']."</td>";
                     ?><td><i class="fa fa-trash" onclick="deleteme('sales','delete_material_cutom','<?php echo $material_list[$r]['id'];?>')"></td><?php
                     echo "</tr>";
                     } 
@@ -175,13 +157,14 @@
             <?php 
             if($itemtype=='1'){$readonly_branding='readonly="readonly"';}else{$readonly_branding='';}
             ?>
+            <input name="packing[]" type="hidden" value="">
             <select name="branding[]" class="form-control" <?php echo $readonly_branding;?>>
                 <option>-Select-</option>
                 <option <?php  if($items[$row]['branding']=='Yes'){echo $selected="selected='selected'";}?>>Yes</option>
                 <option <?php  if($items[$row]['branding']=='No'){echo $selected="selected='selected'";}?>>No</option>
             </select> 
         </td>
-        <td>
+        <!-- <td>
                     <select name="packing[]"  class="form-control" <?php echo $readonly_branding;?>>
                         <option disabled="disabled" selected="selected">-Select-</option>
                         <?php 
@@ -195,7 +178,7 @@
                             <option <?php echo $selected; ?> value="<?php echo $packing[$w]['id'];?>"><?php echo $packing[$w]['packing_name'];?></option>
                             <?php }?>
                     </select>
-                   </td>
+                   </td> -->
                    
                    
 

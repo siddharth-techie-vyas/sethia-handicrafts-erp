@@ -120,7 +120,7 @@
         $subcat=$store->get_subcat_single($search[$k]['subcat']);
         echo "<tr id='".$search[$k]['id']."'>";
           echo "<th>".$counter++."</th>";
-          echo "<td><img src='".$base_url.'theme/assets/images/'.$search[$k]['image']."' height='40' width='auto'></td>";
+          echo "<td><img src='".$base_url.'images/'.$search[$k]['image']."' height='40' width='auto'></td>";
           echo "<td>".$search[$k]['product_name']."</td>";
           echo "<td>".$search[$k]['hsn_code']."</td>";
           echo "<td>".$cat[0]['cat']."</td>";

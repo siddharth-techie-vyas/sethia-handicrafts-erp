@@ -48,6 +48,28 @@
                              <input type="text" value="" class="form-control form-control-sm" name="hsn_code"  required>
                            </div>
   
+                           <div class="col-md-3">
+                                    <label class="form-label">Capablity</label>
+                                    <select class="form-control" name="capability">
+                                        <option value="0">-Select-</option>
+                                        <?php 
+                                        $cap=$product->get_capability();
+                                        foreach($cap as $r=>$v){?>  
+                                        <option value="<?php echo $cap[$r]['id'];?>" ><?php echo $cap[$r]['capability'];?></option>
+                                        <?php }?>
+                                    </select>
+                            </div>
+
+                            <div class="col-md-3">
+                                    <label class="form-label">Material Type / Group</label>
+                                    <select name="material_group" class="form-control" >
+                                        <option value="" disbaled="disabled">Select Material Type</option>
+                                        <?php $material_type=$admin->get_metaname_byvalue('material_type'); foreach($material_type as $mtype => $value){?>
+                                        <option value="<?php echo $material_type[$mtype]['value1'];?>"><?php echo strtoupper($material_type[$mtype]['value1']);?></option>
+                                        <?php }?>
+                                    </select>
+                                </div>
+
                            <div class="col-sm-3">
                            <label class="col-form-label">Category <span class="mendetory">*</span></label>
                              <select class="form-control form-control-sm" name="cat" onchange="get_subcat('subcat',this.value,'store')"  required>
@@ -86,9 +108,14 @@
                            
                            <div class="col-sm-3">
                            <label class="col-form-label">Image <span class="mendetory">*</span></label>
-                             <input type="file" value="" class="form-control form-control-sm" name="pic"   accept=".jpg, .jpeg, .png" required>
+                             <input type="file" value="" class="form-control form-control-sm" name="pic"   accept=".jpg, .jpeg, .png, .webp, .avif" required>
                            </div>
   
+                           <div class="col-sm-3">
+                           <label class="col-form-label">Labout Cost</label>
+                             <input type="number" value="0.0" step="0.01" class="form-control form-control-sm" name="labour_inr">
+                           </div>
+
                            <div class="col-sm-2"><br>
                            
                            <input type="submit" name="submit" class="btn btn-success" value="Submit"/>

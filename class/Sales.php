@@ -206,11 +206,11 @@ function rfq_step0_5_update($itemid_single,$length_single,$width_single,$height_
     return $update;
 }
 
-function rfq_step0_5_material($sid,$pid,$mtype,$finsih,$part)
+function rfq_step0_5_material($sid,$pid,$capability,$remark)
 {
-    $query = "insert into sales_rfq_items_material(sid,pid,mtype,finish,part)VALUES(?,?,?,?,?)";
-    $paramType = "iiiis";
-    $paramValue = array($sid,$pid,$mtype,$finsih,$part);
+    $query = "insert into sales_rfq_items_material(sid,pid,capability,remark)VALUES(?,?,?,?)";
+    $paramType = "iiis";
+    $paramValue = array($sid,$pid,$capability,$remark);
     $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
     return $insertId;
 }
@@ -408,6 +408,70 @@ function rfq_step_09_sent_approval_eng($sid,$pass)
 {
     $update0="update sales_rfq SET engineer_pass='$pass' where id='$sid' ";
     $update0 = $this->db_handle->update($update0);
+    return $update0;
+}
+
+
+//==================estimator functions
+function save_mtype_estimator($mtype,$mtype_remark,$id)
+{
+    $update0="update  sales_rfq_items_material SET mtype='$mtype',mtype_remark='$mtype_remark' where id='$id' ";
+    $update0 = $this->db_handle->update($update0); 
+    return $update0;
+}
+function save_part_estimator($part,$id)
+{
+    $update0="update  sales_rfq_items SET part='$part' where id='$id' ";
+    $update0 = $this->db_handle->update($update0); 
+    return $update0;
+}
+
+function save_cane_estimator($part_details,$id)
+{
+    $update0="update  sales_rfq_items SET cane='$part_details' where id='$id' ";
+    $update0 = $this->db_handle->update($update0); 
+    return $update0;
+}
+
+function save_up_estimator($part_details,$id)
+{
+    $update0="update  sales_rfq_items SET upholestry='$part_details' where id='$id' ";
+    $update0 = $this->db_handle->update($update0); 
+    return $update0;
+}
+
+function save_finish_estimator($part_details,$id)
+{
+    $update0="update  sales_rfq_items SET finish='$part_details' where id='$id' ";
+    $update0 = $this->db_handle->update($update0); 
+    return $update0;
+}
+
+function save_packing_estimator($part_details,$id)
+{
+    $update0="update  sales_rfq_items SET packing='$part_details' where id='$id' ";
+    $update0 = $this->db_handle->update($update0); 
+    return $update0;
+}
+
+function save_packing2_estimator($part_details,$id)
+{
+    $update0="update  sales_rfq_items SET packing2='$part_details' where id='$id' ";
+    $update0 = $this->db_handle->update($update0); 
+    return $update0;
+}
+
+function save_logistics_estimator($part_details,$id)
+{
+    $update0="update  sales_rfq_items SET logistics='$part_details' where id='$id' ";
+    $update0 = $this->db_handle->update($update0); 
+    return $update0;
+}
+
+function save_hardware_estimator($part_details,$id)
+{
+    $update0="update  sales_rfq_items SET hardware='$part_details' where id='$id' ";
+    $update0 = $this->db_handle->update($update0); 
     return $update0;
 }
 //=========== end 

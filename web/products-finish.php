@@ -47,7 +47,7 @@
                                     <select class="form-control" name="finish_material">
                                     <option value="" disbaled="disabled">Select Material</option>
                                         <?php 
-                                        $mlist=$product->get_material();
+                                        $mlist=$product->get_parent_material();
                                         foreach($mlist as $r=>$v){?>
                                         <option value="<?php echo $mlist[$r]['id'];?>" ><?php echo $mlist[$r]['material_name'];?></option>
                                         <?php }?>

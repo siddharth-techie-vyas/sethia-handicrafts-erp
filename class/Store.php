@@ -34,11 +34,11 @@ class Store {
         $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
     	return $insertId;    
     }
-    function create_store_item($product_name,$hsn_code,$cat,$subcat,$pic,$unit)
+    function create_store_item($product_name,$hsn_code,$cat,$subcat,$pic,$unit,$material_group,$capability,$labour_inr)
     {
-        $query = "insert into store_item(product_name,hsn_code,cat,subcat,image,unit)VALUES(?,?,?,?,?,?)";
-        $paramType = "ssiiss";
-        $paramValue = array($product_name,$hsn_code,$cat,$subcat,$pic,$unit);
+        $query = "insert into store_item(product_name,hsn_code,cat,subcat,image,unit,material_group,capability,labour_inr)VALUES(?,?,?,?,?,?,?,?,?)";
+        $paramType = "ssiisssss";
+        $paramValue = array($product_name,$hsn_code,$cat,$subcat,$pic,$unit,$material_group,$capability,$labour_inr);
         $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
     	return $insertId;    
     }

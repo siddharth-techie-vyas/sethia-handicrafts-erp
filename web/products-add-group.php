@@ -89,8 +89,7 @@
                                     <td><?php echo $all[$r]['group_code'];?></td>
                                     <td><?php echo $all[$r]['descs'];?></td>
                                     <td>
-                                        <i class='fa fa-eye btn btn-xs btn-info'></i>
-                                        <i class='fa fa-pencil btn btn-xs btn-warning'></i>
+                                        <a href="<?php echo $base_url.'index.php'?>"><i class='fa fa-pencil btn btn-xs btn-warning'></i>
                                         <i class='fa fa-trash btn btn-xs btn-danger'></i>
                                     </td>
                                 </tr>

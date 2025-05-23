@@ -1508,6 +1508,29 @@ case "sales":
 					//--- update unset array
 				}
 
+				if($_GET['query']=='step-hardware-estimator')
+				{
+					$finalval = array();
+					$hardware = $_POST['hardware_id'];
+					$price = $_POST['price'];
+					$qty = $_POST['qty'];
+					$total = $_POST['total'];
+
+					foreach($hardware as $key=>$v)
+					{
+						$val = array (
+							"hardware"=>$hardware[$key],
+							"price"=>$price[$key],
+							"qty"=>$qty[$key],
+							"total"=>$total[$key]);
+
+						array_push($finalval,$val);
+					}
+					$part_details = json_encode($finalval);
+					$get=$sales->save_hardware_estimator($part_details,$_POST['id']);
+					echo "<div class='alert alert-success'>Hardware Saved Successfully !!!</div>";		
+				}
+
 
 				if($_GET['query']=='step5-estimator')
 				{

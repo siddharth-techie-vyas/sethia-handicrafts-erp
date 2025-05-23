@@ -52,16 +52,10 @@ if($items){
                     <h5>
                     <?php echo $counter++.')';  
                     $itemtype=$items[$row]['item_type'];
-                    if($itemtype=='2' || $itemtype=='3' || $itemtype=='1')
-                    { 
                         $sku=$product->getone($items[$row]['pid']);
                         echo $sku[0]['sku'].'<br>';
                         echo '<h5 class="text-secondary">'.$sku[0]['productname'].'</h5>';
-                    }else{
-                        $sku=$product->getone_temp($items[$row]['pid']);
-                        echo $sku[0]['sku'].'<br>';
-                        echo '<h5 class="text-secondary">'.$sku[0]['productname'].'</h5>';
-                    }
+                    
                     ?>
                     </h5>
                     <h6 class="text-danger">( 
@@ -73,55 +67,29 @@ if($items){
                <?php if($items[$row]['item_type']=='6'){?>Product To Be Ordered As Per Client Design<?php }?>
             )</h6>
 
-                    <table class="table table-bordered" style="font-size:12px;">
-                        <tr colspan="5">
-                            <th colspan="5" class='bg-info'><?php if($itemtype =='4' || $itemtype =='5' || $itemtype =='6'|| $itemtype =='2'){echo "Customization";}else{echo "Part List";}?></th>
-                        </tr>
-                        <tr>
-                            <th class="bg-secondary" width="20%">Type / Part Name</th>
-                            <th class="bg-success" width="20%">Material</th>
-                            <th class="bg-primary" width="20%">Finish</th>
-                            
-                        </tr>
-            <?php if($itemtype =='4' || $itemtype =='5' || $itemtype =='6'|| $itemtype =='2'){
+            <?php if($itemtype =='4' || $itemtype =='5' || $itemtype =='6' || $itemtype =='2'){?>
+                <table class="table table-bordered" style="font-size:12px;">
+                <tr><th colspan="4">Add Capabilities</th></tr>
+                <tr>
+                    <th class="bg-danger" width="30%">Capability</th>
+                    <th class="bg-primary" width="60%">Remark</th>
+                </tr>
+                <?php
 
                 $material_list = $sales->get_temp_item_material($_GET['id'],$items[$row]['pid']);
                 foreach($material_list as $r=>$v)
                     {
-                    $material = $product->get_material_byid($material_list[$r]['mtype']);
-                    $finish = $product->get_finish_byid($material_list[$r]['finish']);
+                    $service = $product->get_capability_byid($material_list[$r]['capability']);
+                    
                     echo "<tr id='".$material_list[$r]['id']."'>";
-                    echo "<td>".$material_list[$r]['part']."</td>";
-                    echo "<td>".$material[0]['material_name']."</td>";
-                    echo "<td>".$finish[0]['finish_name']."</td>";
+                    echo "<td>".$service[0]['capability']."</td>";
+                    echo "<td>".$material_list[$r]['remark']."</td>";
                     echo "</tr>";
                     } 
-               
-                }
-                if($itemtype =='1' )
-                {
-                    //-- show part list
-                    $partlist=$product->get_partlist($items[$row]['pid']);
-                    if($partlist)
-                    {
-                        foreach($partlist as $p=>$v)
-                        {
-                            $material_name = $product->get_material_byname($partlist[$p]['wood']);
-                            echo "<tr>";
-                                echo "<td>".$partlist[$p]['partname']."</td>";
-                                echo "<td>".$partlist[$p]['wood']."</td>";
-                                echo "<td>".$material_name[0]['labour_inr'].' / '.$material_name[0]['uom']."</td>";
-                                echo "<td></td>";
-                                echo "<td></td>";
-                            echo "<tr>";
-                        }
-                    }
-                else{echo "<tr><td colspan='5'>No Part List Available</td></tr>";}
-                }
-            
-                ?>
-
+                    ?>
                 </table>
+                <?php
+                }?>
                 </div>
                 
                 <div class="col-sm-2">
@@ -145,11 +113,15 @@ if($items){
 
 <hr>
                          <label class="text-warning">Similar Item(s) Image(s)</label>
-                         <?php if($items[$row]['sfile'] != '0' && $items[$row]['sfile'] != '' )
+                         <hr>
+                         <?php 
+                         if($items[$row]['sfile'] != '0' && $items[$row]['sfile'] != '' )
                          { $imgs=explode(",",$items[$row]['sfile']);
                         foreach($imgs as $img){
                         ?>
-                        <img src="<?php echo $base_url.'images/'.$img; ?>" height="150" width="auto">
+                        <a href="#" data-toggle="modal" data-target="#exampleModal" onclick="show_page_model('View Client Design','<?php echo $base_url.'index.php?action=leads&query=fileviewer&file='.$img;?>')">
+                        <img src="<?php echo $base_url.'images/'.$img; ?>" height="120" width="auto" style="border:1px #080808 solid; border-radius:2px; display:inline; margin:2px;"> 
+                        </a>
                         <?php } }else{echo "<br>No images found";}?>
                     </div>    
                 </div>
@@ -200,11 +172,11 @@ if($items){
                 </div>
 
 
-                <div class="col-sm-2">
+                <!-- <div class="col-sm-2">
                     <?php if($items[$row]['sfile'] != '0' && $items[$row]['sfile'] != '' ){?>
                         <img src="<?php echo $base_url.'images/'.$items[$row]['sfile']; ?>" height="150" width="auto">
                     <?php }?>
-                </div>
+                </div> -->
 
         </div>
         <hr>
