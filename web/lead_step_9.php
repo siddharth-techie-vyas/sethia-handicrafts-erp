@@ -46,7 +46,7 @@
                                 
                                 <tr>
                                     <th>Company</th>
-                                    <td><input type="text" class="form-control" name="company_now"></td>
+                                    <td><input type="text" class="form-control" name="companyname"></td>
                                     <th>Designation</th>
                                     <td><input type="text" name="designation_now" class="form-control"></td>
                                 </tr>
