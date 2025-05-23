@@ -55,7 +55,7 @@
                                     <th>Phone No.</th>
                                     <td><input type="text" class="form-control" name="phone" value="<?php echo $emp[0]['ucontact'];?>"></td>
                                     <th>Location</th>
-                                    <td><select class="form-control" name="country" id="country" onchange="get_details('country','state','<?php echo $base_url.'index.php?action=leads&query=get_details&type=state&id=';?>')">
+                                    <td><select class="form-control" name="country" id="country" onchange="get_details('country','<?php echo $base_url.'index.php?action=leads&query=get_details&type=state&id=';?>','state')">
 									<option disabled="disabled" selected="selected" >-- Select --</option>
 									<?php $country=$admin->get_country();
 									foreach($country as $r => $v)
@@ -67,7 +67,7 @@
 
                                 <tr>
                                     <th>State
-                                        <select class="form-control" name="state" id="state" onchange="get_details('state','city','<?php echo $base_url.'index.php?action=leads&query=get_details&type=city&id=';?>')"></select>
+                                        <select class="form-control" name="state" id="state" onchange="get_details('state','<?php echo $base_url.'index.php?action=leads&query=get_details&type=city&id=';?>','city')"></select>
                                         <span id="msgstate"></span> 
                                     </th>
                                     <th>City
