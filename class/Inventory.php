@@ -497,6 +497,44 @@ private $db_handle;
 
 
     //---------------- api
+    function wordpress_product_taglist()
+    {
+        $data=array();
+        $data2=array();
+        $query="select DISTINCT(tags) from products where tags != '' ";
+        $result = $this->db_handle->runBaseQuery($query);
+            if($result)
+            {
+                    foreach($result as $k=>$v)                
+                    {
+                        $returnObj = new stdClass();
+                        $product_id = explode(",",$result[$k]['tags']);
+                        foreach($product_id as $k1)
+                        {
+                            array_push($data, $k1);              
+                        }                        
+                    }
+                    //-- grab the unique value from the array
+                    $final_taglist = array_unique($data);
+                    //-- add into the array of unique value
+                    foreach($final_taglist as $k=>$v)
+                    {
+                        $returnObj = new stdClass();
+                        $returnObj->tags = $v;   
+                        array_push($data2, $returnObj);
+                    }
+
+                    $result1 = $this->successResponse($data2);
+                    echo json_encode($result1);
+            }     
+            else
+            {
+                $returnObj = new stdClass();
+                $returnObj->msg = "No Product Tags Found";   
+                $result1 = $this->errorResponse($returnObj);
+                echo json_encode($result1);
+            }
+    }
     function wordpress_product($key)
     {
         $data=array();
@@ -504,19 +542,7 @@ private $db_handle;
         $result = $this->db_handle->runBaseQuery($query);
         if($result)
                         {
-                            // foreach($result as $r=>$v)
-                            // {
-                            //     //-- get city name 
-                            //     $city = $this->admin->get_city($result[$r]['city']);
-
-                            //     $returnObj = new stdClass();
-                            // $returnObj->city = $city[0]['name'];
                             
-                            // }
-                    
-                            //     $result1 = $this->successResponse($data);
-                            //     echo json_encode($result1);
-
                             foreach($result as $k=>$v)
                             {
                                 $cat = $this->get_category_one($result[$k]['cat']);

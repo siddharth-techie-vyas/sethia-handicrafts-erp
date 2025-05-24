@@ -35,6 +35,10 @@ case "api":
             {
                 $product_search=$product->wordpress_product($json['search_key']);
             }
+            if($json['page']=='product_tags')
+            {
+                $product_search=$product->wordpress_product_taglist();
+            }
 
         }
  		else
