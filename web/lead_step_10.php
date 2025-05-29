@@ -55,21 +55,16 @@
 												{   
                                                     $value12=array();
                                                     if(is_string($value2))
-                                                    {$value2=$company_details_leads[$r]['value2'];}
+                                                    {$value12[]=$company_details_leads[$r]['value2'];}
                                                     else
                                                     {
-                                                        if(serialize($company_details_leads[$r]['value2']))
-                                                        {
+                                                        
                                                             $value21=unserialize($company_details_leads[$r]['value2']);
                                                             foreach($value21 as $o => $v)
                                                             {
                                                             $value12[]=$v."<br>"; 
                                                             }
-                                                        }
-                                                        else
-                                                        {
-                                                             $value12[]=$company_details_leads[$r]['value2']; 
-                                                        }
+                                                        
                                                     } 
                                                     
                                                     
