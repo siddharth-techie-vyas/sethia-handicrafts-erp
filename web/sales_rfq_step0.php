@@ -101,7 +101,7 @@
 $skus='';
 $sku0=$product->getall();  
 foreach($sku0 as $s0=>$v){
- $skus .= '<option value="'.$sku0[$s0]['id'].'">'.$sku0[$s0]['sku'].' / '.$sku0[$s0]['productname'].'</option>';
+ //$skus .= '<option value="'.$sku0[$s0]['id'].'">'.$sku0[$s0]['sku'].' / '.$sku0[$s0]['productname'].'</option>';
 }
 ?>
 
@@ -122,12 +122,12 @@ $(add_button).click(function(e)
     e.preventDefault();
     if(x < max_fields){ 
         x++; 
-        alert(x);
+       
     $(wrapper).append('<div id="addmore'+x+'" class="row"><div class="col-md-3"><div class="form-group"><label>Item Type '+x+' </label><select name="item_type[]" class="form-control"><option disabled="disabled" selected="selected">-Select</option><option value="1">Standard Product</option><option value="2">Standard Product With Customization (eg: wood / fitting /finish)</option></select></div></div><div class="col-md-2"><div class="form-group"><label for="sku_item_code">Product Code '+x+':</label><select class="form-control select2 sku_details" name="sku[]" id="sku'+x+'"><option disabled="disabled" selected="selected">-Select-</option><?php echo $skus;?></select></div></div><div class="col-md-4"><div class="form-group"><label for="product_name">Product Details '+x+':</label><br><span id="product_details'+x+'"></span></div></div><div><br><i onclick="removeme('+x+')" class="btn btn-danger btn-sm ti ti-trash remove"></i></div></div>'); 
 
     if(x<1)
       {$("#submit_btn").hide();}
-      else
+    else
       {$("#submit_btn").show();}
 
       $('.select2').select2();
