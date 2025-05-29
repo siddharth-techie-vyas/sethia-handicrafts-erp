@@ -54,21 +54,17 @@
 												foreach($company_details_leads as $r =>$v)
 												{   
                                                     $value12=array();
-                                                    if(!serialize($value2))
+                                                    if(unserialize($company_details_leads[$r]['value2']))
                                                     {$value2=$company_details_leads[$r]['value2'];}
                                                     else
-                                                    {
-                                                        
-                                                            $value21=unserialize($company_details_leads[$r]['value2']);
-                                                            foreach($value21 as $o => $v)
-                                                            {
-                                                            $value12[]=$v."<br>"; 
-                                                            }
-                                                            $value2 = implode("<br>",$value12);
+                                                    {                                                        
+                                                        $value21=unserialize($company_details_leads[$r]['value2']);
+                                                        foreach($value21 as $o => $v)
+                                                        {
+                                                        $value12[]=$v."<br>"; 
+                                                        }
+                                                        $value2 = implode("<br>",$value12);
                                                     } 
-                                                    
-                                                    
-
 													echo "<tr>";
 														echo "<th>".$counter++."</th>";
 														echo "<td>".$company_details_leads[$r]['details']."</td>";
