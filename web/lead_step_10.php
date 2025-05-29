@@ -73,7 +73,7 @@
 														echo "<td>".$company_details_leads[$r]['details']."</td>";
 														echo "<td>".$company_details_leads[$r]['value1']."</td>";
 														echo "<td>";
-                                                            echo implode("<br>",$value12);
+                                                            echo implode(",",$value12);
                                                         echo "</td>";
                                                         echo "<td>";
 
