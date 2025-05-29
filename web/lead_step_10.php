@@ -58,11 +58,17 @@
                                                     {$value2=$company_details_leads[$r]['value2'];}
                                                     else
                                                     {
-                                                        
-                                                        $value21=unserialize($company_details_leads[$r]['value2']);
-                                                        foreach($value21 as $o => $v)
+                                                        if(serialize($company_details_leads[$r]['value2']))
                                                         {
-                                                           $value12[]=$v."<br>"; 
+                                                            $value21=unserialize($company_details_leads[$r]['value2']);
+                                                            foreach($value21 as $o => $v)
+                                                            {
+                                                            $value12[]=$v."<br>"; 
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                             $value12[]=$company_details_leads[$r]['value2']; 
                                                         }
                                                     } 
                                                     
