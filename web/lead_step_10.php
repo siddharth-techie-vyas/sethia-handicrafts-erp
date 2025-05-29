@@ -54,7 +54,7 @@
 												foreach($company_details_leads as $r =>$v)
 												{   
                                                     $value12=array();
-                                                    if(!is_array($company_details_leads[$r]['value2']))
+                                                    if(!unserialize($company_details_leads[$r]['value2']) == false)
                                                     {$value2=$company_details_leads[$r]['value2'];}
                                                     else
                                                     {                                                        
