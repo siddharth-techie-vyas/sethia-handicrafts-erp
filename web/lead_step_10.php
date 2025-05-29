@@ -54,8 +54,8 @@
 												foreach($company_details_leads as $r =>$v)
 												{   
                                                     $value12=array();
-                                                    if(is_string($value2))
-                                                    {$value12[]=$company_details_leads[$r]['value2'];}
+                                                    if(!serialize($value2))
+                                                    {$value2=$company_details_leads[$r]['value2'];}
                                                     else
                                                     {
                                                         
@@ -64,7 +64,7 @@
                                                             {
                                                             $value12[]=$v."<br>"; 
                                                             }
-                                                        
+                                                            $value2 = implode("<br>",$value12);
                                                     } 
                                                     
                                                     
@@ -73,9 +73,7 @@
 														echo "<th>".$counter++."</th>";
 														echo "<td>".$company_details_leads[$r]['details']."</td>";
 														echo "<td>".$company_details_leads[$r]['value1']."</td>";
-														echo "<td>";
-                                                            echo implode(",",$value12);
-                                                        echo "</td>";
+														echo "<td>".$value2."</td>";
                                                         echo "<td>";
 
                                                         $value3=$company_details_leads[$r]['value3'];
