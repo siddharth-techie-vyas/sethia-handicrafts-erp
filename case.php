@@ -1768,6 +1768,16 @@ case "hr":
 case "product":
 	if($_GET['action']=='product')
 	{
+		//-- populate drowpdown
+		if($_GET['query']=='get_sku_dropdown')
+		{
+			$skus='';
+			$sku0=$product->getall();  
+			foreach($sku0 as $s0=>$v){
+			$skus .= '<option value="'.$sku0[$s0]['id'].'">'.$sku0[$s0]['sku'].' / '.$sku0[$s0]['productname'].'</option>';
+			}
+			echo $skus;
+		}
 		//---------- product master
 		if($_GET['query']=='add_group')
 		{
