@@ -98,11 +98,7 @@
 
 
 <?php 
-$skus='';
-$sku0=$product->getall();  
-foreach($sku0 as $s0=>$v){
- //$skus .= '<option value="'.$sku0[$s0]['id'].'">'.$sku0[$s0]['sku'].' / '.$sku0[$s0]['productname'].'</option>';
-}
+
 ?>
 
 <script type="text/javascript">
@@ -131,6 +127,8 @@ $(add_button).click(function(e)
       {$("#submit_btn").show();}
 
       $('.select2').select2();
+
+      populate_dropdown('sku'+x+'','<?php echo $base_url.'index.php?action=product&query=get_sku_dropdown';?>');
 
 }
       

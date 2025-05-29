@@ -1,7 +1,7 @@
 var loading_img='../../images/loading.gif';
-var base_url='http://localhost/sethia-handicrafts-erp/';
+//var base_url='http://localhost/sethia-handicrafts-erp/';
 //var base_url='http://192.168.1.78/sethia-handicrafts-erp/';
-//var base_url='https://sethiahandicrafts.in/';
+var base_url='https://sethiahandicrafts.in/';
 
 function get_details2(inputid,outputid,url)
 {
@@ -274,7 +274,6 @@ function mm_to_foot(mmid,cftid)
 
 calculate_cbm(text_class)
 {
-  alert(text_class);
   var l = $('#length'+text_class).val();
   alert(l);
   var w = $('#width'+text_class).val();
@@ -283,4 +282,16 @@ calculate_cbm(text_class)
   //-- change this to cft
 
   $('#total'+text_class).val(total);
+}
+
+function populate_dropdown(id,url)
+{
+  
+    $.ajax({
+        type:'GET',
+        url:url,
+        success:function(result){
+            $('#'+id).append(result);
+        }
+    });
 }
