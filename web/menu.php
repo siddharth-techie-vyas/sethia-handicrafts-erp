@@ -579,6 +579,34 @@
             </span>
           </a>
         </li>
+		<?php }if($_SESSION['utype']=='14'){?>
+		<!------- estimator -------->
+		    <li>
+          <a href="<?php echo $base_url.'index.php?action=dashboard&page=add_sampling';?>">
+            <i class="fa fa-archive text-warning"></i> <span>Add Sampling</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+        </li>
+
+        <li>
+          <a href="<?php echo $base_url.'index.php?action=dashboard&page=view_all_sample';?>">
+            <i class="fa fa-list text-info"></i> <span>View All Sampling</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+        </li>
+
+        <li>
+          <a href="<?php echo $base_url.'index.php?action=dashboard&page=reports_sample';?>">
+            <i class="fa fa-inr text-success"></i> <span>Report(s)</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+        </li>
 		<?php }?>
       </ul>
     </section>

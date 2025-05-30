@@ -1635,7 +1635,7 @@ case "sales":
 							);
 
 						
-					echo $part_details = json_encode($val);
+					$part_details = json_encode($val);
 					$get=$sales->save_packing_estimator($part_details,$_POST['id']);
 					echo "<div class='alert alert-secondary'>Master Cartoon Added Successfully !!!</div>";
 				}
@@ -1768,6 +1768,12 @@ case "hr":
 case "product":
 	if($_GET['action']=='product')
 	{
+		if($_GET['query']=='get_material_details')
+		{
+			$get=$product->get_material_byid($_GET['material_id']);
+			echo str_replace(" ","",$get[0]['labour_inr']);
+		}
+		
 		//-- populate drowpdown
 		if($_GET['query']=='get_sku_dropdown')
 		{
@@ -1963,7 +1969,6 @@ case "product":
 case "store":
 	if($_GET['action']=='store')
 		{
-			
 			//=====insert
 			if($_GET['query']=='add_store_cat')
 			{
@@ -2154,8 +2159,12 @@ case "store":
 			
 		}
 		break;
+	
 		
 }
 
+
+//-- other cases
+include('case_production.php');
 ?>
 

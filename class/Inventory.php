@@ -730,11 +730,17 @@ private $db_handle;
         $yield=$length*$width*$height*$qty;
         $yield=$yield/1000000000;
         $yield=$yield*35.314;
+        
+        if ($cft == 0.00) {
+        return 0; // Or handle the scenario appropriately based on application logic
+        }
         $yield=$yield/$cft;
         $yield=$yield*100;
         $yield=number_format((float)$yield, 2, '.', '').' %';
         return $yield;
     }
+
+    
 }
 ?>
 

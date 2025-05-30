@@ -474,5 +474,7 @@ function save_hardware_estimator($part_details,$id)
     $update0 = $this->db_handle->update($update0); 
     return $update0;
 }
+
+
 //=========== end 
 }?>
