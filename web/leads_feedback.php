@@ -174,7 +174,7 @@ $step_now=$step[0]['step'];
 						<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#home11" role="tab" aria-selected="true"><span><i class="fa fa-info"></i></span> <span class="hidden-xs-down ml-15"><?php echo 'Step : '.$step_now.' ('.$step[0]['what'].')';?></span></a> </li>
 						
 						<?php if( $query[0]['lead_qualified']=='1'){?>
-							<li class="nav-item "> <a class="nav-link" data-toggle="tab" href="#profile11" role="tab" aria-selected="false"><span><i class="fa fa-user"></i></span> <span class="hidden-xs-down ml-15">Followup</span></a> </li>
+							<li class="nav-item "> <a class="nav-link" data-toggle="tab" href="#profile11" role="tab" aria-selected="false"><span><i class="fa fa-user"></i></span> <span class="hidden-xs-down ml-15">Company Research Info</span></a> </li>
 							<!-- <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#msg" role="tab" aria-selected="false"><span><i class="fa fa-comment"></i></span> <span class="hidden-xs-down ml-15">Followup History</span></a> </li> -->
 						<?php }?>
 					</ul>
