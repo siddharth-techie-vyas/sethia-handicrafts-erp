@@ -14,11 +14,10 @@ function get_details2(inputid,outputid,url)
            url: url+id,
            success: function(data)
            {
-           //alert(url+id);
+           alert(data);
                $('#msg'+outputid).html("Please Wait !!!");
                $('#'+outputid).html(data);
-               $('#msg'+outputid).html("")
-              
+               $('#msg'+outputid).html("");              
            }
         });
 
@@ -161,6 +160,20 @@ function get_details(inputid,url,outputid)
             $('#'+outputid).html(result);
         }
     });
+}
+
+
+function get_details3(inputid,outputid,url)
+{
+  var data = $('#'+inputid).val();  
+  $.ajax({
+      type:'GET',
+      url:url+data,
+      success:function(result){
+        var final_result = parseInt(result);
+          $('#'+outputid).val(final_result);
+      }
+  });
 }
 
 

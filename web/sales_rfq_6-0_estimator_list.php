@@ -167,13 +167,13 @@ $itemtype=$items[0]['item_type'];
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs tabs-vertical" role="tablist">
 						<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#home11" role="tab"><span><i class="ion-home"></i></span> <span class="hidden-xs-down ml-15">Services</span></a> </li>
-						<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile11" role="tab"><span><i class="ion-person"></i></span> <span class="hidden-xs-down ml-15">Specification Of Material</span></a> </li>
-						<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages11" role="tab"><span><i class="ion-email"></i></span> <span class="hidden-xs-down ml-15">Sub Assembly</span></a> </li>
+						<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile11" role="tab"><span><i class="fa fa-pie-chart"></i></span> <span class="hidden-xs-down ml-15">Specification Of Material</span></a> </li>
+						<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages11" role="tab"><span><i class="fa fa-link"></i></span> <span class="hidden-xs-down ml-15">Sub Assembly</span></a> </li>
 						<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#setting11" role="tab"><span><i class="ion-settings"></i></span> <span class="hidden-xs-down ml-15">Wood Work</span></a> </li>
                         <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#hardware" role="tab"><span><i class="fa fa-wrench"></i></span> <span class="hidden-xs-down ml-15">Hardware</span></a> </li>
 						<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#about11" role="tab"><span><i class="fa fa-th""></i></span> <span class="hidden-xs-down ml-15">Canework</span></a> </li>
-						<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#upholestry" role="tab"><span><i class="ion-camera"></i></span> <span class="hidden-xs-down ml-15">Upholestry</span></a> </li>
-                        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#contact11" role="tab"><span><i class="ion-camera"></i></span> <span class="hidden-xs-down ml-15">Polish</span></a> </li>
+						<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#upholestry" role="tab"><span><i class="fa fa-square"></i></span> <span class="hidden-xs-down ml-15">Upholestry</span></a> </li>
+                        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#contact11" role="tab"><span><i class="fa fa-paint-brush"></i></span> <span class="hidden-xs-down ml-15">Polish</span></a> </li>
                         <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#packing" role="tab"><span><i class="fa fa-th-large"></i></span> <span class="hidden-xs-down ml-15">Packing</span></a> </li>
                         <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#logistics" role="tab"><span><i class="fa fa-truck"></i></span> <span class="hidden-xs-down ml-15">Logistics</span></a> </li>
                         <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#Summary" role="tab"><span><i class="fa fa-list"></i></span> <span class="hidden-xs-down ml-15">Summary</span></a> </li>
@@ -346,7 +346,7 @@ $itemtype=$items[0]['item_type'];
                                                     <!-- material type -->
                                                      <td>
                                                         <select name="wood[]" class="form-control">
-                                                            <option value="">Select Material</option>
+                                                            <option value="0">Select Material</option>
                                                             <?php
                                                             $wood = $product->get_material_bycapability('1');
                                                             foreach($wood as $w=>$v1)
@@ -461,8 +461,10 @@ $itemtype=$items[0]['item_type'];
                                            echo "<tr>";
                                                echo "<td><input type='text' name='part_name[]' class='form-control' value='".$c->part_name."'></td>";
                                                echo "<td><input type='text' name='qty[]' class='form-control' value='".$c->qty."'></td>";
-                                               echo "<td>";
-                                                echo '<select class="form-control" name="cane_type[]"><option disabled="disabled" selected="selected">Select</option>';
+                                               echo "<td>";?>
+                                               <select class="form-control" name="cane_type[]" onchange="get_details2('cane_type<?php echo $c;?>','cane_labour<?php echo $c;?>','<?php echo $base_url.'index.php?action=store&query=get_labour_cost&material_id=';?>')">
+                                                <option disabled="disabled" selected="selected">Select</option>
+                                               <?php 
                                                     $canework = $product->get_material_bycapability_child('8','91');
                                                     foreach($canework as $k=>$c1){
                                                         if($canework[$k]['id']==$c->type){$selected="selected='selected'";}else{$selected="";}
@@ -470,7 +472,7 @@ $itemtype=$items[0]['item_type'];
                                                     }
                                                 echo '</select>';
                                                echo "</td>";
-                                               echo "<td><input type='number' name='labour_cost[]' class='form-control' value='".$c->labour_cost."'></td>";
+                                               echo "<td><input type='number' name='labour_cost[]' value='cane_labour$c' class='form-control' value='".$c->labour_cost."'></td>";
                                                echo "<td><input type='number' name='length[]' class='form-control' value='".$c->length."'></td>";
                                                echo "<td><input type='number' name='width[]' class='form-control' value='".$c->width."'></td>";
                                                echo "<td><input type='number' name='total[]' class='form-control' value='".$c->total."'></td>";
@@ -496,9 +498,9 @@ $itemtype=$items[0]['item_type'];
                                         <th>Part Name</th>
                                         <th>Qty</th>
                                         <th>Type</th>
-                                        <th>Labour Cost</th>
                                         <th>Length (MM)</th>
                                         <th>Width (MM)</th>
+                                        <th>Labour Cost</th>
                                         <th>Total</th>
                                     </tr>
                                    <?php 
@@ -519,9 +521,9 @@ $itemtype=$items[0]['item_type'];
                                                     }
                                                 echo '</select>';
                                                echo "</td>";
-                                               echo "<td><input type='number' name='labour_cost[]' class='form-control' value='".$u->labour_cost."'></td>";
                                                echo "<td><input type='number' name='length[]' class='form-control' value='".$u->length."'></td>";
                                                echo "<td><input type='number' name='width[]' class='form-control' value='".$u->width."'></td>";
+                                               echo "<td><input type='number' name='labour_cost[]' class='form-control' value='".$u->labour_cost."'></td>";
                                                echo "<td><input type='number' name='total[]' class='form-control' value='".$u->total."'></td>";
                                            echo "</tr>";
                                        }
@@ -654,11 +656,13 @@ $itemtype=$items[0]['item_type'];
                                     <tr>
                                         <td>
                                             <input type="hidden" name="id" value="<?php echo $_GET['id'];?>" id="id">
-                                            <input type="number" name="length" id="lengthpacking" onchange="calculate_cbm('packing')" value="<?php echo $pval['length'];?>"  class="form-control">
+                                            <input type="hidden" name="id" value="1" id="qtypacking">
+                                            <input type="number" name="length" id="lengthpacking" onkeypress="mm_to_foot('packing','cftpacking')" value="<?php echo $pval['length'];?>"  class="form-control">
                                         </td>
-                                        <td><input type="number" name="width" id="widthpacking" value="<?php echo $pval['width'];?>" class="form-control"></td>
-                                        <td><input type="number" name="height" id="heightpacking" value="<?php echo $pval['height'];?>" class="form-control"></td>
-                                        <td><input type="number" name="cbm" id="cbmpacking" value="<?php echo $pval['cbm'];?>" class="form-control"></td>
+                                        <td><input type="number" name="width" id="widthpacking" onkeypress="mm_to_foot('packing','cftpacking')" value="<?php echo $pval['width'];?>" class="form-control"></td>
+                                        <td><input type="number" name="height" id="heightpacking" value="<?php echo $pval['height'];?>" class="form-control" onkeypress="mm_to_foot('packing','cftpacking')"></td>
+
+                                        <td><input type="number" name="cbm" id="cftpacking" value="<?php echo $pval['cbm'];?>" class="form-control" ></td>
                                         <td><input type="number" name="labour_cost"  id="labourpacking" value="<?php echo $pval['labour_cost'];?>" class="form-control"></td>
                                         <td><input type="number" name="total" id="totalpacking" value="<?php echo $pval['total'];?>" class="total_inr  form-control"></td>
                                     </tr>
@@ -689,12 +693,12 @@ $itemtype=$items[0]['item_type'];
                                     {
                                     foreach($packing_details as $r=>$p2)
                                         {
-                                            echo "<tr>";
-                                                echo "<td><input type='text' name='case[]' class='form-control' readonly='readonly' value='".$p2->case."'></td>";
-                                                echo "<td><input type='text' name='length[]' class='form-control' value='".$p2->length."'></td>";
-                                                echo "<td><input type='number' name='width[]' class='form-control' value='".$p2->width."'></td>";
-                                                echo "<td><input type='number' name='height[]' class='form-control' value='".$p2->height."'></td>";
-                                            echo "</tr>";
+                                            echo "<tr>";?>
+                                                <td><input type='text' name='case[]' class='form-control' readonly='readonly' value='".$p2->case."'></td>
+                                                <td><input type='text' name='length[]'  class='form-control' value='".$p2->length."'></td>
+                                                <td><input type='number' name='width[]' class='form-control' value='".$p2->width."'></td>
+                                                <td><input type='number' name='height[]' class='form-control' id="cft_cartoon" value='".$p2->height."'></td>
+                                            <?php echo "</tr>";
                                         }
                                     }
                                     ?>
@@ -820,9 +824,10 @@ $itemtype=$items[0]['item_type'];
                                             $comp_cft_total=0;
                                             $rm_cost_total=0;
                                             $rm_yield_total=0;
-
+                                        
                                         foreach($part_details as $cs=>$cv)
-                                        {   
+                                        {   if(!empty(($cv->wood)))
+                                            {
                                             //-- get wood type
                                             $wood_type = $product->get_material_byid($cv->wood);
                                             //-- cft of current part
@@ -890,7 +895,7 @@ $itemtype=$items[0]['item_type'];
                                                 echo "<td></td>";
                                                 echo "<td></td>";
                                             echo "</tr>";
-                                        }
+                                        }}
                                         echo "<tr>";
                                             echo "<td></td>";
                                             echo "<td></td>";
@@ -988,7 +993,7 @@ $(add_button).click(function(e)
     e.preventDefault();
     if(x < max_fields){ 
         x++; 
-        $(wrapper).append('<tr id="addmore_part'+x+'"><td><input class="form-control" name="part_name[]"></td><td><input type="number" class="form-control" name="qty[]" value=""></td><td><i class="fa fa-trash" onclick="removeme(addmore_part'+x+')"></td></tr>'); 
+        $(wrapper).append('<tr id="addmore_part'+x+'"><td><input class="form-control" name="part_name[]"></td><td><input type="number" class="form-control" name="qty[]" value="0"></td><td><i class="fa fa-trash" onclick="removeme(addmore_part'+x+')"></td></tr>'); 
         }
     else
     {alert("Sorry, you can add only 50 Items in this segment");}
@@ -1014,8 +1019,12 @@ $(document).ready(function() {
     { //on add input button click
         e.preventDefault();
         if(x < max_fields){ 
+
+            var casefn="get_details3('cane_type"+x+"','cane_labour"+x+"','<?php echo $base_url.'index.php?action=product&query=get_material_details&material_id=';?>')";
+            
+            $(wrapper).append('<tr id="addmore_cane'+x+'"><td><input class="form-control" name="part_name[]"></td><td><input type="number" class="form-control" name="qty[]" value="0"></td><td><select class="form-control" id="cane_type'+x+'" onchange="'+casefn+'" name="cane_type[]"><option disabled="disabled" selected="selected">Select</option><?php echo $canew; ?></select></td><td><input type="number" class="form-control" name="length[]" value="0"></td><td><input type="number" class="form-control" name="width[]" value="0"></td><td><input type="number" class="form-control" id="cane_labour'+x+'" name="labour_cost[]" value="0"></td><td><input type="number" class="form-control" name="total[]" value="0"></td><td><i class="fa fa-trash" onclick="removeme(addmore_cane'+x+')"></td></tr>'); 
+
             x++; 
-            $(wrapper).append('<tr id="addmore_cane'+x+'"><td><input class="form-control" name="part_name[]"></td><td><input type="number" class="form-control" name="qty[]" value=""></td><td><select class="form-control" name="cane_type[]"><option disabled="disabled" selected="selected">Select</option><?php echo $canew; ?></select></td><td><input type="number" class="form-control" name="length[]" value=""></td><td><input type="number" class="form-control" name="width[]" value=""></td><td><input type="number" class="form-control" name="labour_cost[]" value=""></td><td><input type="number" class="form-control" name="total[]" value=""></td><td><i class="fa fa-trash" onclick="removeme(addmore_cane'+x+')"></td></tr>'); 
             }
         else
         {alert("Sorry, you can add only 50 Items in this segment");}
@@ -1026,7 +1035,7 @@ $(document).ready(function() {
     
     });
 
-    //----------- cane work
+    //----------- upholestry work
 
 $(document).ready(function() {
     
@@ -1040,8 +1049,13 @@ $(document).ready(function() {
     { //on add input button click
         e.preventDefault();
         if(x < max_fields){ 
-            x++; 
-            $(wrapper).append('<tr id="addmore_up'+x+'"><td><input class="form-control" name="part_name[]"></td><td><input type="number" class="form-control" name="qty[]" value=""></td><td><select class="form-control" name="cane_type[]"><option disabled="disabled" selected="selected">Select</option><?php echo $upw; ?></select></td><td><input type="number" class="form-control" name="length[]" value=""></td><td><input type="number" class="form-control" name="width[]" value=""></td><td><input type="number" class="form-control" name="labour_cost[]" value=""></td><td><input type="number" class="form-control" name="total[]" value=""></td><td><i class="fa fa-trash" onclick="removeme(addmore_up'+x+')"></td></tr>'); 
+            
+            
+            var labourfn="get_details3('uphol_type"+x+"','uphol_labour"+x+"','<?php echo $base_url.'index.php?action=product&query=get_material_details&material_id=';?>')";
+
+            $(wrapper).append('<tr id="addmore_up'+x+'"><td><input class="form-control" name="part_name[]"></td><td><input type="number" class="form-control" name="qty[]" value="0"></td><td><select id="uphol_type'+x+'" onchange="'+labourfn+'" class="form-control" name="uphol_type[]"><option disabled="disabled" selected="selected">Select</option><?php echo $upw; ?></select></td><td><input type="number" class="form-control" name="length[]" value="0"></td><td><input type="number" class="form-control" name="width[]" value="0"></td><td><span id="msguphol_labour'+x+'"></span><input type="number" class="form-control" id="uphol_labour'+x+'" name="labour_cost[]" value="0" ></td><td><input type="number" class="form-control" name="total[]" value="0"></td><td><i class="fa fa-trash" onclick="removeme(addmore_up'+x+')"></td></tr>'); 
+
+            x++;
             }
         else
         {alert("Sorry, you can add only 50 Items in this segment");}
@@ -1067,7 +1081,7 @@ $(document).ready(function() {
         e.preventDefault();
         if(x < max_fields){ 
             x++; 
-            $(wrapper).append('<tr id="addmore_packing'+x+'"><td><input type="number" name="case[]" class="form-control" value="'+x+'" readonly="readonly"></td><td><input type="number" name="length[]" class="form-control"></td><td><input type="number" name="width[]" class="form-control"></td><td><input type="number" name="height[]" class="form-control"></td></tr>'); 
+            $(wrapper).append('<tr id="addmore_packing'+x+'"><td><input type="number" name="case[]" class="form-control" value="'+x+'" readonly="readonly"></td><td><input type="number" value="0" name="length[]" class="form-control"></td><td><input type="number" value="0" name="width[]" class="form-control"></td><td><input type="number" name="height[]" value="0" class="form-control"></td></tr>'); 
             }
         else
         {alert("Sorry, you can add only 5 Items in this segment");}
@@ -1093,7 +1107,7 @@ $(document).ready(function() {
         e.preventDefault();
         if(x < max_fields){ 
             x++; 
-            $(wrapper).append('<tr id="addmore_handware'+x+'"><td>'+x+'</td><td><select name="hardware_id[]" class="hardware form-control"><option disabled="disabled" selected="selected">Select</option><?php echo $hard;?></select></td><td><input type="number" name="price[]" class="form-control"></td><td><input type="number" name="qty[]" class="form-control"></td><td><input type="number" name="total[]" class="form-control"></td><td><i class="fa fa-trash" onclick="removeme(addmore_handware'+x+')"></td></tr>'); 
+            $(wrapper).append('<tr id="addmore_handware'+x+'"><td>'+x+'</td><td><select name="hardware_id[]" class="hardware form-control"><option disabled="disabled" selected="selected">Select</option><?php echo $hard;?></select></td><td><input type="number" name="price[]" class="form-control"></td><td><input type="number" value="0" name="qty[]" class="form-control"></td><td><input type="number" name="total[]" value="0" class="form-control"></td><td><i class="fa fa-trash" onclick="removeme(addmore_handware'+x+')"></td></tr>'); 
             }
         else
         {alert("Sorry, you can add only 5 Items in this segment");}
