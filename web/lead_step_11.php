@@ -20,7 +20,7 @@
                     <table class="table table-bordered">
                     <tr>
                         <th>Company Name</th>
-                        <td><?php echo $company_profile[0]['companyname'];?></td>
+                        <td><?php echo $company_profile[0]['company_now'];?></td>
                         <th>Email</th>
                         <td><?php echo $company_profile[0]['email'];?></td>
                         <th>Phone</th>
