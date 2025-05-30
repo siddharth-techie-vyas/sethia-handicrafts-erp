@@ -1,7 +1,13 @@
 <section class="content">
-			<div class="row">
-                <div class="col-md-12">
-<h4>Company Research Info</h4>
+			<hr>
+			<!--- form -->
+			<div class="box">
+                
+						<div class="box-header with-border">
+                            <h4>Company Research Info</h4>
+                        </div>    
+
+
                         <table class="table table-bordered">
                                                 <thead>
                                                 <tr>
@@ -52,6 +58,6 @@
 												?>
 											</table>
 
-                                           </div>
-                                           </div>
-                                           </div>
+                    </div>
+                </div>
+                                           
