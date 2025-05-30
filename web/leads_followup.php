@@ -1,3 +1,6 @@
+<section class="content">
+			<div class="row">
+                <div class="col-md-12">
 <h4>Company Research Info</h4>
                         <table class="table table-bordered">
                                                 <thead>
@@ -49,4 +52,6 @@
 												?>
 											</table>
 
-                                           
+                                           </div>
+                                           </div>
+                                           </div>
