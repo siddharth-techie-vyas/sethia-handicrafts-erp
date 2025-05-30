@@ -30,11 +30,13 @@
                     </tr>
                     <tr>
                         <th>City</th>   
-                        <td><?php echo $company_profile[0]['city'];?></td>
-                        <th>State</th>
-                        <td><?php echo $company_profile[0]['state'];?></td>
+                        <td><?php $city=$admin->get_cities_one($company_profile[0]['city']); echo $city[0]['name'];?></td>
+                        <th>State</th>                        
+                        <td><?php 
+                        $state = $admin->get_states_one($company_profile[0]['state']);
+                        echo $state[0]['name'];?></td>
                         <th>Country</th>
-                        <td><?php echo $company_profile[0]['country'];?></td>
+                        <td><?php $country=$admin->get_country_one($company_profile[0]['country']); echo $country[0]['name'];?></td>
                         <th>Zipcode</th>
                         <td><?php echo $company_profile[0]['zipcode'];?></td>
                     </tr>
