@@ -419,6 +419,13 @@ function save_mtype_estimator($mtype,$mtype_remark,$id)
     $update0 = $this->db_handle->update($update0); 
     return $update0;
 }
+function save_assembly_estimator($part,$id)
+{
+    $update0="update  sales_rfq_items SET assembly='$part' where id='$id' ";
+    $update0 = $this->db_handle->update($update0); 
+    return $update0;
+}
+
 function save_part_estimator($part,$id)
 {
     $update0="update  sales_rfq_items SET part='$part' where id='$id' ";

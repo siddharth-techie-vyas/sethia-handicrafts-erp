@@ -217,7 +217,7 @@ class Store {
 //---------- get single
     function get_cat_single($id)
     {
-        $sql = "SELECT * FROM store_item_cat where id='$id' ";
+       $sql = "SELECT * FROM store_item_cat where id='$id' ";
         $result = $this->db_handle->runBaseQuery($sql);
         return $result;   
     }
@@ -340,6 +340,13 @@ function get_material($type)
     return $material;
 }
 
+function get_item_bycat($cat)
+{
+    $select="select * from store_item where cat='$cat' ";
+    $material = $this->db_handle->runBaseQuery($select);
+    return $material;
+}
+
 function delete_item($id)
 {
     $sql="delete from store_item where id='$id'";
@@ -349,7 +356,7 @@ function delete_item($id)
 
 function delete_subcat($id)
 {
-   echo $sql="delete from store_item_cat where id='$id'";
+    $sql="delete from store_item_cat where id='$id'";
     $result = $this->db_handle->runSingleQuery($sql);
     return $result;
 }

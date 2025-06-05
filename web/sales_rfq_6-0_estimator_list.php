@@ -168,13 +168,14 @@ $itemtype=$items[0]['item_type'];
 					<ul class="nav nav-tabs tabs-vertical" role="tablist">
 						<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#home11" role="tab"><span><i class="ion-home"></i></span> <span class="hidden-xs-down ml-15">Services</span></a> </li>
 						<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile11" role="tab"><span><i class="fa fa-pie-chart"></i></span> <span class="hidden-xs-down ml-15">Specification Of Material</span></a> </li>
-						<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages11" role="tab"><span><i class="fa fa-link"></i></span> <span class="hidden-xs-down ml-15">Sub Assembly</span></a> </li>
+						<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#assembly" role="tab"><span><i class="fa fa-connectdevelop"></i></span> <span class="hidden-xs-down ml-15">Assembly</span></a> </li>
+                        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages11" role="tab"><span><i class="fa fa-link"></i></span> <span class="hidden-xs-down ml-15">Sub Assembly</span></a> </li>
 						<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#setting11" role="tab"><span><i class="ion-settings"></i></span> <span class="hidden-xs-down ml-15">Wood Work</span></a> </li>
                         <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#hardware" role="tab"><span><i class="fa fa-wrench"></i></span> <span class="hidden-xs-down ml-15">Hardware</span></a> </li>
 						<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#about11" role="tab"><span><i class="fa fa-th""></i></span> <span class="hidden-xs-down ml-15">Canework</span></a> </li>
 						<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#upholestry" role="tab"><span><i class="fa fa-square"></i></span> <span class="hidden-xs-down ml-15">Upholestry</span></a> </li>
                         <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#contact11" role="tab"><span><i class="fa fa-paint-brush"></i></span> <span class="hidden-xs-down ml-15">Polish</span></a> </li>
-                        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#packing" role="tab"><span><i class="fa fa-th-large"></i></span> <span class="hidden-xs-down ml-15">Packing</span></a> </li>
+                        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#packing" role="tab"><span><i class="fa fa-th-large"></i></span> <span class="hidden-xs-down ml-15">Cartoon</span></a> </li>
                         <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#logistics" role="tab"><span><i class="fa fa-truck"></i></span> <span class="hidden-xs-down ml-15">Logistics</span></a> </li>
                         <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#Summary" role="tab"><span><i class="fa fa-list"></i></span> <span class="hidden-xs-down ml-15">Summary</span></a> </li>
                         <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#final_result" role="tab"><span><i class="fa fa-file-pdf-o"></i></span> <span class="hidden-xs-down ml-15">Final Result</span></a> </li>
@@ -281,14 +282,53 @@ $itemtype=$items[0]['item_type'];
                                 </form>
 							</div>
 						</div>
+
+                        <div class="tab-pane" id="assembly" role="tabpanel">
+							<div class="p-15">
+                                <h4>Step 3.1) Assembly</h4>
+
+                                <span id="msgstep3-1-estimator"></span>
+                                <form name="step3-1-estimator" id="step3-1-estimator" action="<?php echo $base_url.'index.php?action=sales&query=step3-1-estimator';?>" method="post">
+                                <table class="table table-bordered" id="assemblytablepart">
+                                    <tr>
+                                        <th>Assembly Part Name</th>
+                                        <th>Qty</th>
+                                    </tr>
+                                    <?php
+                                    $assembly_details = json_decode($items[0]['assembly']);                                    
+                                    if($assembly_details !='')
+                                    {
+                                    foreach($assembly_details as $a=>$v)
+                                        {
+                                            echo "<tr id='".$a."'>";
+                                            echo "<td><input type='text' name='assembly[]' class='form-control' value='".$v->assembly."'></td>";
+                                            echo "<td><input type='number' name='assembly_qty[]' class='form-control' value='".$v->assembly_qty."'></td>";
+                                            ?>
+                                            <td><i class="fa fa-trash" onclick="deleteme('sales','delete_mtype_step3-1-estimator','<?php echo $r.'&sid='.$items[0]['id'];?>')"></i></td>
+                                            <?php
+                                            echo "</tr>";
+                                        }
+                                    }
+                                    ?>
+
+                                </table>
+                                <input type="hidden" name="id" value="<?php echo $_GET['id'];?>" id="id">
+                                <input type="button" name="addmore" class="btn btn-md btn-secondary" value="Add More Assembly Part" id="assemblyaddmore_part">
+                                <input type="button" onclick="form_submit('step3-1-estimator')" class="btn btn-md btn-warning" value="Save">
+                                </form>
+                                </div>
+                        </div>
+                        
+                        
 						<div class="tab-pane" id="messages11" role="tabpanel">
 							<div class="p-15">
-                                <h4>Step 3) Sub Assembly</h4>
+                                <h4>Step 3.2) Sub Assembly</h4>
                                 <span id="msgstep3-estimator"></span>
                                 <form name="step3-estimator" id="step3-estimator" action="<?php echo $base_url.'index.php?action=sales&query=step3-estimator';?>" method="post">
                                 <table class="table table-bordered" id="tablepart">
                                     <tr>
-                                        <th>Part Name</th>
+                                        <th>Assembly</th>
+                                        <th>Sub Assembly</th>
                                         <th>Qty</th>
                                     </tr>
                                     <?php
@@ -299,7 +339,23 @@ $itemtype=$items[0]['item_type'];
                                     foreach($part_details as $r=>$v)
                                         {
                                             echo "<tr id='".$r."'>";
-                                            echo "<td><input type='text' name='part_name[]' class='form-control' value=".$v->part_name."></td>";
+                                            echo "<td>";
+                                            //-- dimensions and material 
+                                            echo "<input type='hidden' name='length[]' value='".$v->length."'>";
+                                            echo "<input type='hidden' name='width[]' value='".$v->width."'>";
+                                            echo "<input type='hidden' name='height[]' value='".$v->height."'>";
+                                            echo "<input type='hidden' name='wood[]' value='".$v->wood."'>";
+                                            echo "<input type='hidden' name='total[]' value='".$v->total."'>";
+
+                                                echo "<select name='assembly[]' class='form-control'>";
+                                                echo "<option value=''>-Select-</option>";
+                                                foreach ($assembly_details as $as=>$av) {
+                                                    if($av->assembly == $v->assembly){$selected='selected="selected"';}else{$selected='';}
+                                                    echo '<option value="'.$av->assembly.'" '.$selected.'>'.$av->assembly.'</option>';
+                                                }
+                                                echo "<select/>";
+                                            echo "</td>";
+                                            echo "<td><input type='text' name='part_name[]' class='form-control' value='".$v->part_name."'></td>";
                                             echo "<td><input type='number' name='qty[]' class='form-control' value='".$v->qty."'></td>";
                                             ?>
                                             <td><i class="fa fa-trash" onclick="deleteme('sales','delete_mtype_step3-estimator','<?php echo $r.'&sid='.$items[0]['id'];?>')"></i></td>
@@ -311,7 +367,7 @@ $itemtype=$items[0]['item_type'];
 
                                 </table>
                                 <input type="hidden" name="id" value="<?php echo $_GET['id'];?>" id="id">
-                                <input type="button" name="addmore" class="btn btn-md btn-warning" value="Add More Assembly Part" id="addmore_part">
+                                <input type="button" name="addmore" class="btn btn-md btn-secondary" value="Add More Sub Assembly Part" id="addmore_part">
                                 <input type="button" onclick="form_submit('step3-estimator')" class="btn btn-md btn-warning" value="Save">
                                 </form>
 							</div>
@@ -339,7 +395,9 @@ $itemtype=$items[0]['item_type'];
                                             {
                                                 echo "<tr>";?>
                                                     <td>    
-                                                    <input type='hidden' name='part_name[]' class='form-control' value='<?php echo $v->part_name;?>'><?php echo $v->part_name;?></td>
+                                                    <input type='hidden' name='assembly[]' class='form-control' value='<?php echo $v->assembly;?>'>    
+                                                    <input type='hidden' name='part_name[]' class='form-control' value='<?php echo $v->part_name;?>'>
+                                                    <?php echo $v->part_name;?></td>
                                                     <td>
                                                     <!-- qty -->
                                                     <input type='hidden' name='qty[]' class='form-control' id="qty<?php echo 'mm'.$r;?>" value='<?php echo $v->qty;?>'><?php echo $v->qty;?></td>
@@ -547,7 +605,7 @@ $itemtype=$items[0]['item_type'];
                                 <form name="step7-estimator" id="step7-estimator" action="<?php echo $base_url.'index.php?action=sales&query=step7-estimator';?>" method="post">
                                 <table class="table table-bordered" id="tablepart">
                                     <tr>
-                                        <th>Part Name</th>
+                                        <th>Assembly Part Name</th>
                                         <th>Qty</th>
                                         <th>Polish Name</th>
                                         <th>Labour Cost</th>
@@ -555,7 +613,7 @@ $itemtype=$items[0]['item_type'];
                                         <th>Total (INR)</th>
                                     </tr>
                                     <?php
-                                    $part_details = json_decode($items[0]['part']);
+                                    $assembly_details = json_decode($items[0]['assembly']);
                                     $finish_details0=array();
                                     $finish_details = json_decode($items[0]['finish']);
                                     foreach($finish_details as $r=>$f0)
@@ -576,14 +634,14 @@ $itemtype=$items[0]['item_type'];
                                     //                 $finish0 .= '<option value="'.$fv['id'].'">'.$fv['finish_name'].'('.$fv['coating_system'].')</option>';
                                     //             }
 
-                                    if($part_details !='')
+                                    if($assembly_details !='')
                                     {
                                         $final_labour_cost_sum=0;
-                                    foreach($part_details as $r=>$f)
+                                    foreach($assembly_details as $r=>$f)
                                         {
                                             echo "<tr>";
-                                            echo "<td>".$f->part_name."</td>";
-                                            echo "<td>".$f->qty."</td>";
+                                            echo "<td>".$f->assembly."</td>";
+                                            echo "<td>".$f->assembly_qty."</td>";
                                             echo "<td><select class='form-control' name='finish[]'><option disabled='disabled' selected='selected'>Select</option>";
                                             $finish = $product->get_finish();
                                                 foreach ($finish as $key => $fv) {
@@ -624,7 +682,7 @@ $itemtype=$items[0]['item_type'];
 						</div>
                         <div class="tab-pane" id="packing" role="tabpanel">
 							<div class="p-15">
-                                 <h4>Step 9) Packing</h4>
+                                 <h4>Step 9) Cartoon(s)</h4>
                                  <span id="msgstep8-estimator"></span>
                                  <form name="step8-estimator" id="step8-estimator" action="<?php echo $base_url.'index.php?action=sales&query=step8-estimator';?>" method="post">
                                 <table class="table table-bordered">
@@ -656,7 +714,7 @@ $itemtype=$items[0]['item_type'];
                                     <tr>
                                         <td>
                                             <input type="hidden" name="id" value="<?php echo $_GET['id'];?>" id="id">
-                                            <input type="hidden" name="id" value="1" id="qtypacking">
+                                            <input type="hidden" name="qty" value="1" id="qtypacking">
                                             <input type="number" name="length" id="lengthpacking" onkeypress="mm_to_foot('packing','cftpacking')" value="<?php echo $pval['length'];?>"  class="form-control">
                                         </td>
                                         <td><input type="number" name="width" id="widthpacking" onkeypress="mm_to_foot('packing','cftpacking')" value="<?php echo $pval['width'];?>" class="form-control"></td>
@@ -694,10 +752,13 @@ $itemtype=$items[0]['item_type'];
                                     foreach($packing_details as $r=>$p2)
                                         {
                                             echo "<tr>";?>
-                                                <td><input type='text' name='case[]' class='form-control' readonly='readonly' value='".$p2->case."'></td>
-                                                <td><input type='text' name='length[]'  class='form-control' value='".$p2->length."'></td>
-                                                <td><input type='number' name='width[]' class='form-control' value='".$p2->width."'></td>
-                                                <td><input type='number' name='height[]' class='form-control' id="cft_cartoon" value='".$p2->height."'></td>
+                                                <td><input type='text' name='case[]' class='form-control' readonly='readonly' value='<?php echo $p2->case;?>'></td>
+                                                <td><input type='text' name='length[]'  class='form-control' value='<?php echo $p2->length;?>'></td>
+                                                <td><input type='number' name='width[]' class='form-control' value='<?php echo $p2->width;?>'></td>
+                                                <td><input type='number' name='height[]' class='form-control' id="cft_cartoon" value='<?php echo $p2->height;?>'></td>
+                                                <td>
+                                                    <i class="fa fa-trash"></i>
+                                                </td>
                                             <?php echo "</tr>";
                                         }
                                     }
@@ -707,54 +768,94 @@ $itemtype=$items[0]['item_type'];
                                 <input type="button" name="addmore_up" class="btn btn-md btn-warning" value="Add More Case" id="addmore_packing">
                                 <input type="button" onclick="form_submit('step8-estimator1')" class="btn btn-md btn-success" value="Save">
                                 </form>
+
+                                
 							</div>
 						</div>
                         <div class="tab-pane" id="logistics" role="tabpanel">
 							<div class="p-15">
-                                 <h4>Step 10) Logistics</h4>
+                                 <h4>Step 10) Logistics With Packing Material</h4>
                                 <span id="msgstep9-estimator"></span>
                                 <form name="step9-estimator" id="step9-estimator" action="<?php echo $base_url.'index.php?action=sales&query=step9-estimator';?>" method="post">
                                 <table class="table table-bordered">
                                     <tr>
                                         <th>Case</th>
-                                        <th>Qty</th>
-                                        <th>Case</th>
+                                        <th>Parts Name</th>
                                         <th>Kg</th>
+                                        <th>Packing Material</th>
                                     </tr>
                                     <?php
                                     $case_nu = json_decode($items[0]['packing2']);
                                    
                                     $logitics = json_decode($items[0]['logistics']);
+                                    $logitics0=array();
                                     foreach($logitics as $l=>$f0)
                                         {
                                             $val = array (
                                                 "case"=>$f0->case,
-                                                "kg"=>$f0->kg
+                                                "kg"=>$f0->kg,
+                                                "part_name"=>$f0->part_name
                                                 );
                     
                                             array_push($logitics0,$val);
                                         }
 
-                                    if($part_details !='')
+                                    if($items[0]['packing2'] !='')
                                     {
-                                    foreach($part_details as $r=>$v)
+                                    // foreach($part_details as $r=>$v)
+                                    //     {
+                                    //         echo "<tr>";
+                                    //         echo "<td>".$v->part_name."</td>";
+                                    //         echo "<td><input type='number' name='qty[]' class='form-control' value='".$v->qty."' readonly='readonly'></td>";
+                                    //         echo "<td>";
+                                    //             echo "<select class='form-control' name='case[]'>";
+                                    //                 echo "<option disabled='disabled' selected='selected'>Select</option>";
+                                    //                 foreach($case_nu as $r1=>$v1)
+                                    //                 {
+                                    //                     if($logitics0[$r]['case']==$v1->case){$selected='selected';}else{$selected='';}
+                                    //                     echo "<option value='".$v1->case."' $selected>".$v1->case."</option>";
+                                    //                 }
+                                    //             echo "</select>";
+                                    //         echo "</td>";
+                                    //         echo "<td><input type='number' name='kg[]' class='form-control' value='".$logitics0[$r]['kg']."'></td>";
+                                    //         echo "</tr>";
+                                    //     }
+                                         foreach($case_nu as $r1=>$v1)
                                         {
+                                            //-- change parts into array from comma delimit / used assembly on place of part
+                                            $parts=explode(',',$logitics0[$r1]['assembly']);
                                             echo "<tr>";
-                                            echo "<td>".$v->part_name."</td>";
-                                            echo "<td><input type='number' name='qty[]' class='form-control' value='".$v->qty."' readonly='readonly'></td>";
-                                            echo "<td>";
-                                                echo "<select class='form-control' name='case[]'>";
-                                                    echo "<option disabled='disabled' selected='selected'>Select</option>";
-                                                    foreach($case_nu as $r1=>$v1)
-                                                    {
-                                                        if($logitics0[$r]['case']==$v1->case){$selected='selected';}else{$selected='';}
-                                                        echo "<option value='".$v1->case."' $selected>".$v1->case."</option>";
-                                                    }
-                                                echo "</select>";
-                                            echo "</td>";
-                                            echo "<td><input type='number' name='kg[]' class='form-control' value='".$logitics0[$r]['kg']."'></td>";
+                                                echo "<td>".$v1->case."</td>";
+                                                echo "<td>";
+                                                    echo "<input type='hidden' name='case[]' value='".$v1->case."'>";
+                                                    echo "<select class='form-control' name='part_name$v1->case[]' multiple='multiple'>";
+                                                        echo "<option disabled='disabled' selected='selected'>Select</option>";
+                                                        foreach($assembly_details as $r=>$v)
+                                                        {
+                                                            $selected='';
+                                                            if (in_array($v->assembly, $parts))
+                                                                    {
+                                                                    $selected='selected="selected"';
+                                                                    }                                                                     
+                                                            echo "<option value='".$v->assembly."' $selected>".$v->assembly."</option>";
+                                                        }
+                                                    echo "</select>";
+                                                echo "</td>";
+                                                echo "<td>";
+                                                     echo "<input type='number' name='kg[]' class='form-control' value='".$logitics0[$r1]['kg']."'>";   
+                                                echo "</td>";
+                                                ?>
+                                                <td>
+                                                    <div id="add_p_materialdiv"></div>
+                                                    <input type="button" name="add_p_material" id="add_p_material" class="btn btn-warning btn-xs" value="Add Packing Material">
+                                                </td>
+                                                <?php 
                                             echo "</tr>";
+
+
                                         }
+
+
                                     }
                                     ?>
                                   
@@ -849,8 +950,14 @@ $itemtype=$items[0]['item_type'];
                                             // $h=$wood_pillar[0]['hmm']/25.4;
                                             // $h = number_format((float)$h, 2, '.', '');
 
-                                            $pillar_size_converted=$wood_yield_l[0]['thickness']." ft x ".$wood_yield_w[0]['thickness']." in x ".$wood_yield_h[0]['thickness']." in ";
+                                            //-- sizes has been float as per the db entries
+                                            $pillar_l = number_format((float)$wood_yield_l[0]['thickness'], 1, '.', '');
+                                            $pillar_w = number_format((float)$wood_yield_w[0]['thickness'], 0, '.', '');
+                                            $pillar_h = number_format((float)$wood_yield_h[0]['thickness'], 2, '.', '');
+                                            $pillar_size_converted=$pillar_l."ft x ".$pillar_w."in x ".$pillar_h."in";
+
                                             $rm_qty = $cv->qty*$wood_yield_l[0]['thickness_stack']*$wood_yield_w[0]['thickness_stack']*$wood_yield_h[0]['thickness_stack'];
+                                            $rm_qty_total += $rm_qty;
 
                                             //-- rm cft
                                             $rm_group=$product->get_rm_group($cv->wood,$wood_yield_l[0]['thickness'],$wood_yield_w[0]['thickness'],$wood_yield_h[0]['thickness']);
@@ -871,7 +978,8 @@ $itemtype=$items[0]['item_type'];
                                             
 
                                             
-                                            
+                                            //-- unit weight  kg
+                                            $unit_kg=$product->get_unit_kg_wood($wood_type[0]['material_name'],$pillar_size_converted);
 
                                             echo "<tr>";
                                                 echo "<td>".$cv->part_name."</td>";
@@ -891,7 +999,7 @@ $itemtype=$items[0]['item_type'];
                                                 echo "<td></td>";
                                                 echo "<td></td>";
                                                 echo "<td></td>";
-                                                echo "<td></td>";
+                                                echo "<td>".$unit_kg[0]['weight']."</td>";
                                                 echo "<td></td>";
                                                 echo "<td></td>";
                                             echo "</tr>";
@@ -904,7 +1012,7 @@ $itemtype=$items[0]['item_type'];
                                             echo "<td></td>";
                                             echo "<td></td>";
                                             echo "<td></td>";
-                                            echo "<td></td>";
+                                            echo "<th>".$rm_qty_total."</th>";
                                             echo "<th></th>";
                                             echo "<th></th>";
                                             echo "<th></th>";
@@ -977,8 +1085,49 @@ foreach($hardware as $h=>$v){
     $subcat=$store->get_cat_single($hardware[$h]['subcat']);
     $hard .= '<option value="'.$hardware[$h]['id'].'">'.$subcat[0]['subcat'].' - '.$hardware[$h]['product_name'].'</option>';
 }
+
+//--packing material
+$packing_material='';
+$pmaterial = $store->get_item_bycat('28');
+foreach($pmaterial as $pp=>$v){
+    //-- get sub category
+    $subcat = $store->get_subcat_single($pmaterial[$pp]['subcat']);
+    $packing_material .= '<option value="'.$pmaterial[$pp]['id'].'">'.$pmaterial[$pp]['product_name'].'-'.$subcat[0]['subcat'].'</option>';
+}
+
+//-- assembly dropdown
+foreach ($assembly_details as $as=>$av) {
+    $assembly .= '<option value="'.$av->assembly.'">'.$av->assembly.'</option>';
+}
 ?>
 <script type="text/javascript">
+
+//-- assembly
+$(document).ready(function() {
+    
+var max_fields      = 50; //maximum input boxes allowed
+var wrapper         =  $("#assemblytablepart"); //Fields wrapper
+var add_button      =  $("#assemblyaddmore_part"); //Add button ID
+var x = 1; //initlal text box count
+    
+
+$(add_button).click(function(e)
+{ //on add input button click
+    e.preventDefault();
+    if(x < max_fields){ 
+        x++; 
+        $(wrapper).append('<tr id="assemblyaddmore_part'+x+'"><td><input class="form-control" name="assembly[]"></td><td><input type="number" class="form-control" name="assembly_qty[]" value="0"></td><td><i class="fa fa-trash" onclick="removeme(assemblyaddmore_part'+x+')"></td></tr>'); 
+        }
+    else
+    {alert("Sorry, you can add only 50 Items in this segment");}
+
+});
+
+
+
+});
+
+//------- parts
 
 $(document).ready(function() {
     
@@ -993,7 +1142,7 @@ $(add_button).click(function(e)
     e.preventDefault();
     if(x < max_fields){ 
         x++; 
-        $(wrapper).append('<tr id="addmore_part'+x+'"><td><input class="form-control" name="part_name[]"></td><td><input type="number" class="form-control" name="qty[]" value="0"></td><td><i class="fa fa-trash" onclick="removeme(addmore_part'+x+')"></td></tr>'); 
+        $(wrapper).append('<tr id="addmore_part'+x+'"><td><select name="assembly[]" class="form-control"><option disabled="disabled" selected="selected">Select</option><?php echo $assembly;?></select></td><td><input class="form-control" name="part_name[]"></td><td><input type="number" class="form-control" name="qty[]" value="0"></td><td><i class="fa fa-trash" onclick="removeme(addmore_part'+x+')"></td></tr>'); 
         }
     else
     {alert("Sorry, you can add only 50 Items in this segment");}
@@ -1108,6 +1257,33 @@ $(document).ready(function() {
         if(x < max_fields){ 
             x++; 
             $(wrapper).append('<tr id="addmore_handware'+x+'"><td>'+x+'</td><td><select name="hardware_id[]" class="hardware form-control"><option disabled="disabled" selected="selected">Select</option><?php echo $hard;?></select></td><td><input type="number" name="price[]" class="form-control"></td><td><input type="number" value="0" name="qty[]" class="form-control"></td><td><input type="number" name="total[]" value="0" class="form-control"></td><td><i class="fa fa-trash" onclick="removeme(addmore_handware'+x+')"></td></tr>'); 
+            }
+        else
+        {alert("Sorry, you can add only 5 Items in this segment");}
+    
+        $('.hardware').select2();
+    });
+    
+    
+    
+    });
+
+    //----------- packing material
+
+    $(document).ready(function() {
+    
+    var max_fields      = 20; //maximum input boxes allowed
+    var wrapper         =  $("#add_p_materialdiv"); //Fields wrapper
+    var add_button      =  $("#add_p_material"); //Add button ID
+    var x = 0; //initlal text box count
+        
+    
+    $(add_button).click(function(e)
+    { //on add input button click
+        e.preventDefault();
+        if(x < max_fields){ 
+            x++; 
+            $(wrapper).append('<tr id="add_p_materialrow'+x+'"><td>'+x+'</td><td><select name="packing_material[]" class="form-control"><option disabled="disabled" selected="selected">Select</option><?php echo $packing_material;?></select></td><td><input type="number" value="0" name="qty[]" class="form-control"></td><td><i class="fa fa-trash" onclick="removeme(add_p_materialrow'+x+')"></td></tr>'); 
             }
         else
         {alert("Sorry, you can add only 5 Items in this segment");}

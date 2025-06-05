@@ -655,6 +655,7 @@ private $db_handle;
     //------ yield 
     function get_wood_yield($wood,$type,$value)
     {
+        
         //.-- get wood name from products_material
         $mtype=$this->get_material_byid($wood);
         $mid=$mtype[0]['mid'];
@@ -740,6 +741,13 @@ private $db_handle;
         return $yield;
     }
 
+    function get_unit_kg_wood($woodname,$pillar_size_converted)
+    {
+        $stock_unit = $woodname.' '.$pillar_size_converted;
+        $query="SELECT * FROM `products_material_group` WHERE stock_unit = '$stock_unit' "; 
+        $result = $this->db_handle->runBaseQuery($query);
+        return $result;
+    }
     
 }
 ?>
