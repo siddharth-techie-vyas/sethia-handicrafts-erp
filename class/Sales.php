@@ -217,7 +217,7 @@ function rfq_step0_5_material($sid,$pid,$capability,$remark)
 
 function get_temp_item_material($sid,$pid)
 {
-    $query="select * from  sales_rfq_items_material where sid = '$sid' AND pid='$pid' ";
+   echo $query="select * from  sales_rfq_items_material where sid = '$sid' AND pid='$pid' ";
     $result = $this->db_handle->runBaseQuery($query);
     return $result;
 }
