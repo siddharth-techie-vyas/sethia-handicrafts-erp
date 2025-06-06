@@ -489,7 +489,7 @@ private $db_handle;
     
     function get_capability_byid($id)
     {
-        $sql = "SELECT * FROM products_capability where id='$id' ";
+       echo $sql = "SELECT * FROM products_capability where id='$id' ";
         $result = $this->db_handle->runBaseQuery($sql);
         return $result; 
         
