@@ -351,7 +351,7 @@ private $db_handle;
     
     function get_material_bycapability_child($capability,$mid)
     {
-        $sql = "SELECT * FROM products_material where capabilities='$capability' AND mid='$mid' ORDER BY id ASC";
+       echo $sql = "SELECT * FROM products_material where capabilities='$capability' AND mid='$mid' ORDER BY id ASC";
         $result = $this->db_handle->runBaseQuery($sql);
         return $result; 
         
