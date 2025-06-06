@@ -686,8 +686,9 @@ private $db_handle;
     //             LIMIT 1";  
 
    
-
-        $query="select * from products_material_yield where wood_name LIKE '$wood_main%'  AND type = '$type' ORDER BY ABS(min_mm - '$value') LIMIT 1";
+    //$query="select * from products_material_yield where wood_type = '$wood_main' AND type = '$type' AND  min_mm = $value OR max_mm < $value) LIMIT 1";
+        $query="select * from products_material_yield where wood_type = '$wood_main' AND type = '$type' AND $value BETWEEN min_mm AND max_mm LIMIT 1";
+//        $query="select * from products_material_yield where wood_name LIKE '$wood_main%'  AND type = '$type' ORDER BY ABS(min_mm - '$value') LIMIT 1";
         $result = $this->db_handle->runBaseQuery($query);
         return $result;
     }

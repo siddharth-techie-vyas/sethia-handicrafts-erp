@@ -1469,27 +1469,57 @@ case "sales":
 							echo "<div class='alert alert-success'>Material Saved Successfully !!!</div>";
 				}
 
+				if($_GET['query']=='step3-1-estimator')
+				{
+					$finalval = array();
+					$assembly = $_POST['assembly'];
+					$assembly_qty = $_POST['assembly_qty'];										
+					foreach($assembly as $key=>$v)
+					{
+						$val = array (
+							"assembly"=>$assembly[$key],
+							"assembly_qty"=>$assembly_qty[$key]
+							);
+
+						array_push($finalval,$val);
+					}
+					$part_details = json_encode($finalval);
+					$get=$sales->save_assembly_estimator($part_details,$_POST['id']);
+					echo "<div class='alert alert-success'>Assembly Part Saved Successfully !!!</div>";
+				}
+
 				if($_GET['query']=='step3-estimator')
 				{
 					$finalval = array();
+					$assembly = $_POST['assembly'];
 					$part = $_POST['part_name'];
 					$qty = $_POST['qty'];
-					if(isset($_POST['length'])) {$length = $_POST['length'];}else{$length=0;}
-					if(isset($_POST['width'])) {$width = $_POST['width'];}else{$width=0;}
-					if(isset($_POST['height'])) {$height = $_POST['height'];}else{$height=0;}
-					if(isset($_POST['total'])) {$total = $_POST['total'];}else{$total=0;}
-					if(isset($_POST['wood'])) {$wood = $_POST['wood'];}else{$wood='';}
+					$length0 = $_POST['length'];
+					$width0 = $_POST['width'];
+					$height0 = $_POST['height'];
+					$total0 = $_POST['total'];
+					$wood0 = $_POST['wood'];
+
+					
 					
 					foreach($part as $key=>$v)
 					{
+						//-- if blank
+						if(!empty($length0[$key])) {$length = $length0[$key];}else{$length=0;}
+						if(!empty($width0[$key])) {$width = $width0[$key];}else{$width=0;}
+						if(!empty($height0[$key])) {$height = $height0[$key];}else{$height=0;}
+						if(!empty($total0[$key])) {$total = $total0[$key];}else{$total=0;}
+						if(!empty($wood0[$key])) {$wood = $wood0[$key];}else{$wood=0;}
+
 						$val = array (
+							"assembly"=>$assembly[$key],
 							"part_name"=>$part[$key],
 							"qty"=>$qty[$key],
-							"length"=>$length[$key],
-							"width"=>$width[$key],
-							"height"=>$height[$key],
-							"wood"=>$wood[$key],
-							"total"=>$total[$key]);
+							"length"=>$length,
+							"width"=>$width,
+							"height"=>$height,
+							"wood"=>$wood,
+							"total"=>$total);
 
 						array_push($finalval,$val);
 					}
@@ -1503,9 +1533,10 @@ case "sales":
 					$key = $_GET['id'];
 					$items=$sales->sales_rfq_items_item($_GET['sid']);
 					$part = json_decode($items[0]['part']);
-					$search = $part[$key];
 					unset($part[$key]);
 					//--- update unset array
+					$part = json_encode($part);
+					$get=$sales->save_part_estimator($part,$_GET['sid']);
 				}
 
 				if($_GET['query']=='step-hardware-estimator')
@@ -1623,8 +1654,6 @@ case "sales":
 					$cbm = $_POST['cbm'];
 					$labour_cost = $_POST['labour_cost'];
 					$total = $_POST['total'];
-
-					
 						$val = array (
 							"length"=>$length,
 							"width"=>$width,
@@ -1666,22 +1695,36 @@ case "sales":
 
 				if($_GET['query']=='step9-estimator')
 				{
+					print_r($_POST);
 					$finalval = array();
 
 					$case = $_POST['case'];
 					$kg = $_POST['kg'];
 					foreach($case as $key=>$v)
 					{
+						//-- if packing material 
+						$packing_material=array();
+						if(isset($_POST['packing_material'.[$key]]))
+						{
+							$material = $_POST['packing_material'.[$key]];
+							$packing_qty= $_POST['qty'.[$key]];
+							array_push($packing_material,array("material"=>$material,"qty"=>$packing_qty));
+						}
+						$packing_material0=implode(',',$packing_material);
+
+						$parts =$_POST['part_name'.$case[$key]];
 						$val = array (
 							"case"=>$case[$key],
-							"kg"=>$kg[$key]
+							"kg"=>$kg[$key],
+							"part_name"=>implode(',',$parts),
+							"packing_material"=>$packing_material0
 							);
 
 						array_push($finalval,$val);
 					}
-					$part_details = json_encode($finalval);
+					echo $part_details = json_encode($finalval);
 					$get=$sales->save_logistics_estimator($part_details,$_POST['id']);
-					echo "<div class='alert alert-secondary'>Case Saved Successfully !!!</div>";
+					echo "<div class='alert alert-secondary'>Logistics Saved Successfully !!!</div>";
 				}
 
 				

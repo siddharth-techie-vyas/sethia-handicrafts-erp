@@ -338,7 +338,7 @@ $itemtype=$items[0]['item_type'];
                                     {
                                     foreach($part_details as $r=>$v)
                                         {
-                                            echo "<tr id='".$r."'>";
+                                            echo "<tr id='".$r.'&sid='.$items[0]['id']."'>";
                                             echo "<td>";
                                             //-- dimensions and material 
                                             echo "<input type='hidden' name='length[]' value='".$v->length."'>";
@@ -955,7 +955,8 @@ $itemtype=$items[0]['item_type'];
                                             $pillar_w = number_format((float)$wood_yield_w[0]['thickness'], 0, '.', '');
                                             $pillar_h = number_format((float)$wood_yield_h[0]['thickness'], 2, '.', '');
                                             $pillar_size_converted=$pillar_l."ft x ".$pillar_w."in x ".$pillar_h."in";
-
+                                            
+                                            //-rm qty
                                             $rm_qty = $cv->qty*$wood_yield_l[0]['thickness_stack']*$wood_yield_w[0]['thickness_stack']*$wood_yield_h[0]['thickness_stack'];
                                             $rm_qty_total += $rm_qty;
 
@@ -1013,7 +1014,7 @@ $itemtype=$items[0]['item_type'];
                                             echo "<td></td>";
                                             echo "<td></td>";
                                             echo "<th>".$rm_qty_total."</th>";
-                                            echo "<th></th>";
+                                            echo "<th>".$comp_cft_total."</th>";
                                             echo "<th></th>";
                                             echo "<th></th>";
                                             echo "<th></th>";
