@@ -1097,8 +1097,15 @@ foreach($pmaterial as $pp=>$v){
 }
 
 //-- assembly dropdown
+if(!empty($assembly_details))
+{
 foreach ($assembly_details as $as=>$av) {
     $assembly .= '<option value="'.$av->assembly.'">'.$av->assembly.'</option>';
+}
+}
+else
+{
+    $assembly .= '<option value="" disabled="disabled">-No Assembly Found-</option>';
 }
 ?>
 <script type="text/javascript">
