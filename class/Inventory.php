@@ -141,7 +141,7 @@ private $db_handle;
 
     function getone_gallery($id)
     {
-         $sql = "select *  FROM products_gallery where pid = '$id' ";
+       echo  $sql = "select *  FROM products_gallery where pid = '$id' ";
         $result = $this->db_handle->runBaseQuery($sql);
         return $result;
     }
@@ -351,7 +351,7 @@ private $db_handle;
     
     function get_material_bycapability_child($capability,$mid)
     {
-       echo $sql = "SELECT * FROM products_material where capabilities='$capability' AND mid='$mid' ORDER BY id ASC";
+        $sql = "SELECT * FROM products_material where capabilities='$capability' AND mid='$mid' ORDER BY id ASC";
         $result = $this->db_handle->runBaseQuery($sql);
         return $result; 
         

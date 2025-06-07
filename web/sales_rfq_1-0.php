@@ -30,7 +30,7 @@
          
             $sku=$product->getone($items[$row]['pid']);
             $cat=$product->get_category_one($sku[0]['cat']);
-            $gallery=$product->getone_gallery($items[$row]['pid']);
+            $gallery=$product->getone_gallery($sku[0]['id']);
             $itemtype=$items[$row]['item_type'];
 
 
