@@ -47,7 +47,7 @@
           <?php 
             $sku=$product->getone($items[$row]['pid']);
                 echo $sku[0]['sku'].'<br>';
-                echo '<small class="text-secondary">'.$sku[0]['product_name'].'</small>';
+                echo '<small class="text-secondary">'.$sku[0]['productname'].'</small>';
            
             ?>
             <br>
