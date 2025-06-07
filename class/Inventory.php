@@ -141,7 +141,7 @@ private $db_handle;
 
     function getone_gallery($id)
     {
-       echo  $sql = "select *  FROM products_gallery where pid = '$id' ";
+         $sql = "select *  FROM products_gallery where pid = '$id' ";
         $result = $this->db_handle->runBaseQuery($sql);
         return $result;
     }
