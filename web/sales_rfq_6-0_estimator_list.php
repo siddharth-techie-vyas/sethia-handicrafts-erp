@@ -1073,9 +1073,12 @@ foreach($upwork as $k=>$v){
     $upw .= '<option value="'.$upwork[$k]['col1'].'">'.$upwork[$k]['col2'].'</option>';
     //-- get child material
     $upchild = $product->get_material_bycapability_child('3',$upwork[$k]['col1']);
-    foreach($upchild as $k1=>$v1){
-        $upw .= '<option value="'.$upchild[$k1]['id'].'"> - '.$upchild[$k1]['material_name'].'</option>';
-    }
+    if($upchild)
+    {
+        foreach($upchild as $k1=>$v1){
+            $upw .= '<option value="'.$upchild[$k1]['id'].'"> - '.$upchild[$k1]['material_name'].'</option>';
+        }
+    }    
 }
 
 //---  hardware list
