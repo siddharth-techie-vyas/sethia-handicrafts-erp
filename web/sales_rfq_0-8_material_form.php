@@ -60,7 +60,9 @@ $mtype=$product->get_material_unique();
                     <!-- form ends--->
 
       
-                    <?php $cap=$product->get_capability();
+                    <?php 
+                    $caps='';
+                    $cap=$product->get_capability();
                     foreach($cap as $r=>$v){
                         $caps .= '<option value="'.$cap[$r]['id'].'">'.$cap[$r]['capability'].'</option>';
                     }?>
@@ -79,7 +81,7 @@ $(add_button).click(function(e)
     e.preventDefault();
     if(x < max_fields){ 
         x++; 
-        $(wrapper).append('<tr id="'+x+'"><td><select class="form-control" name="capability[]"><option>-Select-</option></option><?php echo $caps;?></select></td><td><input type="text" class="form-control" name="remark[]" value=""></td><td><i class="fa fa-trash" onclick="removeme('+x+')"></td></tr>'); 
+        $(wrapper).append('<tr id="addmore_services'+x+'"><td><select class="form-control" name="capability[]"><option>-Select-</option></option><?php echo $caps;?></select></td><td><input type="text" class="form-control" name="remark[]" value=""></td><td><i class="fa fa-trash" onclick="removeme('+x+')"></td></tr>'); 
         }
     else
     {alert("Sorry, you can add only 50 Items in this segment");}
@@ -94,7 +96,7 @@ $(add_button).click(function(e)
 function removeme(x)
 {
   //alert(x);
-  $('#addmore_tr'+x).remove();
+  $('#addmore_services'+x).remove();
     //get_subtotal(x);
 }  
 </script>
