@@ -925,9 +925,13 @@ $itemtype=$items[0]['item_type'];
                                             $comp_cft_total=0;
                                             $rm_cost_total=0;
                                             $rm_yield_total=0;
+                                            //-- counter 
+                                            $wcounter=0;
+                                            $wcounter_array = array();
                                         
                                         foreach($part_details as $cs=>$cv)
-                                        {   if(!empty(($cv->wood)))
+                                        {   
+                                            if(!empty(($cv->wood)))
                                             {
                                             //-- get wood type
                                             $wood_type = $product->get_material_byid($cv->wood);
@@ -966,7 +970,18 @@ $itemtype=$items[0]['item_type'];
                                             //-- comp cft 
                                             $comp_cft = $rm_qty*$rm_cft ;
                                             $comp_cft=number_format((float)$comp_cft, 2, '.', '');
+                                            array_push($wcounter_array,$comp_cft);
+
                                             $comp_cft_total += $comp_cft;
+                                                    //-- check if board / wood
+                                                    if (str_contains($wood_yield_h[0]['wood_type'], 'Board')) { 
+                                                            $board_cft += $comp_cft;
+                                                        }
+                                                    else
+                                                        {
+                                                            $wood_cft += $comp_cft;
+                                                        }
+
                                             //-- rm rate 
                                             $rm_rate = $product->get_rm_rate($wood_type[0]['material_name'],$rm_group[0]['rate_group']);
                                             $rm_rate_total += $rm_rate;
@@ -978,9 +993,12 @@ $itemtype=$items[0]['item_type'];
                                             $rm_yield_total += $yield;
                                             
 
-                                            
+                                            //-- part_sq_ft
+                                            $part_sq_feet = (($cv->length*$cv->width)/1000000)*10.764;
+                                            $part_sq_feet_total += $part_sq_feet;
                                             //-- unit weight  kg
                                             $unit_kg=$product->get_unit_kg_wood($wood_type[0]['material_name'],$pillar_size_converted);
+
 
                                             echo "<tr>";
                                                 echo "<td>".$cv->part_name."</td>";
@@ -989,21 +1007,22 @@ $itemtype=$items[0]['item_type'];
                                                 echo "<td>".$cv->width."</td>";
                                                 echo "<td>".$cv->height."</td>";
                                                 echo "<td>".$cv->qty."</td>";
-                                                echo "<td>".$pillar_size_converted."</td>";
+                                                echo "<td>".$wood_yield_h[0]['wood_type'].' '.$pillar_size_converted."</td>";
                                                 echo "<td>".$rm_qty."</td>";
                                                 echo "<td>".$comp_cft."</td>";
                                                 echo "<td>".$rm_rate."</td>";
                                                 echo "<td>".$rm_cost."</td>";
                                                 echo "<td>".$yield."</td>";
-                                                echo "<td></td>";
-                                                echo "<td></td>";
-                                                echo "<td></td>";
-                                                echo "<td></td>";
-                                                echo "<td></td>";
+                                                echo "<td id='per_wood$wcounter'></td>";
+                                                echo "<td>".$wood_yield_l[0]['thickness_stack']."</td>";
+                                                echo "<td>".$wood_yield_w[0]['thickness_stack']."</td>";
+                                                echo "<td>".$wood_yield_h[0]['thickness_stack']."</td>";
+                                                echo "<td>".$part_sq_feet."</td>";
                                                 echo "<td>".$unit_kg[0]['weight']."</td>";
                                                 echo "<td></td>";
                                                 echo "<td></td>";
                                             echo "</tr>";
+                                            $wcounter++;
                                         }}
                                         echo "<tr>";
                                             echo "<td></td>";
@@ -1015,17 +1034,32 @@ $itemtype=$items[0]['item_type'];
                                             echo "<td></td>";
                                             echo "<th>".$rm_qty_total."</th>";
                                             echo "<th>".$comp_cft_total."</th>";
+                                            echo "<th><small>";
+                                                    echo "Board:-".$board_cft;
+                                                    echo "<br>";
+                                                    echo "Wood:-".$wood_cft;
+                                            echo "</small></th>";
                                             echo "<th></th>";
                                             echo "<th></th>";
-                                            echo "<th></th>";
                                             echo "<td></td>";
                                             echo "<td></td>";
                                             echo "<td></td>";
                                             echo "<td></td>";
+                                            echo "<th>".$part_sq_feet_total."</th>";
                                             echo "<td></td>";
                                             echo "<td></td>";
                                             echo "<td></td>";
                                         echo "</tr>";
+
+                                        //-- js function to add % comp for each wood
+                                        $w2counter=0;
+                                        foreach($part_details as $cs=>$cv)
+                                        {
+                                            $cft_value = $wcounter_array[$w2counter];
+                                            //$cft_final = $cft_value/$comp_cft_total;
+                                            echo "<script>$('#per_wood$w2counter').html('".$cft_value."%');</script>";
+                                            $w2counter++;
+                                        }
                                         ?>
                                         </table>
                                         
