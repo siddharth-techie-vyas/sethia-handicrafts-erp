@@ -782,7 +782,11 @@ $itemtype=$items[0]['item_type'];
                                         <th>Case</th>
                                         <th>Parts Name</th>
                                         <th>Kg</th>
-                                        <th>Packing Material</th>
+                                        <th>Box Type</th>
+                                        <th>Product Nature</th>
+                                        <th>Scratch Protect</th>
+                                        <th>Delivery Method</th>
+                                        <th>BOM Update Stage</th>
                                     </tr>
                                     <?php
                                     $case_nu = json_decode($items[0]['packing2']);
@@ -845,10 +849,12 @@ $itemtype=$items[0]['item_type'];
                                                      echo "<input type='number' name='kg[]' class='form-control' value='".$logitics0[$r1]['kg']."'>";   
                                                 echo "</td>";
                                                 ?>
-                                                <td>
-                                                    <div id="add_p_materialdiv"></div>
-                                                    <input type="button" name="add_p_material" id="add_p_material" class="btn btn-warning btn-xs" value="Add Packing Material">
-                                                </td>
+                                                <td><input type="text" name="box_type[]" class="form-control" value=""></td>
+                                                <td><input type="text" name="box_type[]" class="form-control" value=""></td>
+                                                <td><input type="text" name="box_type[]" class="form-control" value=""></td>
+                                                <td><input type="text" name="box_type[]" class="form-control" value=""></td>
+                                                <td><input type="text" name="box_type[]" class="form-control" value=""></td>
+
                                                 <?php 
                                             echo "</tr>";
 
