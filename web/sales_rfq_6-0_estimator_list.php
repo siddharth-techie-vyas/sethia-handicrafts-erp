@@ -1146,11 +1146,11 @@ $itemtype=$items[0]['item_type'];
                                         ?>
                                         </table>
 
-                                        <hr id="summaryhr">  
-                                        <h4>Packing Sheet</h4> 
+                                       
                                         <?php 
                                         if($items[0]['packing2'] !='')
                                         {
+                                            $packing_details_byfn=array();
                                             $packing_details21=array();
                                             $packing_details2 = json_decode($items[0]['packing2']);
                                             foreach($packing_details2 as $r=>$v)
@@ -1166,6 +1166,8 @@ $itemtype=$items[0]['item_type'];
                                             }
                                             
                                             ?>
+                                            <hr id="summaryhr">  
+                                            <h4>Packing Sheet</h4> 
                                             <table id="packingsheet">
                                                 <tr>
                                                     <th>BOX#</TH>
@@ -1186,6 +1188,12 @@ $itemtype=$items[0]['item_type'];
                                             <?php 
                                                 foreach($case_nu as $r1=>$v1)
                                                 {
+                                                    //--call packing function and get all values in an array 
+                                                    $packingfr=$sales->packing_cost_function($v1->case,$logitics0[$r1]['box_type'],$packing_details21[$r1]['length'],$packing_details21[$r1]['width'],$packing_details21[$r1]['height'],$logitics0[$r1]['kg'],$logitics0[$r1]['product_nature'],$logitics0[$r1]['scratch_protect'],$logitics0[$r1]['delivery_method']);
+                                                    //-- put all into the array
+                                                    array_push($packing_details_byfn,$packingfr);
+                                                    
+
                                                     echo "<tr>";
                                                         echo "<th>".$v1->case."</th>";
                                                         echo "<td>".$logitics0[$r1]['assembly']."</td>";
@@ -1227,7 +1235,8 @@ $itemtype=$items[0]['item_type'];
                                                 {
                                                     echo "<tr>";
                                                         echo "<th>".$v1->case."</th>";
-                                                        
+                                                        echo "<td>".$packing_details_byfn[$r1]['cartoon_spec']."</td>";
+                                                        echo "<td>".$packing_details_byfn[$r1]['cartoon_sq_mtr']."</td>";
                                                     echo "</tr>";
                                                 }
                                         ?>

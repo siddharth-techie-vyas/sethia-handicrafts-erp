@@ -482,6 +482,67 @@ function save_hardware_estimator($part_details,$id)
     return $update0;
 }
 
+function step8_estimator1_logistics($part_details,$id)
+{
+    $update0="update  sales_rfq_items SET logistics='$part_details' where id='$id' ";
+    $update0 = $this->db_handle->update($update0); 
+    return $update0;
+}
 
+function packing_cost_function($case,$box_type,$length,$width,$height,$kg,$product_nature,$scratch_protect,$delivery_method)
+{
+    //-- weight class
+    if($kg<13.6){$weight_class='1';}
+    elseif($kg>90*0.9){$weight_class='6';}
+    elseif($kg>27.2*0.9){$weight_class='6';}
+    elseif($kg>45.4*0.9){$weight_class='6';}
+    elseif($kg>68.18*0.9){$weight_class='6';}
+    else{$weight_class='5';}
+
+    //-- packing_standard
+    if($delivery_method=='ISTA'){$packing_standard='275 LBS/Sq In';}
+    elseif($delivery_method=='Non-ISTA Parcel'){$packing_standard='220 LBS/Sq In';}
+    elseif($delivery_method=='Ftl?Fct Worthy'){$packing_standard='180 LBS/Sq In';}
+    else{$packing_standard='N/A';}
+
+    //-- cartoon_spec ply
+    if($weight_class<3){$cartoon_spec='5 Ply';}
+    else{$cartoon_spec='7 Ply';}//- harware box to check to do
+    
+    //-- edge protector
+    if($edge_protector<3){$edge_protector='19';}
+    else{$edge_protector=($weight_class-2)*6.35+19;}
+
+    //-- wrap thickness
+    if($scratch_protect=='Low'){$wrap_thickness='1';}
+    elseif($scratch_protect=='Medium'){$wrap_thickness='2';}
+    elseif($scratch_protect=='Medium'){$wrap_thickness='2';}
+    else{$wrap_thickness='3';}
+    
+    //--cartoon sq mtr
+    if($box_type=='Regular Cartoon')
+    {$cartoon_sq_mtr=($length+$width)+50 * ($width+$height) * 2 / 1000000;}
+    elseif($box_type=='Double Flap Carton')
+    {$cartoon_sq_mtr=($length+$width)+50 * ($width+$height) * 2 / 1000000;}
+    else
+    {$cartoon_sq_mtr=($length+$width) * ($width+$height)  / 1000000;}
+
+
+    $result=array();
+    $result['case']=$case;
+    $result['weight_class']=$weight_class;
+    $result['cartoon_spec']=$cartoon_spec;
+    $result['packing_standard']=$packing_standard;
+    $result['edge_protector']=$edge_protector;
+    $result['wrap_thickness']=$wrap_thickness;
+    $result['cartoon_sq_mtr']=$cartoon_sq_mtr;
+    // $result['product_nature']=$product_nature;
+    // $result['scratch_protect']=$scratch_protect;
+    // $result['delivery_method']=$delivery_method;
+    // $result['weight_class']=$weight_class;
+    // $result['packing_standard']=$packing_standard;
+    // $result['cartoon_spec']=$cartoon_spec;
+    return $result;
+}
 //=========== end 
 }?>
