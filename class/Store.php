@@ -347,6 +347,13 @@ function get_item_bycat($cat)
     return $material;
 }
 
+function get_item_bysubcat($subcat)
+{
+    $select="select * from store_item where subcat='$subcat' ";
+    $material = $this->db_handle->runBaseQuery($select);
+    return $material;
+}
+
 function delete_item($id)
 {
     $sql="delete from store_item where id='$id'";
