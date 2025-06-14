@@ -578,13 +578,21 @@ function packing_cost_function($case,$box_type,$length,$width,$height,$kg,$produ
 
     //-- edge protector wall3
     if($minlwh < 100)
-    {$edge_protector_wall3=4;}
+    {
+        $edge_protector_wall3=$edgelength/800;
+        $edge_protector_wall2=round($edge_protector_wall2);
+        $edge_protector_wall2=$edge_protector_wall2-4;
+    }
     else
     {$edge_protector_wall3=0;}//- harware box to check to do
 
     //-- edge protector wall2
     if($minlwh < 100)
-    {$edge_protector_wall2=8;}
+    {
+        $edge_protector_wall2=$edgelength*3*8/75;
+        $edge_protector_wall2=round($edge_protector_wall2);
+        $edge_protector_wall2=$edge_protector_wall2/450;
+    }
     else
     {$edge_protector_wall2=0;}//- harware box to check to do
 
