@@ -814,7 +814,7 @@ $itemtype=$items[0]['item_type'];
                                     {
                                   
 
-                                         foreach($case_nu as $r1=>$v1)
+                                        foreach($case_nu as $r1=>$v1)
                                         {
                                             //-- change parts into array from comma delimit / used assembly on place of part
                                             $parts=explode(',',$logitics0[$r1]['assembly']);
@@ -845,8 +845,13 @@ $itemtype=$items[0]['item_type'];
                                                         <?php 
                                                         $cartoon=$store->get_item_bysubcat('30');
                                                         foreach($cartoon as $c=>$v){
+                                                            $selected0='';
+                                                            if($cartoon[$c]['product_name']==$logitics0[$r1]['box_type'])
+                                                            {
+                                                                $selected0='selected="selected"';
+                                                            }
                                                         ?>
-                                                        <option><?php echo $cartoon[$c]['product_name'];?></option>
+                                                        <option <?php echo $selected0;?>><?php echo $cartoon[$c]['product_name'];?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </td>
@@ -872,8 +877,13 @@ $itemtype=$items[0]['item_type'];
                                                         <?php 
                                                         $delivery_method=$admin->get_metaname_byvalue1('logistics_meta','delivery_method');
                                                         foreach($delivery_method as $c=>$v){
+                                                            $selected='';
+                                                            if($logitics0[$r1]['delivery_method']==$delivery_method[$c]['value2'])
+                                                            {
+                                                                $selected='selected="selected"';
+                                                            }
                                                         ?>
-                                                        <option><?php echo $delivery_method[$c]['value2'];?></option>
+                                                        <option <?php echo $selected;?>><?php echo $delivery_method[$c]['value2'];?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </td>
@@ -883,8 +893,13 @@ $itemtype=$items[0]['item_type'];
                                                         <?php 
                                                         $scratch_protect=$admin->get_metaname_byvalue1('logistics_meta','scratch_protect');
                                                         foreach($scratch_protect as $c=>$v){
+                                                            $selected='';
+                                                            if($logitics0[$r1]['scratch_protect']==$scratch_protect[$c]['value2'])
+                                                            {
+                                                                $selected='selected="selected"';
+                                                            }
                                                         ?>
-                                                        <option><?php echo $scratch_protect[$c]['value2'];?></option>
+                                                        <option <?php echo $selected;?>><?php echo $scratch_protect[$c]['value2'];?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </td>
@@ -894,8 +909,13 @@ $itemtype=$items[0]['item_type'];
                                                         <?php 
                                                         $bom_update_stage=$admin->get_metaname_byvalue1('logistics_meta','bom_update_stage');
                                                         foreach($bom_update_stage as $c=>$v){
+                                                            $selected='';
+                                                            if($logitics0[$r1]['scratch_protect']==$scratch_protect[$c]['value2'])
+                                                            {
+                                                                $selected='selected="selected"';
+                                                            }
                                                         ?>
-                                                        <option><?php echo $bom_update_stage[$c]['value2'];?></option>
+                                                        <option <?php echo $selected;?>><?php echo $bom_update_stage[$c]['value2'];?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </td>
@@ -926,7 +946,7 @@ $itemtype=$items[0]['item_type'];
 
                         <div class="tab-pane" id="Summary" role="tabpanel">
 							<div class="p-15">
-                                <h4>Cost Sheet</h4>
+                                
                                 <div class="row" style="overflow-x: scroll">
                                     <style>
                                         #costsheet{width:100%; border:1px solid; color:#000;}   
@@ -938,9 +958,21 @@ $itemtype=$items[0]['item_type'];
                                         }
                                         #costsheet th{min-width:40px; border:1px solid;}
                                         #costsheet td{min-width:40px; border:1px solid;}
+
+                                        #packingsheet{width:100%; border:1px solid; color:#080808;}   
+                                        #packingsheet tr th{
+                                            font-size:12px; background-color:#000; color:#c96; padding:2px;
+                                        }
+                                        #packingsheet tr td{
+                                            font-size:10px; padding:2px;
+                                        }
+                                        #packingsheet th{min-width:40px; border:1px solid;}
+                                        #packingsheet td{min-width:40px; border:1px solid;}
+
+                                        #summaryhr{margin:8px 0px; border:0.5px solid #000; width:100%;}
                                     </style>
                                    
-                                    <hr>   
+                                    <h4>Cost Sheet</h4>  
                                     <table id="costsheet">
                                         <tr>
                                             <th>Part Name</th>
@@ -1111,6 +1143,64 @@ $itemtype=$items[0]['item_type'];
                                             echo "<script>$('#per_wood$w2counter').html('".$cft_value."%');</script>";
                                             $w2counter++;
                                         }
+                                        ?>
+                                        </table>
+
+                                        <hr id="summaryhr">  
+                                        <h4>Packing Sheet</h4> 
+                                        <?php 
+                                        $packing_details21=array();
+                                        $packing_details2 = json_decode($items[0]['packing2']);
+                                        foreach($packing_details2 as $r=>$v)
+                                        {
+                                            $val = array (
+                                                "case"=>$v->case,
+                                                "length"=>$v->length,
+                                                "width"=>$v->width,
+                                                "height"=>$v->height
+                                                );
+                    
+                                            array_push($packing_details21,$val);
+                                        }
+                                        
+                                        ?>
+                                        <table id="packingsheet">
+                                            <tr>
+                                                <th>BOX#</TH>
+                                                <TH>PART DESCRIPTION</TH>
+                                                <TH>Box Type</TH>
+                                                <TH>Inner L mm</TH>
+                                                <TH>Inner W mm</TH>
+                                                <TH>Inner H mm (Flute Direction non-opening side)</TH>
+                                                <TH>Net Weight Kg</TH>
+                                                <TH>PRODUCT/BOX</TH>
+                                                <TH>PRODUCT NATURE</TH>
+                                                <TH>SCRATCH PROTECT</TH>
+                                                <TH>DELIVERY METHOD</TH>
+                                                <TH>Carton L mm</TH>
+                                                <TH>Carton W mm</TH>
+                                                <TH>Carton H mm</th>
+                                            </tr>
+                                         <?php 
+                                            foreach($case_nu as $r1=>$v1)
+                                            {
+                                                echo "<tr>";
+                                                    echo "<th>".$v1->case."</th>";
+                                                    echo "<td>".$logitics0[$r1]['assembly']."</td>";
+                                                    echo "<td>".$logitics0[$r1]['box_type']."</td>";
+                                                    echo "<td>".$packing_details21[$r1]['length']."</td>";
+                                                    echo "<td>".$packing_details21[$r1]['width']."</td>";
+                                                    echo "<td>".$packing_details21[$r1]['height']."</td>";
+                                                    echo "<td>".$logitics0[$r1]['kg']."</td>";
+                                                    echo "<td></td>";
+                                                    echo "<td>".$logitics0[$r1]['product_nature']."</td>";
+                                                    echo "<td>".$logitics0[$r1]['scratch_protect']."</td>";
+                                                    echo "<td>".$logitics0[$r1]['delivery_method']."</td>";
+                                                    echo "<td>".$logitics0[$r1]['carton_l']."</td>";
+                                                    echo "<td>".$logitics0[$r1]['carton_w']."</td>";
+                                                    echo "<td>".$logitics0[$r1]['carton_h']."</td>";
+                                                echo "</tr>";
+                                            }
                                         ?>
                                         </table>
                                         
