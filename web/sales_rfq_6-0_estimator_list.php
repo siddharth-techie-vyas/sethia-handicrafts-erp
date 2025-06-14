@@ -949,7 +949,7 @@ $itemtype=$items[0]['item_type'];
                                 
                                 <div class="row" style="overflow-x: scroll">
                                     <style>
-                                        #costsheet{width:100%; border:1px solid; color:#000;}   
+                                        #costsheet{width:100%; border:1px solid; color:#000; margin:5px 0px;}   
                                         #costsheet tr th{
                                             font-size:12px; background-color:#000; color:#FFF; padding:2px;
                                         }
@@ -959,7 +959,7 @@ $itemtype=$items[0]['item_type'];
                                         #costsheet th{min-width:40px; border:1px solid;}
                                         #costsheet td{min-width:40px; border:1px solid;}
 
-                                        #packingsheet{width:100%; border:1px solid; color:#080808;}   
+                                        #packingsheet{width:100%; border:1px solid; color:#080808; margin:5px 0px;}   
                                         #packingsheet tr th{
                                             font-size:12px; background-color:#000; color:#c96; padding:2px;
                                         }
@@ -1192,7 +1192,6 @@ $itemtype=$items[0]['item_type'];
                                                     $packingfr=$sales->packing_cost_function($v1->case,$logitics0[$r1]['box_type'],$packing_details21[$r1]['length'],$packing_details21[$r1]['width'],$packing_details21[$r1]['height'],$logitics0[$r1]['kg'],$logitics0[$r1]['product_nature'],$logitics0[$r1]['scratch_protect'],$logitics0[$r1]['delivery_method']);
                                                     //-- put all into the array
                                                     array_push($packing_details_byfn,$packingfr);
-                                                    
 
                                                     echo "<tr>";
                                                         echo "<th>".$v1->case."</th>";
@@ -1206,9 +1205,9 @@ $itemtype=$items[0]['item_type'];
                                                         echo "<td>".$logitics0[$r1]['product_nature']."</td>";
                                                         echo "<td>".$logitics0[$r1]['scratch_protect']."</td>";
                                                         echo "<td>".$logitics0[$r1]['delivery_method']."</td>";
-                                                        echo "<td>".$logitics0[$r1]['carton_l']."</td>";
-                                                        echo "<td>".$logitics0[$r1]['carton_w']."</td>";
-                                                        echo "<td>".$logitics0[$r1]['carton_h']."</td>";
+                                                        echo "<td>".$packing_details_byfn[$r1]['cartoonlmm']."</td>";
+                                                        echo "<td>".$packing_details_byfn[$r1]['cartoonwmm']."</td>";
+                                                        echo "<td>".$packing_details_byfn[$r1]['cartoonhmm']."</td>";
                                                     echo "</tr>";
                                                 }
                                         ?>
@@ -1237,6 +1236,16 @@ $itemtype=$items[0]['item_type'];
                                                         echo "<th>".$v1->case."</th>";
                                                         echo "<td>".$packing_details_byfn[$r1]['cartoon_spec']."</td>";
                                                         echo "<td>".$packing_details_byfn[$r1]['cartoon_sq_mtr']."</td>";
+                                                        echo "<td></td>";
+                                                        echo "<td>".$packing_details_byfn[$r1]['corner_protector_wall4']."</td>";
+                                                        echo "<td>".$packing_details_byfn[$r1]['corner_protector_wall3']."</td>";
+                                                        echo "<td>".$packing_details_byfn[$r1]['edge_protector_wall3']."</td>";
+                                                        echo "<td>".$packing_details_byfn[$r1]['edge_protector_wall2']."</td>";
+                                                        echo "<td></td>";
+                                                        echo "<td></td>";
+                                                        echo "<td></td>";
+                                                        echo "<td></td>";
+                                                        echo "<td></td>";
                                                     echo "</tr>";
                                                 }
                                         ?>

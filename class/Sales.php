@@ -527,6 +527,68 @@ function packing_cost_function($case,$box_type,$length,$width,$height,$kg,$produ
     else
     {$cartoon_sq_mtr=($length+$width) * ($width+$height)  / 1000000;}
 
+    //-- add mm
+    if($cartoon_spec='5 Ply')
+    {$addmm =6+$edge_protector+$wrap_thickness;}
+    else
+    {$addmm =9+$edge_protector+$wrap_thickness;}
+    
+    //-- cartoon lmm
+    if($addmm==''){$cartoonlmm='';}
+    else{$cartoonlmm=$addmm*$length;}
+
+    //-- cartoon wmm
+    if($addmm==''){$cartoonwmm='';}
+    else{$cartoonwmm=$addmm*$width;}
+
+    //-- cartoon hmm
+    if($addmm==''){$cartoonhmm='';}
+    else{$cartoonhmm=$addmm*$height;}
+
+    //--min of lwh
+    $string = $length.','.$width.','.$height;
+    $workArray = explode(',', $string);
+    $minlwh = min($workArray);
+    
+    //--edge length
+    if($length==''){$edgelength='';}
+    else{
+        $edgelength=$length+$edge_protector+$wrap_thickness;
+        $edgelength=$edgelength*4;
+    }
+
+    //-- area
+    if($length==''){$area='';}
+    else{
+        $area=($length*$width)+($width*$height)+($height*$length) * 2;
+        $area=$area/1000000;
+    }
+
+    //-- corner protector 4
+    if($minlwh < 100)
+    {$corner_protector4=4;}
+    else
+    {$corner_protector4=0;}//- harware box to check to do
+
+    //-- corner protector 3
+    if($minlwh < 100)
+    {$corner_protector3=8;}
+    else
+    {$corner_protector3=0;}//- harware box to check to do
+
+    //-- edge protector wall3
+    if($minlwh < 100)
+    {$edge_protector_wall3=4;}
+    else
+    {$edge_protector_wall3=0;}//- harware box to check to do
+
+    //-- edge protector wall2
+    if($minlwh < 100)
+    {$edge_protector_wall2=8;}
+    else
+    {$edge_protector_wall2=0;}//- harware box to check to do
+
+
 
     $result=array();
     $result['case']=$case;
@@ -536,12 +598,19 @@ function packing_cost_function($case,$box_type,$length,$width,$height,$kg,$produ
     $result['edge_protector']=$edge_protector;
     $result['wrap_thickness']=$wrap_thickness;
     $result['cartoon_sq_mtr']=$cartoon_sq_mtr;
-    // $result['product_nature']=$product_nature;
-    // $result['scratch_protect']=$scratch_protect;
-    // $result['delivery_method']=$delivery_method;
-    // $result['weight_class']=$weight_class;
-    // $result['packing_standard']=$packing_standard;
-    // $result['cartoon_spec']=$cartoon_spec;
+    $result['addmm']=$addmm;
+    $result['cartoonlmm']=$cartoonlmm;
+    $result['cartoonwmm']=$cartoonwmm;
+    $result['cartoonhmm']=$cartoonhmm;
+    $result['minlwh']=$minlwh;
+    $result['edgelength']=$edgelength;
+    $result['area']=$area;
+    $result['corner_protector4']=$corner_protector4;
+    $result['corner_protector3']=$corner_protector3;
+    $result['edge_protector_wall3']=$edge_protector_wall3;
+    $result['edge_protector_wall2']=$edge_protector_wall2;
+    // $result['edgelength']=$edgelength;
+    // $result['edgelength']=$edgelength;
     return $result;
 }
 //=========== end 
