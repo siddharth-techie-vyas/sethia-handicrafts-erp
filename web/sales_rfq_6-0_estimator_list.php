@@ -1149,60 +1149,140 @@ $itemtype=$items[0]['item_type'];
                                         <hr id="summaryhr">  
                                         <h4>Packing Sheet</h4> 
                                         <?php 
-                                        $packing_details21=array();
-                                        $packing_details2 = json_decode($items[0]['packing2']);
-                                        foreach($packing_details2 as $r=>$v)
+                                        if($items[0]['packing2'] !='')
                                         {
-                                            $val = array (
-                                                "case"=>$v->case,
-                                                "length"=>$v->length,
-                                                "width"=>$v->width,
-                                                "height"=>$v->height
-                                                );
-                    
-                                            array_push($packing_details21,$val);
-                                        }
-                                        
-                                        ?>
-                                        <table id="packingsheet">
-                                            <tr>
-                                                <th>BOX#</TH>
-                                                <TH>PART DESCRIPTION</TH>
-                                                <TH>Box Type</TH>
-                                                <TH>Inner L mm</TH>
-                                                <TH>Inner W mm</TH>
-                                                <TH>Inner H mm (Flute Direction non-opening side)</TH>
-                                                <TH>Net Weight Kg</TH>
-                                                <TH>PRODUCT/BOX</TH>
-                                                <TH>PRODUCT NATURE</TH>
-                                                <TH>SCRATCH PROTECT</TH>
-                                                <TH>DELIVERY METHOD</TH>
-                                                <TH>Carton L mm</TH>
-                                                <TH>Carton W mm</TH>
-                                                <TH>Carton H mm</th>
-                                            </tr>
-                                         <?php 
-                                            foreach($case_nu as $r1=>$v1)
+                                            $packing_details21=array();
+                                            $packing_details2 = json_decode($items[0]['packing2']);
+                                            foreach($packing_details2 as $r=>$v)
                                             {
-                                                echo "<tr>";
-                                                    echo "<th>".$v1->case."</th>";
-                                                    echo "<td>".$logitics0[$r1]['assembly']."</td>";
-                                                    echo "<td>".$logitics0[$r1]['box_type']."</td>";
-                                                    echo "<td>".$packing_details21[$r1]['length']."</td>";
-                                                    echo "<td>".$packing_details21[$r1]['width']."</td>";
-                                                    echo "<td>".$packing_details21[$r1]['height']."</td>";
-                                                    echo "<td>".$logitics0[$r1]['kg']."</td>";
-                                                    echo "<td></td>";
-                                                    echo "<td>".$logitics0[$r1]['product_nature']."</td>";
-                                                    echo "<td>".$logitics0[$r1]['scratch_protect']."</td>";
-                                                    echo "<td>".$logitics0[$r1]['delivery_method']."</td>";
-                                                    echo "<td>".$logitics0[$r1]['carton_l']."</td>";
-                                                    echo "<td>".$logitics0[$r1]['carton_w']."</td>";
-                                                    echo "<td>".$logitics0[$r1]['carton_h']."</td>";
-                                                echo "</tr>";
+                                                $val = array (
+                                                    "case"=>$v->case,
+                                                    "length"=>$v->length,
+                                                    "width"=>$v->width,
+                                                    "height"=>$v->height
+                                                    );
+                        
+                                                array_push($packing_details21,$val);
                                             }
+                                            
+                                            ?>
+                                            <table id="packingsheet">
+                                                <tr>
+                                                    <th>BOX#</TH>
+                                                    <TH>PART DESCRIPTION</TH>
+                                                    <TH>Box Type</TH>
+                                                    <TH>Inner L mm</TH>
+                                                    <TH>Inner W mm</TH>
+                                                    <TH>Inner H mm (Flute Direction non-opening side)</TH>
+                                                    <TH>Net Weight Kg</TH>
+                                                    <TH>PRODUCT/BOX</TH>
+                                                    <TH>PRODUCT NATURE</TH>
+                                                    <TH>SCRATCH PROTECT</TH>
+                                                    <TH>DELIVERY METHOD</TH>
+                                                    <TH>Carton L mm</TH>
+                                                    <TH>Carton W mm</TH>
+                                                    <TH>Carton H mm</th>
+                                                </tr>
+                                            <?php 
+                                                foreach($case_nu as $r1=>$v1)
+                                                {
+                                                    echo "<tr>";
+                                                        echo "<th>".$v1->case."</th>";
+                                                        echo "<td>".$logitics0[$r1]['assembly']."</td>";
+                                                        echo "<td>".$logitics0[$r1]['box_type']."</td>";
+                                                        echo "<td>".$packing_details21[$r1]['length']."</td>";
+                                                        echo "<td>".$packing_details21[$r1]['width']."</td>";
+                                                        echo "<td>".$packing_details21[$r1]['height']."</td>";
+                                                        echo "<td>".$logitics0[$r1]['kg']."</td>";
+                                                        echo "<td></td>";
+                                                        echo "<td>".$logitics0[$r1]['product_nature']."</td>";
+                                                        echo "<td>".$logitics0[$r1]['scratch_protect']."</td>";
+                                                        echo "<td>".$logitics0[$r1]['delivery_method']."</td>";
+                                                        echo "<td>".$logitics0[$r1]['carton_l']."</td>";
+                                                        echo "<td>".$logitics0[$r1]['carton_w']."</td>";
+                                                        echo "<td>".$logitics0[$r1]['carton_h']."</td>";
+                                                    echo "</tr>";
+                                                }
                                         ?>
                                         </table>
+
+                                        <table id="packingsheet">
+                                                <tr>
+                                                        <th></th>
+                                                    	<th>CARTON SPECS BF	CARTON SPECS PLY</TH>
+                                                        <TH>CARTON SQ MTR</TH>
+                                                        <TH>CUSHIONING THICKNESS MM</TH>
+                                                        <TH>CORNER PROTECTOR 4 WALL</TH>
+                                                        <TH>CORNER PROTECTOR 3 WALL</TH>
+                                                        <TH>EDGE PROTECTOR 3 WALL</TH>
+                                                        <TH>EDGE PROTECTOR 2 WALL</TH>
+                                                        <TH>CUSHIONING PADS</TH>
+                                                        <TH>WRAP THICKNESS MM</TH>
+                                                        <TH>WRAP SQ. MTR.</TH>
+                                                        <TH>CBM</TH>
+                                                        <TH>DESSICANT grams</th>
+                                                </tr>
+                                                <?php 
+                                                foreach($case_nu as $r1=>$v1)
+                                                {
+                                                    echo "<tr>";
+                                                        echo "<th>".$v1->case."</th>";
+                                                        
+                                                    echo "</tr>";
+                                                }
+                                        ?>
+                                        </table>
+
+                                        <table id="packingsheet">
+                                            <tr>
+                                                <th></th>
+                                                <th>APPLICABLE RATES</TH>
+                                                <TH>CARTON</TH>
+                                                <TH>CORNER PROTECTOR 4 WALL</TH>
+                                                <TH>CORNER PROTECTOR 3 WALL</TH>
+                                                <TH>EDGE PROTECTOR 3 WALL</TH>
+                                                <TH>EDGE PROTECTOR 2 WALL</TH>
+                                                <TH>CUSHIONING PADS</TH>
+                                                <TH>WRAP</TH>
+                                                <TH>LABOUR</th>
+                                            </tr>
+                                             <?php 
+                                                foreach($case_nu as $r1=>$v1)
+                                                {
+                                                    echo "<tr>";
+                                                        echo "<th>".$v1->case."</th>";
+                                                        
+                                                    echo "</tr>";
+                                                }
+                                             ?>
+                                            </table>
+
+                                            <table id="packingsheet">
+                                                <tr>
+                                                    <th>PACKING COST</TH>
+                                                    <TH>OTHER MATERIALS</TH>
+                                                    <TH>CONTINGENCY</TH>
+                                                    <TH>CARTON</TH>
+                                                    <TH>CORNER PROTECTOR 4 WALL</TH>
+                                                    <TH>CORNER PROTECTOR 3 WALL</TH>
+                                                    <TH>EDGE PROTECTOR 3 WALL</TH>
+                                                    <TH>EDGE PROTECTOR 2 WALL</TH>
+                                                    <TH>CUSHIONING PADS</TH>
+                                                    <TH>WRAP</TH>
+                                                    <TH>LABOUR</TH>
+                                                    <TH>TOTAL</th>
+                                                </tr>
+                                                <?php 
+                                                foreach($case_nu as $r1=>$v1)
+                                                {
+                                                    echo "<tr>";
+                                                        echo "<th>".$v1->case."</th>";
+                                                        
+                                                    echo "</tr>";
+                                                }
+                                             ?>
+                                            </table>    
+                                        <?php }?>
                                         
                                 </div>
                             <div>
