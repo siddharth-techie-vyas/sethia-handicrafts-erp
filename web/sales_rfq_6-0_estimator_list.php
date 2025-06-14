@@ -775,8 +775,8 @@ $itemtype=$items[0]['item_type'];
                         <div class="tab-pane" id="logistics" role="tabpanel">
 							<div class="p-15">
                                  <h4>Step 10) Logistics With Packing Material</h4>
-                                <span id="msgstep9-estimator"></span>
-                                <form name="step9-estimator" id="step9-estimator" action="<?php echo $base_url.'index.php?action=sales&query=step9-estimator';?>" method="post">
+                                <span id="msgstep8-estimator1_logistics"></span>
+                                <form name="step8-estimator1_logistics" id="step8-estimator1_logistics" action="<?php echo $base_url.'index.php?action=sales&query=step8-estimator1_logistics';?>" method="post">
                                 <table class="table table-bordered">
                                     <tr>
                                         <th>Case</th>
@@ -793,37 +793,27 @@ $itemtype=$items[0]['item_type'];
                                    
                                     $logitics = json_decode($items[0]['logistics']);
                                     $logitics0=array();
+                                    //print_r($logistics);
                                     foreach($logitics as $l=>$f0)
                                         {
                                             $val = array (
                                                 "case"=>$f0->case,
                                                 "kg"=>$f0->kg,
-                                                "part_name"=>$f0->part_name
+                                                "box_type"=>$f0->box_type,
+                                                "product_nature"=>$f0->product_nature,
+                                                "delivery_method"=>$f0->delivery_method,
+                                                "scratch_protect"=>$f0->scratch_protect,
+                                                "bom_update_stage"=>$f0->bom_update_stage
                                                 );
                     
                                             array_push($logitics0,$val);
                                         }
+                                        //print_r($logitics0);
 
                                     if($items[0]['packing2'] !='')
                                     {
-                                    // foreach($part_details as $r=>$v)
-                                    //     {
-                                    //         echo "<tr>";
-                                    //         echo "<td>".$v->part_name."</td>";
-                                    //         echo "<td><input type='number' name='qty[]' class='form-control' value='".$v->qty."' readonly='readonly'></td>";
-                                    //         echo "<td>";
-                                    //             echo "<select class='form-control' name='case[]'>";
-                                    //                 echo "<option disabled='disabled' selected='selected'>Select</option>";
-                                    //                 foreach($case_nu as $r1=>$v1)
-                                    //                 {
-                                    //                     if($logitics0[$r]['case']==$v1->case){$selected='selected';}else{$selected='';}
-                                    //                     echo "<option value='".$v1->case."' $selected>".$v1->case."</option>";
-                                    //                 }
-                                    //             echo "</select>";
-                                    //         echo "</td>";
-                                    //         echo "<td><input type='number' name='kg[]' class='form-control' value='".$logitics0[$r]['kg']."'></td>";
-                                    //         echo "</tr>";
-                                    //     }
+                                  
+
                                          foreach($case_nu as $r1=>$v1)
                                         {
                                             //-- change parts into array from comma delimit / used assembly on place of part
@@ -832,7 +822,7 @@ $itemtype=$items[0]['item_type'];
                                                 echo "<td>".$v1->case."</td>";
                                                 echo "<td>";
                                                     echo "<input type='hidden' name='case[]' value='".$v1->case."'>";
-                                                    echo "<select class='form-control' name='part_name$v1->case[]' multiple='multiple'>";
+                                                    echo "<select class='form-control' name='assembly".$v1->case."[]' multiple='multiple'>";
                                                         echo "<option disabled='disabled' selected='selected'>Select</option>";
                                                         foreach($assembly_details as $r=>$v)
                                                         {
@@ -840,7 +830,7 @@ $itemtype=$items[0]['item_type'];
                                                             if (in_array($v->assembly, $parts))
                                                                     {
                                                                     $selected='selected="selected"';
-                                                                    }                                                                     
+                                                                    }                       
                                                             echo "<option value='".$v->assembly."' $selected>".$v->assembly."</option>";
                                                         }
                                                     echo "</select>";
@@ -849,11 +839,66 @@ $itemtype=$items[0]['item_type'];
                                                      echo "<input type='number' name='kg[]' class='form-control' value='".$logitics0[$r1]['kg']."'>";   
                                                 echo "</td>";
                                                 ?>
-                                                <td><input type="text" name="box_type[]" class="form-control" value=""></td>
-                                                <td><input type="text" name="box_type[]" class="form-control" value=""></td>
-                                                <td><input type="text" name="box_type[]" class="form-control" value=""></td>
-                                                <td><input type="text" name="box_type[]" class="form-control" value=""></td>
-                                                <td><input type="text" name="box_type[]" class="form-control" value=""></td>
+                                                <td>
+                                                    <select name="box_type[]" class="form-control">
+                                                        <option disaled="disabled" selected="selected">Select</option>
+                                                        <?php 
+                                                        $cartoon=$store->get_item_bysubcat('30');
+                                                        foreach($cartoon as $c=>$v){
+                                                        ?>
+                                                        <option><?php echo $cartoon[$c]['product_name'];?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select name="product_nature[]" class="form-control">
+                                                        <option disaled="disabled" selected="selected">Select</option>
+                                                        <?php 
+                                                        $product_nature=$admin->get_metaname_byvalue1('logistics_meta','product_nature');
+                                                        foreach($product_nature as $c=>$v){
+                                                            $selected='';
+                                                            if($logitics0[$r1]['product_nature']==$product_nature[$c]['value2'])
+                                                            {
+                                                                $selected='selected="selected"';
+                                                            }
+                                                        ?>
+                                                        <option <?php echo $selected;?>><?php echo $product_nature[$c]['value2'];?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select name="delivery_method[]" class="form-control">
+                                                        <option disaled="disabled" selected="selected">Select</option>
+                                                        <?php 
+                                                        $delivery_method=$admin->get_metaname_byvalue1('logistics_meta','delivery_method');
+                                                        foreach($delivery_method as $c=>$v){
+                                                        ?>
+                                                        <option><?php echo $delivery_method[$c]['value2'];?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select name="scratch_protect[]" class="form-control">
+                                                        <option disaled="disabled" selected="selected">Select</option>
+                                                        <?php 
+                                                        $scratch_protect=$admin->get_metaname_byvalue1('logistics_meta','scratch_protect');
+                                                        foreach($scratch_protect as $c=>$v){
+                                                        ?>
+                                                        <option><?php echo $scratch_protect[$c]['value2'];?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select name="bom_update_stage[]" class="form-control">
+                                                        <option disaled="disabled" selected="selected">Select</option>
+                                                        <?php 
+                                                        $bom_update_stage=$admin->get_metaname_byvalue1('logistics_meta','bom_update_stage');
+                                                        foreach($bom_update_stage as $c=>$v){
+                                                        ?>
+                                                        <option><?php echo $bom_update_stage[$c]['value2'];?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </td>
 
                                                 <?php 
                                             echo "</tr>";
@@ -868,7 +913,7 @@ $itemtype=$items[0]['item_type'];
                                     <tr>
                                         <td>
                                             <input type="hidden" name="id" value="<?php echo $_GET['id'];?>" id="id">
-                                            <input type="button" class="btn btn-md btn-primary" value="Update" onclick="form_submit('step9-estimator')">
+                                            <input type="button" class="btn btn-md btn-primary" value="Update" onclick="form_submit('step8-estimator1_logistics')">
                                         </td>
                                         <td></td>
                                     </tr>
