@@ -689,7 +689,7 @@ $itemtype=$items[0]['item_type'];
 
                                                     echo "</tr>";
                                                 }   
-                                                echo "<tr><td colspan='6'></td><th>".round($total_sqft*0.00328084,3)."</th></tr>";
+                                                echo "<tr><td colspan='6'></td><th>".$total_sqft."</th></tr>";
                                                 echo "</table>";
                                                 $grand_sqft += $total_sqft;                     
                                             echo "</td>";
@@ -697,8 +697,8 @@ $itemtype=$items[0]['item_type'];
                                         }
                                     }
                                     //-- into foot
-                                    $grand_sqft_inft = round($grand_sqft*0.00328084,3);
-                                    $control_sqft_inft = round($control_sqft*0.00328084,3);
+                                    $grand_sqft_inft = round($grand_sqft);
+                                    $control_sqft_inft = round($control_sqft);
                                         echo "<tr>";
                                         echo "<td></td>";
                                         echo "<th class='text-end '>Total SqFt. :- ".$grand_sqft_inft."</th>";
