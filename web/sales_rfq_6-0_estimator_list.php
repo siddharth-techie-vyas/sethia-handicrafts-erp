@@ -662,10 +662,19 @@ $itemtype=$items[0]['item_type'];
                                                 echo "</tr>";
                                                 foreach($svalue as $skey){
                                                     echo "<tr>";
-
+                                                    //-- sq ft only
                                                     $sqft = $subassembly_details[$skey]['width']*$subassembly_details[$skey]['length']*$subassembly_details[$skey]['qty'];
                                                     $sqft = round($sqft/92900,3);
                                                     $total_sqft += $sqft;
+                                                    //-- control sql fr
+                                                        $control_sqft0 = ($subassembly_details[$skey]['length']*$subassembly_details[$skey]['width']*2)/92900;
+                                                        $control_sqft1 = ($subassembly_details[$skey]['length']*$subassembly_details[$skey]['height']*2)/92900;
+                                                        $control_sqft2 = ($subassembly_details[$skey]['height']*$subassembly_details[$skey]['width']*2)/92900;
+                                                        $control_sqft3=$control_sqft0+$control_sqft1+$control_sqft2;
+                                                        $control_sqft4 = round($control_sqft3,3)*$subassembly_details[$skey]['qty'];
+                                                        $control_sqft +=$control_sqft4;
+
+
                                                         echo "<td>".$subassembly_details[$skey]['part_name']."</td>";
 
                                                         echo "<td><select class='form-control' name='finish[]'><option disabled='disabled' selected='selected'>Select</option>";
@@ -681,18 +690,12 @@ $itemtype=$items[0]['item_type'];
                                                         echo "<td>".$subassembly_details[$skey]['height']."</td>";
                                                         echo "<td>".$subassembly_details[$skey]['qty']."</td>";
                                                         echo "<td>".$sqft."</td>";
-                                                        //-- control sql fr
-                                                        $control_sqft0 = ($subassembly_details[$skey]['length']*$subassembly_details[$skey]['width']*2)/92900;
-                                                        $control_sqft1 = ($subassembly_details[$skey]['length']*$subassembly_details[$skey]['height']*2)/92900;
-                                                        $control_sqft2 = ($subassembly_details[$skey]['height']*$subassembly_details[$skey]['width']*2)/92900;
-                                                        $control_sqft3=$control_sqft0+$control_sqft1+$control_sqft2;
-                                                        $control_sqft4 = round($control_sqft3,3)*$subassembly_details[$skey]['qty'];
-                                                        $control_sqft +=$control_sqft4;
+                                                        
                                                         echo "<td>".$control_sqft4."</td>";
 
                                                     echo "</tr>";
                                                 }   
-                                                echo "<tr><td colspan='6'></td><th>".$total_sqft."</th><th></th></tr>";
+                                                echo "<tr><td colspan='6'></td><th>".$total_sqft."</th><th>".$control_sqft."</th></tr>";
                                                 echo "</table>";
                                                 $grand_sqft += $total_sqft;                     
                                             echo "</td>";
