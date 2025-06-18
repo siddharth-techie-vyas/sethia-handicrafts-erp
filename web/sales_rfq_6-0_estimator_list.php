@@ -678,7 +678,7 @@ $itemtype=$items[0]['item_type'];
                                                         $sqft=round($control_sqft3,3);
                                                         $total_sqft += $sqft;
 
-                                                    echo "<td>".$subassembly_details[$skey]['assembly']."</td>";
+                                                    // echo "<td>".$subassembly_details[$skey]['assembly']."</td>";
 
                                                         echo "<td>".$subassembly_details[$skey]['part_name']."</td>";
 
