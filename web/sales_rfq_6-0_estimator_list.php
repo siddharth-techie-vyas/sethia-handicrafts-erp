@@ -605,73 +605,103 @@ $itemtype=$items[0]['item_type'];
                                 <form name="step7-estimator" id="step7-estimator" action="<?php echo $base_url.'index.php?action=sales&query=step7-estimator';?>" method="post">
                                 <table class="table table-bordered" id="tablepart">
                                     <tr>
-                                        <th>Assembly Part Name</th>
-                                        <th>Qty</th>
-                                        <th>Polish Name</th>
-                                        <th>Labour Cost</th>
-                                        <th>Total CFT</th>
-                                        <th>Total (INR)</th>
+                                        <th>Assembly</th>
+                                        <td colspan="2"></td>                                    
                                     </tr>
                                     <?php
+                                    function arraySearch($foo, $array){ 
+                                        $mykeys = array();
+                                            foreach($array as $key => $val){
+                                                    if($val['assembly']=== $foo){
+                                                    array_push($mykeys,$key);
+                                                    }
+                                                }
+                                            return $mykeys;
+                                            }
+
                                     $assembly_details = json_decode($items[0]['assembly']);
+                                    $subassembly_details =json_decode($items[0]['part'], true);
+                                    $$control_sqft=0;
                                     $finish_details0=array();
                                     $finish_details = json_decode($items[0]['finish']);
                                     foreach($finish_details as $r=>$f0)
-                                        {
-                                            $val = array (
-                                                "finish"=>$f0->finish,
-                                                "labour_cost"=>$f0->labour_cost,
-                                                "total_cft"=>$f0->total_cft,
-                                                "total"=>$f0->total
-                                                );
-                    
-                                            array_push($finish_details0,$val);
-                                        }
-                                    
+                                    {
+                                        $val = array (
+                                            "finish"=>$f0->finish,
+                                            "labour_cost"=>$f0->labour_cost,
+                                            "total_cft"=>$f0->total_cft,
+                                            "total"=>$f0->total
+                                            );
+                
+                                        array_push($finish_details0,$val);
+                                    }
                                        
-                                    // $finish = $product->get_finish();
-                                    //             foreach ($finish as $key => $fv) {
-                                    //                 $finish0 .= '<option value="'.$fv['id'].'">'.$fv['finish_name'].'('.$fv['coating_system'].')</option>';
-                                    //             }
-
                                     if($assembly_details !='')
                                     {
-                                        $final_labour_cost_sum=0;
+                                    $final_labour_cost_sum=0;
+                                        $grand_sqft=0;
                                     foreach($assembly_details as $r=>$f)
                                         {
+                                            //-- search in sub assembly
+                                           $svalue = arraySearch($f->assembly,$subassembly_details);
+                                           $total_sqft=0; 
+
                                             echo "<tr>";
                                             echo "<td>".$f->assembly."</td>";
-                                            echo "<td>".$f->assembly_qty."</td>";
-                                            echo "<td><select class='form-control' name='finish[]'><option disabled='disabled' selected='selected'>Select</option>";
-                                            $finish = $product->get_finish();
-                                                foreach ($finish as $key => $fv) {
-                                                    if($fv['id']==$finish_details0[$r]['finish']){$selected1="selected='selected'";}else{$selected1="";}
-                                                   echo '<option value="'.$fv['id'].'" '.$selected1.'>'.$fv['finish_name'].'('.$fv['coating_system'].')</option>';
-                                                }
-                                            echo "</select></td>";
-                                            //-- get labour cost 
-                                            $finish_labour0 = $product->get_finish_byid($finish_details0[$r]['finish']);
-                                            if(!empty($finish_details0[$r]['labour_cost']))
-                                            {
-                                                $flabour=$finish_details0[$r]['labour_cost'];
-                                            }
-                                            else{$flabour=$finish_labour0[0]['labour_inr'];
-                                            }
-                                            //-- as per crm
-                                            if($f->total==NULL)
-                                            {$ftotal=0;}
-                                            else{$ftotal=$f->total;}
-                                            $final_labour_cost = $flabour*$ftotal;
+                                            echo "<td colspan='6'>";
 
-                                                echo "<td><input type='number' name='labour_cost[]' class='form-control' value='".$flabour."'></td>";
-                                                echo "<td><input type='number' name='total_cft[]' class='form-control' value='".$ftotal."' readonly='readonly'></td>";
-                                                echo "<td><input type='number' name='total[]' class='form-control' value='".$final_labour_cost."' readonly='readonly'></td>";
+                                                echo "<table width='100%'>";
+                                                echo "<tr>";
+                                                echo "<th>Sub Assembly</th>";
+                                                echo "<th>Polish Name</th>";
+                                                echo "<th>Length [MM]</th>";
+                                                echo "<th>Width [MM]</th>";
+                                                echo "<th>Qty</th>";
+                                                echo "<th>Sq. Ft</th>";    
+                                                echo "</tr>";
+                                                foreach($svalue as $skey){
+                                                    echo "<tr>";
+
+                                                    $sqft = $subassembly_details[$skey]['width']*$subassembly_details[$skey]['length']*$subassembly_details[$skey]['qty'];
+                                                    $sqft = round($sqft/92900,2);
+                                                    $total_sqft += $sqft;
+                                                        echo "<td>".$subassembly_details[$skey]['part_name']."</td>";
+
+                                                        echo "<td><select class='form-control' name='finish[]'><option disabled='disabled' selected='selected'>Select</option>";
+                                                        $finish = $product->get_finish();
+                                                            foreach ($finish as $key => $fv) {
+                                                                if($fv['id']==$finish_details0[$r]['finish']){$selected1="selected='selected'";}else{$selected1="";}
+                                                            echo '<option value="'.$fv['id'].'" '.$selected1.'>'.$fv['finish_name'].'('.$fv['coating_system'].')</option>';
+                                                            }
+                                                        echo "</select></td>";
+
+                                                        echo "<td>".$subassembly_details[$skey]['length']."</td>";
+                                                        echo "<td>".$subassembly_details[$skey]['width']."</td>";
+                                                        echo "<td>".$subassembly_details[$skey]['qty']."</td>";
+                                                        echo "<td>".round($sqft*0.00328084,3)."</td>";
+                                                        //-- control sql fr
+                                                        $control_sqft0 = $subassembly_details[$skey]['length'] + $subassembly_details[$skey]['height'];
+                                                        $control_sqft1 = $subassembly_details[$skey]['width']+$subassembly_details[$skey]['height'];
+                                                        $control_sqft2 = $control_sqft0*$control_sqft1*$subassembly_details[$skey]['qty']*2;
+                                                        $control_sqft +=$control_sqft2;
+
+                                                    echo "</tr>";
+                                                }   
+                                                echo "<tr><td colspan='5'></td><th>".round($total_sqft*0.00328084,3)."</th></tr>";
+                                                echo "</table>";
+                                                $grand_sqft += $total_sqft;                     
+                                            echo "</td>";
                                             echo "</tr>";
-
-                                            //-- sum of polish 
-                                            $final_labour_cost_sum +=$final_labour_cost;
                                         }
                                     }
+                                    //-- into foot
+                                    $grand_sqft_inft = round($grand_sqft*0.00328084,3);
+                                    $control_sqft_inft = round($control_sqft*0.00328084,3);
+                                        echo "<tr>";
+                                        echo "<td></td>";
+                                        echo "<th class='text-end '>Total SqFt. :- ".$grand_sqft_inft."</th>";
+                                        echo "<th class='text-end '>Control SqFt. :- ".$control_sqft_inft."</th>";
+                                        echo "</tr>";
                                     ?>
 
                                 </table>
