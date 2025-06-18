@@ -680,7 +680,7 @@ $itemtype=$items[0]['item_type'];
                                                         echo "<td>".$subassembly_details[$skey]['width']."</td>";
                                                         echo "<td>".$subassembly_details[$skey]['height']."</td>";
                                                         echo "<td>".$subassembly_details[$skey]['qty']."</td>";
-                                                        echo "<td>".round($sqft,3)."</td>";
+                                                        echo "<td>".round($sqft,4)."</td>";
                                                         //-- control sql fr
                                                         $control_sqft0 = $subassembly_details[$skey]['length'] + $subassembly_details[$skey]['height'];
                                                         $control_sqft1 = $subassembly_details[$skey]['width']+$subassembly_details[$skey]['height'];
