@@ -656,6 +656,7 @@ $itemtype=$items[0]['item_type'];
                                                 echo "<th>Polish Name</th>";
                                                 echo "<th>Length [MM]</th>";
                                                 echo "<th>Width [MM]</th>";
+                                                echo "<th>Height [MM]</th>";
                                                 echo "<th>Qty</th>";
                                                 echo "<th>Sq. Ft</th>";    
                                                 echo "</tr>";
@@ -677,6 +678,7 @@ $itemtype=$items[0]['item_type'];
 
                                                         echo "<td>".$subassembly_details[$skey]['length']."</td>";
                                                         echo "<td>".$subassembly_details[$skey]['width']."</td>";
+                                                        echo "<td>".$subassembly_details[$skey]['height']."</td>";
                                                         echo "<td>".$subassembly_details[$skey]['qty']."</td>";
                                                         echo "<td>".round($sqft*0.00328084,3)."</td>";
                                                         //-- control sql fr
@@ -687,7 +689,7 @@ $itemtype=$items[0]['item_type'];
 
                                                     echo "</tr>";
                                                 }   
-                                                echo "<tr><td colspan='5'></td><th>".round($total_sqft*0.00328084,3)."</th></tr>";
+                                                echo "<tr><td colspan='6'></td><th>".round($total_sqft*0.00328084,3)."</th></tr>";
                                                 echo "</table>";
                                                 $grand_sqft += $total_sqft;                     
                                             echo "</td>";
