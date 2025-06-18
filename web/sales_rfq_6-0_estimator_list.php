@@ -659,6 +659,7 @@ $itemtype=$items[0]['item_type'];
                                                 echo "<th>Height [MM]</th>";
                                                 echo "<th>Qty</th>";
                                                 echo "<th>Sq. Ft</th>";    
+                                                echo "<th>Control Sq. Ft</th>";    
                                                 echo "</tr>";
                                                 foreach($svalue as $skey){
                                                     echo "<tr>";
@@ -697,7 +698,7 @@ $itemtype=$items[0]['item_type'];
                                                 }   
                                                 echo "<tr><td colspan='6'></td><th>".$total_sqft."</th><th>".$control_sqft."</th></tr>";
                                                 echo "</table>";
-                                                $grand_sqft += $total_sqft;                     
+                                                $grand_sqft += $total_sqft;                        
                                             echo "</td>";
                                             echo "</tr>";
                                         }
