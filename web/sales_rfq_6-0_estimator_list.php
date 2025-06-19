@@ -621,7 +621,7 @@ $itemtype=$items[0]['item_type'];
 
                                     $assembly_details = json_decode($items[0]['assembly']);
                                     $subassembly_details =json_decode($items[0]['part'], true);
-                                    $$control_sqft=0;
+                                    
                                     $finish_details0=array();
                                     $finish_details = json_decode($items[0]['finish']);
                                     foreach($finish_details as $r=>$f0)
@@ -638,19 +638,21 @@ $itemtype=$items[0]['item_type'];
                                        
                                     if($assembly_details !='')
                                     {
-                                    $final_labour_cost_sum=0;
+                                        $final_labour_cost_sum=0;
                                         $grand_sqft=0;
                                     foreach($assembly_details as $r=>$f)
                                         {
                                             //-- search in sub assembly
                                            $svalue = arraySearch($f->assembly,$subassembly_details);
                                            $total_sqft=0; 
+                                           $control_sqft=0;
 
                                             echo "<tr>";
                                             echo "<td>".$f->assembly."</td>";
                                             echo "<td colspan='6'>";
 
                                                 echo "<table width='100%'>";
+                                                echo "<tr><td colspan='8'><span class='badge badge-danger'>System Auto Generated</span></td></tr>";
                                                 echo "<tr>";
                                                 echo "<th>Sub Assembly</th>";
                                                 echo "<th>Polish Name</th>";
@@ -699,17 +701,32 @@ $itemtype=$items[0]['item_type'];
                                                         echo "<td>".$control_sqft4."</td>";
 
                                                     echo "</tr>";
+                                                    ?>
+                                                <tr><td colspan='6'><input type='button' value='+ Add Custom Size' name='custom_size$r' class='btn btn-sm btn-primary' onclick="show_txtbox('custom_row<?php echo $r;?>')"></td></tr>
+                                                <?php
+                                                echo "<tr class='bg-secondary' id='custom_row".$r."' style='display:none;'>";
+                                                    echo "<th>Length [MM]</th>";
+                                                    echo "<td><input type='hidden' name='custom_key[]' value='$r'><input type='text' name='custom_length[]' class='form-control'></td>";
+                                                    echo "<th>Width [MM]</th>";
+                                                    echo "<td colspan='2'><input type='text' name='custom_width[]' class='form-control'></td>";
+                                                    echo "<th>Height [MM]</th>";
+                                                    echo "<td colspan='2'><input type='text' name='custom_height[]' class='form-control'></td>";
+                                                echo "</tr>";
+
+                                                
                                                 }   
-                                                echo "<tr><td colspan='6'></td><th>".$total_sqft."</th><th>".$control_sqft."</th></tr>";
+                                                echo "<tr><th class='bg-warning'>$total_sqft</th><th class='bg-success'> $control_sqft</th></tr>";
+                                                
                                                 echo "</table>";
-                                                $grand_sqft += $total_sqft;                        
+                                                $grand_sqft += $total_sqft;  
+                                                $grand_csqft += $control_sqft;                      
                                             echo "</td>";
                                             echo "</tr>";
                                         }
                                     }
                                     //-- into foot
-                                    $grand_sqft_inft = round($grand_sqft);
-                                    $control_sqft_inft = round($control_sqft);
+                                    $grand_sqft_inft = round($grand_sqft,3);
+                                    $control_sqft_inft = round($grand_csqft,3);
                                         echo "<tr>";
                                         echo "<td></td>";
                                         echo "<th class='text-end '>Total SqFt. :- ".$grand_sqft_inft."</th>";
