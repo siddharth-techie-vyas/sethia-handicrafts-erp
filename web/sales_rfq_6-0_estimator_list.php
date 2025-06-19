@@ -708,9 +708,13 @@ $itemtype=$items[0]['item_type'];
                                                     echo "<th>Length [MM]</th>";
                                                     echo "<td><input type='hidden' name='custom_key[]' value='$r'><input type='text' name='custom_length[]' class='form-control'></td>";
                                                     echo "<th>Width [MM]</th>";
-                                                    echo "<td colspan='2'><input type='text' name='custom_width[]' class='form-control'></td>";
+                                                    echo "<td><input type='text' name='custom_width[]' class='form-control'></td>";
                                                     echo "<th>Height [MM]</th>";
-                                                    echo "<td colspan='2'><input type='text' name='custom_height[]' class='form-control'></td>";
+                                                    echo "<td><input type='text' name='custom_height[]' class='form-control'></td>";
+                                                    echo "<th>SQ Ft.</th>";
+                                                    echo "<td><input type='text' name='custom_sqft[]' class='form-control'></td>";
+                                                    echo "<th>Control SQ Ft.</th>";
+                                                    echo "<td><input type='text' name='custom_csqft[]' class='form-control'></td>";
                                                 echo "</tr>";
 
                                                 
