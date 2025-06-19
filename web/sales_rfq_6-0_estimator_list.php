@@ -715,7 +715,7 @@ $itemtype=$items[0]['item_type'];
 
                                                 
                                                 }   
-                                                echo "<tr><td>td></td><th class='bg-warning'>$total_sqft</th><th class='bg-success'> $control_sqft</th></tr>";
+                                                echo "<tr><td colspan='6'></td><th class='bg-warning'>$total_sqft</th><th class='bg-success'> $control_sqft</th></tr>";
 
                                                 echo "</table>";
                                                 $grand_sqft += $total_sqft;  
