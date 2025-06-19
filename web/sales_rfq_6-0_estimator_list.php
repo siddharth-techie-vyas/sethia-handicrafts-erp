@@ -711,8 +711,8 @@ $itemtype=$items[0]['item_type'];
                                                     echo "<td><input type='text' name='custom_width[]' class='form-control'></td>";
                                                     echo "<th>Height [MM]</th>";
                                                     echo "<td><input type='text' name='custom_height[]' class='form-control'></td>";
-                                                    echo "<th>SQ Ft.<br><input type='text' name='custom_sqft[]' class='form-control'></td>";
-                                                    echo "<th>Control SQ Ft.<br><input type='text' name='custom_csqft[]' class='form-control'></td>";
+                                                    echo "<th>SQ Ft.<br><input type='text' name='custom_sqft[]' readonly='readonly'></td>";
+                                                    echo "<th>Control SQ Ft.<br><input type='text' name='custom_csqft[]' readonly='readonly' ></td>";
                                                 echo "</tr>";
 
                                                 
