@@ -1624,24 +1624,30 @@ case "sales":
 				if($_GET['query']=='step7-estimator')
 				{
 					$finalval = array();
-
+					$id = $_POST['id'];
+					$assembly = $_POST['assembly'];
+					$subassembly = $_POST['custom_name'];
 					$finish = $_POST['finish'];
-					$labour_cost = $_POST['labour_cost'];
-					$total_cft = $_POST['total_cft'];
-					$total = $_POST['total'];
-					foreach($finish as $key=>$v)
+					$length = $_POST['custom_length'];
+					$width = $_POST['custom_height'];
+					$height = $_POST['custom_width'];
+					$qty = $_POST['custom_qty'];
+					foreach($length as $key=>$v)
 					{
 						$val = array (
+							"assembly"=>$assembly,
+							"subassembly"=>$subassembly[$key],
+							"length"=>$length[$key],
+							"width"=>$width[$key],
+							"height"=>$height[$key],
 							"finish"=>$finish[$key],
-							"labour_cost"=>$labour_cost[$key],
-							"total_cft"=>$total_cft[$key],
-							"total"=>$total[$key]
+							"qty"=>$qty[$key]
 							);
 
 						array_push($finalval,$val);
 					}
 					$part_details = json_encode($finalval);
-					$get=$sales->save_finish_estimator($part_details,$_POST['id']);
+					$get=$sales->save_finish_estimator($part_details,$id);
 					echo "<div class='alert alert-secondary'>Finish Saved Successfully !!!</div>";
 				}
 
@@ -1695,7 +1701,6 @@ case "sales":
 
 				if($_GET['query']=='step9-estimator')
 				{
-					print_r($_POST);
 					$finalval = array();
 
 					$case = $_POST['case'];
@@ -1722,8 +1727,45 @@ case "sales":
 
 						array_push($finalval,$val);
 					}
-					echo $part_details = json_encode($finalval);
+					$part_details = json_encode($finalval);
 					$get=$sales->save_logistics_estimator($part_details,$_POST['id']);
+					echo "<div class='alert alert-secondary'>Logistics Saved Successfully !!!</div>";
+				}
+
+				if($_GET['query']=='step8-estimator1_logistics')
+				{
+					print_r($_POST);
+					$finalval = array();
+					$val = array();
+					$case = $_POST['case'];
+					$kg = $_POST['kg'];
+					$box_type = $_POST['box_type'];
+					$product_nature = $_POST['product_nature'];
+					$delivery_method = $_POST['delivery_method'];
+					$scratch_protect = $_POST['scratch_protect'];
+					$bom_update_stage = $_POST['bom_update_stage'];
+
+					foreach($case as $key=>$v)
+					{
+						print_r ($case[$key]);
+						print_r($_POST['assembly'.$case[$key]]);
+						//echo $assembly = implode(",",$_POST['assembly'.$key]);
+						$val = array (
+							"case"=>$case[$key],
+							"kg"=>$kg[$key],
+							"assembly"=>$assembly,
+							"box_type"=>$box_type[$key],
+							"product_nature"=>$product_nature[$key],
+							"delivery_method"=>$delivery_method[$key],
+							"scratch_protect"=>$scratch_protect[$key],
+							"bom_update_stage"=>$bom_update_stage[$key]							
+						);
+
+						array_push($finalval,$val);
+						print_r($lval);
+					}
+					$part_details = json_encode($finalval);
+					$get=$sales->step8_estimator1_logistics($part_details,$_POST['id']);
 					echo "<div class='alert alert-secondary'>Logistics Saved Successfully !!!</div>";
 				}
 
