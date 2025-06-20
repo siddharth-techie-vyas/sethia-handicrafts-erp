@@ -449,7 +449,7 @@ function save_up_estimator($part_details,$id)
 
 function save_finish_estimator($part_details,$id)
 {
-    $update0="update  sales_rfq_items SET finish='$part_details' where id='$id' ";
+   echo $update0="update  sales_rfq_items SET finish='$part_details' where id='$id' ";
     $update0 = $this->db_handle->update($update0); 
     return $update0;
 }
@@ -620,6 +620,23 @@ function packing_cost_function($case,$box_type,$length,$width,$height,$kg,$produ
     // $result['edgelength']=$edgelength;
     // $result['edgelength']=$edgelength;
     return $result;
+}
+
+function control_sqft($length,$width,$height,$qty)
+{
+$control_sqft0 = ($length*$width*2)/92900;
+$control_sqft1 = ($length*$height*2)/92900;
+$control_sqft2 = ($height*$width*2)/92900;
+
+//- sq ft only
+$control_sqft21=$control_sqft0+$control_sqft1+$control_sqft2;
+$control_sqft3=round($control_sqft21,3);
+
+//-- control sql ft final
+$control_sqft4 = round($control_sqft3,3)*$qty;
+
+$val=array ("sqft"=>$control_sqft3,"control_sqft"=>$control_sqft4);
+return $val;
 }
 //=========== end 
 }?>

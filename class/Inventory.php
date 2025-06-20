@@ -379,7 +379,7 @@ private $db_handle;
 
     function get_finish_byid($id)
     {
-        $sql = "SELECT * FROM products_finish where id='$id' ";
+        echo$sql = "SELECT * FROM products_finish where id='$id' ";
         $result = $this->db_handle->runBaseQuery($sql);
         return $result;
     }
@@ -687,7 +687,7 @@ private $db_handle;
 
    
     //$query="select * from products_material_yield where wood_type = '$wood_main' AND type = '$type' AND  min_mm = $value OR max_mm < $value) LIMIT 1";
-        $query="select * from products_material_yield where wood_type = '$wood_main' AND type = '$type' AND $value BETWEEN min_mm AND max_mm LIMIT 1";
+         $query="select * from products_material_yield where wood_type LIke '%$wood_main%' AND type = '$type' AND $value BETWEEN min_mm AND max_mm LIMIT 1";
 //        $query="select * from products_material_yield where wood_name LIKE '$wood_main%'  AND type = '$type' ORDER BY ABS(min_mm - '$value') LIMIT 1";
         $result = $this->db_handle->runBaseQuery($query);
         return $result;
