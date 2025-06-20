@@ -46,7 +46,7 @@
                                                                 //-- table starts of system generated details
                                                                 echo "<table width='100%' class='b-1 border-info'>";
                                                                 echo "<tr class='bg-info'>";
-                                                                echo "<th>Sub Assembly</th>";                                                
+                                                                echo "<th>Sub Assembly</th>";
                                                                 echo "<th>Length [MM]</th>";
                                                                 echo "<th>Width [MM]</th>";
                                                                 echo "<th>Height [MM]</th>";
@@ -83,7 +83,7 @@
 
 
                                                         //-- custom dimensions col 4
-                                                        echo "<td  class='align-top'>";
+                                                        echo "<td  class='align-top' colspan='2'>";
                                                         echo "<form name='custom_polish$r' id='custom_polish$r'  action='".$base_url."index.php?action=sales&query=step7-estimator' method='post'>";
                                                                 echo "<span id='msgcustom_polish$r'></span>";
                                                                 //-- hidden assembly and id of rfq
@@ -92,7 +92,7 @@
                                                                 echo "<label>Finish Type</label><select class='form-control' name='finish[]'><option disabled='disabled' selected='selected'>Select</option>";
                                                                 $finish = $product->get_finish();
                                                                 foreach ($finish as $key => $fv) {
-                                                                if($fv['id']==$finish_details[0]['finish']){$selected1="selected='selected'";}else{$selected1="";}
+                                                                if($fv['id']==$finish_details[$r]['finish']){$selected1="selected='selected'";}else{$selected1="";}
                                                                 echo '<option value="'.$fv['id'].'" '.$selected1.'>'.$fv['finish_name'].'('.$fv['coating_system'].')</option>';
                                                                 }
                                                                 echo "</select><hr>";
@@ -146,6 +146,10 @@
 
                                                                 <input type='button' name='addmore_custom_submit' class='btn btn-xs btn-primary' value='Save' onclick="form_submit('custom_polish<?php echo $r;?>')">
                                                         <?php
+                                                        // total polish costing 
+                                                        $single_finish_cost_grand+=$single_finish_cost;
+                                                        echo $control_qft_subassembly_grand += $control_qft_subassembly;    
+
                                                          echo "</form>";
                                                         echo "</td>";
 
@@ -162,8 +166,11 @@
                                     $control_sqft_inft = round($grand_csqft,3);
                                         echo "<tr>";
                                         echo "<td></td>";
-                                        echo "<th class='text-end bg-secondary'>Total SqFt. :- ".$grand_sqft_inft."</th>";
+                                        //echo "<th class='text-end bg-secondary'>Total SqFt. :- ".$grand_sqft_inft."</th>";
+                                        echo "<th></th>";
                                         echo "<th class='text-end bg-primary'>Control SqFt. :- ".$control_sqft_inft."</th>";
+                                        echo "<th class='text-end bg-success'>Polish Sqft.:- ".$control_qft_subassembly_grand."</th>";
+                                        echo "<th class='text-end bg-danger'>Total Polish Cost :- ".$single_finish_cost_grand."</th>";
                                         echo "</tr>";
                                     ?>
 
