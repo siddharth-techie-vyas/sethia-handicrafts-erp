@@ -132,9 +132,11 @@
                                                                 //--  get single fishi labour cost 
                                                                 $single_finish = $product->get_finish_byid($finish_details[0]['finish']);
                                                                 $single_finish_labour_cost=$single_finish[0]['labour_inr'];
+                                                                $single_finish_cost=$control_qft_subassembly*$single_finish_labour_cost;
+                                                                
                                                                 echo "<tr><th>Finish Cost : </th><td>".$single_finish_labour_cost."</td>";
                                                                 echo "<th>Total Control Sq Ft : </th><td colspan='1'>$control_qft_subassembly</td>";
-                                                                echo "<th>Total</th><td>$control_qft_subassembly*$single_finish_labour_cost</td></tr>";
+                                                                echo "<th>Total</th><td>$single_finish_cost</td></tr>";
                                                                 echo "</tfoot>";
                                                                 echo "</table>";
                                                                 //-- table ends
