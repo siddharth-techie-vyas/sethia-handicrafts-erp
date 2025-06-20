@@ -599,147 +599,7 @@ $itemtype=$items[0]['item_type'];
                         <div class="tab-pane" id="contact11" role="tabpanel">
 							<div class="p-15">
                                  <h4>Step 8) Polish</h4>
-                                 
-
-                                <span id="msgstep7-estimator"></span>
-                                <form name="step7-estimator" id="step7-estimator" action="<?php echo $base_url.'index.php?action=sales&query=step7-estimator';?>" method="post">
-                                <table class="table table-bordered" id="tablepart">
-                                    <tr>
-                                        <th>Assembly</th>
-                                        <td colspan="2"></td>                                    
-                                    </tr>
-                                    <?php
-                                    function arraySearch($foo, $array){ 
-                                        $mykeys = array();
-                                            foreach($array as $key => $val){
-                                                    if($val['assembly']=== $foo){
-                                                    array_push($mykeys,$key);
-                                                    }
-                                                }
-                                            return $mykeys;
-                                            }
-
-                                    $assembly_details = json_decode($items[0]['assembly']);
-                                    $subassembly_details =json_decode($items[0]['part'], true);
-                                    
-                                    $finish_details0=array();
-                                    $finish_details = json_decode($items[0]['finish']);
-                                    foreach($finish_details as $r=>$f0)
-                                    {
-                                        $val = array (
-                                            "finish"=>$f0->finish,
-                                            "labour_cost"=>$f0->labour_cost,
-                                            "total_cft"=>$f0->total_cft,
-                                            "total"=>$f0->total
-                                            );
-                
-                                        array_push($finish_details0,$val);
-                                    }
-                                       
-                                    if($assembly_details !='')
-                                    {
-                                        $final_labour_cost_sum=0;
-                                        $grand_sqft=0;
-                                    foreach($assembly_details as $r=>$f)
-                                        {
-                                            //-- search in sub assembly
-                                           $svalue = arraySearch($f->assembly,$subassembly_details);
-                                           $total_sqft=0; 
-                                           $control_sqft=0;
-
-                                            echo "<tr>";
-                                            echo "<td>".$f->assembly."</td>";
-                                            echo "<td colspan='6'>";
-
-                                                echo "<table width='100%'>";
-                                                echo "<tr><td colspan='8'><span class='badge badge-danger'>System Auto Generated</span></td></tr>";
-                                                echo "<tr>";
-                                                echo "<th>Sub Assembly</th>";
-                                                echo "<th>Polish Name</th>";
-                                                echo "<th>Length [MM]</th>";
-                                                echo "<th>Width [MM]</th>";
-                                                echo "<th>Height [MM]</th>";
-                                                echo "<th>Qty</th>";
-                                                echo "<th>Sq. Ft</th>";    
-                                                echo "<th>Control Sq. Ft</th>";    
-                                                echo "</tr>";
-                                                foreach($svalue as $skey){
-                                                    echo "<tr>";
-                                                    //-- sq ft only
-                                                    // $sqft = $subassembly_details[$skey]['width']*$subassembly_details[$skey]['length']*$subassembly_details[$skey]['qty'];
-                                                    // $sqft = round($sqft/92900,3);
-                                                    
-                                                    //-- control sql fr
-                                                        $control_sqft0 = ($subassembly_details[$skey]['length']*$subassembly_details[$skey]['width']*2)/92900;
-                                                        $control_sqft1 = ($subassembly_details[$skey]['length']*$subassembly_details[$skey]['height']*2)/92900;
-                                                        $control_sqft2 = ($subassembly_details[$skey]['height']*$subassembly_details[$skey]['width']*2)/92900;
-                                                        $control_sqft3=$control_sqft0+$control_sqft1+$control_sqft2;
-                                                        $control_sqft4 = round($control_sqft3,3)*$subassembly_details[$skey]['qty'];
-                                                        $control_sqft +=$control_sqft4;
-
-                                                        $sqft=round($control_sqft3,3);
-                                                        $total_sqft += $sqft;
-
-                                                    // echo "<td>".$subassembly_details[$skey]['assembly']."</td>";
-
-                                                        echo "<td>".$subassembly_details[$skey]['part_name']."</td>";
-
-                                                        echo "<td><select class='form-control' name='finish[]'><option disabled='disabled' selected='selected'>Select</option>";
-                                                        $finish = $product->get_finish();
-                                                            foreach ($finish as $key => $fv) {
-                                                                if($fv['id']==$finish_details0[$r]['finish']){$selected1="selected='selected'";}else{$selected1="";}
-                                                            echo '<option value="'.$fv['id'].'" '.$selected1.'>'.$fv['finish_name'].'('.$fv['coating_system'].')</option>';
-                                                            }
-                                                        echo "</select></td>";
-
-                                                        echo "<td>".$subassembly_details[$skey]['length']."</td>";
-                                                        echo "<td>".$subassembly_details[$skey]['width']."</td>";
-                                                        echo "<td>".$subassembly_details[$skey]['height']."</td>";
-                                                        echo "<td>".$subassembly_details[$skey]['qty']."</td>";
-                                                        echo "<td>".$sqft."</td>";
-                                                        
-                                                        echo "<td>".$control_sqft4."</td>";
-
-                                                    echo "</tr>";
-                                                    ?>
-                                                <tr><td colspan='6'><input type='button' value='+ Add Custom Size' name='custom_size$r' class='btn btn-sm btn-primary' onclick="show_txtbox('custom_row<?php echo $r;?>')"></td></tr>
-                                                <?php
-                                                echo "<tr class='bg-secondary' id='custom_row".$r."' style='display:none;'>";
-                                                    echo "<th>Length [MM]</th>";
-                                                    echo "<td><input type='hidden' name='custom_key[]' value='$r'><input type='text' name='custom_length[]' class='form-control'></td>";
-                                                    echo "<th>Width [MM]</th>";
-                                                    echo "<td><input type='text' name='custom_width[]' class='form-control'></td>";
-                                                    echo "<th>Height [MM]</th>";
-                                                    echo "<td><input type='text' name='custom_height[]' class='form-control'></td>";
-                                                    echo "<th>SQ Ft.<br><input type='text' name='custom_sqft[]' readonly='readonly'></td>";
-                                                    echo "<th>Control SQ Ft.<br><input type='text' name='custom_csqft[]' readonly='readonly' ></td>";
-                                                echo "</tr>";
-
-                                                
-                                                }   
-                                                echo "<tr><td colspan='6'></td><th class='bg-warning'>$total_sqft</th><th class='bg-success'> $control_sqft</th></tr>";
-
-                                                echo "</table>";
-                                                $grand_sqft += $total_sqft;  
-                                                $grand_csqft += $control_sqft;                      
-                                            echo "</td>";
-                                            echo "</tr>";
-                                        }
-                                    }
-                                    //-- into foot
-                                    $grand_sqft_inft = round($grand_sqft,3);
-                                    $control_sqft_inft = round($grand_csqft,3);
-                                        echo "<tr>";
-                                        echo "<td></td>";
-                                        echo "<th class='text-end '>Total SqFt. :- ".$grand_sqft_inft."</th>";
-                                        echo "<th class='text-end '>Control SqFt. :- ".$control_sqft_inft."</th>";
-                                        echo "</tr>";
-                                    ?>
-
-                                </table>
-                                <input type="hidden" name="id" value="<?php echo $_GET['id'];?>" id="id">
-                                <input type="button" onclick="form_submit('step7-estimator')" class="btn btn-md btn-warning" value="Save">
-                                </form>
+                                   <?php include('sales_rfq_step7_estimator_polish.php');?>
 							</div>
 						</div>
                         <div class="tab-pane" id="packing" role="tabpanel">
@@ -1647,4 +1507,14 @@ function removeme(x)
   $(x).remove();
     //get_subtotal(x);
 }  
+
+function addmore_custom(id)
+{
+    $('#custom_table'+id).append('<tr id="add_p_materialrow"><td><input type="text" name="custom_name[]" class="form-control" value=""></td><td><input type="number" step=".01" name="custom_length[]" class="form-control" value="0"></td><td><input type="number" step=".01" name="custom_width[]" class="form-control" value="0"></td><td><input type="number" step=".01" name="custom_height[]" class="form-control" value="0"></td><td><input type="number" step=".01" class="form-control" name="custom_qty[]" value="0"></td><td><i class="fa fa-trash" onclick="removetr($(this))"></td></tr>');             
+}
+
+function removetr(row)
+{
+     row.closest('tr').remove();
+}
 </script>
