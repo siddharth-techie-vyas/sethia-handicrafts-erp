@@ -379,7 +379,7 @@ private $db_handle;
 
     function get_finish_byid($id)
     {
-        echo$sql = "SELECT * FROM products_finish where id='$id' ";
+        $sql = "SELECT * FROM products_finish where id='$id' ";
         $result = $this->db_handle->runBaseQuery($sql);
         return $result;
     }
