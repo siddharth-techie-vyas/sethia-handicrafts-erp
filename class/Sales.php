@@ -449,9 +449,29 @@ function save_up_estimator($part_details,$id)
 
 function save_finish_estimator($part_details,$id)
 {
-   echo $update0="update  sales_rfq_items SET finish='$part_details' where id='$id' ";
-    $update0 = $this->db_handle->update($update0); 
-    return $update0;
+    //-- check of some of the data is present or not 
+    $select="select * from sales_rfq_items where id='$id' ";
+    $select = $this->db_handle->runBaseQuery($select);
+    if($select[0]['finish']!='')
+    {
+        $finish = json_decode($select[0]['finish'],true);
+        //--- change part details to php array and merge 
+        $part_details = json_decode($part_details,true);
+        $finish = array_merge($finish,$part_details);
+        $finish = json_encode($finish);
+        $update0="update  sales_rfq_items SET finish='$finish' where id='$id' ";
+        $update0 = $this->db_handle->update($update0);
+
+    }
+    else
+    {
+        $update0="update  sales_rfq_items SET finish='$part_details' where id='$id' ";
+        $update0 = $this->db_handle->update($update0); 
+    }
+
+
+
+    
 }
 
 function save_packing_estimator($part_details,$id)
