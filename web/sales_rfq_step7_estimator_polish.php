@@ -148,7 +148,7 @@
                                                         <?php
                                                         // total polish costing 
                                                         $single_finish_cost_grand+=$single_finish_cost;
-                                                        echo $control_qft_subassembly_grand += $control_qft_subassembly;    
+                                                        $control_qft_subassembly_grand += $control_qft_subassembly;    
 
                                                          echo "</form>";
                                                         echo "</td>";
