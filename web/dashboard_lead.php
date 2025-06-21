@@ -129,6 +129,9 @@
 								{
 									foreach($pend as $k=>$v)
 									{
+										//-- check step is applicable to view or not 
+										$step=$admin->get_module_step('lead',$pend[$k]['step']);
+										if($step[0]['who']==$_SESSION['utype']){
 									?>
 									<tr>
 										<th><?php echo 'SHL'.$pend[$k]['id'];?></th>
@@ -136,7 +139,7 @@
 										<td><?php echo $pend[$k]['step'];?></td>
 										<td><?php echo date("d-m-Y", strtotime($pend[$k]['targetted_date']));  ?></td>
 									</tr>
-									<?php }?>
+									<?php }}?>
 									<!-- <tr>
 										<td colspan='6'><h4><A href="<?php echo $base_url.'index.php?action=dashboard&page=lead_viewall&lead_status=2';?>">View More</a></h4></td>
 									</tr> -->
@@ -153,7 +156,7 @@
 			<div class="col-xl-4 col-lg-6 col-12">
 				<div class="box">
 						<div class="box-header with-border">						
-						<h4 class="box-title">Today's Follow Up Reminder</h4>
+						<h4 class="box-title">Open Task</h4>
 						<h6 class="box-subtitle">Reminder for follow back</h6>
 						</div>
 						<div class="box-body p-15">						
@@ -173,6 +176,9 @@
 								{
 									foreach($pend as $k=>$v)
 									{
+										//-- check step is applicable to view or not 
+										$step=$admin->get_module_step('lead',$pend[$k]['step']);
+										if($step[0]['who']==$_SESSION['utype']){
 									?>
 									<tr>
 										<th><?php echo 'SHL'.$pend[$k]['id'];?></th>
@@ -181,7 +187,7 @@
 										<td><?php $up=$admin->getone_user($pend[$k]['audit_by']); echo $up[0]['person_name'];;?></td>
 										<td><?php echo date("d-m-Y", strtotime($pend[$k]['targetted_date']));  ?></td>
 									</tr>
-									<?php }?>
+									<?php }}?>
 									<!-- <tr>
 										<td colspan='6'><h4><A href="<?php echo $base_url.'index.php?action=dashboard&page=lead_viewall&lead_status=2';?>">View More</a></h4></td>
 									</tr> -->

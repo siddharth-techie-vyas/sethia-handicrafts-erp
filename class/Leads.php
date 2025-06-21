@@ -251,7 +251,7 @@ function get_group_one($id)
     function get_my_next_follow_dashboard($uid)
     {
         $date=date('Y-m-d');
-        $query="SELECT * FROM leads where handledby = '$uid' AND targetted_date < '$date' LIMIT 5";
+        $query="SELECT * FROM leads where handledby = '$uid' AND targetted_date < '$date' AND step != '0' LIMIT 5";
 		$result = $this->db_handle->runBaseQuery($query);
         return $result; 
     }
@@ -267,7 +267,7 @@ function get_group_one($id)
     function get_my_next_follow_old_dashboard($uid)
     {
         $date=date('Y-m-d');
-        $query="SELECT * FROM leads where handledby = '$uid' AND  audit_by != '0' LIMIT 5";
+        $query="SELECT * FROM leads where handledby = '$uid' AND  audit_by != '0' AND step != '0' LIMIT 5";
 		$result = $this->db_handle->runBaseQuery($query);
         return $result; 
     }
