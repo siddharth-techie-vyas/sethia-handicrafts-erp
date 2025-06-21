@@ -297,7 +297,7 @@
 				
 				
 				<!-- graph 2 -->
-				<div class="col-xl-4 col-12">
+				<!-- <div class="col-xl-4 col-12">
 					<div class="box">
 						<div class="box-body">
 							<h4 class="box-title">Overall Chart</h4>
@@ -337,7 +337,7 @@
 							<input type="hidden" name="bar_title2" id="bar_title2" value='Overall Report Till <?php echo date('d-m-Y');?>'/>
 						</div>
 					</div>
-				</div>
+				</div> -->
 
 				<!-- graph 3 -->
 				<div class="col-xl-4 col-12">
