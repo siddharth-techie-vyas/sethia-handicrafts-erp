@@ -597,9 +597,8 @@ $itemtype=$items[0]['item_type'];
 							</div>
 						</div>
                         <div class="tab-pane" id="contact11" role="tabpanel">
-							<div class="p-15">
-                                 <h4>Step 8) Polish</h4>
-                                   <?php include('sales_rfq_step7_estimator_polish.php');?>
+							<div class="p-15" id="step7-estimator_div">
+                                  <?php include('sales_rfq_step7_estimator_polish.php');?>
 							</div>
 						</div>
                         <div class="tab-pane" id="packing" role="tabpanel">

@@ -1,7 +1,9 @@
-var loading_img='../../images/loading.gif';
-//var base_url='http://localhost/sethia-handicrafts-erp/';
-//var base_url='http://192.168.1.78/sethia-handicrafts-erp/';
+//var base_url='http://192.168.1.43/sethia-handicrafts-erp/';
 var base_url='https://sethiahandicrafts.in/';
+
+//var base_url='http://localhost/sethia-handicrafts-erp/';
+var loading_img=base_url+'images/loading.gif';
+
 
 function get_details2(inputid,outputid,url)
 {
@@ -14,7 +16,7 @@ function get_details2(inputid,outputid,url)
            url: url+id,
            success: function(data)
            {
-           alert(data);
+           
                $('#msg'+outputid).html("Please Wait !!!");
                $('#'+outputid).html(data);
                $('#msg'+outputid).html("");              
@@ -77,6 +79,33 @@ function form_submit(x)
         //form.show(); 
  } 
 
+ function load_div(url,div)
+ {
+  $('#'+div).html('<img src='+loading_img+'>');
+  $('#'+div).load(url); 
+ }
+
+ function form_submit_refresh(x,div,url) 
+{
+      var form = $("#"+x);
+        $('#msg'+x).html("Please Wait !");
+        $.ajax({
+           type: "POST",
+           url: $("#"+x).attr("action"),
+           data: form.serialize(),
+           success: function(result)
+           {
+              $('#msg'+x).html(result); 
+              setTimeout(function(){
+                    $('#msg'+x).slideUp('slow').fadeOut(function() {
+                        load_div(url,div);
+                    });
+              }, 1000);  
+              
+           }
+        }); 
+        //form.show(); 
+ } 
  function noform_submit(x,url)
  {
         var pid = $("#pid"+x).val;

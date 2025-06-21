@@ -1,5 +1,8 @@
-<span id="msgstep7-estimator"></span>
-                              
+<h4>Step 8) Polish</h4>
+<?php 
+$items=$sales->sales_rfq_items_item($_GET['id']);
+$view=$sales->get_rfq_one($items[0]['sid']);
+?>
                                 <table class="table table-bordered" width="100%">
                                     <tr>
                                         <th width="10%">Assembly</th>
@@ -115,12 +118,19 @@
                                                                 $control_qft_subassembly=0;
                                                                 foreach($custom_value as $ckey=>$ck)
                                                                 {
-                                                                    echo "<tr>";
-                                                                        echo "<td>".$finish_details[$ck]['subassembly']."</td>";
-                                                                        echo "<td>".$finish_details[$ck]['length']."</td>";
-                                                                        echo "<td>".$finish_details[$ck]['width']."</td>";
-                                                                        echo "<td>".$finish_details[$ck]['height']."</td>";
-                                                                        echo "<td>".$finish_details[$ck]['qty']."</td>";
+                                                                    echo "<tr id='$ck'>";
+                                                                        echo "<td>";
+                                                                            echo "<input type='text' name='custom_name[]' class='form-control' value='".$finish_details[$ck]['subassembly']."'/>";
+                                                                            echo "<input type='hidden' name='key[]' value='$ck' />";
+                                                                    echo "</td>";
+                                                                        echo "</td>";
+                                                                        echo "<td><input type='text' name='custom_length[]' class='form-control' value='".$finish_details[$ck]['length']."' /></td>";
+                                                                        echo "<td><input type='text' name='custom_name[]' class='form-control' value='".$finish_details[$ck]['width']."'/></td>";
+                                                                        echo "<td><input type='text' name='custom_name[]' class='form-control' value='".$finish_details[$ck]['height']."' /></td>";
+                                                                        echo "<td><input type='text' name='custom_name[]' class='form-control' value='".$finish_details[$ck]['qty']."' /></td>";
+                                                                        ?>
+                                                                        <td><i class='fa fa-trash text-danger' onclick="deleteme('sales','deletepolish_step7-estimator','<?php $id=$finish_details[$ck].'&id='.$_GET['id']; echo $id; ?>')"></i></td>
+                                                                        <?php
                                                                     echo "</tr>";
 
                                                                     //-- add sqft into array
@@ -134,9 +144,9 @@
                                                                 $single_finish_labour_cost=$single_finish[0]['labour_inr'];
                                                                 $single_finish_cost=$control_qft_subassembly*$single_finish_labour_cost;
                                                                 
-                                                                echo "<tr><th>Finish Cost : </th><td>".$single_finish_labour_cost."</td>";
-                                                                echo "<th>Total Control Sq Ft : </th><td colspan='1'>$control_qft_subassembly</td>";
-                                                                echo "<th>Total</th><td>$single_finish_cost</td></tr>";
+                                                                echo "<tr><th class='small'>Finish Cost : </th><td>".$single_finish_labour_cost."</td>";
+                                                                echo "<th class='small'>Total Control Sq Ft : </th><td colspan='1'>$control_qft_subassembly</td>";
+                                                                echo "<th class='small'>Total</th><td>$single_finish_cost</td></tr>";
                                                                 echo "</tfoot>";
                                                                 echo "</table>";
                                                                 //-- table ends
@@ -144,7 +154,7 @@
                                                                 ?>
                                                                 <input type='button' name='addmore_custom_btn' class='btn btn-xs btn-secondary' value='Add More Custom Dimension' id='addmore_custom_btn<?php echo $r;?>' onclick="addmore_custom('<?php echo $r;?>')">
 
-                                                                <input type='button' name='addmore_custom_submit' class='btn btn-xs btn-primary' value='Save' onclick="form_submit('custom_polish<?php echo $r;?>')">
+                                                                <input type='button' name='addmore_custom_submit' class='btn btn-xs btn-primary' value='Save' onclick="form_submit_refresh('custom_polish<?php echo $r;?>','step7-estimator_div','<?php  echo $base_url.'index.php?action=dashboard&nocss=sales_rfq_step7_estimator_polish&id='.$_GET['id'];?>')">
                                                         <?php
                                                         // total polish costing 
                                                         $single_finish_cost_grand+=$single_finish_cost;
