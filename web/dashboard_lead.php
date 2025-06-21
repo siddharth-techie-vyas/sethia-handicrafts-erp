@@ -269,7 +269,7 @@
 							{
 								//-- get status name 
 								$status0=$admin->get_metaname_byvalue2('lead_status',$graph_status[$gs]['status']);
-								$status[]=$status0[0]['value1'];
+								$status[]='Handled';
 								$count[]=$graph_status[$gs]['count'];
 							}
 
