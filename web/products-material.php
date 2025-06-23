@@ -3,7 +3,7 @@
     	  <div class="content-header">
 			<div class="d-flex align-items-center">
 				<div class="mr-auto">
-					<h3 class="page-title">Material Registration</h3>
+					<h3 class="page-title">Raw Material Registration</h3>
 					<div class="d-inline-block align-items-center">
 						<nav>
 							<ol class="breadcrumb">
@@ -123,12 +123,11 @@
 							<tr>
 								<th>#</th>
                                 <th>Image</th>
-                                <th>HSN</th>
-                                <th>Capabilities</th>
-                                <th>Group</th>
-								<th>Material Name</th>
+                                <th>Material Name</th>
                                 <th>Parent Material</th>
-								<th>Type</th>
+                                <th>Capabilities</th>
+                                <th>Type / Group</th>
+                                <th>HSN</th>                                
                                 <th>Labour Cost</th>
 								<th>Utility</th>
 							</tr>
@@ -136,7 +135,7 @@
 						<tbody>
                             <?php 
                             $counter=1;
-                            $all = $product->get_material();
+                            $all = $product->get_parent_material();
                             foreach($all as $r=>$v)
                             {
                                 $unit=$store->get_unit_one($all[$r]['uom']);
@@ -145,12 +144,12 @@
                                 <tr>
                                     <th><?php echo $counter++;?></th>
                                     <td><?php if($all[$r]['pic'] != ''){echo "<img src=".$base_url."images/".$all[$r]['pic']." width='50px' height='50px'>";$all[$r]['pic'];}?></td>
-                                    <td><?php echo $all[$r]['hsn'];?></td>
-                                    <td><?php echo $cap[0]['capability'];?></td>
-                                    <td><?php echo $all[$r]['material_group'];?></td>                                    
-                                    <td><?php echo $all[$r]['material_name'];?></td>
+                                    
+                                    <td><?php echo "<b class='text-danger'>".$all[$r]['material_name']."</b>";?></td>
                                     <td><?php $mname = $product->get_material_byid($all[$r]['mid']); echo $mname[0]['material_name'];?></td>
+                                    <td><?php echo $cap[0]['capability'];?></td>
                                     <td><?php echo $all[$r]['material_type'];?></td>
+                                    <td><?php echo $all[$r]['hsn'];?></td>
                                     <td><?php echo $all[$r]['labour_inr'].' / '.$unit[0]['unit'];?></td>
                                     <td>
                                         <i class='fa fa-eye btn btn-xs btn-info'></i>
@@ -158,6 +157,33 @@
                                         <i class='fa fa-trash btn btn-xs btn-danger'></i>
                                     </td>
                                 </tr>
+                                <?php 
+                                //-- get chaild material 
+                                $child = $product->get_child_material($all[$r]['id']);
+                                if($child){
+                                    foreach($child as $c=>$v){
+                                        $unit=$store->get_unit_one($child[$c]['uom']);
+                                         $cap=$product->get_capability_byid($child[$c]['capabilities']);
+                                        ?>
+                                        <tr>
+                                            <th><?php echo $counter++;?></th>
+                                            <td><?php if($child[$c]['pic'] != ''){echo "<img src=".$base_url."images/".$child[$c]['pic']." width='50px' height='50px'>";$child[$c]['pic'];}?></td>
+                                            <td>- <?php echo $child[$c]['material_name'];?></td>
+                                            <td><?php $mname = $product->get_material_byid($child[$c]['mid']); echo "<em>".$mname[0]['material_name']."</em>";?></td>
+                                            <td><?php echo $cap[0]['capability'];?></td>
+                                            <td><?php echo $child[$c]['material_type'];?></td>
+                                            <td><?php echo $child[$c]['hsn'];?></td>                       
+                                            <td><?php echo $child[$c]['labour_inr'].' / '.$unit[0]['unit'];?></td>
+                                            <td>
+                                                <i class='fa fa-eye btn btn-xs btn-info'></i>
+                                                <i class='fa fa-pencil btn btn-xs btn-warning'></i>
+                                                <i class='fa fa-trash btn btn-xs btn-danger'></i>
+                                            </td>
+                                        </tr>
+                                    <?php ;}
+                                }
+                                ?>
+
                             <?php }?>
                         </tbody>
                         </table> 
