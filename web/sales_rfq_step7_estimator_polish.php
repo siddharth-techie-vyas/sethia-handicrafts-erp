@@ -129,7 +129,7 @@ $view=$sales->get_rfq_one($items[0]['sid']);
                                                                         echo "<td><input type='text' name='custom_name[]' class='form-control' value='".$finish_details[$ck]['height']."' /></td>";
                                                                         echo "<td><input type='text' name='custom_name[]' class='form-control' value='".$finish_details[$ck]['qty']."' /></td>";
                                                                         ?>
-                                                                        <td><i class='fa fa-trash text-danger' onclick="deleteme('sales','deletepolish_step7-estimator','<?php $id=$finish_details[$ck].'&id='.$_GET['id']; echo $id; ?>')"></i></td>
+                                                                        <td><i class='fa fa-trash text-danger' onclick="deleteme('sales','deletepolish_step7-estimator','<?php echo $id=$ck.'&sid='.$_GET['id'];  ?>')"></i></td>
                                                                         <?php
                                                                     echo "</tr>";
 

@@ -153,7 +153,7 @@
                                     <td><?php echo $all[$r]['labour_inr'].' / '.$unit[0]['unit'];?></td>
                                     <td>
                                         <i class='fa fa-eye btn btn-xs btn-info'></i>
-                                        <i class='fa fa-pencil btn btn-xs btn-warning'></i>
+                                        <i class='fa fa-pencil btn btn-xs btn-warning' data-toggle="modal" data-target="#exampleModal"  onclick="show_page_model('Add Material Specification','<?php echo $base_url.'index.php?action=dashboard&nocss=products-material_wood_config&id='.$all[$r]['id'];?>')"></i>
                                         <i class='fa fa-trash btn btn-xs btn-danger'></i>
                                     </td>
                                 </tr>
@@ -176,7 +176,7 @@
                                             <td><?php echo $child[$c]['labour_inr'].' / '.$unit[0]['unit'];?></td>
                                             <td>
                                                 <i class='fa fa-eye btn btn-xs btn-info'></i>
-                                                <i class='fa fa-pencil btn btn-xs btn-warning'></i>
+                                                <i class='fa fa-pencil btn btn-xs btn-warning' onclick="show_page_model('Add Material Specification','<?php echo $base_url.'index.php?action=nocss&page=product-material_wood_config'.$child[$c]['id'];?>')"></i>
                                                 <i class='fa fa-trash btn btn-xs btn-danger'></i>
                                             </td>
                                         </tr>

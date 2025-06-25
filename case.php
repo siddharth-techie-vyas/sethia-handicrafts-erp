@@ -1629,8 +1629,8 @@ case "sales":
 					$subassembly = $_POST['custom_name'];
 					$finish = $_POST['finish'];
 					$length = $_POST['custom_length'];
-					$width = $_POST['custom_height'];
-					$height = $_POST['custom_width'];
+					$width = $_POST['custom_width'];
+					$height = $_POST['custom_height'];
 					$qty = $_POST['custom_qty'];
 					foreach($length as $key=>$v)
 					{
@@ -1650,6 +1650,9 @@ case "sales":
 					$get=$sales->save_finish_estimator($part_details,$id);
 					echo "<div class='alert alert-secondary'>Finish Saved Successfully !!!</div>";
 				}
+
+				if($_GET['query']=='deletepolish_step7-estimator')
+				{$sales->deletepolish_step7_estimator($_GET['id'],$_GET['sid']);}
 
 				if($_GET['query']=='step8-estimator')
 				{

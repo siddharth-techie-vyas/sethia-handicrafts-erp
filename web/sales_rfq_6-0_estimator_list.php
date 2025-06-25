@@ -178,7 +178,7 @@ $itemtype=$items[0]['item_type'];
                         <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#packing" role="tab"><span><i class="fa fa-th-large"></i></span> <span class="hidden-xs-down ml-15">Cartoon</span></a> </li>
                         <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#logistics" role="tab"><span><i class="fa fa-truck"></i></span> <span class="hidden-xs-down ml-15">Logistics</span></a> </li>
                         <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#Summary" role="tab"><span><i class="fa fa-list"></i></span> <span class="hidden-xs-down ml-15">Summary</span></a> </li>
-                        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#final_result" role="tab"><span><i class="fa fa-file-pdf-o"></i></span> <span class="hidden-xs-down ml-15">Final Result</span></a> </li>
+                        <li class="nav-item" onclick="load_div('<?php echo $base_url.'index.php?action=dashboard&nocss=sales_final_result&id='.$_GET['id'];?>','final_result')"> <a class="nav-link" data-toggle="tab" href="#final_result" role="tab"><span><i class="fa fa-file-pdf-o"></i></span> <span class="hidden-xs-down ml-15" >Final Result</span></a> </li>
 					</ul>
 					<!-- Tab panes -->
 					<div class="tab-content tabcontent-border">
@@ -596,11 +596,15 @@ $itemtype=$items[0]['item_type'];
                                 
 							</div>
 						</div>
+
+                        <!-------- 8. polish ------------->
                         <div class="tab-pane" id="contact11" role="tabpanel">
 							<div class="p-15" id="step7-estimator_div">
                                   <?php include('sales_rfq_step7_estimator_polish.php');?>
 							</div>
 						</div>
+
+                        <!-------- 9. cartoon ------------->
                         <div class="tab-pane" id="packing" role="tabpanel">
 							<div class="p-15">
                                  <h4>Step 9) Cartoon(s)</h4>
@@ -864,6 +868,10 @@ $itemtype=$items[0]['item_type'];
 						</div>
 
                         
+
+                        <!-------- final result --------->
+                        <div class="tab-pane" id="final_result" role="tabpanel"></div>
+
 
                         <div class="tab-pane" id="Summary" role="tabpanel">
 							<div class="p-15">

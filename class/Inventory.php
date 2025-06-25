@@ -711,8 +711,8 @@ private $db_handle;
         //-- get group price
         $query0="select * from products_material_group_rate where wood='$mname' AND rate_grp='$rate_group'";
         $result0 = $this->db_handle->runBaseQuery($query0);
-        $rate_cft=$result0[0]['rate_cft'];
-        $extra=$result0[0]['extra'];
+        $rate_cft=floatval($result0[0]['rate_cft']);
+        $extra=floatval($result0[0]['extra']);
 
         //-- calc
         if($rate_addon != '' OR $rate_addon != 'N')

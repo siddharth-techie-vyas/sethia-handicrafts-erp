@@ -658,5 +658,16 @@ $control_sqft4 = round($control_sqft3,3)*$qty;
 $val=array ("sqft"=>$control_sqft3,"control_sqft"=>$control_sqft4);
 return $val;
 }
+
+function deletepolish_step7_estimator($key,$id)
+{
+    echo $select = "select * from sales_rfq_items where id='$id'";
+    $select = $this->db_handle->runBaseQuery($select);
+    $finish = json_decode($select[0]['finish'],true);
+    unset($finish[$key]);
+    $finish = json_encode($finish);
+    $update0="update  sales_rfq_items SET finish='$finish' where id='$id' ";
+    $update0 = $this->db_handle->update($update0);
+}
 //=========== end 
 }?>
