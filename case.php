@@ -1737,7 +1737,7 @@ case "sales":
 
 				if($_GET['query']=='step8-estimator1_logistics')
 				{
-					print_r($_POST);
+					
 					$finalval = array();
 					$val = array();
 					$case = $_POST['case'];
@@ -1750,8 +1750,8 @@ case "sales":
 
 					foreach($case as $key=>$v)
 					{
-						print_r ($case[$key]);
-						print_r($_POST['assembly'.$case[$key]]);
+						// print_r ($case[$key]);
+						// print_r($_POST['assembly'.$case[$key]]);
 						//echo $assembly = implode(",",$_POST['assembly'.$key]);
 						$val = array (
 							"case"=>$case[$key],
@@ -1765,11 +1765,35 @@ case "sales":
 						);
 
 						array_push($finalval,$val);
-						print_r($lval);
+						
 					}
 					$part_details = json_encode($finalval);
 					$get=$sales->step8_estimator1_logistics($part_details,$_POST['id']);
 					echo "<div class='alert alert-secondary'>Logistics Saved Successfully !!!</div>";
+				}
+
+				if($_GET['query']=='final_submit_form')
+				{
+					$val = array (
+							"turning_qty"=>$_POST['turning_qty'],
+							"turning_rate"=>$_POST['turning_rate'],
+							"turning_amount"=>$_POST['turning_amount'],
+							"fitting_amount"=>$_POST['fitting_amount'],
+							"polish_material_rate"=>$_POST['polish_material_rate'],
+							"powder_rate"=>$_POST['powder_rate'],
+							"polish_rate"=>$_POST['polish_rate'],
+							"packing_rate"=>$_POST['packing_rate'],
+							"cartoon_rate"=>$_POST['cartoon_rate'],
+							"cartoon_amt"=>$_POST['cartoon_amt'],
+							"mislleneous_amt"=>$_POST['mislleneous_amt'],
+							"packing_labour_rate"=>$_POST['packing_labour_rate'],
+							"packing_laoding_rate"=>$_POST['packing_laoding_rate'],
+							"cartoon_qty"=>$_POST['cartoon_qty'],
+							"final_rate"=>$_POST['final_rate']
+						);
+						$part_details = json_encode($val);
+						$get=$sales->step_final_submit($part_details,$_POST['id']);
+						echo "<div class='alert alert-secondary'>Saved Successfully !!!</div>";
 				}
 
 				

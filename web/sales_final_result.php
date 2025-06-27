@@ -1,3 +1,6 @@
+<span id="msgfinal_submit_form"></span>
+<form id="final_submit_form" name="final_submit_form" action="<?php echo $base_url.'index.php?action=sales&query=final_submit_form';?>" method="post">
+<input type="hidden" name="id" value="<?php echo $_GET['id'];?>">
 <?php 
 function arraySearch($foo, $array){ 
                                         $mykeys = array();
@@ -13,6 +16,7 @@ $items=$sales->sales_rfq_items_item($_GET['id']);
 $view=$sales->get_rfq_one($items[0]['sid']);
 $itemtype=$items[0]['item_type'];
 $part_details = json_decode($items[0]['part']);
+$final_submit = json_decode($items[0]['final_submit'],true);
 $rm_cost_total=0;
 $hardware_total=0;
 $rm_qty_total=0;
@@ -77,7 +81,9 @@ $compound_polish=0;
                                             //-- rm cost
                                             $rm_cost = $rm_rate*$comp_cft;
                                             //-- check if board / wood
-                                                    if (str_contains($wood_yield_h[0]['wood_type'], 'Board')) { 
+                                                    
+                                                    if(preg_match('(Board|MDF)', $wood_yield_h[0]['wood_type']) === 1)
+                                                    { 
                                                             $board_cft += $comp_cft;
                                                             $rm_qty_mdf_total += $rm_qty;
                                                             $rm_cost_mdf += $rm_cost;
@@ -140,7 +146,7 @@ $compound_polish=0;
                         foreach($part3 as $key=>$c)
                         {
                             $search=arraySearch($c,$polish);
-                            echo "<tr style='display:none;'>";
+                            echo "<tr>";
                                 echo "<td>".$c."</td>";
                                 echo "<td>".$polish[$key]['length'].' x '.$polish[$key]['width'].' x '.$polish[$key]['height']."</td>";
                                 echo "<td>";
@@ -232,31 +238,31 @@ $compound_polish=0;
                  <tr>
                     <th>Turning</th>
                     <td colspan="3"></td>
-                    <td><input type='number' class='form-control' name='turning_qty' id='turning_qty'></td>
-                    <td><input type='number' class='form-control' name='turning_rate' id='turning_rate'></td>
-                    <td><input type='number' class='form-control' name='turning_amount' id='turning_amount'></td>
+                    <td><input type='number' class='form-control' name='turning_qty' id='turning_qty' value="<?php echo $final_submit['turning_qty'];?>"></td>
+                    <td><input type='number' class='form-control' name='turning_rate' id='turning_rate' value="<?php echo $final_submit['turning_rate'];?>"></td>
+                    <td><input type='number' readonly="readonly" class='form-control' name='turning_amount' id='turning_amount' value="<?php echo $turning=$final_submit['turning_qty']*$final_submit['turning_rate'];?>"></td>
                     <td></td>
                  </tr>
                  <tr>
                     <th>Fitting</th>
                     <td colspan="5"></td>
-                    <td><input type='number' class='form-control' name='fitting_amount' id='fitting_amount'></td>
+                    <td><input type='number' class='form-control' name='fitting_amount' id='fitting_amount' value="<?php echo $fitting = $final_submit['fitting_amount'];?>"></td>
                     <td></td>
                  </tr>
-                 <tr class="bg-secondary"><th colspan="6">Cost Of Structure</th><td colspan="2"></td></tr>
+                 <tr class="bg-secondary"><th colspan="6">Cost Of Structure</th><td colspan="2"><?php echo $cost_structure = $carpentry+$turning+$fitting;?></td></tr>
 
 
 
 
-                 <tr><th colspan="8" class="text-primary">Polish Material</th></tr>
+                 <tr></tr>
                  <tr>
-                    <td></td>
+                    <th>Polish Material</th>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td><?php echo $compound_polish;?></td>
-                    <td>15</td>
-                    <td><?php echo $polish_rate = $compound_polish*15;?></td>
+                    <td><input type="text" class="form-control" name="polish_material_rate"  value="<?php echo $final_submit['fitting_amount'];?>"></td>
+                    <td><?php echo $polish_rate = $compound_polish*$final_submit['fitting_amount'];?></td>
                     <td></td>
                  </tr>
                  <tr>
@@ -276,7 +282,7 @@ $compound_polish=0;
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
+                    <td><input type="text" class="form-control" name="powder_rate" value="<?php echo $powder_rate=$final_submit['powder_rate'];?>"></td>
                     <td></td>
                     <td></td>
                  </tr>
@@ -286,8 +292,8 @@ $compound_polish=0;
                     <td></td>
                     <td></td>
                     <td><?php echo $polish_rate;?></td>
-                    <td>10</td>
-                    <td><?php echo $polish_labour_rate=$polish_rate*0.10;?></td>
+                    <td><input type="text" step=".01" class="form-control" name="polish_rate" value="<?php echo $polish_rate3=$final_submit['polish_rate'];?>"></td>
+                    <td><?php echo $polish_labour_rate=$polish_rate*$polish_rate3;?></td>
                     <td></td>
                  </tr>
                  <tr  class="bg-success"><th colspan="6" >Cost Of Polish</th><td colspan="2"><?php echo $cost_polish = $polish_labour_rate+$polish_total;?></td></tr>
@@ -310,17 +316,18 @@ $compound_polish=0;
                                        
                                     ?>
                  <tr>
-                    <td></td>
+                    <td>Cartoon</td>
                     <td><?php echo $pval['length'];?> (MM)</td> 
                     <td><?php echo $pval['width'];?> (MM)</td> 
                     <td><?php echo $pval['height'];?> (MM)</td> 
-                    <td>1</td>
-                    <td><input type='number' class='form-control' name='packing_rate' id='packing_rate'></td>
-                    <td></td>
+                    <td><input type='number' class='form-control' name='cartoon_qty' id='cartoon_qty' value="<?php echo $final_submit['cartoon_qty'];?>"></td>
+                    <td><input type='number' class='form-control' name='packing_rate' id='packing_rate' value="<?php echo $final_submit['packing_rate'];?>"></td>
+                    <td><?php echo $cartoon_rate = $final_submit['cartoon_qty']*$final_submit['packing_rate']; ?></td>
                     <td></td>
                  </tr>
                  <tr>
                     <td>Packing Material</td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td>
@@ -332,9 +339,10 @@ $compound_polish=0;
                         $packing_cost=$packing_cost/61000;  
                         echo $packing_cost=round($packing_cost,3)?>
                     </td>
-                    <td><input type='number' class='form-control' name='cartoon_rate' id='cartoon_rate'></td>
-                    <td><input type='number' class='form-control' name='cartoon_amt' id='cartoon_amt'></td>
+                    <td><input type='number' class='form-control' name='cartoon_rate' id='cartoon_rate' value="<?php echo $final_submit['cartoon_rate'];?>"></td>
+                    <td><input type='number' readonly="readonly" class='form-control' name='cartoon_amt' id='cartoon_amt' value="<?php echo $packing_material_amt = $final_submit['cartoon_amt']*$packing_cost;?>"></td>
                     <td></td>
+                    
                  </tr>
                  <tr>
                     <td>Mislleneous Items</td>
@@ -343,7 +351,7 @@ $compound_polish=0;
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td><input type='number' class='form-control' name='mislleneous_amt' id='mislleneous_amt'></td>
+                    <td><input type='number' class='form-control' name='mislleneous_amt' id='mislleneous_amt' value="<?php echo $mis_amt= $final_submit['mislleneous_amt'];?>"></td>
                     <td></td>
                  </tr>
                 <tr><th colspan="8">Labour Charges</th></tr>
@@ -353,8 +361,8 @@ $compound_polish=0;
                     <td></td>
                     <td></td>
                     <td><?php  echo $packing_cost; ?></td>
-                    <td><input type='number' class='form-control' name='packing_labour_rate' id='packing_labour_rate'></td>
-                    <td></td>
+                    <td><input type='number' class='form-control' name='packing_labour_rate' id='packing_labour_rate' value="<?php echo  $final_submit['packing_labour_rate'];?>"></td>
+                     <td><?php echo $packing_labour = $final_submit['packing_labour_rate']*$packing_cost;?></td>
                     <td></td>
                  </tr>
                  <tr>
@@ -363,23 +371,29 @@ $compound_polish=0;
                     <td></td>
                     <td></td>
                     <td><?php  echo $packing_cost; ?></td>
-                    <td><input type='number' class='form-control' name='packing_laoding_rate' id='packing_laoding_rate'></td>
-                    <td></td>
+                    <td><input type='number' class='form-control' name='packing_laoding_rate' id='packing_laoding_rate' value="<?php echo $final_submit['packing_laoding_rate'];?>"></td>
+                    <td><?php echo $loading_amt = $final_submit['packing_laoding_rate']*$packing_cost;?></td>
                     <td></td>
                  </tr>
 
-                 <tr class="bg-warning"><th colspan="5">Cost Of Packing and Loading</th><td colspan="3"></td></tr>
-                 <tr class="bg-secondary"><th colspan="5">FOB Charges</th><td colspan="3"></td></tr>
-                 <tr class="bg-info"><th colspan="5">Cost (INR)</th><td colspan="3"></td></tr>
-                 <tr class="bg-primary"><th colspan="5">Cost In USD</th><td colspan="3"></td></tr>
-                 <tr class="bg-primary"><th colspan="5">Cost In USD</th><td colspan="3"></td></tr>
-                 <tr class="bg-primary"><th colspan="5">Price In USD After 10% Discount</th><td colspan="3"></td></tr>
-                 <tr class="bg-primary"><th colspan="5">Cost In USD After 20% Discount</th><td colspan="3"></td></tr>
-                 <tr class="bg-primary"><th colspan="5">Cost In USD After 25% Discount</th><td colspan="3"></td></tr>
-                 <tr class="bg-danger"><th colspan="5">Loadability</th><td colspan="3"></td></tr>
-
-
+                 <tr class="bg-warning"><th colspan="6">Cost Of Packing and Loading</th><td colspan="2"><?php echo $cost_packing = $cartoon_rate+$packing_material_amt+$mis_amt+$packing_labour+$loading_amt;?></td></tr>
+                 <tr class="bg-secondary"><th colspan="6">FOB Charges</th><td colspan="2"></td></tr>
+                 <tr class="bg-info"><th colspan="6">Cost (INR)</th><td colspan="2"></td></tr>
+                 <tr class="bg-primary"><th colspan="6">Cost In USD</th><td colspan="2"></td></tr>
+                 <tr class="bg-primary"><th colspan="6">Cost In USD</th><td colspan="2"></td></tr>
+                 <tr class="bg-primary"><th colspan="6">Price In USD After 10% Discount</th><td colspan="2"></td></tr>
+                 <tr class="bg-primary"><th colspan="6">Cost In USD After 20% Discount</th><td colspan="2"></td></tr>
+                 <tr class="bg-primary"><th colspan="6">Cost In USD After 25% Discount</th><td colspan="2"></td></tr>
+                 <tr class="bg-danger"><th colspan="6">Loadability</th><td colspan="2"></td></tr>
+                
+                <tr>
+                    <td colspan="7"></td>
+                    <td>
+                        <input type="button" class="btn btn-primary" onclick="form_submit('final_submit_form')" value="Save & Calculate"/>
+                    </td>
+                </tr>
     
                     
     </tbody>
 </table>
+</form>
