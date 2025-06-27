@@ -864,6 +864,54 @@ $itemtype=$items[0]['item_type'];
                                     </tr>
                                 </table>
                                 </form>
+
+                                <hr>
+                                <h4>Loadability</h4>
+                                <?php $loadability = json_decode($items[0]['loadability'],true); ?>
+                                <span id="msgstep_11_loadability"></span>
+                                <form name="loadability" id="step_11_loadability" action="<?php echo $base_url.'index.php?action=sales&query=step_11_loadability';?>" method="post">
+                                <input type="hidden" name="id" value="<?php echo $_GET['id'];?>"/>
+                                <table class="table table-bordered table-striped">
+                                    <tr>
+                                        <th>Number Of Boxes (Length)</th>
+                                        <th>Number Of Boxes (Width)</th>
+                                        <th>Number Of Boxes (Height)</th>
+                                        <th>Total</th>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="value1[]" class="form-control" value="<?php echo $loadability[0]['value1'];?>"></td></td>
+                                        <td><input type="text" name="value2[]" class="form-control" value="<?php echo $loadability[0]['value2'];?>"></td></td>
+                                        <td><input type="text" name="value3[]" class="form-control" value="<?php echo $loadability[0]['value3'];?>"></td></td>
+                                        <td><input readonly="readonly" type="text" name="value4[]" class="form-control" value="<?php echo $loadability[0]['value4'];?>"></td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="value1[]" class="form-control" value="<?php echo $loadability[1]['value1'];?>"></td></td>
+                                        <td><input type="text" name="value2[]" class="form-control" value="<?php echo $loadability[1]['value2'];?>"></td></td>
+                                        <td><input type="text" name="value3[]" class="form-control" value="<?php echo $loadability[1]['value3'];?>"></td></td>
+                                        <td><input readonly="readonly" type="text" name="value4[]" class="form-control" value="<?php echo $loadability[1]['value4'];?>"></td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="value1[]" class="form-control" value="<?php echo $loadability[2]['value1'];?>"></td></td>
+                                        <td><input type="text" name="value2[]" class="form-control" value="<?php echo $loadability[2]['value2'];?>"></td></td>
+                                        <td><input type="text" name="value3[]" class="form-control" value="<?php echo $loadability[2]['value3'];?>"></td></td>
+                                        <td><input readonly="readonly" type="text" name="value4[]" class="form-control" value="<?php echo $loadability[2]['value4'];?>"></td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="value1[]" class="form-control" value="<?php echo $loadability[3]['value1'];?>"></td></td>
+                                        <td><input type="text" name="value2[]" class="form-control" value="<?php echo $loadability[3]['value2'];?>"></td></td>
+                                        <td><input type="text" name="value3[]" class="form-control" value="<?php echo $loadability[3]['value3'];?>"></td></td>
+                                        <td><input readonly="readonly" type="text" name="value4[]" class="form-control" value="<?php echo $loadability[3]['value4'];?>"></td></td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="2">Total</th>
+                                        <th colspan="2"></th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3"></td>
+                                        <td><input type="button" name="submit_load" value="Update" class="btn btn-warning" onclick="form_submit('step_11_loadability')"></td>
+                                    </tr>
+                                </table>
+                                </form>
 							</div>
 						</div>
 

@@ -27,6 +27,13 @@ $wood_cft = 0;
 $rm_qty_wood_total = 0;
 $rm_cost_wood = 0;
 $compound_polish=0;
+
+//-- lodability
+$loadability_amt=0;
+$loadability = json_decode($items[0]['loadability'],true); 
+foreach($loadability as $load){
+    $loadability_amt += $load['value4'];
+}
 ?>
 <table class="table table-bordered table-striped">
     <thead>
@@ -105,7 +112,7 @@ $compound_polish=0;
                 <td><?php echo $rm_qty;?></td>
                 <td><?php echo $rm_rate;?></td>
                 <td><?php echo $rm_cost;?></td>
-                <td></td>
+                
             </tr>
             <?php }
             // echo "<tr>";
@@ -146,7 +153,7 @@ $compound_polish=0;
                         foreach($part3 as $key=>$c)
                         {
                             $search=arraySearch($c,$polish);
-                            echo "<tr>";
+                            echo "<tr style='display:none;'>";
                                 echo "<td>".$c."</td>";
                                 echo "<td>".$polish[$key]['length'].' x '.$polish[$key]['width'].' x '.$polish[$key]['height']."</td>";
                                 echo "<td>";
@@ -377,14 +384,23 @@ $compound_polish=0;
                  </tr>
 
                  <tr class="bg-warning"><th colspan="6">Cost Of Packing and Loading</th><td colspan="2"><?php echo $cost_packing = $cartoon_rate+$packing_material_amt+$mis_amt+$packing_labour+$loading_amt;?></td></tr>
-                 <tr class="bg-secondary"><th colspan="6">FOB Charges</th><td colspan="2"></td></tr>
+                 <tr class="bg-secondary">
+                    <th>FOB Charges</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><?php echo $fob =  round(1/$loadability_amt,4);?> <input type="hidden" name="fob" value="<?php echo $fob;?>"></td>
+                    <td><input type='number' class='form-control' name='fob_rate' id='fob_rate' value="<?php echo $final_submit['fob_rate'];?>"></td>
+                    <td><input type='number' readonly="readonly" class='form-control' name='fob_amt' id='fob_amt' value="<?php echo $final_submit['fob_amt'];?>"></td>
+                    <td></td>
+                </tr>
                  <tr class="bg-info"><th colspan="6">Cost (INR)</th><td colspan="2"></td></tr>
                  <tr class="bg-primary"><th colspan="6">Cost In USD</th><td colspan="2"></td></tr>
                  <tr class="bg-primary"><th colspan="6">Cost In USD</th><td colspan="2"></td></tr>
                  <tr class="bg-primary"><th colspan="6">Price In USD After 10% Discount</th><td colspan="2"></td></tr>
                  <tr class="bg-primary"><th colspan="6">Cost In USD After 20% Discount</th><td colspan="2"></td></tr>
                  <tr class="bg-primary"><th colspan="6">Cost In USD After 25% Discount</th><td colspan="2"></td></tr>
-                 <tr class="bg-danger"><th colspan="6">Loadability</th><td colspan="2"></td></tr>
+                 <tr class="bg-danger"><th colspan="6">Loadability</th><td colspan="2"><?php echo $loadability_amt;?></td></tr>
                 
                 <tr>
                     <td colspan="7"></td>
