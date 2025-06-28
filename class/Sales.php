@@ -669,5 +669,17 @@ function deletepolish_step7_estimator($key,$id)
     $update0="update  sales_rfq_items SET finish='$finish' where id='$id' ";
     $update0 = $this->db_handle->update($update0);
 }
+
+function step_final_submit($part,$id)
+{
+    $update0="update  sales_rfq_items SET final_submit='$part' where id='$id' ";
+    $update0 = $this->db_handle->update($update0);
+}
+
+function step_11_loadability($part,$id)
+{
+    $update0="update  sales_rfq_items SET loadability='$part' where id='$id' ";
+    $update0 = $this->db_handle->update($update0);
+}
 //=========== end 
 }?>
