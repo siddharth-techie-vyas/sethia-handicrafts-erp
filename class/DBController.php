@@ -23,17 +23,15 @@
         //$conn = $this->connectDB($database,$uri,$driverOptions);
 
         $this->conn = $this->connectDB();         
-        error_reporting(0);
+        //error_reporting(0);
     }   
     
     function default_timezone()
     {
-                  date_default_timezone_set("Asia/Kolkata");
-                  $current_date = date("Y-m-d h:i:sa");
-                  return $current_date;
-
-                   //daily_backup();
-                  
+        date_default_timezone_set("Asia/Kolkata");
+        $current_date = date("Y-m-d h:i:sa");
+        return $current_date;
+        //daily_backup();                  
     }
 
     function connectDB() {
