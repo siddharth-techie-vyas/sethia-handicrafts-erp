@@ -1774,6 +1774,7 @@ case "sales":
 
 				if($_GET['query']=='final_submit_form')
 				{
+					$fob_amt = round($_POST['fob_rate']*$_POST['fob'],3);
 					$val = array (
 							"turning_qty"=>$_POST['turning_qty'],
 							"turning_rate"=>$_POST['turning_rate'],
@@ -1789,11 +1790,39 @@ case "sales":
 							"packing_labour_rate"=>$_POST['packing_labour_rate'],
 							"packing_laoding_rate"=>$_POST['packing_laoding_rate'],
 							"cartoon_qty"=>$_POST['cartoon_qty'],
-							"final_rate"=>$_POST['final_rate']
+							"final_rate"=>$_POST['final_rate'],
+							"fob"=>$_POST['fob'],
+							"fob_rate"=>$_POST['fob_rate'],
+							"fob_amt"=>$fob_amt
 						);
 						$part_details = json_encode($val);
 						$get=$sales->step_final_submit($part_details,$_POST['id']);
 						echo "<div class='alert alert-secondary'>Saved Successfully !!!</div>";
+				}
+
+				if($_GET['query']=='step_11_loadability')
+				{
+					$finalval = array();
+					$val = array();
+					$value1 = $_POST['value1'];
+					$value2 = $_POST['value2'];
+					$value3 = $_POST['value3'];
+					
+
+					foreach($value1 as $key=>$v)
+					{
+						$value4 = intval($value1[$key])*intval($value2[$key])*intval($value3[$key]);
+						$val = array (
+							"value1"=>$value1[$key],
+							"value2"=>$value2[$key],
+							"value3"=>$value3[$key],
+							"value4"=>$value4
+						);
+						array_push($finalval,$val);						
+					}
+					$part_details = json_encode($finalval);
+					$get=$sales->step_11_loadability($part_details,$_POST['id']);
+					echo "<div class='alert alert-secondary'>Loadability Saved Successfully !!!</div>";
 				}
 
 				

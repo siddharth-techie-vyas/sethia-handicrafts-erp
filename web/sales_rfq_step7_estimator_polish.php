@@ -139,7 +139,7 @@ $view=$sales->get_rfq_one($items[0]['sid']);
                                                                 }
                                                                 echo "</tbody>";
                                                                 echo "<tfoot>";
-                                                                //--  get single fishi labour cost 
+                                                                //--  get single finish labour cost 
                                                                 $single_finish = $product->get_finish_byid($finish_details[0]['finish']);
                                                                 $single_finish_labour_cost=$single_finish[0]['labour_inr'];
                                                                 $single_finish_cost=$control_qft_subassembly*$single_finish_labour_cost;

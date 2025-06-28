@@ -383,7 +383,8 @@ foreach($loadability as $load){
                     <td></td>
                  </tr>
 
-                 <tr class="bg-warning"><th colspan="6">Cost Of Packing and Loading</th><td colspan="2"><?php echo $cost_packing = $cartoon_rate+$packing_material_amt+$mis_amt+$packing_labour+$loading_amt;?></td></tr>
+                 <tr class="bg-warning"><th colspan="6">Cost Of Packing and Loading</th><td colspan="2"><?php $cost_packing = $cartoon_rate+$packing_material_amt+$mis_amt+$packing_labour+$loading_amt; 
+                 echo $cost_packing=round($cost_packing,2);?></td></tr>
                  <tr class="bg-secondary">
                     <th>FOB Charges</th>
                     <td></td>
@@ -394,12 +395,12 @@ foreach($loadability as $load){
                     <td><input type='number' readonly="readonly" class='form-control' name='fob_amt' id='fob_amt' value="<?php echo $final_submit['fob_amt'];?>"></td>
                     <td></td>
                 </tr>
-                 <tr class="bg-info"><th colspan="6">Cost (INR)</th><td colspan="2"></td></tr>
-                 <tr class="bg-primary"><th colspan="6">Cost In USD</th><td colspan="2"></td></tr>
-                 <tr class="bg-primary"><th colspan="6">Cost In USD</th><td colspan="2"></td></tr>
-                 <tr class="bg-primary"><th colspan="6">Price In USD After 10% Discount</th><td colspan="2"></td></tr>
-                 <tr class="bg-primary"><th colspan="6">Cost In USD After 20% Discount</th><td colspan="2"></td></tr>
-                 <tr class="bg-primary"><th colspan="6">Cost In USD After 25% Discount</th><td colspan="2"></td></tr>
+                 <tr class="bg-info"><th colspan="6">Cost (INR)</th><td colspan="2"><?php echo $cost_inr = $cost_structure+$cost_polish+$cost_packing+$final_submit['fob_amt'];?></td></tr>
+                 <tr class="bg-primary"><th colspan="6">Cost In USD</th><td colspan="2"><?php echo $cost_usd = round($cost_inr/84,2);?></td></tr>
+                 <tr class="bg-primary"><th colspan="6">Price In USD</th><td colspan="2"><?php echo $price_usd = round($cost_usd/0.6,2);?></td></tr>
+                 <tr class="bg-primary"><th colspan="6">Price In USD After 10% Discount</th><td colspan="2"><?php  $price_10 = $price_usd*0.9; echo round($price_10,2);?></td></tr>
+                 <tr class="bg-primary"><th colspan="6">Cost In USD After 20% Discount</th><td colspan="2"><?php  $price_20 = $price_usd*0.8; echo round($price_20,2);?></td></tr>
+                 <tr class="bg-primary"><th colspan="6">Cost In USD After 25% Discount</th><td colspan="2"><?php  $price_25 = $price_usd*0.75; echo round($price_25,2);?></td></tr>
                  <tr class="bg-danger"><th colspan="6">Loadability</th><td colspan="2"><?php echo $loadability_amt;?></td></tr>
                 
                 <tr>
