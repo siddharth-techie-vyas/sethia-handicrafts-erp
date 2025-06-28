@@ -1833,7 +1833,7 @@ case "sales":
 					echo 'Fit In Length :-'.$cartoon['fit_lengthwise'].'<br>';
 					echo 'Fit In Width :-'.$cartoon['fit_widthwise'].'<br>';
 					echo 'Fit In Height :-'.$cartoon['fit_heightwise'].'<br>';
-					echo 'Fit In Height :-'.$cartoon['total_fit'];
+					echo 'Total Cartoons :-'.$cartoon['total_fit'];
 				}
 
 
