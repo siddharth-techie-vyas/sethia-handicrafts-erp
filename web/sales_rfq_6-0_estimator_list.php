@@ -867,6 +867,26 @@ $itemtype=$items[0]['item_type'];
 
                                 <hr>
                                 <h4>Loadability</h4>
+                                 <form name="container_unit" id="container_unit" action="<?php echo $base_url.'index.php?action=sales&query=container_unit';?>" method="post">
+                                <table class="table table-bordered table-striped">
+                                    <tr>
+                                        <th width="30%">
+                                            <label>Select Container Type</label>
+                                            <input type="hidden" name="length" value="<?php echo $pval['length'];?>">
+                                            <input type="hidden" name="width" value="<?php echo $pval['width'];?>">
+                                            <input type="hidden" name="height" value="<?php echo $pval['height'];?>">
+                                            <select name="container_type" class="form-control" onchange="form_submit_result('container_unit')">
+                                                <option disaled="disabled" selected="selected">Select</option>
+                                                <option value="20ft">20ft</option>
+                                                <option value="40ft">40ft</option>
+                                                <option value="40ftHQ">40ftHQ</option>
+                                            </select>    
+                                        </th>
+                                        <td colspan="3" id="msgcontainer_unit"></td>
+                                    </tr>
+                                </table>    
+                                </form>
+
                                 <?php $loadability = json_decode($items[0]['loadability'],true); ?>
                                 <span id="msgstep_11_loadability"></span>
                                 <form name="loadability" id="step_11_loadability" action="<?php echo $base_url.'index.php?action=sales&query=step_11_loadability';?>" method="post">

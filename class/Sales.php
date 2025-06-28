@@ -681,5 +681,32 @@ function step_11_loadability($part,$id)
     $update0="update  sales_rfq_items SET loadability='$part' where id='$id' ";
     $update0 = $this->db_handle->update($update0);
 }
+
+function calculateCartonFit($cartonLength, $cartonWidth, $cartonHeight, $containerType) {
+    // Container dimensions in mm
+    $containers = [
+        '20ft' => ['length' => 5898, 'width' => 2352, 'height' => 2393],
+        '40ft' => ['length' => 12032, 'width' => 2352, 'height' => 2393],
+        '40ftHQ' => ['length' => 12032, 'width' => 2352, 'height' => 2698],
+    ];
+
+    if (!isset($containers[$containerType])) {
+        return ['error' => 'Invalid container type.'];
+    }
+
+    $container = $containers[$containerType];
+
+    // Fit calculation
+    $fitLength = floor($container['length'] / $cartonLength);
+    $fitWidth  = floor($container['width']  / $cartonWidth);
+    $fitHeight = floor($container['height'] / $cartonHeight);
+
+    $totalCartons = $fitLength * $fitWidth * $fitHeight;
+    $result = array('fit_lengthwise' => $fitLength,
+        'fit_widthwise'  => $fitWidth,
+        'fit_heightwise' => $fitHeight,
+        'total_fit'      => $totalCartons);
+    return $result;
+}
 //=========== end 
 }?>

@@ -125,6 +125,21 @@ function form_submit(x)
         }); 
  }
 
+ function form_submit_result(x)
+ {
+        var form = $("#"+x);
+        $('#msg'+x).html("Please Wait !");
+        $.ajax({
+            type: "POST",
+            url: $("#"+x).attr("action"),
+            data: form.serialize(),
+           success: function(result)
+           {
+              $('#msg'+x).html(result);  
+           }
+        }); 
+ }
+
 
  function form_submit_alert(x) 
  {  

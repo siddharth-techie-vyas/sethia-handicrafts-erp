@@ -1825,6 +1825,18 @@ case "sales":
 					echo "<div class='alert alert-secondary'>Loadability Saved Successfully !!!</div>";
 				}
 
+				if($_GET['query']=='container_unit')
+				{
+					$cartoon = array();
+					$cartoon = $sales->calculateCartonFit($_POST['length'],$_POST['width'],$_POST['height'],$_POST['container_type']);
+					
+					echo 'Fit In Length :-'.$cartoon['fit_lengthwise'].'<br>';
+					echo 'Fit In Width :-'.$cartoon['fit_widthwise'].'<br>';
+					echo 'Fit In Height :-'.$cartoon['fit_heightwise'].'<br>';
+					echo 'Fit In Height :-'.$cartoon['total_fit'];
+				}
+
+
 				
 	}
 	break;
