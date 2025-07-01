@@ -22,8 +22,9 @@
    function __construct() {
         //$conn = $this->connectDB($database,$uri,$driverOptions);
 
-        $this->conn = $this->connectDB();         
-        //error_reporting(0);
+        $this->conn = $this->connectDB();    
+        //-- errro reporting     
+        error_reporting(0);
     }   
     
     function default_timezone()
